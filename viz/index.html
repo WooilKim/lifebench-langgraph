@@ -264,15 +264,16 @@ traits:  [<span class="cs">"家庭导向"</span>, <span class="cs">"事业导向
   <div class="ss ss-new">
     <div class="flex items-center gap-2 flex-wrap">
       <span class="npill np-new">🪪 person_gen</span>
-      <span class="badge b-rule">성씨 분포</span>
-      <span class="badge b-llm">LLM (직업)</span>
+      <span class="badge b-rule">완전 규칙 기반</span>
+      <span class="badge b-ko">LLM 없음</span>
     </div>
     <div class="ss-path">nodes/person_gen.py</div>
     <div class="ss-note">
-      이름: 2020 통계청 성씨 분포 × koreanname.me 이름 랭킹 (count 가중치 top 500)<br>
-      나이: 25~55 가중 분포 (18~70 전범위)<br>
-      성별: 50/50 랜덤 배분<br>
-      직업: 나이대별 후보 목록에서 LLM이 가장 자연스러운 직업 선택
+      <b>성별</b>: 50/50 랜덤 배분 후 섞기<br>
+      <b>이름</b>: 성씨(통계청 분포) + 이름(koreanname.me 성별 전용 풀, count 가중치)<br>
+      &nbsp;&nbsp;→ 남성 이름 풀 ↔ 여성 이름 풀 교차 없음<br>
+      <b>나이</b>: 25~55 가중 분포 (18~70 전범위)<br>
+      <b>직업</b>: 나이대 × 성별 가중치 테이블에서 랜덤 선택 <span class="badge b-rule">LLM 없음</span>
     </div>
     <div class="io">
       <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// state</span>
