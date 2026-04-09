@@ -3,7 +3,7 @@ import json
 import re
 from datetime import date, timedelta
 
-from langchain.schema import HumanMessage
+from langchain_core.messages import HumanMessage
 
 from pipeline.full_state import FullPipelineState
 

@@ -11,7 +11,7 @@ import json
 import random
 from pathlib import Path
 from typing import Optional
-from langchain.schema import HumanMessage
+from langchain_core.messages import HumanMessage
 from pipeline.full_state import FullPipelineState
 
 
