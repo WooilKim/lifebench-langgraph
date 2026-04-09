@@ -21,11 +21,22 @@ def _enrich_transcript(llm, call: dict) -> str:
         ts_end = _datetime_to_unix_ms(call["datetime_end"])
         duration_s = (ts_end - ts) // 1000
     direction = "outgoing" if call.get("direction", 0) == 0 else "incoming"
-    prompt = (
-        f"Write a realistic 1-2 sentence summary of a {direction} phone call "
-        f"with {contact} lasting {duration_s} seconds. "
-        "Reply with the summary only, no extra commentary."
-    )
+    date_str = call.get("datetime", "")[:10]
+    call_event_id = call.get("event_id", "")
+    prompt = f"""다음 이벤트 정보와 생성 지침에 따라 통화 데이터를 생성하세요.
+
+## 입력 정보
+- 날짜: {date_str}
+- 이벤트 정보: call with {contact} ({direction}, {duration_s}s)
+- 생성 지침: transcriptDialog 요약 생성
+- 이벤트 ID: {call_event_id}
+
+## 생성 요구사항
+1. 이벤트와 연관된 통화 생성
+2. 통화 방향(발신/수신), 시간, 결과 포함
+3. 참여자 관계 반영 (가족/동료/친구)
+4. 현실적인 통화 시간
+통화 요약(1~2문장)만 출력하세요."""
     try:
         response = llm.invoke([HumanMessage(content=prompt)])
         return response.content.strip()
@@ -39,11 +50,22 @@ def _enrich_sms_body(llm, sms: dict) -> str:
     original = sms.get("message_content", "")
     if not original:
         return original
-    prompt = (
-        "Rewrite the following SMS message to sound more natural and conversational "
-        "while preserving the original meaning. Reply with the rewritten message only.\n\n"
-        f"Original: {original}"
-    )
+    date_str = sms.get("datetime", "")[:10]
+    sms_event_id = sms.get("event_id", "")
+    prompt = f"""다음 이벤트 정보와 생성 지침에 따라 문자(SMS) 데이터를 생성하세요.
+
+## 입력 정보
+- 날짜: {date_str}
+- 이벤트 정보: SMS content: {original}
+- 생성 지침: 더 자연스럽고 구어체적으로 재작성
+- 이벤트 ID: {sms_event_id}
+
+## 생성 요구사항
+1. 이벤트와 자연스럽게 연결되는 문자 대화 생성
+2. 참여자의 관계와 성격 반영
+3. 시간적 논리 유지
+4. 현실적인 문자 내용과 길이
+재작성된 메시지만 출력하세요."""
     try:
         response = llm.invoke([HumanMessage(content=prompt)])
         return response.content.strip()
