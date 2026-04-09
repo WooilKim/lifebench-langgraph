@@ -24,6 +24,17 @@ function setJobGender(g) {
   renderJobTable();
 }
 
+function toggleJobTable() {
+  const body = document.getElementById('jt-body');
+  const icon = document.getElementById('jt-toggle-icon');
+  const btns = document.getElementById('jt-gender-btns');
+  const open = body.style.display === 'none';
+  body.style.display = open ? 'block' : 'none';
+  icon.textContent   = open ? '▼' : '▶';
+  btns.style.display = open ? 'flex' : 'none';
+  if (open) renderJobTable();
+}
+
 function renderJobTable() {
   const el = document.getElementById('job-weight-table');
   if (!el) return;
@@ -55,7 +66,7 @@ function renderJobTable() {
   el.innerHTML = html;
 }
 
-window.addEventListener('DOMContentLoaded', () => { setTimeout(renderJobTable, 200); });
+// table renders on open
   </script>
   <script>tailwind.config={darkMode:'class'}</script>
   <style>
@@ -336,14 +347,19 @@ window.addEventListener('DOMContentLoaded', () => { setTimeout(renderJobTable, 2
 
   <!-- job weight table -->
   <div class="ss ss-new" style="padding:10px 13px;">
-    <div class="flex items-center justify-between mb-2">
+    <div class="flex items-center justify-between" style="cursor:pointer" onclick="toggleJobTable()">
       <span class="ss-title-g" style="font-size:11px">📊 나이대 × 성별 가중치 테이블</span>
-      <div class="flex gap-1">
-        <button id="jt-btn-m" onclick="setJobGender('m')" style="font-size:9px;padding:2px 8px;border-radius:4px;cursor:pointer;background:#1e3a5f;color:#93c5fd;border:1px solid #3b82f6;font-weight:700">남</button>
-        <button id="jt-btn-f" onclick="setJobGender('f')" style="font-size:9px;padding:2px 8px;border-radius:4px;cursor:pointer;background:#1f2937;color:#6b7280;border:1px solid #374151;font-weight:700">여</button>
+      <div class="flex gap-2 items-center">
+        <div id="jt-gender-btns" class="flex gap-1" style="display:none!important">
+          <button id="jt-btn-m" onclick="event.stopPropagation();setJobGender('m')" style="font-size:9px;padding:2px 8px;border-radius:4px;cursor:pointer;background:#1e3a5f;color:#93c5fd;border:1px solid #3b82f6;font-weight:700">남</button>
+          <button id="jt-btn-f" onclick="event.stopPropagation();setJobGender('f')" style="font-size:9px;padding:2px 8px;border-radius:4px;cursor:pointer;background:#1f2937;color:#6b7280;border:1px solid #374151;font-weight:700">여</button>
+        </div>
+        <span id="jt-toggle-icon" style="font-size:12px;color:#475569">▶</span>
       </div>
     </div>
-    <div id="job-weight-table"></div>
+    <div id="jt-body" style="display:none;margin-top:8px;">
+      <div id="job-weight-table"></div>
+    </div>
   </div>
 
   <div class="ss-arrow ss-arrow-g">↓</div>
