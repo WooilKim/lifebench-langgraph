@@ -21,21 +21,24 @@ class FullPipelineState(TypedDict):
     daily_events_map: dict  # persona_name → list of {datetime, event_type, description, location}
 
     # ── Step 3: phone_data_gen ────────────────────────────────────────────
-    raw_calls: list   # flat list across all personas; each record has persona_name field
+    raw_calls: list    # flat list across all personas; each record has persona_name field
     raw_sms: list
     raw_push: list
+    raw_emails: list   # email data (for GMAIL event_source)
     # pre-computed identifier sets for splitting after conversion
-    persona_event_id_map: dict  # persona_name → {call_ids: set, sms_ids: set, noti_ids: set}
+    persona_event_id_map: dict  # persona_name → {call_ids, sms_ids, noti_ids, gmail_ids}
 
-    # ── Step 4–6: existing call_gen / sms_gen / noti_gen ──────────────────
+    # ── Steps 4–7: call_gen / sms_gen / noti_gen / gmail_gen ─────────────
     generated_calls: list
     generated_sms: list
     generated_noti: list
+    generated_gmail: list
 
-    # ── Step 7: formatter ─────────────────────────────────────────────────
-    behavior_events: list   # all personas combined, sorted by timestamp
+    # ── Step 8: formatter ─────────────────────────────────────────────────
+    behavior_events: list        # all personas combined, sorted by timestamp
 
     # ── Final per-persona split ───────────────────────────────────────────
-    behavior_events_map: dict  # persona_name → list of BehaviorEventEntity dicts
+    behavior_events_map: dict       # persona_name → list of BehaviorEventEntity dicts
+    behavior_events_by_type: dict   # persona_name → {call, sms, noti, gmail}
 
     metadata: dict

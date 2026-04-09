@@ -15,6 +15,7 @@ from pipeline.nodes.phone_data_gen import generate_phone_data
 from pipeline.nodes.call_gen import generate_calls
 from pipeline.nodes.sms_gen import generate_sms
 from pipeline.nodes.noti_gen import generate_notifications
+from pipeline.nodes.gmail_gen import generate_gmail
 
 
 # ── multi_formatter ────────────────────────────────────────────────────────────
@@ -41,6 +42,7 @@ def multi_formatter(state: FullPipelineState) -> FullPipelineState:
         list(state.get("generated_calls", []))
         + list(state.get("generated_sms", []))
         + list(state.get("generated_noti", []))
+        + list(state.get("generated_gmail", []))
     )
     all_events.sort(key=lambda e: e["timestamp"])
     all_events = _assign_context_group_ids(all_events)
@@ -49,18 +51,32 @@ def multi_formatter(state: FullPipelineState) -> FullPipelineState:
     persona_event_id_map: dict = state.get("persona_event_id_map", {})
     personas = state.get("personas", [])
     behavior_events_map: dict = {}
+    behavior_events_by_type: dict = {}
 
     for persona in personas:
         name = persona.get("name", "")
         id_sets = persona_event_id_map.get(name, {})
-        all_ids: set = (
-            id_sets.get("call_ids", set())
-            | id_sets.get("sms_ids", set())
-            | id_sets.get("noti_ids", set())
-        )
+        call_ids  = id_sets.get("call_ids", set())
+        sms_ids   = id_sets.get("sms_ids", set())
+        noti_ids  = id_sets.get("noti_ids", set())
+        gmail_ids = id_sets.get("gmail_ids", set())
+        all_ids = call_ids | sms_ids | noti_ids | gmail_ids
+
         persona_events = [e for e in all_events if e["identifier"] in all_ids]
         behavior_events_map[name] = persona_events
-        print(f"[multi_formatter] {name}: {len(persona_events)} behavior event(s)")
+
+        # Per-type split
+        behavior_events_by_type[name] = {
+            "call":  [e for e in persona_events if e["identifier"] in call_ids],
+            "sms":   [e for e in persona_events if e["identifier"] in sms_ids],
+            "noti":  [e for e in persona_events if e["identifier"] in noti_ids],
+            "gmail": [e for e in persona_events if e["identifier"] in gmail_ids],
+        }
+        print(f"[multi_formatter] {name}: {len(persona_events)} events "
+              f"(call={len(behavior_events_by_type[name]['call'])}, "
+              f"sms={len(behavior_events_by_type[name]['sms'])}, "
+              f"noti={len(behavior_events_by_type[name]['noti'])}, "
+              f"gmail={len(behavior_events_by_type[name]['gmail'])})")
 
     metadata = state.get("metadata", {})
     metadata["finish_time"] = time.time()
@@ -76,6 +92,7 @@ def multi_formatter(state: FullPipelineState) -> FullPipelineState:
         **state,
         "behavior_events": all_events,
         "behavior_events_map": behavior_events_map,
+        "behavior_events_by_type": behavior_events_by_type,
         "metadata": metadata,
     }
 
@@ -94,6 +111,7 @@ def build_full_graph():
     g.add_node("call_gen",       generate_calls)
     g.add_node("sms_gen",        generate_sms)
     g.add_node("noti_gen",       generate_notifications)
+    g.add_node("gmail_gen",      generate_gmail)
     g.add_node("formatter",      multi_formatter)
 
     g.set_entry_point("person_gen")
@@ -104,7 +122,8 @@ def build_full_graph():
     g.add_edge("phone_data_gen", "call_gen")
     g.add_edge("call_gen",       "sms_gen")
     g.add_edge("sms_gen",        "noti_gen")
-    g.add_edge("noti_gen",       "formatter")
+    g.add_edge("noti_gen",       "gmail_gen")
+    g.add_edge("gmail_gen",      "formatter")
     g.add_edge("formatter",      END)
 
     return g.compile()

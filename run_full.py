@@ -67,10 +67,13 @@ def main():
         print("[WARNING] behavior_events_map is empty — saving combined output instead")
         behavior_events_map = {"all": result.get("behavior_events", [])}
 
+    behavior_events_by_type = result.get("behavior_events_by_type", {})
+
     saved = []
     for persona in personas:
         name = persona.get("name", "unknown")
         events = behavior_events_map.get(name, [])
+        by_type = behavior_events_by_type.get(name, {})
         out_dir = output_root / name
         out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -78,12 +81,19 @@ def main():
         with open(events_path, "w", encoding="utf-8") as f:
             json.dump(events, f, ensure_ascii=False, indent=2)
 
+        for type_name, type_events in by_type.items():
+            with open(out_dir / f"behavior_events_{type_name}.json", "w", encoding="utf-8") as f:
+                json.dump(type_events, f, ensure_ascii=False, indent=2)
+
         persona_path = out_dir / "persona.json"
         with open(persona_path, "w", encoding="utf-8") as f:
             json.dump(persona, f, ensure_ascii=False, indent=2)
 
+        counts = {t: len(v) for t, v in by_type.items()}
         saved.append((name, len(events), str(events_path)))
-        print(f"  Saved {len(events):4d} events → {events_path}")
+        print(f"  Saved {len(events):4d} events → {out_dir}/ "
+              f"[call={counts.get('call',0)} sms={counts.get('sms',0)} "
+              f"noti={counts.get('noti',0)} gmail={counts.get('gmail',0)}]")
 
     # ── Save metadata ──────────────────────────────────────────────────────────
     metadata = result.get("metadata", {})

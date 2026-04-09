@@ -123,6 +123,38 @@ _RECEIVE_MSG_TEMPLATES = [
 ]
 
 
+# ── Email templates ──────────────────────────────────────────────────────────
+
+_EMAIL_DOMAINS = ["gmail.com", "naver.com", "kakao.com", "daum.net", "company.co.kr"]
+
+_EMAIL_TEMPLATES: dict = {
+    "직장": [
+        ("[업무] 프로젝트 진행 상황 공유", "안녕하세요. 이번 주 진행 상황을 공유드립니다."),
+        ("[공지] 전사 회의 일정 안내", "다음 주 전사 회의가 예정되어 있습니다."),
+        ("[결재] 출장 신청서 승인 요청", "출장 신청서를 첨부하오니 검토 부탁드립니다."),
+        ("[업무] 보고서 피드백 요청", "보고서 검토 후 피드백 주시면 감사하겠습니다."),
+        ("RE: 미팅 일정 조율", "말씀하신 시간 괜찮습니다. 확인 부탁드립니다."),
+    ],
+    "가족": [
+        ("주말 일정 공유", "이번 주말 가족 모임 일정이에요."),
+        ("사진 공유", "지난번 가족 여행 사진 보내드려요."),
+        ("안부 인사", "잘 지내고 있나요? 건강 챙기세요."),
+    ],
+    "social": [
+        ("[이벤트] 동창회 모임 안내", "다음 달 동창회가 예정되어 있습니다."),
+        ("생일 축하해!", "생일 축하한다! 건강하고 행복하게 지내길 바라."),
+        ("여행 계획 공유", "다음 여행지 후보 몇 가지 정리해봤어."),
+    ],
+    "service": [
+        ("[알림] 결제 완료 안내", "결제가 정상 처리되었습니다."),
+        ("[안내] 배송 현황 업데이트", "주문하신 상품이 발송되었습니다."),
+        ("[공지] 서비스 이용 약관 변경 안내", "서비스 이용 약관이 변경되었습니다."),
+        ("[쿠폰] 특별 할인 혜택 안내", "회원님께만 드리는 특별 할인 쿠폰입니다."),
+        ("뉴스레터", "이번 주 주요 소식을 전달해드립니다."),
+    ],
+}
+
+
 # ── Push notification content templates ───────────────────────────────────────
 
 _PUSH_TEMPLATES: dict = {
@@ -362,6 +394,85 @@ def _get_persona_apps(persona: dict) -> list:
     return list(apps)[:12]  # keep at most 12 apps
 
 
+def _gen_emails_for_persona(persona: dict, events: list, base_id: int, rng: random.Random) -> list:
+    """Generate emails — 1~4 per calendar day."""
+    name = persona.get("name", "")
+    job = persona.get("job", "")
+    relationships = persona.get("relationships", [])
+
+    # Build contact email map deterministically
+    def _contact_email(contact_name: str) -> str:
+        import hashlib
+        h = int(hashlib.md5(contact_name.encode("utf-8")).hexdigest(), 16)
+        domain = _EMAIL_DOMAINS[h % len(_EMAIL_DOMAINS)]
+        local = contact_name.replace(" ", "").lower()[:8]
+        return f"{local}@{domain}"
+
+    work_contacts = [r["name"] for r in relationships
+                     if any(kw in r.get("social_circle", "") for kw in ["직장", "회사", "업무"])]
+    family_contacts = [r["name"] for r in relationships
+                       if "가족" in r.get("social_circle", "")]
+    social_contacts = [r["name"] for r in relationships
+                       if r["name"] not in work_contacts + family_contacts]
+
+    emails = []
+    seq = 0
+
+    # Group events by date
+    by_date: dict = {}
+    for evt in events:
+        dt = evt.get("datetime", "")
+        if not dt:
+            continue
+        by_date.setdefault(dt[:10], []).append(evt)
+
+    for day in sorted(by_date.keys()):
+        num_emails = rng.randint(1, 4)
+        for _ in range(num_emails):
+            # Choose email category
+            roll = rng.random()
+            if roll < 0.4 and work_contacts:
+                category = "직장"
+                from_name = rng.choice(work_contacts)
+            elif roll < 0.55 and family_contacts:
+                category = "가족"
+                from_name = rng.choice(family_contacts)
+            elif roll < 0.7 and social_contacts:
+                category = "social"
+                from_name = rng.choice(social_contacts)
+            else:
+                category = "service"
+                from_name = rng.choice(["no-reply", "noreply", "support", "info"])
+                from_name = f"{from_name}@{rng.choice(_EMAIL_DOMAINS[1:])}"
+
+            templates = _EMAIL_TEMPLATES.get(category, _EMAIL_TEMPLATES["service"])
+            subject, snippet = rng.choice(templates)
+
+            if category != "service":
+                from_addr = _contact_email(from_name)
+            else:
+                from_addr = from_name
+
+            send_dt = f"{day} {rng.randint(7, 22):02d}:{rng.randint(0, 59):02d}:00"
+            event_id = base_id + seq
+
+            emails.append({
+                "event_id": event_id,
+                "datetime": send_dt,
+                "from_address": from_addr,
+                "subject": subject,
+                "snippet": snippet,
+                "persona_name": name,
+            })
+            seq += 1
+            if seq >= 9999:
+                break
+        if seq >= 9999:
+            break
+
+    return emails
+
+
 def _gen_push_for_persona(persona: dict, events: list, base_id: int, rng: random.Random) -> list:
     """Generate push notifications — 5-15 per calendar day (not per event)."""
     name = persona.get("name", "")
@@ -422,36 +533,27 @@ def _gen_push_for_persona(persona: dict, events: list, base_id: int, rng: random
     return push_list
 
 
-# ── Pre-compute identifiers for splitting ─────────────────────────────────────
+# ── Node ──────────────────────────────────────────────────────────────────────
 
-def _compute_identifiers(calls: list, sms_list: list, push_list: list) -> dict:
-    """Compute the identifiers that call_gen/sms_gen/noti_gen will produce."""
+def _compute_identifiers(calls: list, sms_list: list, push_list: list, emails: list) -> dict:
+    """Compute the identifiers that call_gen/sms_gen/noti_gen/gmail_gen will produce."""
 
     def ts(dt_str: str) -> int:
         dt = datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S")
         return int(dt.timestamp() * 1000)
 
-    call_ids = set()
-    for c in calls:
-        t = ts(c["datetime"])
-        call_ids.add(f"call_{c['event_id']}_{t}")
+    call_ids = {f"call_{c['event_id']}_{ts(c['datetime'])}" for c in calls}
+    sms_ids  = {f"sms_{s['event_id']}_{ts(s['datetime'])}" for s in sms_list}
+    noti_ids = {f"noti_{n['event_id']}_{ts(n['datetime'])}" for n in push_list}
+    gmail_ids = {f"gmail_{e['event_id']}_{ts(e['datetime'])}" for e in emails}
 
-    sms_ids = set()
-    for s in sms_list:
-        mid = int(s["event_id"])  # always int in our scheme
-        t = ts(s["datetime"])
-        sms_ids.add(f"sms_{mid}_{t}")
+    return {
+        "call_ids":  call_ids,
+        "sms_ids":   sms_ids,
+        "noti_ids":  noti_ids,
+        "gmail_ids": gmail_ids,
+    }
 
-    noti_ids = set()
-    for n in push_list:
-        eid = int(n["event_id"])
-        t = ts(n["datetime"])
-        noti_ids.add(f"noti_{eid}_{t}")
-
-    return {"call_ids": call_ids, "sms_ids": sms_ids, "noti_ids": noti_ids}
-
-
-# ── Node ──────────────────────────────────────────────────────────────────────
 
 def generate_phone_data(state: FullPipelineState) -> FullPipelineState:
     """Step 3: Generate synthetic phone data from daily events."""
@@ -461,37 +563,41 @@ def generate_phone_data(state: FullPipelineState) -> FullPipelineState:
     all_calls: list = []
     all_sms: list = []
     all_push: list = []
+    all_emails: list = []
     persona_event_id_map: dict = {}
 
     for i, persona in enumerate(personas):
         name = persona.get("name", f"persona_{i}")
         events = daily_events_map.get(name, [])
 
-        # Deterministic RNG per persona for reproducibility
         rng = random.Random(hash(name) & 0xFFFFFFFF)
 
-        base_call = i * 100_000
-        base_sms  = i * 100_000 + 10_000
-        base_push = i * 100_000 + 20_000
+        base_call  = i * 100_000
+        base_sms   = i * 100_000 + 10_000
+        base_push  = i * 100_000 + 20_000
+        base_email = i * 100_000 + 30_000
 
         print(f"[phone_data_gen] Generating phone data for {name} ({len(events)} events)...")
 
         calls    = _gen_calls_for_persona(persona, events, base_call, rng)
         sms_list = _gen_sms_for_persona(persona, events, base_sms, rng)
         push     = _gen_push_for_persona(persona, events, base_push, rng)
+        emails   = _gen_emails_for_persona(persona, events, base_email, rng)
 
-        persona_event_id_map[name] = _compute_identifiers(calls, sms_list, push)
+        persona_event_id_map[name] = _compute_identifiers(calls, sms_list, push, emails)
 
         all_calls.extend(calls)
         all_sms.extend(sms_list)
         all_push.extend(push)
+        all_emails.extend(emails)
 
-        print(f"[phone_data_gen] {name}: {len(calls)} calls, {len(sms_list)} sms, {len(push)} push")
+        print(f"[phone_data_gen] {name}: {len(calls)} calls, {len(sms_list)} sms, {len(push)} push, {len(emails)} emails")
 
     return {
         **state,
-        "raw_calls": all_calls,
-        "raw_sms": all_sms,
-        "raw_push": all_push,
+        "raw_calls":  all_calls,
+        "raw_sms":    all_sms,
+        "raw_push":   all_push,
+        "raw_emails": all_emails,
         "persona_event_id_map": persona_event_id_map,
     }
