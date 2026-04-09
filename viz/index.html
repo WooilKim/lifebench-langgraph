@@ -312,7 +312,8 @@ traits:  [<span class="cs">"家庭导向"</span>...]
     <div class="ss-path">nodes/person_gen.py — generate_persons() Phase 2</div>
     <div class="ss-note">
       나이대 × 성별 가중치 후보 목록 생성 후 LLM이 가장 자연스러운 직업 선택.<br>
-      예: 29세 여성 → [간호사(8), 초등학교 교사(6), 회계사(5)...] 중 선택
+      후보 출처: <span class="badge b-zh" style="font-size:9px">LifeBench person.json 설문</span> <span class="badge" style="background:#1e3a5f;color:#93c5fd;border:1px solid #3b82f6;font-size:9px">refer.json 137개</span> <span class="badge b-rule" style="font-size:9px">기존 후보</span><br>
+      예: 29세 여성 → [간호사(8), 조산사(3), 주치의(3), 의류매장운영자(5)...] 중 선택
     </div>
     <div class="pb-wrap">
       <div class="pb pb-rule">{name}({age}세, {gender}성)에게 가장 자연스러운 직업 하나를 고르세요.
@@ -320,18 +321,22 @@ traits:  [<span class="cs">"家庭导向"</span>...]
 직업 이름만 출력하세요. 설명 없이.</div>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// skeleton + 후보 목록</span>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// skeleton + 나이×성별 후보</span>
 {"name":<span class="cs">"박준혁"</span>,
  "age":<span class="cn">46</span>, "gender":<span class="cs">"남"</span>}
 
-<span class="ck">// 나이×성별 후보 (가중치순)</span>
-이사(6) 임원(6) 공기업부장(6)
-자영업자(5) 교장(4) 의사(5)...</pre></div>
+<span class="ck">// 46세 남성 후보 (출처 혼합)</span>
+이사(6) 임원(6) 공기업부장(6)    <span class="cb">// 기존</span>
+회사직능부서임원(6)              <span class="cb">// refer.json</span>
+의원급의사(5) 변호사(5)          <span class="cb">// 기존</span>
+법관(4) 검사(4)                 <span class="cb">// refer.json</span>
+항공기조종사(5)                  <span class="cb">// refer.json</span>
+자영업자(5) 교장(4)...           <span class="cb">// 기존+refer</span></pre></div>
       <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// state.persons</span>
 [{"name":<span class="cs">"박준혁"</span>,
   "age":<span class="cn">46</span>,
   "gender":<span class="cs">"남"</span>,
-  "job":<span class="cs">"소프트웨어 개발자"</span>},
+  "job":<span class="cs">"공기업 부장"</span>},
  {"name":<span class="cs">"김서연"</span>,
   "age":<span class="cn">32</span>,
   "gender":<span class="cs">"여"</span>,
