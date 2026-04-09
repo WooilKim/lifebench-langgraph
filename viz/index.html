@@ -734,9 +734,15 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>이벤트 정보</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>데이터 타입 결정
-(call/sms/push/...)</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 이벤트 1개</span>
+{"date":"2025-01-01",
+ "event_type":"Meeting",
+ "participants":["Zhang Wei"]}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 데이터 타입 판단</span>
+[{"type":"sms",
+  "generate_text":"회의 후 확인 문자"},
+ {"type":"call",
+  "generate_text":"회의 시작 통화"}]</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -752,9 +758,16 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>이벤트 + 연락처</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>call.json
-<span class="ck">transcriptDialog=""</span></pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 이벤트 + 연락처</span>
+{"event_info":{"type":"Meeting"},
+ "generate_guide":"회의 시작 통화",
+ "contactName":"Li Xiuying"}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// call.json</span>
+{"type":"call",
+ "contactName":"Li Xiuying",
+ "datetime":"2025-01-01 13:30:00",
+ "direction":0,
+ <span class="cr">"transcriptDialog":""</span>}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -770,9 +783,16 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>이벤트 + 연락처</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>sms.json
-(내용 포함)</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 이벤트 + 연락처</span>
+{"event_info":{"type":"Social"},
+ "generate_guide":"새해 인사",
+ "contactName":"Gao Yunfei"}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// sms.json</span>
+{"type":"sms",
+ "message_content":"Happy New Year!
+How was your morning run?",
+ "contactName":"Gao Yunfei",
+ "message_type":"Send"}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -788,9 +808,14 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>이벤트 + 앱 목록</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>push.json
-(앱 알림 내용)</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 이벤트 + 앱 컨텍스트</span>
+{"event_info":{"type":"Morning run"},
+ "generate_guide":"음악 앱 알림"}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// push.json</span>
+{"type":"push",
+ "title":"NetEase: Daily Recommendations",
+ "content":"오늘의 추천 플레이리스트",
+ "source":"NetEase Cloud Music"}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
