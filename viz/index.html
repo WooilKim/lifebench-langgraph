@@ -5,71 +5,83 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LifeBench LangGraph — Pipeline Comparison</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: { extend: { colors: { brand: '#6366f1', replaced: '#f59e0b' } } }
-    }
-  </script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
   <style>
-    /* Node styles */
+    /* ── Node pill ─────────────────────────────── */
     .node-pill {
       position: relative;
-      display: inline-flex; flex-direction: column; align-items: center;
-      cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+      display: flex; flex-direction: column; align-items: center;
+      cursor: default;
     }
-    .node-pill:hover { transform: translateY(-3px); }
     .node-box {
-      display: inline-flex; align-items: center; justify-content: center;
-      padding: 10px 26px; border-radius: 10px; font-size: 14px; font-weight: 700;
-      letter-spacing: 0.01em; white-space: nowrap;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 32px; border-radius: 12px;
+      font-size: 15px; font-weight: 700; letter-spacing: 0.01em;
+      min-width: 200px; text-align: center;
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: pointer;
     }
-    .node-base    { background: #1e3a5f; color: #bfdbfe; border: 2px solid #3b82f6; box-shadow: 0 0 12px rgba(59,130,246,0.2); }
-    .node-variant { background: #78350f; color: #fef3c7; border: 2px solid #f59e0b; box-shadow: 0 0 12px rgba(245,158,11,0.3); }
-    .node-shared  { background: #1e293b; color: #94a3b8; border: 2px solid #475569; }
-    .node-end     { background: #111827; color: #4b5563; border: 2px dashed #374151; }
-    .node-replaced-base    { background: #1e3a5f; color: #60a5fa; border: 2px solid #3b82f6; opacity: 0.45; }
-    .node-replaced-base .node-box { text-decoration: line-through; }
-    .node-replaced-variant { background: #78350f; color: #fef3c7; border: 2px solid #f59e0b; box-shadow: 0 0 16px rgba(245,158,11,0.5); }
+    .node-pill:hover .node-box { transform: translateY(-2px); }
 
-    /* Arrow */
-    .arrow { color: #4b5563; font-size: 22px; margin: 0 2px; user-select: none; align-self: center; padding-top: 8px; }
+    .n-base    { background:#1e3a5f; color:#bfdbfe; border:2px solid #3b82f6; box-shadow:0 0 14px rgba(59,130,246,0.15); }
+    .n-variant { background:#78350f; color:#fef3c7; border:2px solid #f59e0b; box-shadow:0 0 14px rgba(245,158,11,0.25); }
+    .n-shared  { background:#1e293b; color:#94a3b8; border:2px solid #475569; }
+    .n-end     { background:#111827; color:#4b5563; border:2px dashed #374151; }
+    .n-rb      { background:#1e3a5f; color:#60a5fa; border:2px solid #3b82f6; opacity:0.4; }
+    .n-rb .node-box { text-decoration:line-through; }
+    .n-rv      { background:#78350f; color:#fef3c7; border:2px solid #f59e0b; box-shadow:0 0 18px rgba(245,158,11,0.45); }
 
-    /* Replace slot */
-    .replace-slot { display: inline-flex; flex-direction: column; align-items: center; gap: 6px; }
-    .replace-slot-label { font-size: 9px; font-weight: 800; letter-spacing: 0.08em; padding: 2px 6px; border-radius: 3px; }
+    /* ── Vertical arrow ────────────────────────── */
+    .v-arrow {
+      display:flex; flex-direction:column; align-items:center;
+      color:#4b5563; font-size:22px; line-height:1; margin:4px 0;
+      user-select:none;
+    }
+    .v-arrow-line { width:2px; height:24px; background:#374151; }
 
-    /* Tooltip */
+    /* ── Tooltip ───────────────────────────────── */
     .tooltip {
-      position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%);
-      width: 320px; background: #0f172a; border: 1px solid #334155;
-      border-radius: 10px; padding: 14px; z-index: 100;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-      pointer-events: none; opacity: 0; transition: opacity 0.15s;
-      text-align: left; font-family: ui-monospace, monospace;
+      position:absolute; left:calc(100% + 16px); top:50%; transform:translateY(-50%);
+      width:340px; background:#0f172a; border:1px solid #334155;
+      border-radius:12px; padding:16px; z-index:200;
+      box-shadow:0 8px 40px rgba(0,0,0,0.7);
+      pointer-events:none; opacity:0; transition:opacity 0.15s;
+      font-family:ui-monospace,monospace; text-align:left;
     }
-    .node-pill:hover .tooltip { opacity: 1; }
-    /* Keep tooltip inside viewport on edges */
-    .node-pill:first-child .tooltip { left: 0; transform: none; }
-    .node-pill:last-of-type .tooltip { left: auto; right: 0; transform: none; }
+    .node-pill:hover .tooltip { opacity:1; }
+    /* flip left if near right edge */
+    .flip-tip .tooltip { left:auto; right:calc(100% + 16px); }
 
-    /* View buttons */
+    /* ── Both-view replace slot ────────────────── */
+    .replace-slot { display:flex; flex-direction:column; align-items:center; gap:4px; }
+    .rs-label { font-size:9px; font-weight:800; letter-spacing:0.1em; padding:2px 7px; border-radius:3px; }
+
+    /* ── Context pipeline (top) ────────────────── */
+    .ctx-step {
+      display:flex; flex-direction:column; align-items:center; gap:4px;
+      min-width:100px; flex:1;
+    }
+    .ctx-box {
+      padding:8px 12px; border-radius:8px; font-size:11px; font-weight:700;
+      text-align:center; width:100%; border:2px solid transparent;
+      transition:all 0.15s;
+    }
+    .ctx-inactive { background:#1e293b; color:#64748b; border-color:#334155; }
+    .ctx-active   { background:#312e81; color:#c7d2fe; border-color:#6366f1;
+                    box-shadow:0 0 16px rgba(99,102,241,0.3); }
+    .ctx-arrow    { color:#475569; font-size:16px; align-self:center; padding-bottom:20px; }
+
+    /* ── View buttons ──────────────────────────── */
     .view-btn {
-      padding: 7px 18px; border-radius: 7px; font-size: 12px; font-weight: 700;
-      border: 2px solid transparent; cursor: pointer; transition: all 0.15s;
+      padding:7px 18px; border-radius:8px; font-size:12px; font-weight:700;
+      border:2px solid transparent; cursor:pointer; transition:all 0.15s;
     }
-    .vb-base    { background: #1e3a5f; color: #bfdbfe; border-color: #3b82f6; }
-    .vb-variant { background: #78350f; color: #fef3c7; border-color: #f59e0b; }
-    .vb-both    { background: #1a1437; color: #c4b5fd; border-color: #6366f1; }
-    .vb-off     { background: #1f2937; color: #6b7280; border-color: #374151; }
+    .vb-base    { background:#1e3a5f; color:#bfdbfe; border-color:#3b82f6; }
+    .vb-variant { background:#78350f; color:#fef3c7; border-color:#f59e0b; }
+    .vb-both    { background:#1a1437; color:#c4b5fd; border-color:#6366f1; }
+    .vb-off     { background:#1f2937; color:#6b7280; border-color:#374151; }
 
-    /* Flow container */
-    .flow-container {
-      display: flex; flex-wrap: wrap; align-items: flex-start;
-      gap: 8px; padding: 32px 28px; min-height: 120px;
-    }
-
-    pre { white-space: pre-wrap; word-break: break-word; }
+    pre { white-space:pre-wrap; word-break:break-word; }
   </style>
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen font-mono">
@@ -80,7 +92,7 @@
     <h1 class="text-xl font-bold text-indigo-400">LifeBench LangGraph</h1>
     <p class="text-xs text-gray-500 mt-0.5">Pipeline Comparison Visualizer</p>
   </div>
-  <div class="flex gap-3 items-center">
+  <div class="flex gap-3">
     <button onclick="loadFile()" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded border border-gray-700">Load JSON</button>
     <button onclick="toggleDark()" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded border border-gray-700">Toggle Dark</button>
   </div>
@@ -91,7 +103,7 @@
   <div class="text-5xl mb-4">📊</div>
   <p class="text-lg mb-2">No comparison data loaded</p>
   <p class="text-sm">Run <code class="bg-gray-800 px-1 rounded">python compare.py --user fenghaoran --variant llm_enriched</code></p>
-  <p class="text-xs mt-4 text-gray-700">Or the page auto-loads <code>./comparison_result.json</code> on startup.</p>
+  <p class="text-xs mt-4 text-gray-700">Auto-loads <code>./comparison_result.json</code> on startup</p>
 </div>
 
 <!-- Main -->
@@ -117,12 +129,77 @@
     </div>
   </section>
 
-  <!-- Graph section -->
+  <!-- LifeBench Full Pipeline Context -->
+  <section>
+    <div class="flex items-center gap-2 mb-3">
+      <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400">LifeBench Full Pipeline</h2>
+      <span class="text-xs text-gray-600">— where this project fits in</span>
+    </div>
+    <div class="bg-gray-900 rounded-xl border border-gray-800 px-6 py-5">
+      <div class="flex items-start gap-1 overflow-x-auto pb-1">
+        <!-- Step 0 -->
+        <div class="ctx-step">
+          <div class="ctx-box ctx-inactive">
+            <div class="text-lg mb-1">👤</div>
+            <div>Step 0</div>
+            <div class="font-normal text-gray-500 text-xs mt-0.5">Persona Gen</div>
+          </div>
+          <div class="text-xs text-gray-600 text-center leading-snug">persona.json<br>30+ fields</div>
+        </div>
+        <div class="ctx-arrow">→</div>
+        <!-- Step 1 -->
+        <div class="ctx-step">
+          <div class="ctx-box ctx-inactive">
+            <div class="text-lg mb-1">📅</div>
+            <div>Step 1</div>
+            <div class="font-normal text-gray-500 text-xs mt-0.5">Draft Gen</div>
+          </div>
+          <div class="text-xs text-gray-600 text-center leading-snug">daily_draft.json<br>~190 events/yr</div>
+        </div>
+        <div class="ctx-arrow">→</div>
+        <!-- Step 2 -->
+        <div class="ctx-step">
+          <div class="ctx-box ctx-inactive">
+            <div class="text-lg mb-1">🎮</div>
+            <div>Step 2</div>
+            <div class="font-normal text-gray-500 text-xs mt-0.5">Simulator</div>
+          </div>
+          <div class="text-xs text-gray-600 text-center leading-snug">daily_event.json<br>4,000–5,000 events</div>
+        </div>
+        <div class="ctx-arrow">→</div>
+        <!-- Step 3 — ACTIVE -->
+        <div class="ctx-step">
+          <div class="ctx-box ctx-active">
+            <div class="text-lg mb-1">📱</div>
+            <div>Step 3</div>
+            <div class="font-normal text-indigo-300 text-xs mt-0.5">Phone Data Gen</div>
+          </div>
+          <div class="text-xs text-indigo-400 font-bold text-center leading-snug mt-1">← This project<br>call / sms / noti</div>
+        </div>
+        <div class="ctx-arrow">→</div>
+        <!-- Step 4 -->
+        <div class="ctx-step">
+          <div class="ctx-box ctx-inactive">
+            <div class="text-lg mb-1">❓</div>
+            <div>Step 4</div>
+            <div class="font-normal text-gray-500 text-xs mt-0.5">QA Gen</div>
+          </div>
+          <div class="text-xs text-gray-600 text-center leading-snug">QA.json<br>multi-hop Q&amp;A</div>
+        </div>
+      </div>
+      <p class="text-xs text-gray-600 mt-4">
+        Steps 0–2 &amp; 4 are from the original LifeBench (Chinese, fixed scripts).
+        <span class="text-indigo-400">Step 3</span> is rebuilt as a LangGraph pipeline — modular, swappable, multilingual.
+      </p>
+    </div>
+  </section>
+
+  <!-- LangGraph Pipeline -->
   <section>
     <div class="flex items-center justify-between mb-3">
       <div>
-        <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400">Graph Structure</h2>
-        <p class="text-xs text-gray-600 mt-0.5">Hover over a node to see details</p>
+        <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400">Step 3 — LangGraph Pipeline</h2>
+        <p class="text-xs text-gray-600 mt-0.5">Hover a node to see inputs, outputs, and examples</p>
       </div>
       <div class="flex gap-2">
         <button id="btn-base"    onclick="setView('base')"    class="view-btn">Base only</button>
@@ -132,24 +209,25 @@
     </div>
 
     <!-- Legend -->
-    <div id="legend" class="flex flex-wrap gap-4 mb-3 text-xs text-gray-400"></div>
+    <div id="legend" class="flex flex-wrap gap-4 mb-4 text-xs text-gray-400"></div>
 
-    <!-- Graph -->
-    <div class="bg-gray-900 rounded-xl border border-gray-800">
-      <div id="graph-flow" class="flow-container"></div>
+    <!-- Vertical graph -->
+    <div class="flex gap-6">
+      <!-- Graph column -->
+      <div class="bg-gray-900 rounded-xl border border-gray-800 flex-1 flex flex-col items-center py-10 px-6 min-h-[600px]">
+        <div id="graph-flow" class="flex flex-col items-center w-full"></div>
+      </div>
+
+      <!-- Replaced detail column (Both view) -->
+      <div id="replaced-detail" class="hidden w-80 space-y-4 flex-shrink-0"></div>
     </div>
-
-    <!-- Replaced detail -->
-    <div id="replaced-detail" class="hidden mt-4 space-y-3"></div>
   </section>
 
   <!-- Diff stats -->
   <section>
     <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">Diff Statistics</h2>
     <div class="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden">
-      <table class="w-full text-sm">
-        <tbody id="diff-table"></tbody>
-      </table>
+      <table class="w-full text-sm"><tbody id="diff-table"></tbody></table>
     </div>
   </section>
 
@@ -173,337 +251,302 @@
 <input type="file" id="file-input" accept=".json" class="hidden" onchange="onFileSelected(event)" />
 
 <script>
-  // ── Node metadata (descriptions, input, output, example) ─────────────────────
-  const NODE_INFO = {
-    loader: {
-      emoji: '📂',
-      title: 'loader',
-      desc: 'Reads raw JSON files from the user\'s data directory into pipeline state.',
-      file: 'pipeline/nodes/loader.py',
-      input: [
-        'persona.json — character profile',
-        'daily_event.json — 4,000–5,000 daily events',
-        'phone_data/call.json — raw call records',
-        'phone_data/sms.json — raw SMS records',
-        'phone_data/push.json — raw push notifications',
-      ],
-      output: [
-        'state.persona',
-        'state.daily_events',
-        'state.raw_calls',
-        'state.raw_sms',
-        'state.raw_push',
-      ],
-      example_in:  '{ "data_dir": "data/fenghaoran", "user_id": "fenghaoran" }',
-      example_out: '{ "raw_calls": [...], "raw_sms": [...], "raw_push": [...] }',
-    },
-    call_gen: {
-      emoji: '📞',
-      title: 'call_gen',
-      desc: 'Rule-based conversion of raw call records into BehaviorEventEntity format. No LLM — pure data mapping.',
-      file: 'pipeline/nodes/call_gen.py',
-      input: ['state.raw_calls — list of raw call dicts'],
-      output: ['state.generated_calls — BehaviorEventEntity list'],
-      example_in:  '{ "datetime": "2025-01-02 09:15:00", "direction": 1, "call_result": "answered" }',
-      example_out: '{ "identifier": "call_42_...", "event_source": "CALL_LOG", "payload": "{...}" }',
-    },
-    sms_gen: {
-      emoji: '💬',
-      title: 'sms_gen',
-      desc: 'Rule-based conversion of raw SMS into BehaviorEventEntity. Assigns thread IDs per contact. No LLM.',
-      file: 'pipeline/nodes/sms_gen.py',
-      input: ['state.raw_sms — list of raw SMS dicts'],
-      output: ['state.generated_sms — BehaviorEventEntity list'],
-      example_in:  '{ "datetime": "2025-03-10 14:22:00", "message_type": "Send", "body": "On my way!" }',
-      example_out: '{ "identifier": "sms_1860_...", "event_source": "SMS", "payload": "{...}" }',
-    },
-    noti_gen: {
-      emoji: '🔔',
-      title: 'noti_gen',
-      desc: 'Maps raw push notifications to BehaviorEventEntity. Resolves app names to package names via a lookup table.',
-      file: 'pipeline/nodes/noti_gen.py',
-      input: ['state.raw_push — list of raw push dicts'],
-      output: ['state.generated_noti — BehaviorEventEntity list'],
-      example_in:  '{ "appName": "WeChat", "title": "New message", "text": "Come check this out!" }',
-      example_out: '{ "identifier": "noti_6_...", "payload": "{ \\"packageName\\": \\"com.tencent.mm\\" ...}" }',
-    },
-    formatter: {
-      emoji: '🗂️',
-      title: 'formatter',
-      desc: 'Merges all generated events, sorts by timestamp, and assigns contextGroupId (one group per calendar day).',
-      file: 'pipeline/nodes/formatter.py',
-      input: [
-        'state.generated_calls',
-        'state.generated_sms',
-        'state.generated_noti',
-      ],
-      output: ['state.events — merged, sorted, contextGroupId-assigned list'],
-      example_in:  '[ call_events[], sms_events[], noti_events[] ]',
-      example_out: '[ { "identifier": "...", "timestamp": 1696107600000, "contextGroupId": 1 }, ... ]',
-    },
-  };
+// ── Node metadata ─────────────────────────────────────────────────────────────
+const NODE_INFO = {
+  loader: {
+    emoji: '📂', file: 'pipeline/nodes/loader.py',
+    desc: 'Reads raw JSON files produced by LifeBench Steps 0–2 into pipeline state. No transformation — pure I/O.',
+    input:  ['data_dir/persona.json', 'data_dir/daily_event.json', 'phone_data/call.json', 'phone_data/sms.json', 'phone_data/push.json'],
+    output: ['state.persona', 'state.daily_events', 'state.raw_calls', 'state.raw_sms', 'state.raw_push'],
+    ex_in:  '{ "data_dir": "data/fenghaoran", "user_id": "fenghaoran" }',
+    ex_out: '{ "raw_calls": [300 records], "raw_sms": [420 records], "raw_push": [1200 records] }',
+  },
+  call_gen: {
+    emoji: '📞', file: 'pipeline/nodes/call_gen.py',
+    desc: 'Rule-based conversion of raw call records → BehaviorEventEntity. Maps direction/result to call_type (0=outgoing, 1=incoming, 2=missed). transcriptDialog is empty in base.',
+    input:  ['state.raw_calls — list of raw call dicts'],
+    output: ['state.generated_calls — BehaviorEventEntity list (CALL_LOG)'],
+    ex_in:  '{ "datetime": "2025-01-02 09:15:00", "direction": 1, "call_result": "answered", "contactName": "Zhang Wei" }',
+    ex_out: '{ "identifier": "call_42_1735777500000", "event_source": "CALL_LOG",\n  "payload": { "name": "Zhang Wei", "type": 1, "transcriptDialog": "" } }',
+  },
+  sms_gen: {
+    emoji: '💬', file: 'pipeline/nodes/sms_gen.py',
+    desc: 'Rule-based conversion of raw SMS → BehaviorEventEntity. Assigns stable thread IDs per contact. Message body is used as-is in base.',
+    input:  ['state.raw_sms — list of raw SMS dicts'],
+    output: ['state.generated_sms — BehaviorEventEntity list (SMS)'],
+    ex_in:  '{ "datetime": "2025-03-10 14:22:00", "message_type": "Send", "body": "On my way!" }',
+    ex_out: '{ "identifier": "sms_1860_1741611720000", "event_source": "SMS",\n  "payload": { "body": "On my way!", "threadId": 7, "isIncoming": 0 } }',
+  },
+  noti_gen: {
+    emoji: '🔔', file: 'pipeline/nodes/noti_gen.py',
+    desc: 'Maps raw push notifications → BehaviorEventEntity. Resolves app names to Android package names via lookup table (100+ apps). korean_local variant replaces this node to use Korean app names.',
+    input:  ['state.raw_push — list of raw push notification dicts'],
+    output: ['state.generated_noti — BehaviorEventEntity list (NOTIFICATION)'],
+    ex_in:  '{ "appName": "WeChat", "title": "New message from Li Ming", "text": "Come check this out!" }',
+    ex_out: '{ "identifier": "noti_6_1696107600000", "event_source": "NOTIFICATION",\n  "payload": { "packageName": "com.tencent.mm", "appName": "WeChat" } }',
+  },
+  formatter: {
+    emoji: '🗂️', file: 'pipeline/nodes/formatter.py',
+    desc: 'Merges all three event lists, sorts by timestamp, assigns contextGroupId (one integer per calendar day). Final output is ready for benchmark evaluation.',
+    input:  ['state.generated_calls', 'state.generated_sms', 'state.generated_noti'],
+    output: ['state.events — merged, sorted, contextGroupId-stamped list'],
+    ex_in:  'calls[300] + sms[420] + noti[1200]',
+    ex_out: '[ { "identifier": "...", "timestamp": 1696107600000, "contextGroupId": 1 },\n  { "identifier": "...", "timestamp": 1696110000000, "contextGroupId": 1 }, ... ]',
+  },
+};
 
-  // ── State ────────────────────────────────────────────────────────────────────
-  let currentData = null;
-  let currentView = 'both';
+// ── State ─────────────────────────────────────────────────────────────────────
+let currentData = null;
+let currentView = 'both';
 
-  // ── Boot ─────────────────────────────────────────────────────────────────────
-  window.addEventListener('DOMContentLoaded', () => {
-    fetch('./comparison_result.json')
-      .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-      .then(data => render(data))
-      .catch(() => {});
+// ── Boot ──────────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  fetch('./comparison_result.json')
+    .then(r => { if (!r.ok) throw 0; return r.json(); })
+    .then(render).catch(() => {});
+});
+function loadFile() { document.getElementById('file-input').click(); }
+function onFileSelected(e) {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = ev => { try { render(JSON.parse(ev.target.result)); } catch { alert('Invalid JSON'); } };
+  r.readAsText(f);
+}
+function toggleDark() { document.documentElement.classList.toggle('dark'); }
+
+// ── View toggle ───────────────────────────────────────────────────────────────
+function setView(v) { currentView = v; updateBtns(); if (currentData) renderGraph(currentData); }
+function updateBtns() {
+  const map = { base:'vb-base', variant:'vb-variant', both:'vb-both' };
+  ['base','variant','both'].forEach(k => {
+    document.getElementById('btn-'+k).className = 'view-btn ' + (currentView===k ? map[k] : 'vb-off');
   });
+}
 
-  function loadFile() { document.getElementById('file-input').click(); }
-  function onFileSelected(e) {
-    const file = e.target.files[0]; if (!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => { try { render(JSON.parse(ev.target.result)); } catch(err) { alert('Invalid JSON'); } };
-    reader.readAsText(file);
-  }
-  function toggleDark() { document.documentElement.classList.toggle('dark'); }
+// ── Main render ───────────────────────────────────────────────────────────────
+function render(data) {
+  currentData = data;
+  document.getElementById('placeholder').classList.add('hidden');
+  document.getElementById('main').classList.remove('hidden');
+  document.getElementById('meta-user').textContent          = data.user_id;
+  document.getElementById('meta-variant').textContent       = data.variant;
+  document.getElementById('meta-base-count').textContent    = data.diff.base_count;
+  document.getElementById('meta-variant-count').textContent = data.diff.variant_count;
+  renderGraph(data);
+  renderDiffTable(data.diff);
+  renderSamples('base-samples',    data.base_sample    || []);
+  renderSamples('variant-samples', data.variant_sample || []);
+  updateBtns();
+}
 
-  // ── View ─────────────────────────────────────────────────────────────────────
-  function setView(v) { currentView = v; updateViewBtns(); if (currentData) renderGraph(currentData); }
+// ── Graph ─────────────────────────────────────────────────────────────────────
+function renderGraph(data) {
+  const flow   = document.getElementById('graph-flow');
+  const legend = document.getElementById('legend');
+  const detail = document.getElementById('replaced-detail');
+  flow.innerHTML = legend.innerHTML = detail.innerHTML = '';
+  detail.classList.add('hidden');
 
-  function updateViewBtns() {
-    const cfg = { base: 'vb-base', variant: 'vb-variant', both: 'vb-both' };
-    ['base','variant','both'].forEach(k => {
-      document.getElementById('btn-' + k).className =
-        'view-btn ' + (currentView === k ? cfg[k] : 'vb-off');
-    });
-  }
+  const baseNodes     = data.base_graph.nodes    || [];
+  const variantNodes  = data.variant_graph.nodes || [];
+  const replacedNodes = data.variant_graph.replaced_nodes || [];
 
-  // ── Main render ───────────────────────────────────────────────────────────────
-  function render(data) {
-    currentData = data;
-    document.getElementById('placeholder').classList.add('hidden');
-    document.getElementById('main').classList.remove('hidden');
+  if (currentView === 'base') {
+    legend.innerHTML = dot('#3b82f6','#1e3a5f','Base node');
+    buildVertical(flow, baseNodes, [], 'base');
+  } else if (currentView === 'variant') {
+    legend.innerHTML  = dot('#475569','#1e293b','Unchanged node');
+    legend.innerHTML += dot('#f59e0b','#78350f','Replaced node');
+    buildVertical(flow, variantNodes, replacedNodes, 'variant');
+  } else {
+    legend.innerHTML  = dot('#475569','#1e293b','Shared (unchanged)');
+    legend.innerHTML += dot('#3b82f6','#1e3a5f','Base (replaced)');
+    legend.innerHTML += dot('#f59e0b','#78350f','Variant (replaced, glowing)');
+    buildVerticalBoth(flow, baseNodes, variantNodes, replacedNodes);
 
-    document.getElementById('meta-user').textContent         = data.user_id;
-    document.getElementById('meta-variant').textContent      = data.variant;
-    document.getElementById('meta-base-count').textContent   = data.diff.base_count;
-    document.getElementById('meta-variant-count').textContent= data.diff.variant_count;
+    if (replacedNodes.length) {
+      detail.classList.remove('hidden');
+      const h = document.createElement('p');
+      h.className = 'text-xs text-gray-500 uppercase font-bold tracking-wider mb-1';
+      h.textContent = '🔄 Replaced Nodes';
+      detail.appendChild(h);
 
-    renderGraph(data);
-    renderDiffTable(data.diff);
-    renderSamples('base-samples',    data.base_sample    || []);
-    renderSamples('variant-samples', data.variant_sample || []);
-    updateViewBtns();
-  }
-
-  // ── Graph ─────────────────────────────────────────────────────────────────────
-  function renderGraph(data) {
-    const flow    = document.getElementById('graph-flow');
-    const legend  = document.getElementById('legend');
-    const detail  = document.getElementById('replaced-detail');
-    flow.innerHTML = legend.innerHTML = detail.innerHTML = '';
-    detail.classList.add('hidden');
-
-    const baseNodes     = data.base_graph.nodes    || [];
-    const variantNodes  = data.variant_graph.nodes || [];
-    const replacedNodes = data.variant_graph.replaced_nodes || [];
-
-    if (currentView === 'base') {
-      legend.innerHTML = dot('#3b82f6','#1e3a5f','Base node');
-      buildFlow(flow, baseNodes, [], 'base');
-    } else if (currentView === 'variant') {
-      legend.innerHTML  = dot('#475569','#1e293b','Unchanged node');
-      legend.innerHTML += dot('#f59e0b','#78350f','Replaced node');
-      buildFlow(flow, variantNodes, replacedNodes, 'variant');
-    } else {
-      legend.innerHTML  = dot('#475569','#1e293b','Shared (unchanged)');
-      legend.innerHTML += dot('#3b82f6','#1e3a5f','Base (replaced, struck)');
-      legend.innerHTML += dot('#f59e0b','#78350f','Variant (replaced, glowing)');
-      buildFlowBoth(flow, baseNodes, variantNodes, replacedNodes);
-
-      if (replacedNodes.length) {
-        detail.classList.remove('hidden');
-        const h = document.createElement('p');
-        h.className = 'text-xs text-gray-500 uppercase tracking-wider font-bold';
-        h.textContent = '🔄 Replaced Nodes';
-        detail.appendChild(h);
-
-        replacedNodes.forEach(name => {
-          const info = NODE_INFO[name] || {};
-          const card = document.createElement('div');
-          card.className = 'bg-gray-900 rounded-xl border border-amber-900/50 p-5 grid md:grid-cols-2 gap-6';
-          card.innerHTML = `
-            <div>
-              <span class="inline-block text-xs font-bold bg-blue-900/50 text-blue-300 border border-blue-700 px-2 py-0.5 rounded mb-2">BASE</span>
-              <p class="text-base font-bold text-blue-300">${name}</p>
-              <p class="text-xs text-gray-500 mt-1">Original LifeBench implementation</p>
-            </div>
-            <div>
-              <span class="inline-block text-xs font-bold bg-amber-900/50 text-amber-300 border border-amber-700 px-2 py-0.5 rounded mb-2">VARIANT — ${data.variant}</span>
-              <p class="text-base font-bold text-amber-300">${name}</p>
-              <p class="text-xs text-gray-500 mt-1">Replaced in <span class="text-amber-400 font-bold">${data.variant}</span></p>
-            </div>
-          `;
-          detail.appendChild(card);
-        });
-      }
+      replacedNodes.forEach(name => {
+        const info = NODE_INFO[name] || {};
+        const card = document.createElement('div');
+        card.className = 'bg-gray-900 rounded-xl border border-amber-900/40 p-4 space-y-3';
+        card.innerHTML = `
+          <div>
+            <span class="text-xs font-bold bg-blue-900/50 text-blue-300 border border-blue-700 px-2 py-0.5 rounded">BASE</span>
+            <p class="text-sm font-bold text-blue-300 mt-1">${name}</p>
+            <p class="text-xs text-gray-500">Original LifeBench implementation</p>
+          </div>
+          <div class="border-t border-gray-800 pt-3">
+            <span class="text-xs font-bold bg-amber-900/50 text-amber-300 border border-amber-700 px-2 py-0.5 rounded">VARIANT — ${data.variant}</span>
+            <p class="text-sm font-bold text-amber-300 mt-1">${name}</p>
+            <p class="text-xs text-gray-500">Replaced node in <span class="text-amber-400">${data.variant}</span></p>
+          </div>
+        `;
+        detail.appendChild(card);
+      });
     }
   }
+}
 
-  function buildFlow(container, nodes, replacedNodes, mode) {
-    nodes.forEach((name, i) => {
-      const isReplaced = replacedNodes.includes(name);
-      let cls = mode === 'base' ? 'node-base' : (isReplaced ? 'node-variant' : 'node-shared');
-      container.appendChild(makeNodePill(name, cls, mode === 'base' ? 'base' : (isReplaced ? 'variant' : 'shared')));
-      if (i < nodes.length - 1) container.appendChild(makeArrow());
-    });
-    container.appendChild(makeArrow());
-    container.appendChild(makeEnd());
-  }
+function buildVertical(container, nodes, replacedNodes, mode) {
+  nodes.forEach((name, i) => {
+    const isReplaced = replacedNodes.includes(name);
+    const cls = mode === 'base' ? 'n-base' : (isReplaced ? 'n-variant' : 'n-shared');
+    const role = mode === 'base' ? 'base' : (isReplaced ? 'variant' : 'shared');
+    container.appendChild(makeNodePill(name, cls, role));
+    if (i < nodes.length - 1) container.appendChild(makeVArrow());
+  });
+  container.appendChild(makeVArrow());
+  container.appendChild(makeEnd());
+}
 
-  function buildFlowBoth(container, baseNodes, variantNodes, replacedNodes) {
-    baseNodes.forEach((name, i) => {
-      const isReplaced = replacedNodes.includes(name);
-      if (isReplaced) {
-        const slot = document.createElement('div');
-        slot.className = 'replace-slot';
+function buildVerticalBoth(container, baseNodes, variantNodes, replacedNodes) {
+  baseNodes.forEach((name, i) => {
+    const isReplaced = replacedNodes.includes(name);
+    if (isReplaced) {
+      const slot = document.createElement('div');
+      slot.className = 'replace-slot w-full flex flex-col items-center';
 
-        const baseLabel = document.createElement('span');
-        baseLabel.className = 'replace-slot-label bg-blue-900/40 text-blue-400';
-        baseLabel.textContent = 'BASE';
+      const lBase = document.createElement('span');
+      lBase.className = 'rs-label bg-blue-900/40 text-blue-400 mb-1';
+      lBase.textContent = 'BASE';
+      const pBase = makeNodePill(name, 'n-rb', 'base');
 
-        const basePill = makeNodePill(name, 'node-replaced-base', 'base');
-        basePill.querySelector('.node-box').style.textDecoration = 'line-through';
+      const lVar = document.createElement('span');
+      lVar.className = 'rs-label bg-amber-900/40 text-amber-400 mt-3 mb-1';
+      lVar.textContent = 'VARIANT';
+      const pVar = makeNodePill(name, 'n-rv', 'variant');
 
-        const variantLabel = document.createElement('span');
-        variantLabel.className = 'replace-slot-label bg-amber-900/40 text-amber-400';
-        variantLabel.textContent = 'VARIANT';
+      slot.appendChild(lBase);
+      slot.appendChild(pBase);
+      slot.appendChild(lVar);
+      slot.appendChild(pVar);
+      container.appendChild(slot);
+    } else {
+      container.appendChild(makeNodePill(name, 'n-shared', 'shared'));
+    }
+    if (i < baseNodes.length - 1) container.appendChild(makeVArrow());
+  });
+  container.appendChild(makeVArrow());
+  container.appendChild(makeEnd());
+}
 
-        const variantPill = makeNodePill(name, 'node-replaced-variant', 'variant');
+function makeNodePill(name, boxClass, role) {
+  const info = NODE_INFO[name] || {};
+  const pill = document.createElement('div');
+  pill.className = 'node-pill w-full flex flex-col items-center';
 
-        slot.appendChild(baseLabel);
-        slot.appendChild(basePill);
-        slot.appendChild(variantLabel);
-        slot.appendChild(variantPill);
-        container.appendChild(slot);
-      } else {
-        container.appendChild(makeNodePill(name, 'node-shared', 'shared'));
-      }
-      if (i < baseNodes.length - 1) container.appendChild(makeArrow());
-    });
-    container.appendChild(makeArrow());
-    container.appendChild(makeEnd());
-  }
+  const box = document.createElement('div');
+  box.className = 'node-box ' + boxClass;
+  box.innerHTML = `<span>${info.emoji||''}</span><span>${name}</span>`;
 
-  function makeNodePill(name, boxClass, role) {
-    const info = NODE_INFO[name] || {};
-    const pill = document.createElement('div');
-    pill.className = 'node-pill';
+  // Tooltip
+  const tip = document.createElement('div');
+  tip.className = 'tooltip';
+  const roleHtml = role==='base'
+    ? '<span class="text-blue-400 font-bold text-xs">BASE</span>'
+    : role==='variant'
+    ? '<span class="text-amber-400 font-bold text-xs">VARIANT</span>'
+    : '<span class="text-gray-400 font-bold text-xs">SHARED</span>';
 
-    const box = document.createElement('div');
-    box.className = 'node-box ' + boxClass;
-    box.textContent = (info.emoji ? info.emoji + ' ' : '') + name;
+  tip.innerHTML = `
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-white font-bold">${info.emoji||''} ${name}</span>
+      ${roleHtml}
+    </div>
+    <p class="text-gray-400 text-xs mb-3 leading-relaxed">${info.desc||''}</p>
+    ${info.file ? `<p class="text-gray-600 text-xs mb-3">${info.file}</p>` : ''}
+    <div class="grid grid-cols-2 gap-3 mb-3">
+      <div>
+        <p class="text-blue-400 font-bold text-xs mb-1">📥 Input</p>
+        ${(info.input||[]).map(s=>`<p class="text-gray-400 text-xs leading-snug">• ${s}</p>`).join('')}
+      </div>
+      <div>
+        <p class="text-green-400 font-bold text-xs mb-1">📤 Output</p>
+        ${(info.output||[]).map(s=>`<p class="text-gray-400 text-xs leading-snug">• ${s}</p>`).join('')}
+      </div>
+    </div>
+    ${info.ex_in ? `
+    <div class="border-t border-gray-800 pt-2">
+      <p class="text-gray-600 text-xs font-bold mb-1">Example IN</p>
+      <pre class="text-gray-400 text-xs bg-gray-950 rounded p-2 max-h-24 overflow-auto">${info.ex_in}</pre>
+      <p class="text-gray-600 text-xs font-bold mt-2 mb-1">Example OUT</p>
+      <pre class="text-gray-400 text-xs bg-gray-950 rounded p-2 max-h-24 overflow-auto">${info.ex_out}</pre>
+    </div>` : ''}
+  `;
 
-    // Tooltip
-    const tip = document.createElement('div');
-    tip.className = 'tooltip';
+  pill.appendChild(box);
+  pill.appendChild(tip);
+  return pill;
+}
 
-    const roleLabel = role === 'base' ? '<span class="text-blue-400 font-bold">BASE</span>'
-                    : role === 'variant' ? '<span class="text-amber-400 font-bold">VARIANT</span>'
-                    : '<span class="text-gray-400 font-bold">SHARED</span>';
+function makeVArrow() {
+  const wrap = document.createElement('div');
+  wrap.className = 'v-arrow';
+  wrap.innerHTML = '<div class="v-arrow-line"></div><span>↓</span>';
+  return wrap;
+}
 
-    tip.innerHTML = `
+function makeEnd() {
+  const pill = document.createElement('div');
+  pill.className = 'node-pill w-full flex flex-col items-center';
+  const box = document.createElement('div');
+  box.className = 'node-box n-end';
+  box.textContent = 'END';
+  pill.appendChild(box);
+  return pill;
+}
+
+function dot(border, bg, label) {
+  return `<span class="flex items-center gap-1.5">
+    <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:${bg};border:2px solid ${border}"></span>
+    <span>${label}</span>
+  </span>`;
+}
+
+// ── Diff table ────────────────────────────────────────────────────────────────
+function renderDiffTable(diff) {
+  const rows = [
+    ['Base event count',    diff.base_count],
+    ['Variant event count', diff.variant_count],
+    ['Common identifiers',  diff.common_identifiers],
+    ['Changed payloads',    diff.changed_payloads],
+    ['Only in base',        diff.only_in_base],
+    ['Only in variant',     diff.only_in_variant],
+  ];
+  document.getElementById('diff-table').innerHTML = rows.map(([l,v],i)=>`
+    <tr class="${i%2===0?'bg-gray-900':'bg-gray-950'}">
+      <td class="px-4 py-2 text-gray-400">${l}</td>
+      <td class="px-4 py-2 text-right font-bold text-white">${v??'-'}</td>
+    </tr>`).join('');
+}
+
+// ── Sample events ─────────────────────────────────────────────────────────────
+function renderSamples(id, samples) {
+  const c = document.getElementById(id);
+  c.innerHTML = '';
+  if (!samples.length) { c.innerHTML = '<p class="text-xs text-gray-600">No samples</p>'; return; }
+  const colors = { CALL_LOG:'text-blue-400', SMS:'text-green-400', NOTIFICATION:'text-amber-400' };
+  samples.forEach(ev => {
+    let p = {};
+    try { p = JSON.parse(ev.payload); } catch {}
+    const card = document.createElement('div');
+    card.className = 'bg-gray-900 rounded-lg border border-gray-800 p-3 text-xs';
+    card.innerHTML = `
       <div class="flex items-center justify-between mb-2">
-        <span class="text-white font-bold text-sm">${info.emoji || ''} ${name}</span>
-        ${roleLabel}
+        <span class="font-bold ${colors[ev.event_source]||'text-gray-400'}">${ev.event_source}</span>
+        <span class="text-gray-600">${new Date(ev.timestamp).toLocaleString()}</span>
       </div>
-      <p class="text-gray-400 text-xs mb-3 leading-relaxed">${info.desc || 'No description'}</p>
-      ${info.file ? `<p class="text-gray-600 text-xs mb-3 font-mono">${info.file}</p>` : ''}
-      <div class="grid grid-cols-2 gap-2 mb-3">
-        <div>
-          <p class="text-blue-400 font-bold text-xs mb-1">📥 Input</p>
-          ${(info.input||[]).map(s=>`<p class="text-gray-400 text-xs leading-snug">• ${s}</p>`).join('')}
-        </div>
-        <div>
-          <p class="text-green-400 font-bold text-xs mb-1">📤 Output</p>
-          ${(info.output||[]).map(s=>`<p class="text-gray-400 text-xs leading-snug">• ${s}</p>`).join('')}
-        </div>
-      </div>
-      ${info.example_in ? `
-      <div class="border-t border-gray-800 pt-2 mt-2">
-        <p class="text-gray-600 text-xs font-bold mb-1">Example IN</p>
-        <pre class="text-gray-400 text-xs bg-gray-950 rounded p-2 overflow-auto max-h-20">${info.example_in}</pre>
-        <p class="text-gray-600 text-xs font-bold mt-2 mb-1">Example OUT</p>
-        <pre class="text-gray-400 text-xs bg-gray-950 rounded p-2 overflow-auto max-h-20">${info.example_out}</pre>
-      </div>` : ''}
-    `;
-
-    pill.appendChild(box);
-    pill.appendChild(tip);
-    return pill;
-  }
-
-  function makeArrow() {
-    const a = document.createElement('span');
-    a.className = 'arrow';
-    a.textContent = '→';
-    return a;
-  }
-
-  function makeEnd() {
-    const pill = document.createElement('div');
-    pill.className = 'node-pill';
-    const box = document.createElement('div');
-    box.className = 'node-box node-end';
-    box.textContent = 'END';
-    pill.appendChild(box);
-    return pill;
-  }
-
-  function dot(border, bg, label) {
-    return `<span class="flex items-center gap-1.5 text-xs text-gray-400">
-      <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:${bg};border:2px solid ${border}"></span>
-      ${label}
-    </span>`;
-  }
-
-  // ── Diff table ────────────────────────────────────────────────────────────────
-  function renderDiffTable(diff) {
-    const rows = [
-      ['Base event count',    diff.base_count],
-      ['Variant event count', diff.variant_count],
-      ['Common identifiers',  diff.common_identifiers],
-      ['Changed payloads',    diff.changed_payloads],
-      ['Only in base',        diff.only_in_base],
-      ['Only in variant',     diff.only_in_variant],
-    ];
-    document.getElementById('diff-table').innerHTML = rows.map(([label, val], i) => `
-      <tr class="${i % 2 === 0 ? 'bg-gray-900' : 'bg-gray-950'}">
-        <td class="px-4 py-2 text-gray-400">${label}</td>
-        <td class="px-4 py-2 text-right font-bold text-white">${val ?? '-'}</td>
-      </tr>
-    `).join('');
-  }
-
-  // ── Sample events ─────────────────────────────────────────────────────────────
-  function renderSamples(id, samples) {
-    const container = document.getElementById(id);
-    container.innerHTML = '';
-    if (!samples.length) { container.innerHTML = '<p class="text-xs text-gray-600">No samples</p>'; return; }
-    const colors = { CALL_LOG: 'text-blue-400', SMS: 'text-green-400', NOTIFICATION: 'text-amber-400' };
-    samples.forEach(ev => {
-      let payload = {};
-      try { payload = JSON.parse(ev.payload); } catch(e) {}
-      const card = document.createElement('div');
-      card.className = 'bg-gray-900 rounded-lg border border-gray-800 p-3 text-xs';
-      card.innerHTML = `
-        <div class="flex items-center justify-between mb-2">
-          <span class="font-bold ${colors[ev.event_source]||'text-gray-400'}">${ev.event_source}</span>
-          <span class="text-gray-600">${new Date(ev.timestamp).toLocaleString()}</span>
-        </div>
-        <p class="text-gray-500 mb-1 truncate">${ev.identifier}</p>
-        <pre class="text-gray-300 bg-gray-950 rounded p-2 overflow-auto max-h-40">${JSON.stringify(payload,null,2)}</pre>
-      `;
-      container.appendChild(card);
-    });
-  }
+      <p class="text-gray-500 mb-1 truncate">${ev.identifier}</p>
+      <pre class="text-gray-300 bg-gray-950 rounded p-2 overflow-auto max-h-40">${JSON.stringify(p,null,2)}</pre>`;
+    c.appendChild(card);
+  });
+}
 </script>
 </body>
 </html>
