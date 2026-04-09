@@ -305,7 +305,7 @@ function renderJobTable() {
 {name}({age}세, {gender}성)에게
 가장 자연스러운 직업 하나를 고르세요.
 
-후보: {', '.join(candidates[:10])}
+후보: {', '.join(candidates)}  <span style='color:#475569'>// 나이대 전체 후보</span>
 
 <span style="color:#475569">// 예시 — 46세 남성</span>
 후보: 이사, 임원, 회사 직능부서 임원,

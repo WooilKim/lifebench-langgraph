@@ -277,7 +277,7 @@ def generate_persons(state: FullPipelineState) -> FullPipelineState:
         candidates = _candidate_jobs(s["age"], s["gender"])
         prompt = (
             f"{s['name']}({s['age']}세, {s['gender']}성)에게 가장 자연스러운 직업 하나를 고르세요.\n"
-            f"후보: {', '.join(candidates[:10])}\n"
+            f"후보: {', '.join(candidates)}\n"
             f"직업 이름만 출력하세요. 설명 없이."
         )
         job = candidates[0]
