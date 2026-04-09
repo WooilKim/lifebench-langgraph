@@ -1595,182 +1595,81 @@ to Jan 3 sleep delay"}</pre></div>
 
 <!-- ╔══════════════════════════════ DATA COMPARISON ════════════════════════════╗ -->
 <div style="grid-column:1/-1;background:#070b14;border-top:2px solid #1e3a5f;padding:32px 40px">
-  <div style="max-width:1100px;margin:0 auto">
-    <h2 style="font-size:16px;font-weight:800;color:#e2e8f0;letter-spacing:.06em;margin-bottom:4px">📊 데이터 비교</h2>
-    <p style="font-size:11px;color:#475569;margin-bottom:24px">Original LifeBench vs LangGraph(KO) · 테스트 샘플: 원본 3명(fenghaoran 외) vs LangGraph 3명(오다온·김찬영·박수지)</p>
-
-    <!-- Pipeline Overview -->
-    <h3 style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">Pipeline 개요</h3>
-    <div style="overflow-x:auto;margin-bottom:28px">
-    <table style="width:100%;border-collapse:collapse;font-size:11px;font-family:ui-monospace,monospace">
+  <div style="max-width:1200px;margin:0 auto">
+    <h2 style="font-size:16px;font-weight:800;color:#e2e8f0;letter-spacing:.06em;margin-bottom:4px">[DATA] 데이터 필드 비교</h2>
+    <p style="font-size:11px;color:#475569;margin-bottom:24px">Original LifeBench(ZH) vs LangGraph(KO) &middot; 각 데이터 타입별 포함된 필드와 콘텐츠 비교</p>
+    <div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse;font-size:10.5px;font-family:ui-monospace,monospace">
       <thead>
-        <tr style="border-bottom:1px solid #1e3a5f">
-          <th style="text-align:left;padding:8px 12px;color:#475569;width:18%">단계</th>
-          <th style="text-align:left;padding:8px 12px;color:#3b82f6;width:41%">Original LifeBench (ZH)</th>
-          <th style="text-align:left;padding:8px 12px;color:#22c55e;width:41%">LangGraph (KO)</th>
+        <tr style="border-bottom:2px solid #1e3a5f;background:#0a0e1a">
+          <th style="text-align:left;padding:8px 10px;color:#475569;width:18%">필드 / 항목</th>
+          <th style="text-align:left;padding:8px 10px;color:#3b82f6;width:36%">Original LifeBench (ZH)</th>
+          <th style="text-align:left;padding:8px 10px;color:#22c55e;width:36%">LangGraph (KO)</th>
+          <th style="text-align:left;padding:8px 10px;color:#374151;width:10%">비고</th>
         </tr>
       </thead>
       <tbody>
-        <tr style="border-bottom:1px solid #0e1a2e">
-          <td style="padding:8px 12px;color:#64748b;font-weight:700">Step 0
-            <br><span style="color:#374151;font-weight:400">Persona Gen</span></td>
-          <td style="padding:8px 12px;color:#93c5fd">중국인 페르소나 수동 입력 (person.json)<br>필드: 27개 (home_address, birth, salary, family 등)<br>LLM ×3/인: gen_profile → gen_relations → gen_persons<br><span style="color:#475569">인간 관계 20~26명</span></td>
-          <td style="padding:8px 12px;color:#86efac">한국인 자동 생성 (person_gen Phase 1+2)<br>필드: 19개 (home_city, mbti, marital_status 등)<br>LLM ×4/인: person_gen→gen_profile→gen_relations→gen_persons<br><span style="color:#475569">인간 관계 10~15명 · 통계청 성씨 + koreanname.me</span></td>
-        </tr>
-        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f">
-          <td style="padding:8px 12px;color:#64748b;font-weight:700">Step 1
-            <br><span style="color:#374151;font-weight:400">Draft Gen</span></td>
-          <td style="padding:8px 12px;color:#93c5fd">7단계 스케줄러 (LLM ×5/인)<br>연간 ~190개 이벤트 킹 카테고리 9종<br>월별 분석 ×12 + 충돌 해소 + 연간 개요 생성</td>
-          <td style="padding:8px 12px;color:#86efac">동일 5단계 (LLM ×5/인 · test: ×1)<br>연간 ~190개 이벤트 · 한국 공휴일·직장문화 반영<br>test 모드: Round 1만 (20개)</td>
-        </tr>
-        <tr style="border-bottom:1px solid #0e1a2e">
-          <td style="padding:8px 12px;color:#64748b;font-weight:700">Step 2
-            <br><span style="color:#374151;font-weight:400">Simulator</span></td>
-          <td style="padding:8px 12px;color:#93c5fd">8단계 Mind/Refiner/Formatter (LLM ×7/일 ×365일)<br>4,000~5,000개 일일 상세 이벤트<br>퍼지기억 · 주관적계획 · 장기기억 업데이트</td>
-          <td style="padding:8px 12px;color:#86efac">동일 8단계 KO (test: 템플릿 전체)<br>test 모드: 직장인 템플릿 (7 이벤트/일 ×365)<br>2,451개 이벤트/인</td>
-        </tr>
-        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f">
-          <td style="padding:8px 12px;color:#64748b;font-weight:700">Step 3
-            <br><span style="color:#374151;font-weight:400">Phone Data</span></td>
-          <td style="padding:8px 12px;color:#93c5fd">LLM ×7종 (type 판단+call+sms+noti+note+calendar+photo)<br>공화스시다원스 출력 없음 · 퍼셀 일변 데이터<br>call: transcript 없음 · 발신자: +86 중국 번호</td>
-          <td style="padding:8px 12px;color:#86efac">규칙 기반 call/sms/noti/gmail 생성<br>call: LLM transcript 대화 자동 생성 (10통화씩 배치)<br>gmail NEW · 한국 전화번호 (010-XXXX-XXXX) · 28개 KR 앱</td>
-        </tr>
+
+        <!-- PERSONA -->
+        <tr style="background:#0a0e1a"><td colspan="4" style="padding:8px 10px;color:#64748b;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">페르소나 (Persona)</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">name / age / gender</td><td style="padding:6px 10px;color:#60a5fa">name, age, gender</td><td style="padding:6px 10px;color:#4ade80">name, age, gender</td><td style="padding:6px 10px;color:#475569;font-size:10px"></td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">직업 필드</td><td style="padding:6px 10px;color:#60a5fa">job + occupation (2필드)</td><td style="padding:6px 10px;color:#4ade80">job (1필드 통합)</td><td style="padding:6px 10px;color:#475569;font-size:10px">직위명+직무 통합</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">주거지</td><td style="padding:6px 10px;color:#60a5fa">home_address (실제 주소)</td><td style="padding:6px 10px;color:#4ade80">home_city (도시명)</td><td style="padding:6px 10px;color:#475569;font-size:10px">원본: 상세 주소</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">birth / birth_place</td><td style="padding:6px 10px;color:#60a5fa">birth (YYYY-MM-DD) + birth_place</td><td style="padding:6px 10px;color:#f87171">&#10060; 없음</td><td style="padding:6px 10px;color:#475569;font-size:10px"></td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">nationality</td><td style="padding:6px 10px;color:#60a5fa">nationality (중국 고정)</td><td style="padding:6px 10px;color:#f87171">&#10060; 없음</td><td style="padding:6px 10px;color:#475569;font-size:10px">한국인 고정으로 생략</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">mbti</td><td style="padding:6px 10px;color:#f87171">&#10060; 없음</td><td style="padding:6px 10px;color:#4ade80">&#10003; mbti (신규)</td><td style="padding:6px 10px;color:#475569;font-size:10px">LangGraph 신규 추가</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">marital_status</td><td style="padding:6px 10px;color:#f87171">&#10060; 없음</td><td style="padding:6px 10px;color:#4ade80">&#10003; marital_status (신규)</td><td style="padding:6px 10px;color:#475569;font-size:10px"></td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">경제 수준</td><td style="padding:6px 10px;color:#60a5fa">salary (연봉 수치)</td><td style="padding:6px 10px;color:#4ade80">economic_level (하/중/상)</td><td style="padding:6px 10px;color:#475569;font-size:10px">개념 수준으로 추상화</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">belief / body / family</td><td style="padding:6px 10px;color:#60a5fa">belief + body + family</td><td style="padding:6px 10px;color:#f87171">&#10060; 없음</td><td style="padding:6px 10px;color:#475569;font-size:10px">favorite_foods / memory_date 도 없음</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">description / aim / hobbies</td><td style="padding:6px 10px;color:#60a5fa">description + aim + hobbies</td><td style="padding:6px 10px;color:#4ade80">description + aim + hobbies</td><td style="padding:6px 10px;color:#475569;font-size:10px">동일</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">설명 필드</td><td style="padding:6px 10px;color:#60a5fa">healthy_desc + lifestyle_desc + work_desc + experience_desc</td><td style="padding:6px 10px;color:#4ade80">health_desc + lifestyle_desc + work_desc</td><td style="padding:6px 10px;color:#475569;font-size:10px">experience_desc 없음</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">인간관계 수</td><td style="padding:6px 10px;color:#60a5fa">relation 20~26명</td><td style="padding:6px 10px;color:#4ade80">relationships 10~15명</td><td style="padding:6px 10px;color:#475569;font-size:10px">수 줄임, 필드 확장</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">관계 상세 필드</td><td style="padding:6px 10px;color:#60a5fa">name, relation, circle</td><td style="padding:6px 10px;color:#4ade80">name, relation, social_circle, age, gender, job, home_city, description</td><td style="padding:6px 10px;color:#475569;font-size:10px">LangGraph 상세 정보 포함</td></tr>
+
+        <!-- DAILY EVENT -->
+        <tr style="background:#0a0e1a"><td colspan="4" style="padding:8px 10px;color:#64748b;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">일일 이벤트 (Daily Event)</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">이벤트명/타입</td><td style="padding:6px 10px;color:#60a5fa">name (상세 행동명) + type (카테고리)</td><td style="padding:6px 10px;color:#4ade80">event_type (행동 유형)</td><td style="padding:6px 10px;color:#475569;font-size:10px">원본: 더 풍부한 이름</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">시간 형식</td><td style="padding:6px 10px;color:#60a5fa">date [자연어 범위 형식]</td><td style="padding:6px 10px;color:#4ade80">datetime (YYYY-MM-DD HH:MM:SS)</td><td style="padding:6px 10px;color:#475569;font-size:10px">LangGraph 정형 timestamp</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">description</td><td style="padding:6px 10px;color:#60a5fa">상세 서술형 (수백 자)</td><td style="padding:6px 10px;color:#4ade80">간단 (수십 자)</td><td style="padding:6px 10px;color:#475569;font-size:10px">원본: LLM 상세 서술</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">participant / location</td><td style="padding:6px 10px;color:#60a5fa">participant (참여인 목록) + location (상세 주소)</td><td style="padding:6px 10px;color:#4ade80">location (장소명만)</td><td style="padding:6px 10px;color:#475569;font-size:10px">participant 없음</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">일일 회고 (reflection)</td><td style="padding:6px 10px;color:#f87171">&#10060; 별도 없음</td><td style="padding:6px 10px;color:#4ade80">&#10003; thought (full 모드)</td><td style="padding:6px 10px;color:#475569;font-size:10px">LangGraph full 모드에서 생성</td></tr>
+
+        <!-- CALL LOG -->
+        <tr style="background:#0a0e1a"><td colspan="4" style="padding:8px 10px;color:#64748b;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">통화 (Call Log)</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">BehaviorEventEntity</td><td style="padding:6px 10px;color:#f87171">&#10060; raw 파일 (call.json)</td><td style="padding:6px 10px;color:#4ade80">&#10003; identifier + timestamp + contextGroupId</td><td style="padding:6px 10px;color:#475569;font-size:10px">앱 직접 연동 가능</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">전화번호 형식</td><td style="padding:6px 10px;color:#60a5fa">+86 13xxx (중국)</td><td style="padding:6px 10px;color:#4ade80">010-XXXX-XXXX (한국)</td><td style="padding:6px 10px;color:#475569;font-size:10px"></td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">통화 방향/결과</td><td style="padding:6px 10px;color:#60a5fa">direction (0/1) + call_result (Connected/missed)</td><td style="padding:6px 10px;color:#4ade80">type (0=발신, 1=수신, 2=부재중) + missedReason</td><td style="padding:6px 10px;color:#475569;font-size:10px">부재중 세분화</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">통화 시간</td><td style="padding:6px 10px;color:#60a5fa">datetime_end로 역산</td><td style="padding:6px 10px;color:#4ade80">duration (초, 직접 저장)</td><td style="padding:6px 10px;color:#475569;font-size:10px"></td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8"><b>transcriptDialog</b></td><td style="padding:6px 10px;color:#f87171">&#10060; 없음</td><td style="padding:6px 10px;color:#4ade80">&#10003; LLM 생성 한국어 대화 (10통화씩 배치)</td><td style="padding:6px 10px;color:#475569;font-size:10px;font-weight:700">LangGraph 핵심 차별점</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">geocodedLocation</td><td style="padding:6px 10px;color:#f87171">&#10060; 없음</td><td style="padding:6px 10px;color:#4ade80">geocodedLocation (빈 값, 확장 예정)</td><td style="padding:6px 10px;color:#475569;font-size:10px"></td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">payload 형식</td><td style="padding:6px 10px;color:#60a5fa">raw JSON 객체 (call.json 직접)</td><td style="padding:6px 10px;color:#4ade80">BehaviorEventEntity 안 payload 객체</td><td style="padding:6px 10px;color:#475569;font-size:10px">역슬래시 없음</td></tr>
+
+        <!-- SMS -->
+        <tr style="background:#0a0e1a"><td colspan="4" style="padding:8px 10px;color:#64748b;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">문자 (SMS)</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">BehaviorEventEntity</td><td style="padding:6px 10px;color:#f87171">&#10060; raw (sms.json)</td><td style="padding:6px 10px;color:#4ade80">&#10003; identifier + event_source: SMS</td><td style="padding:6px 10px;color:#475569;font-size:10px"></td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">message 본문</td><td style="padding:6px 10px;color:#60a5fa">message_content (자연어)</td><td style="padding:6px 10px;color:#4ade80">body (자연어)</td><td style="padding:6px 10px;color:#475569;font-size:10px">필드명만 변경</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">threadId</td><td style="padding:6px 10px;color:#f87171">&#10060; 없음</td><td style="padding:6px 10px;color:#4ade80">&#10003; threadId (연락처별 스레드)</td><td style="padding:6px 10px;color:#475569;font-size:10px">LangGraph 신규</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">messageId / creator</td><td style="padding:6px 10px;color:#f87171">&#10060; 없음</td><td style="padding:6px 10px;color:#4ade80">&#10003; messageId + messageTypeAndId + creator</td><td style="padding:6px 10px;color:#475569;font-size:10px">앱 호환 필드</td></tr>
+
+        <!-- NOTIFICATION -->
+        <tr style="background:#0a0e1a"><td colspan="4" style="padding:8px 10px;color:#64748b;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">앱 알림 (Notification/Push)</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">BehaviorEventEntity</td><td style="padding:6px 10px;color:#f87171">&#10060; raw (push.json)</td><td style="padding:6px 10px;color:#4ade80">&#10003; event_source: NOTIFICATION</td><td style="padding:6px 10px;color:#475569;font-size:10px"></td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">앱 국적</td><td style="padding:6px 10px;color:#60a5fa">중국 앱 (NetEase, WeChat, Alipay 등)</td><td style="padding:6px 10px;color:#4ade80">한국 앱 28개 (카카오톡, 토스, 쿠팡 등)</td><td style="padding:6px 10px;color:#475569;font-size:10px;font-weight:700">한국화 핵심</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">packageName</td><td style="padding:6px 10px;color:#f87171">&#10060; 없음</td><td style="padding:6px 10px;color:#4ade80">&#10003; com.kakao.talk 등 실제 패키지명</td><td style="padding:6px 10px;color:#475569;font-size:10px"></td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">category</td><td style="padding:6px 10px;color:#f87171">&#10060; 없음</td><td style="padding:6px 10px;color:#4ade80">&#10003; social/finance/shopping/food 등</td><td style="padding:6px 10px;color:#475569;font-size:10px">취미 기반 앱 매핑</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">jump_path</td><td style="padding:6px 10px;color:#60a5fa">jump_path (딥링크 경로)</td><td style="padding:6px 10px;color:#f87171">&#10060; 없음</td><td style="padding:6px 10px;color:#475569;font-size:10px">원본 추가 필드</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">summarized_info</td><td style="padding:6px 10px;color:#60a5fa">summarized_info (LLM 요약)</td><td style="padding:6px 10px;color:#f87171">&#10060; 없음</td><td style="padding:6px 10px;color:#475569;font-size:10px">원본 LLM 생성 요약</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">analysis</td><td style="padding:6px 10px;color:#f87171">&#10060; 없음</td><td style="padding:6px 10px;color:#4ade80">analysis: {} (향후 확장 필드)</td><td style="padding:6px 10px;color:#475569;font-size:10px"></td></tr>
+
+        <!-- GMAIL -->
+        <tr style="background:#0a0e1a"><td colspan="4" style="padding:8px 10px;color:#64748b;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">이메일 (Gmail) &mdash; LangGraph 신규</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">event_source: GMAIL</td><td style="padding:6px 10px;color:#f87171">&#10060; 없음 (이메일 데이터 없음)</td><td style="padding:6px 10px;color:#4ade80">&#10003; GMAIL 타입 신규</td><td style="padding:6px 10px;color:#475569;font-size:10px;font-weight:700">LangGraph 완전 신규</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">id / uid</td><td style="padding:6px 10px;color:#f87171">&#10060;</td><td style="padding:6px 10px;color:#4ade80">id (gmail_{n}) + uid (int)</td><td style="padding:6px 10px;color:#475569;font-size:10px"></td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e"><td style="padding:6px 10px;color:#94a3b8">from / subject</td><td style="padding:6px 10px;color:#f87171">&#10060;</td><td style="padding:6px 10px;color:#4ade80">from (실제 이메일) + subject (제목)</td><td style="padding:6px 10px;color:#475569;font-size:10px">직장/가족/소셜/서비스</td></tr>
+        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f"><td style="padding:6px 10px;color:#94a3b8">snippet / receivedEpochMs</td><td style="padding:6px 10px;color:#f87171">&#10060;</td><td style="padding:6px 10px;color:#4ade80">snippet (미리보기) + receivedEpochMs (ms)</td><td style="padding:6px 10px;color:#475569;font-size:10px">format.txt 스펙 준수</td></tr>
+
       </tbody>
     </table>
-    </div>
-
-    <!-- Data Stats -->
-    <h3 style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">데이터 통계 비교 (3명 기준)</h3>
-    <div style="overflow-x:auto;margin-bottom:28px">
-    <table style="width:100%;border-collapse:collapse;font-size:11px;font-family:ui-monospace,monospace">
-      <thead>
-        <tr style="border-bottom:1px solid #1e3a5f">
-          <th style="text-align:left;padding:8px 12px;color:#475569">항목</th>
-          <th style="text-align:right;padding:8px 12px;color:#3b82f6">Original (3명 평균)</th>
-          <th style="text-align:right;padding:8px 12px;color:#22c55e">LangGraph (3명 평균)</th>
-          <th style="text-align:left;padding:8px 12px;color:#475569">비고</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="border-bottom:1px solid #0e1a2e">
-          <td style="padding:8px 12px;color:#94a3b8">일일 이벤트 수</td>
-          <td style="text-align:right;padding:8px 12px;color:#60a5fa">~5,149</td>
-          <td style="text-align:right;padding:8px 12px;color:#4ade80">4,999</td>
-          <td style="padding:8px 12px;color:#475569">test 모드: 템플릿 2,451 / full: LLM ~4,000개</td>
-        </tr>
-        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f">
-          <td style="padding:8px 12px;color:#94a3b8">통화 (call)</td>
-          <td style="text-align:right;padding:8px 12px;color:#60a5fa">1,253</td>
-          <td style="text-align:right;padding:8px 12px;color:#4ade80">197</td>
-          <td style="padding:8px 12px;color:#475569">원본: 이벤트별 LLM 생성 · KO: 규칙 기반 샘플링</td>
-        </tr>
-        <tr style="border-bottom:1px solid #0e1a2e">
-          <td style="padding:8px 12px;color:#94a3b8">transcript 유무</td>
-          <td style="text-align:right;padding:8px 12px;color:#f87171">❌ 없음</td>
-          <td style="text-align:right;padding:8px 12px;color:#4ade80">✅ 24개/인 (LLM 배치)</td>
-          <td style="padding:8px 12px;color:#475569">실제 한국어 대화 스크립트</td>
-        </tr>
-        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f">
-          <td style="padding:8px 12px;color:#94a3b8">문자 (sms)</td>
-          <td style="text-align:right;padding:8px 12px;color:#60a5fa">2,325</td>
-          <td style="text-align:right;padding:8px 12px;color:#4ade80">235</td>
-          <td style="padding:8px 12px;color:#475569">원본: LLM 생성 · KO: 템플릿 기반 생성</td>
-        </tr>
-        <tr style="border-bottom:1px solid #0e1a2e">
-          <td style="padding:8px 12px;color:#94a3b8">앱 알림 (noti)</td>
-          <td style="text-align:right;padding:8px 12px;color:#60a5fa">2,738</td>
-          <td style="text-align:right;padding:8px 12px;color:#4ade80">3,654</td>
-          <td style="padding:8px 12px;color:#475569">KO: 취미 기반 앱 코스터마이싱 · 28개 KR 앱</td>
-        </tr>
-        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f">
-          <td style="padding:8px 12px;color:#94a3b8">이메일 (gmail)</td>
-          <td style="text-align:right;padding:8px 12px;color:#f87171">❌ 없음</td>
-          <td style="text-align:right;padding:8px 12px;color:#4ade80">✅ 912개/인 (NEW)</td>
-          <td style="padding:8px 12px;color:#475569">직장/가족/소셜/서비스 카테고리</td>
-        </tr>
-        <tr style="border-bottom:1px solid #0e1a2e">
-          <td style="padding:8px 12px;color:#94a3b8">전체 행동 이벤트</td>
-          <td style="text-align:right;padding:8px 12px;color:#60a5fa">~6,316</td>
-          <td style="text-align:right;padding:8px 12px;color:#4ade80">4,999</td>
-          <td style="padding:8px 12px;color:#475569">call+sms+noti (+gmail KO)</td>
-        </tr>
-        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f">
-          <td style="padding:8px 12px;color:#94a3b8">언어 / 국적</td>
-          <td style="text-align:right;padding:8px 12px;color:#60a5fa">중국어 / 중국인</td>
-          <td style="text-align:right;padding:8px 12px;color:#4ade80">한국어 / 한국인</td>
-          <td style="padding:8px 12px;color:#475569">전화번호 010-XXXX · 한국 핵심 지명 반영</td>
-        </tr>
-        <tr style="border-bottom:1px solid #0e1a2e">
-          <td style="padding:8px 12px;color:#94a3b8">payload 형식</td>
-          <td style="text-align:right;padding:8px 12px;color:#60a5fa">JSON 문자열 (역슬래시)</td>
-          <td style="text-align:right;padding:8px 12px;color:#4ade80">JSON 객체 (역슬래시 없음)</td>
-          <td style="padding:8px 12px;color:#475569">슬래시 없이 먹스 가능</td>
-        </tr>
-        <tr style="border-bottom:1px solid #0e1a2e;background:#04080f">
-          <td style="padding:8px 12px;color:#94a3b8">인물 수 / 미래 확장성</td>
-          <td style="text-align:right;padding:8px 12px;color:#60a5fa">10명 고정</td>
-          <td style="text-align:right;padding:8px 12px;color:#4ade80">가변 (–count N)</td>
-          <td style="padding:8px 12px;color:#475569">다양한 나이대·직업 자동 샘플링</td>
-        </tr>
-        <tr>
-          <td style="padding:8px 12px;color:#94a3b8">예상 LLM 호출 수/인</td>
-          <td style="text-align:right;padding:8px 12px;color:#60a5fa">~2,600회 (7 직렬 LLM/일)</td>
-          <td style="text-align:right;padding:8px 12px;color:#4ade80">~60회 (full 모드)</td>
-          <td style="padding:8px 12px;color:#475569">Step1: 17회 · Step3 transcript: ~20회</td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
-
-    <!-- Sample Data -->
-    <h3 style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">샘플 데이터 비교</h3>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-
-      <div>
-        <div style="font-size:10px;font-weight:700;color:#3b82f6;margin-bottom:6px">🟦 Original — Call (transcriptDialog 없음)</div>
-        <pre style="background:#020817;border:1px solid #1e3a5f;border-radius:6px;padding:10px;font-size:9.5px;color:#64748b;overflow-x:auto;line-height:1.5">{"type": "call",
- "event_id": "5",
- "phoneNumber": "+8613917128765",
- "contactName": "Li Xiuying",
- "datetime": "2025-01-01 13:30:00",
- "datetime_end": "2025-01-01 13:45:20",
- "direction": 0,
- "call_result": "Connected"}</pre>
-      </div>
-
-      <div>
-        <div style="font-size:10px;font-weight:700;color:#22c55e;margin-bottom:6px">🟩 LangGraph — Call (transcript 있음)</div>
-        <pre style="background:#020817;border:1px solid #166534;border-radius:6px;padding:10px;font-size:9.5px;color:#64748b;overflow-x:auto;line-height:1.5">{"identifier": "call_100000_...",
- "event_source": "CALL_LOG",
- "payload": {
-   "number": "010-0091-8871",
-   "name": "김찬영",
-   "type": 1, "duration": 720,
-   "transcriptDialog":
-    "김찬영: 네, 부장님. 말씀하세요.\n임재훈: 다음 주 월요일 클라이언트 미팅..."}}</pre>
-      </div>
-
-      <div>
-        <div style="font-size:10px;font-weight:700;color:#3b82f6;margin-bottom:6px">🟦 Original — Daily Event</div>
-        <pre style="background:#020817;border:1px solid #1e3a5f;border-radius:6px;padding:10px;font-size:9.5px;color:#64748b;overflow-x:auto;line-height:1.5">{"event_id": "1",
- "name": "Morning Preparations...",
- "date": ["From 06:40 to 08:00 on Jan 1"],
- "type": "Personal Life",
- "description": "Awakened by biological clock..."}</pre>
-      </div>
-
-      <div>
-        <div style="font-size:10px;font-weight:700;color:#22c55e;margin-bottom:6px">🟩 LangGraph — Gmail (NEW)</div>
-        <pre style="background:#020817;border:1px solid #166534;border-radius:6px;padding:10px;font-size:9.5px;color:#64748b;overflow-x:auto;line-height:1.5">{"identifier": "gmail_130001_...",
- "event_source": "GMAIL",
- "payload": {
-   "id": "gmail_130001",
-   "from": "신유리@gmail.com",
-   "subject": "[이벤트] 동창회 모임 안내",
-   "snippet": "이번 달 문창회가 예정...",
-   "receivedEpochMs": 1735690200000}}</pre>
-      </div>
-
     </div>
   </div>
 </div>
