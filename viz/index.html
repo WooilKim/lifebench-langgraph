@@ -485,7 +485,28 @@ traits:  [<span class="cs">"家庭导向"</span>...]
     <div class="ss-path">nodes/persona_gen.py → gen_profile() (template_refine 기반)</div>
     <div class="ss-note">person_gen 결과를 받아 MBTI·취미·성격·학력·혼인 상태·건강·생활습관·직장 설명·종합 설명 생성. 나이/학력/직업/수입 일치 검증.</div>
     <div class="pb-wrap">
-      <div class="pb" data-new-k="persona_gen" data-lang="kr">로딩 중…</div>
+      <div class="pb" style="border-left-color:#22c55e;color:#94a3b8">당신은 인류학자, 작가, 논리 전문가입니다. 아래 기본 인물 정보를 바탕으로
+풍부하고 현실적인 한국인 프로파일을 생성하세요.
+
+기본 정보 (반드시 유지):
+{name, age, gender, job, home_city}
+
+생성할 필드:
+- mbti: MBTI 유형 (나이·직업·성별에 자연스러운 것)
+- hobbies: 취미 4~8개 (독특한 취미 1개 포함 가능)
+- personality_traits: 성격 특성 2~4개
+- economic_level: "하"/"중"/"상"
+- education: 최종 학력
+- marital_status: 혼인 상태
+- health_desc: 건강 상태 (1~2문장)
+- lifestyle_desc: 일상 생활 패턴 (1~2문장)
+- work_desc: 직장 관련 설명 (1~2문장)
+- description: 종합 설명 (3~5문장)
+- relation: [] ← 다음 단계에서 채움
+
+검증: 나이/학력/직업/수입 일치 · 성격/취미/건강과 나이·직업 조화
+
+JSON만 출력하세요.</div>
     </div>
     <div class="io">
       <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// state.persons (고정값 유지)</span>
@@ -514,6 +535,28 @@ traits:  [<span class="cs">"家庭导向"</span>...]
     </div>
     <div class="ss-path">nodes/persona_gen.py → gen_relations() (template_relation_1 기반)</div>
     <div class="ss-note">프로파일을 분석해 가족·직장·학교·취미 등 소셜서클을 추론하고, 연락을 유지할 10~15명의 관계 뼈대 생성. 이름·관계·소셜서클만 포함.</div>
+    <div class="pb-wrap">
+      <div class="pb" style="border-left-color:#22c55e;color:#94a3b8">당신은 인류학자, 스토리 작가, 소셜 네트워크 전문가입니다.
+아래 인물 프로파일을 분석하여 이 인물이 연락을 유지하는
+사람 10~15명의 관계망을 생성하세요.
+
+인물 프로파일: {name, age, gender, job, home_city, mbti,
+               education, marital_status, hobbies, work_desc}
+
+소셜 서클 예시: 가족, 직장, 대학 동기, 고등학교 동기,
+               동네, 취미 모임, 연인
+
+출력 형식:
+[{"name": "이름", "relation": "관계",
+  "social_circle": "소셜서클"}]
+
+조건:
+- 이름은 한국인 이름
+- 가족/직장/친구 등 다양한 서클 포함
+- 같은 서클 사람들은 서로 연결될 수 있음
+
+JSON 배열만 출력하세요.</div>
+    </div>
     <div class="io">
       <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// gen_profile() 결과</span>
 {"name":<span class="cs">"박준혁"</span>,
@@ -541,6 +584,29 @@ traits:  [<span class="cs">"家庭导向"</span>...]
     </div>
     <div class="ss-path">nodes/persona_gen.py → gen_persons() (template_person 기반)</div>
     <div class="ss-note">관계 뼈대에 상세 정보 추가. 각 연락처마다 나이·성별·직업·도시·관계 설명 생성. 같은 소셜서클끼리 정보 일관성 유지.</div>
+    <div class="pb-wrap">
+      <div class="pb" style="border-left-color:#22c55e;color:#94a3b8">당신은 인류학자, 스토리 작가, 데이터 전문가입니다.
+아래 인물의 관계 목록에 있는 각 연락처에 대해
+상세 정보를 생성하세요.
+
+주인공 프로파일: {name, age, gender, job, home_city, mbti}
+
+관계 목록: [{name, relation, social_circle}, ...]
+
+각 연락처 생성 필드:
+- name, relation, social_circle (유지)
+- age: 주인공과의 관계에 맞는 나이
+- gender: 이름·직업과 일치
+- job: 직업
+- home_city: 거주 도시 (일부는 다른 도시 가능)
+- description: 관계·만남 방식·연락 빈도 (1~2문장)
+
+조건:
+- 같은 소셜서클 사람들 간 정보 일관성
+- 온라인/오래 못 만난 친구는 다른 도시 가능
+
+JSON 배열만 출력하세요.</div>
+    </div>
     <div class="io">
       <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 프로파일 + 관계 뼈대</span>
 {"profile":{...},
