@@ -41,10 +41,11 @@ def _get_llm(provider: str, max_tokens: int = 8192):
 
 
 def _parse_json_safe(text: str):
+    from json_repair import repair_json
     text = text.strip()
     text = re.sub(r"^```(?:json)?\s*", "", text)
     text = re.sub(r"\s*```$", "", text)
-    return json.loads(text.strip())
+    return json.loads(repair_json(text.strip()))
 
 
 # ── Rule-based templates ───────────────────────────────────────────────────────

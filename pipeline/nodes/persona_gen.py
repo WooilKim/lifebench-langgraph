@@ -83,10 +83,11 @@ def _get_llm(provider: str, max_tokens: int = 4096):
 
 
 def _parse_json(text: str):
+    from json_repair import repair_json
     text = text.strip()
     text = re.sub(r"^```(?:json)?\s*", "", text)
     text = re.sub(r"\s*```$", "", text)
-    return json.loads(text.strip())
+    return json.loads(repair_json(text.strip()))
 
 
 # ── Sub-step 1: gen_profile (template_refine 기반 + refer_kr.json) ─────────────
