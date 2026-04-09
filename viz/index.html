@@ -19,15 +19,48 @@
     }
   </script>
   <style>
-    /* Flow graph */
-    .node { display:inline-flex; align-items:center; justify-content:center;
-            padding:6px 18px; border-radius:8px; font-size:13px; font-weight:600; }
-    .node-base    { background:#3730a3; color:#e0e7ff; border:2px solid #6366f1; }
-    .node-normal  { background:#1e3a5f; color:#bfdbfe; border:2px solid #3b82f6; }
-    .node-replaced{ background:#78350f; color:#fef3c7; border:2px solid #f59e0b; }
-    .node-end     { background:#374151; color:#9ca3af; border:2px dashed #6b7280; }
-    .arrow { color:#6b7280; font-size:18px; margin:0 6px; }
-    pre { white-space:pre-wrap; word-break:break-word; }
+    .node {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 7px 20px; border-radius: 8px; font-size: 13px; font-weight: 600;
+      transition: all 0.2s;
+    }
+    .node-base     { background: #1e3a5f; color: #bfdbfe; border: 2px solid #3b82f6; }
+    .node-variant  { background: #78350f; color: #fef3c7; border: 2px solid #f59e0b; }
+    .node-shared   { background: #1e293b; color: #94a3b8; border: 2px solid #475569; }
+    .node-end      { background: #1f2937; color: #6b7280; border: 2px dashed #4b5563; }
+    .node-replaced-base    { background: #1e3a5f; color: #93c5fd; border: 2px solid #3b82f6; opacity: 0.5; text-decoration: line-through; }
+    .node-replaced-variant { background: #78350f; color: #fef3c7; border: 2px solid #f59e0b; box-shadow: 0 0 10px rgba(245,158,11,0.4); }
+
+    .arrow { color: #4b5563; font-size: 18px; margin: 0 4px; }
+
+    .diff-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; padding: 2px 8px; border-radius: 999px; font-weight: 600;
+    }
+    .view-btn {
+      padding: 6px 16px; border-radius: 6px; font-size: 12px; font-weight: 600;
+      border: 2px solid transparent; cursor: pointer; transition: all 0.15s;
+    }
+    .view-btn-active-base    { background: #1e3a5f; color: #bfdbfe; border-color: #3b82f6; }
+    .view-btn-active-variant { background: #78350f; color: #fef3c7; border-color: #f59e0b; }
+    .view-btn-active-both    { background: #1a1f2e; color: #c4b5fd; border-color: #6366f1; }
+    .view-btn-inactive       { background: #1f2937; color: #6b7280; border-color: #374151; }
+
+    .replace-slot {
+      display: inline-flex; flex-direction: column; align-items: center; gap: 3px;
+      vertical-align: middle;
+    }
+    .replace-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.05em;
+      padding: 1px 5px; border-radius: 3px;
+    }
+
+    pre { white-space: pre-wrap; word-break: break-word; }
+
+    .flow-wrap {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+      padding: 16px;
+    }
   </style>
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen font-mono">
@@ -48,11 +81,6 @@
   </div>
 </header>
 
-<!-- Status bar -->
-<div id="status" class="bg-gray-900 border-b border-gray-800 px-6 py-2 text-xs text-gray-400 hidden">
-  <span id="status-text"></span>
-</div>
-
 <!-- No data placeholder -->
 <div id="placeholder" class="flex flex-col items-center justify-center h-96 text-gray-600">
   <div class="text-5xl mb-4">📊</div>
@@ -62,7 +90,7 @@
   <p class="text-xs mt-4 text-gray-700">Or the page auto-loads <code>./comparison_result.json</code> on startup.</p>
 </div>
 
-<!-- Main content (hidden until data loads) -->
+<!-- Main content -->
 <main id="main" class="hidden px-6 py-6 space-y-8">
 
   <!-- Meta row -->
@@ -85,26 +113,28 @@
     </div>
   </section>
 
-  <!-- Graph flows -->
+  <!-- Graph section -->
   <section>
-    <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">Graph Structure</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-      <div class="bg-gray-900 rounded-lg p-5 border border-gray-800">
-        <p class="text-xs text-indigo-400 font-bold uppercase mb-3">Base Graph</p>
-        <div id="base-graph-flow" class="flex flex-wrap items-center gap-1"></div>
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400">Graph Structure</h2>
+      <!-- View toggle -->
+      <div class="flex gap-2">
+        <button id="btn-base"    onclick="setView('base')"    class="view-btn">Base only</button>
+        <button id="btn-variant" onclick="setView('variant')" class="view-btn">Variant only</button>
+        <button id="btn-both"    onclick="setView('both')"    class="view-btn">Both</button>
       </div>
-
-      <div class="bg-gray-900 rounded-lg p-5 border border-gray-800">
-        <p class="text-xs text-amber-400 font-bold uppercase mb-3">Variant Graph</p>
-        <div id="variant-graph-flow" class="flex flex-wrap items-center gap-1"></div>
-        <p class="text-xs text-amber-500 mt-2">
-          <span class="inline-block w-3 h-3 rounded bg-amber-700 border border-amber-400 mr-1"></span>
-          Replaced nodes highlighted
-        </p>
-      </div>
-
     </div>
+
+    <!-- Legend -->
+    <div id="legend" class="flex flex-wrap gap-4 mb-3 text-xs text-gray-400"></div>
+
+    <!-- Graph container -->
+    <div class="bg-gray-900 rounded-lg border border-gray-800 min-h-20">
+      <div id="graph-flow" class="flow-wrap"></div>
+    </div>
+
+    <!-- Replaced node detail (shown in Both view) -->
+    <div id="replaced-detail" class="hidden mt-3 space-y-2"></div>
   </section>
 
   <!-- Diff stats -->
@@ -117,75 +147,66 @@
     </div>
   </section>
 
-  <!-- Timing -->
-  <section>
-    <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">Timing</h2>
-    <div class="grid grid-cols-2 gap-4">
-      <div class="bg-gray-900 rounded-lg p-4 border border-gray-800">
-        <p class="text-xs text-gray-500">Base</p>
-        <p id="timing-base" class="text-2xl font-bold text-blue-300 mt-1"></p>
-      </div>
-      <div class="bg-gray-900 rounded-lg p-4 border border-gray-800">
-        <p class="text-xs text-gray-500">Variant</p>
-        <p id="timing-variant" class="text-2xl font-bold text-green-300 mt-1"></p>
-      </div>
-    </div>
-  </section>
-
   <!-- Sample events side-by-side -->
   <section>
     <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">Sample Events</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
       <div>
-        <p class="text-xs text-indigo-400 font-bold uppercase mb-2">Base</p>
+        <p class="text-xs text-blue-400 font-bold uppercase mb-2">Base</p>
         <div id="base-samples" class="space-y-3"></div>
       </div>
-
       <div>
         <p class="text-xs text-amber-400 font-bold uppercase mb-2">Variant</p>
         <div id="variant-samples" class="space-y-3"></div>
       </div>
-
     </div>
   </section>
 
 </main>
 
-<!-- Hidden file input -->
 <input type="file" id="file-input" accept=".json" class="hidden" onchange="onFileSelected(event)" />
 
 <script>
   let currentData = null;
+  let currentView = 'both';
 
-  // ── Auto-load from same directory ────────────────────────────────────────────
   window.addEventListener('DOMContentLoaded', () => {
     fetch('./comparison_result.json')
       .then(r => { if (!r.ok) throw new Error('not found'); return r.json(); })
       .then(data => render(data))
-      .catch(() => { /* no file yet, show placeholder */ });
+      .catch(() => {});
   });
 
-  function loadFile() {
-    document.getElementById('file-input').click();
-  }
-
+  function loadFile() { document.getElementById('file-input').click(); }
   function onFileSelected(e) {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
     reader.onload = ev => {
-      try {
-        render(JSON.parse(ev.target.result));
-      } catch(err) {
-        alert('Invalid JSON: ' + err.message);
-      }
+      try { render(JSON.parse(ev.target.result)); }
+      catch(err) { alert('Invalid JSON: ' + err.message); }
     };
     reader.readAsText(file);
   }
+  function toggleDark() { document.documentElement.classList.toggle('dark'); }
 
-  function toggleDark() {
-    document.documentElement.classList.toggle('dark');
+  // ── View toggle ──────────────────────────────────────────────────────────────
+  function setView(view) {
+    currentView = view;
+    updateViewButtons();
+    if (currentData) renderGraph(currentData);
+  }
+
+  function updateViewButtons() {
+    const map = {
+      base:    { id: 'btn-base',    active: 'view-btn-active-base' },
+      variant: { id: 'btn-variant', active: 'view-btn-active-variant' },
+      both:    { id: 'btn-both',    active: 'view-btn-active-both' },
+    };
+    Object.entries(map).forEach(([key, { id, active }]) => {
+      const btn = document.getElementById(id);
+      btn.className = 'view-btn ' + (currentView === key ? active : 'view-btn-inactive');
+    });
   }
 
   // ── Render ───────────────────────────────────────────────────────────────────
@@ -194,79 +215,179 @@
     document.getElementById('placeholder').classList.add('hidden');
     document.getElementById('main').classList.remove('hidden');
 
-    const status = document.getElementById('status');
-    status.classList.remove('hidden');
-    document.getElementById('status-text').textContent =
-      `Loaded: user=${data.user_id}  variant=${data.variant}  base=${data.diff.base_count} events  variant=${data.diff.variant_count} events`;
-
-    // Meta
-    document.getElementById('meta-user').textContent = data.user_id;
+    document.getElementById('meta-user').textContent    = data.user_id;
     document.getElementById('meta-variant').textContent = data.variant;
-    document.getElementById('meta-base-count').textContent = data.diff.base_count;
+    document.getElementById('meta-base-count').textContent    = data.diff.base_count;
     document.getElementById('meta-variant-count').textContent = data.diff.variant_count;
 
-    // Graphs
-    renderFlow('base-graph-flow', data.base_graph, []);
-    renderFlow('variant-graph-flow', data.variant_graph, data.variant_graph.replaced_nodes || []);
-
-    // Diff table
+    renderGraph(data);
     renderDiffTable(data.diff);
-
-    // Timing
-    document.getElementById('timing-base').textContent = data.timing.base_s + 's';
-    document.getElementById('timing-variant').textContent = data.timing.variant_s + 's';
-
-    // Samples
-    renderSamples('base-samples', data.base_sample || []);
+    renderSamples('base-samples',    data.base_sample    || []);
     renderSamples('variant-samples', data.variant_sample || []);
+    updateViewButtons();
   }
 
-  function renderFlow(containerId, graph, replacedNodes) {
-    const container = document.getElementById(containerId);
+  // ── Graph rendering ──────────────────────────────────────────────────────────
+  function renderGraph(data) {
+    const container = document.getElementById('graph-flow');
+    const legend    = document.getElementById('legend');
+    const detail    = document.getElementById('replaced-detail');
     container.innerHTML = '';
-    const nodes = graph.nodes || [];
-    nodes.forEach((nodeName, i) => {
-      const span = document.createElement('span');
-      const isReplaced = replacedNodes.includes(nodeName);
-      span.className = 'node ' + (isReplaced ? 'node-replaced' : 'node-normal');
-      span.textContent = nodeName;
-      container.appendChild(span);
-      if (i < nodes.length - 1) {
-        const arrow = document.createElement('span');
-        arrow.className = 'arrow';
-        arrow.textContent = '→';
-        container.appendChild(arrow);
+    legend.innerHTML    = '';
+    detail.innerHTML    = '';
+    detail.classList.add('hidden');
+
+    const baseNodes     = data.base_graph.nodes    || [];
+    const variantNodes  = data.variant_graph.nodes || [];
+    const replacedNodes = data.variant_graph.replaced_nodes || [];
+
+    if (currentView === 'base') {
+      legend.innerHTML = legendItem('#3b82f6', '#1e3a5f', 'Base node');
+      appendFlow(container, baseNodes, [], 'base');
+    }
+    else if (currentView === 'variant') {
+      legend.innerHTML  = legendItem('#475569', '#1e293b', 'Unchanged node');
+      legend.innerHTML += legendItem('#f59e0b', '#78350f', 'Replaced node');
+      appendFlow(container, variantNodes, replacedNodes, 'variant');
+    }
+    else {
+      // Both: merged flow showing diffs inline
+      legend.innerHTML  = legendItem('#475569', '#1e293b', 'Shared (unchanged)');
+      legend.innerHTML += legendItem('#3b82f6', '#1e3a5f', 'Base node (replaced)');
+      legend.innerHTML += legendItem('#f59e0b', '#78350f', 'Variant node (replaced)');
+
+      appendFlowBoth(container, baseNodes, variantNodes, replacedNodes);
+
+      // Detail cards for replaced nodes
+      if (replacedNodes.length > 0) {
+        detail.classList.remove('hidden');
+        const heading = document.createElement('p');
+        heading.className = 'text-xs text-gray-500 uppercase tracking-wider mb-1';
+        heading.textContent = 'Replaced Nodes';
+        detail.appendChild(heading);
+
+        replacedNodes.forEach(name => {
+          const card = document.createElement('div');
+          card.className = 'bg-gray-900 rounded-lg border border-amber-800/40 p-4 grid grid-cols-2 gap-4';
+          card.innerHTML = `
+            <div>
+              <span class="diff-badge bg-blue-900/50 text-blue-300 border border-blue-700 mb-2">BASE</span>
+              <p class="text-sm font-bold text-blue-300 mt-1">${name}</p>
+              <p class="text-xs text-gray-500 mt-1">Original implementation</p>
+            </div>
+            <div>
+              <span class="diff-badge bg-amber-900/50 text-amber-300 border border-amber-700 mb-2">VARIANT</span>
+              <p class="text-sm font-bold text-amber-300 mt-1">${name}</p>
+              <p class="text-xs text-gray-500 mt-1">Replaced in <span class="text-amber-400">${currentData.variant}</span></p>
+            </div>
+          `;
+          detail.appendChild(card);
+        });
       }
-    });
-    // END node
-    const arrow = document.createElement('span');
-    arrow.className = 'arrow';
-    arrow.textContent = '→';
-    container.appendChild(arrow);
-    const endSpan = document.createElement('span');
-    endSpan.className = 'node node-end';
-    endSpan.textContent = 'END';
-    container.appendChild(endSpan);
+    }
   }
 
+  function appendFlow(container, nodes, replacedNodes, mode) {
+    nodes.forEach((name, i) => {
+      const span = document.createElement('span');
+      const isReplaced = replacedNodes.includes(name);
+      if (mode === 'base') {
+        span.className = 'node node-base';
+      } else {
+        span.className = 'node ' + (isReplaced ? 'node-variant' : 'node-shared');
+      }
+      span.textContent = name;
+      container.appendChild(span);
+      if (i < nodes.length - 1) appendArrow(container);
+    });
+    appendArrow(container);
+    appendEnd(container);
+  }
+
+  function appendFlowBoth(container, baseNodes, variantNodes, replacedNodes) {
+    // Use baseNodes as the reference order; replaced positions show both
+    baseNodes.forEach((name, i) => {
+      const isReplaced = replacedNodes.includes(name);
+
+      if (isReplaced) {
+        // Show stacked: base (struck) on top, variant (highlighted) below
+        const slot = document.createElement('span');
+        slot.className = 'replace-slot';
+
+        const baseSpan = document.createElement('span');
+        baseSpan.className = 'node node-replaced-base';
+        baseSpan.textContent = name;
+
+        const variantSpan = document.createElement('span');
+        variantSpan.className = 'node node-replaced-variant';
+        variantSpan.textContent = name;
+
+        const baseLabel = document.createElement('span');
+        baseLabel.className = 'replace-label bg-blue-900/50 text-blue-400';
+        baseLabel.textContent = 'BASE';
+
+        const variantLabel = document.createElement('span');
+        variantLabel.className = 'replace-label bg-amber-900/50 text-amber-400';
+        variantLabel.textContent = 'VARIANT';
+
+        slot.appendChild(baseLabel);
+        slot.appendChild(baseSpan);
+        slot.appendChild(variantLabel);
+        slot.appendChild(variantSpan);
+        container.appendChild(slot);
+      } else {
+        const span = document.createElement('span');
+        span.className = 'node node-shared';
+        span.textContent = name;
+        container.appendChild(span);
+      }
+
+      if (i < baseNodes.length - 1) appendArrow(container);
+    });
+    appendArrow(container);
+    appendEnd(container);
+  }
+
+  function appendArrow(container) {
+    const a = document.createElement('span');
+    a.className = 'arrow';
+    a.textContent = '→';
+    container.appendChild(a);
+  }
+
+  function appendEnd(container) {
+    const e = document.createElement('span');
+    e.className = 'node node-end';
+    e.textContent = 'END';
+    container.appendChild(e);
+  }
+
+  function legendItem(borderColor, bgColor, label) {
+    return `<span class="flex items-center gap-1.5">
+      <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:${bgColor};border:2px solid ${borderColor}"></span>
+      <span>${label}</span>
+    </span>`;
+  }
+
+  // ── Diff table ───────────────────────────────────────────────────────────────
   function renderDiffTable(diff) {
     const rows = [
-      ['Base event count',      diff.base_count],
-      ['Variant event count',   diff.variant_count],
-      ['Common identifiers',    diff.common_identifiers],
-      ['Changed payloads',      diff.changed_payloads],
-      ['Only in base',          diff.only_in_base],
-      ['Only in variant',       diff.only_in_variant],
+      ['Base event count',    diff.base_count],
+      ['Variant event count', diff.variant_count],
+      ['Common identifiers',  diff.common_identifiers],
+      ['Changed payloads',    diff.changed_payloads],
+      ['Only in base',        diff.only_in_base],
+      ['Only in variant',     diff.only_in_variant],
     ];
-    const tbody = document.getElementById('diff-table');
-    tbody.innerHTML = rows.map(([label, val], i) => `
+    document.getElementById('diff-table').innerHTML = rows.map(([label, val], i) => `
       <tr class="${i % 2 === 0 ? 'bg-gray-900' : 'bg-gray-950'}">
         <td class="px-4 py-2 text-gray-400">${label}</td>
-        <td class="px-4 py-2 text-right font-bold text-white">${val}</td>
+        <td class="px-4 py-2 text-right font-bold text-white">${val ?? '-'}</td>
       </tr>
     `).join('');
   }
 
+  // ── Sample events ────────────────────────────────────────────────────────────
   function renderSamples(containerId, samples) {
     const container = document.getElementById(containerId);
     container.innerHTML = '';
@@ -274,23 +395,16 @@
       container.innerHTML = '<p class="text-xs text-gray-600">No samples</p>';
       return;
     }
+    const sourceColors = { CALL_LOG: 'text-blue-400', SMS: 'text-green-400', NOTIFICATION: 'text-amber-400' };
     samples.forEach(event => {
       let payload = {};
       try { payload = JSON.parse(event.payload); } catch(e) {}
 
       const card = document.createElement('div');
       card.className = 'bg-gray-900 rounded-lg border border-gray-800 p-3 text-xs';
-
-      const sourceColors = {
-        CALL_LOG: 'text-blue-400',
-        SMS: 'text-green-400',
-        NOTIFICATION: 'text-amber-400',
-      };
-      const sourceColor = sourceColors[event.event_source] || 'text-gray-400';
-
       card.innerHTML = `
         <div class="flex items-center justify-between mb-2">
-          <span class="font-bold ${sourceColor}">${event.event_source}</span>
+          <span class="font-bold ${sourceColors[event.event_source] || 'text-gray-400'}">${event.event_source}</span>
           <span class="text-gray-600">${new Date(event.timestamp).toLocaleString()}</span>
         </div>
         <p class="text-gray-500 mb-1 truncate">${event.identifier}</p>
