@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LifeBench LangGraph — Pipeline Comparison</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: '#6366f1',
+            replaced: '#f59e0b',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Flow graph */
+    .node { display:inline-flex; align-items:center; justify-content:center;
+            padding:6px 18px; border-radius:8px; font-size:13px; font-weight:600; }
+    .node-base    { background:#3730a3; color:#e0e7ff; border:2px solid #6366f1; }
+    .node-normal  { background:#1e3a5f; color:#bfdbfe; border:2px solid #3b82f6; }
+    .node-replaced{ background:#78350f; color:#fef3c7; border:2px solid #f59e0b; }
+    .node-end     { background:#374151; color:#9ca3af; border:2px dashed #6b7280; }
+    .arrow { color:#6b7280; font-size:18px; margin:0 6px; }
+    pre { white-space:pre-wrap; word-break:break-word; }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen font-mono">
+
+<!-- Header -->
+<header class="border-b border-gray-800 px-6 py-4 flex items-center justify-between">
+  <div>
+    <h1 class="text-xl font-bold text-indigo-400">LifeBench LangGraph</h1>
+    <p class="text-xs text-gray-500 mt-0.5">Pipeline Comparison Visualizer</p>
+  </div>
+  <div class="flex gap-3 items-center">
+    <button onclick="loadFile()" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded border border-gray-700">
+      Load comparison_result.json
+    </button>
+    <button onclick="toggleDark()" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded border border-gray-700">
+      Toggle Dark
+    </button>
+  </div>
+</header>
+
+<!-- Status bar -->
+<div id="status" class="bg-gray-900 border-b border-gray-800 px-6 py-2 text-xs text-gray-400 hidden">
+  <span id="status-text"></span>
+</div>
+
+<!-- No data placeholder -->
+<div id="placeholder" class="flex flex-col items-center justify-center h-96 text-gray-600">
+  <div class="text-5xl mb-4">📊</div>
+  <p class="text-lg mb-2">No comparison data loaded</p>
+  <p class="text-sm">Run <code class="bg-gray-800 px-1 rounded">python compare.py --user fenghaoran --variant llm_enriched</code></p>
+  <p class="text-sm mt-1">then click <strong>Load comparison_result.json</strong> above.</p>
+  <p class="text-xs mt-4 text-gray-700">Or the page auto-loads <code>./comparison_result.json</code> on startup.</p>
+</div>
+
+<!-- Main content (hidden until data loads) -->
+<main id="main" class="hidden px-6 py-6 space-y-8">
+
+  <!-- Meta row -->
+  <section class="grid grid-cols-2 gap-4 md:grid-cols-4">
+    <div class="bg-gray-900 rounded-lg p-4 border border-gray-800">
+      <p class="text-xs text-gray-500 uppercase tracking-wider">User</p>
+      <p id="meta-user" class="text-lg font-bold text-indigo-300 mt-1"></p>
+    </div>
+    <div class="bg-gray-900 rounded-lg p-4 border border-gray-800">
+      <p class="text-xs text-gray-500 uppercase tracking-wider">Variant</p>
+      <p id="meta-variant" class="text-lg font-bold text-amber-300 mt-1"></p>
+    </div>
+    <div class="bg-gray-900 rounded-lg p-4 border border-gray-800">
+      <p class="text-xs text-gray-500 uppercase tracking-wider">Base events</p>
+      <p id="meta-base-count" class="text-lg font-bold text-blue-300 mt-1"></p>
+    </div>
+    <div class="bg-gray-900 rounded-lg p-4 border border-gray-800">
+      <p class="text-xs text-gray-500 uppercase tracking-wider">Variant events</p>
+      <p id="meta-variant-count" class="text-lg font-bold text-green-300 mt-1"></p>
+    </div>
+  </section>
+
+  <!-- Graph flows -->
+  <section>
+    <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">Graph Structure</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      <div class="bg-gray-900 rounded-lg p-5 border border-gray-800">
+        <p class="text-xs text-indigo-400 font-bold uppercase mb-3">Base Graph</p>
+        <div id="base-graph-flow" class="flex flex-wrap items-center gap-1"></div>
+      </div>
+
+      <div class="bg-gray-900 rounded-lg p-5 border border-gray-800">
+        <p class="text-xs text-amber-400 font-bold uppercase mb-3">Variant Graph</p>
+        <div id="variant-graph-flow" class="flex flex-wrap items-center gap-1"></div>
+        <p class="text-xs text-amber-500 mt-2">
+          <span class="inline-block w-3 h-3 rounded bg-amber-700 border border-amber-400 mr-1"></span>
+          Replaced nodes highlighted
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Diff stats -->
+  <section>
+    <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">Diff Statistics</h2>
+    <div class="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden">
+      <table class="w-full text-sm">
+        <tbody id="diff-table"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Timing -->
+  <section>
+    <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">Timing</h2>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="bg-gray-900 rounded-lg p-4 border border-gray-800">
+        <p class="text-xs text-gray-500">Base</p>
+        <p id="timing-base" class="text-2xl font-bold text-blue-300 mt-1"></p>
+      </div>
+      <div class="bg-gray-900 rounded-lg p-4 border border-gray-800">
+        <p class="text-xs text-gray-500">Variant</p>
+        <p id="timing-variant" class="text-2xl font-bold text-green-300 mt-1"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sample events side-by-side -->
+  <section>
+    <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">Sample Events</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      <div>
+        <p class="text-xs text-indigo-400 font-bold uppercase mb-2">Base</p>
+        <div id="base-samples" class="space-y-3"></div>
+      </div>
+
+      <div>
+        <p class="text-xs text-amber-400 font-bold uppercase mb-2">Variant</p>
+        <div id="variant-samples" class="space-y-3"></div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- Hidden file input -->
+<input type="file" id="file-input" accept=".json" class="hidden" onchange="onFileSelected(event)" />
+
+<script>
+  let currentData = null;
+
+  // ── Auto-load from same directory ────────────────────────────────────────────
+  window.addEventListener('DOMContentLoaded', () => {
+    fetch('./comparison_result.json')
+      .then(r => { if (!r.ok) throw new Error('not found'); return r.json(); })
+      .then(data => render(data))
+      .catch(() => { /* no file yet, show placeholder */ });
+  });
+
+  function loadFile() {
+    document.getElementById('file-input').click();
+  }
+
+  function onFileSelected(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        render(JSON.parse(ev.target.result));
+      } catch(err) {
+        alert('Invalid JSON: ' + err.message);
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function toggleDark() {
+    document.documentElement.classList.toggle('dark');
+  }
+
+  // ── Render ───────────────────────────────────────────────────────────────────
+  function render(data) {
+    currentData = data;
+    document.getElementById('placeholder').classList.add('hidden');
+    document.getElementById('main').classList.remove('hidden');
+
+    const status = document.getElementById('status');
+    status.classList.remove('hidden');
+    document.getElementById('status-text').textContent =
+      `Loaded: user=${data.user_id}  variant=${data.variant}  base=${data.diff.base_count} events  variant=${data.diff.variant_count} events`;
+
+    // Meta
+    document.getElementById('meta-user').textContent = data.user_id;
+    document.getElementById('meta-variant').textContent = data.variant;
+    document.getElementById('meta-base-count').textContent = data.diff.base_count;
+    document.getElementById('meta-variant-count').textContent = data.diff.variant_count;
+
+    // Graphs
+    renderFlow('base-graph-flow', data.base_graph, []);
+    renderFlow('variant-graph-flow', data.variant_graph, data.variant_graph.replaced_nodes || []);
+
+    // Diff table
+    renderDiffTable(data.diff);
+
+    // Timing
+    document.getElementById('timing-base').textContent = data.timing.base_s + 's';
+    document.getElementById('timing-variant').textContent = data.timing.variant_s + 's';
+
+    // Samples
+    renderSamples('base-samples', data.base_sample || []);
+    renderSamples('variant-samples', data.variant_sample || []);
+  }
+
+  function renderFlow(containerId, graph, replacedNodes) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+    const nodes = graph.nodes || [];
+    nodes.forEach((nodeName, i) => {
+      const span = document.createElement('span');
+      const isReplaced = replacedNodes.includes(nodeName);
+      span.className = 'node ' + (isReplaced ? 'node-replaced' : 'node-normal');
+      span.textContent = nodeName;
+      container.appendChild(span);
+      if (i < nodes.length - 1) {
+        const arrow = document.createElement('span');
+        arrow.className = 'arrow';
+        arrow.textContent = '→';
+        container.appendChild(arrow);
+      }
+    });
+    // END node
+    const arrow = document.createElement('span');
+    arrow.className = 'arrow';
+    arrow.textContent = '→';
+    container.appendChild(arrow);
+    const endSpan = document.createElement('span');
+    endSpan.className = 'node node-end';
+    endSpan.textContent = 'END';
+    container.appendChild(endSpan);
+  }
+
+  function renderDiffTable(diff) {
+    const rows = [
+      ['Base event count',      diff.base_count],
+      ['Variant event count',   diff.variant_count],
+      ['Common identifiers',    diff.common_identifiers],
+      ['Changed payloads',      diff.changed_payloads],
+      ['Only in base',          diff.only_in_base],
+      ['Only in variant',       diff.only_in_variant],
+    ];
+    const tbody = document.getElementById('diff-table');
+    tbody.innerHTML = rows.map(([label, val], i) => `
+      <tr class="${i % 2 === 0 ? 'bg-gray-900' : 'bg-gray-950'}">
+        <td class="px-4 py-2 text-gray-400">${label}</td>
+        <td class="px-4 py-2 text-right font-bold text-white">${val}</td>
+      </tr>
+    `).join('');
+  }
+
+  function renderSamples(containerId, samples) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+    if (!samples.length) {
+      container.innerHTML = '<p class="text-xs text-gray-600">No samples</p>';
+      return;
+    }
+    samples.forEach(event => {
+      let payload = {};
+      try { payload = JSON.parse(event.payload); } catch(e) {}
+
+      const card = document.createElement('div');
+      card.className = 'bg-gray-900 rounded-lg border border-gray-800 p-3 text-xs';
+
+      const sourceColors = {
+        CALL_LOG: 'text-blue-400',
+        SMS: 'text-green-400',
+        NOTIFICATION: 'text-amber-400',
+      };
+      const sourceColor = sourceColors[event.event_source] || 'text-gray-400';
+
+      card.innerHTML = `
+        <div class="flex items-center justify-between mb-2">
+          <span class="font-bold ${sourceColor}">${event.event_source}</span>
+          <span class="text-gray-600">${new Date(event.timestamp).toLocaleString()}</span>
+        </div>
+        <p class="text-gray-500 mb-1 truncate">${event.identifier}</p>
+        <pre class="text-gray-300 bg-gray-950 rounded p-2 overflow-auto max-h-40">${JSON.stringify(payload, null, 2)}</pre>
+      `;
+      container.appendChild(card);
+    });
+  }
+</script>
+</body>
+</html>

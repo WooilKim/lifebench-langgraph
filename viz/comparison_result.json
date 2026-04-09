@@ -1,0 +1,204 @@
+{
+  "user_id": "fenghaoran",
+  "variant": "korean_local",
+  "base_graph": {
+    "name": "base",
+    "nodes": [
+      "loader",
+      "call_gen",
+      "sms_gen",
+      "noti_gen",
+      "formatter"
+    ],
+    "edges": [
+      {
+        "from": "loader",
+        "to": "call_gen"
+      },
+      {
+        "from": "call_gen",
+        "to": "sms_gen"
+      },
+      {
+        "from": "sms_gen",
+        "to": "noti_gen"
+      },
+      {
+        "from": "noti_gen",
+        "to": "formatter"
+      },
+      {
+        "from": "formatter",
+        "to": "END"
+      }
+    ],
+    "replaced_nodes": []
+  },
+  "variant_graph": {
+    "name": "korean_local",
+    "nodes": [
+      "loader",
+      "call_gen",
+      "sms_gen",
+      "noti_gen",
+      "formatter"
+    ],
+    "edges": [
+      {
+        "from": "loader",
+        "to": "call_gen"
+      },
+      {
+        "from": "call_gen",
+        "to": "sms_gen"
+      },
+      {
+        "from": "sms_gen",
+        "to": "noti_gen"
+      },
+      {
+        "from": "noti_gen",
+        "to": "formatter"
+      },
+      {
+        "from": "formatter",
+        "to": "END"
+      }
+    ],
+    "replaced_nodes": [
+      "noti_gen"
+    ]
+  },
+  "base_metadata": {
+    "load_time": 1775701046.2424011,
+    "user_id": "fenghaoran",
+    "counts": {
+      "raw_calls": 1338,
+      "raw_sms": 2271,
+      "raw_push": 3037,
+      "daily_events": 4878
+    },
+    "finish_time": 1775701046.334502,
+    "total_events": 6646,
+    "event_counts": {
+      "calls": 1338,
+      "sms": 2271,
+      "notifications": 3037
+    }
+  },
+  "variant_metadata": {
+    "load_time": 1775701046.2424011,
+    "user_id": "fenghaoran",
+    "counts": {
+      "raw_calls": 1338,
+      "raw_sms": 2271,
+      "raw_push": 3037,
+      "daily_events": 4878
+    },
+    "finish_time": 1775701046.334502,
+    "total_events": 6646,
+    "event_counts": {
+      "calls": 1338,
+      "sms": 2271,
+      "notifications": 3037
+    }
+  },
+  "timing": {
+    "base_s": 0.08,
+    "variant_s": 0.11
+  },
+  "diff": {
+    "base_count": 6646,
+    "variant_count": 6646,
+    "common_identifiers": 6573,
+    "changed_payloads": 2248,
+    "only_in_base": 0,
+    "only_in_variant": 0,
+    "changed_sample": [
+      "noti_4623_1765580400000",
+      "noti_2427_1751027400000",
+      "noti_379_1738362900000",
+      "noti_2973_1754610300000",
+      "noti_2170_1749466800000",
+      "noti_3862_1760256540000",
+      "noti_331_1737980100000",
+      "noti_1873_1747621800000",
+      "noti_1280_1744016700000",
+      "noti_2425_1751019720000"
+    ]
+  },
+  "base_sample": [
+    {
+      "identifier": "noti_6_1696107600000",
+      "timestamp": 1696107600000,
+      "event_source": "NOTIFICATION",
+      "payload": "{\"packageName\": \"com.netease.cloudmusic\", \"postTime\": 1696107600000, \"key\": \"noti_6\", \"id\": 6, \"isOngoing\": false, \"isClearable\": true, \"title\": \"NetEase Cloud Music: Daily Recommendations Update\", \"text\": \"【NetEase Cloud Music】Based on your listening habits, today's recommended playlist \\\"Morning Run Energy Rhythm\\\" has been updated, including 5 new songs.\", \"subText\": \"\", \"category\": \"music\", \"appName\": \"NetEase Cloud Music\", \"analysis\": {}}",
+      "contextGroupId": 1
+    },
+    {
+      "identifier": "noti_856_1741409100000",
+      "timestamp": 1741409100000,
+      "event_source": "NOTIFICATION",
+      "payload": "{\"packageName\": \"com.app.snowball\", \"postTime\": 1741409100000, \"key\": \"noti_856\", \"id\": 856, \"isOngoing\": false, \"isClearable\": false, \"title\": \"Snowball: Unusual Activity Detected in the Technology Stocks You Follow\", \"text\": \"【Snowball】The AI computing power sector stocks you follow are experiencing a rapid surge. It is recommended to stay updated on related developments.\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"Snowball\", \"analysis\": {}}",
+      "contextGroupId": 67
+    },
+    {
+      "identifier": "sms_1860_1747550710000",
+      "timestamp": 1747550710000,
+      "event_source": "SMS",
+      "payload": "{\"messageTypeAndId\": \"sms_1860\", \"messageType\": 1, \"messageId\": 1860, \"threadId\": 17, \"date\": 1747550710000, \"address\": \"+8613510785678\", \"title\": \"Zhang Mingxuan\", \"body\": \"Guys, I'm home. Just finished my run and took a shower—feeling refreshed! What did you all do over the weekend?\", \"isIncoming\": 0, \"creator\": \"com.android.mms\"}",
+      "contextGroupId": 138
+    },
+    {
+      "identifier": "sms_2899_1754135100000",
+      "timestamp": 1754135100000,
+      "event_source": "SMS",
+      "payload": "{\"messageTypeAndId\": \"sms_2899\", \"messageType\": 0, \"messageId\": 2899, \"threadId\": 23, \"date\": 1754135100000, \"address\": \"1069008610086\", \"title\": \"China Mobile\", \"body\": \"【China Mobile】Dear customer, you currently have 5.2GB of data and 120 minutes of call time remaining in your plan. Click http://10086.cn for details.\", \"isIncoming\": 1, \"creator\": \"com.android.mms\"}",
+      "contextGroupId": 210
+    },
+    {
+      "identifier": "noti_3945_1760749500000",
+      "timestamp": 1760749500000,
+      "event_source": "NOTIFICATION",
+      "payload": "{\"packageName\": \"com.xingin.xhs\", \"postTime\": 1760749500000, \"key\": \"noti_3945\", \"id\": 3945, \"isOngoing\": false, \"isClearable\": false, \"title\": \"Xiaohongshu: Portrait Photography Lighting Techniques\", \"text\": \"【Xiaohongshu】The portrait photographer you follow has updated: A complete guide to indoor portrait lighting, with practical analysis of Rembrandt lighting and butterfly lighting. Click to view and enhance your photography skills.\", \"subText\": \"\", \"category\": \"entertainment\", \"appName\": \"Xiaohongshu\", \"analysis\": {}}",
+      "contextGroupId": 286
+    }
+  ],
+  "variant_sample": [
+    {
+      "identifier": "noti_6_1696107600000",
+      "timestamp": 1696107600000,
+      "event_source": "NOTIFICATION",
+      "payload": "{\"packageName\": \"com.netease.cloudmusic\", \"postTime\": 1696107600000, \"key\": \"noti_6\", \"id\": 6, \"isOngoing\": false, \"isClearable\": true, \"title\": \"NetEase Cloud Music: 오늘의 추천 업데이트\", \"text\": \"【NetEase Cloud Music】Based on your listening habits, today's 추천 플레이리스트 \\\"아침 달리기 Energy Rhythm\\\" has been updated, including 5 new songs.\", \"subText\": \"\", \"category\": \"music\", \"appName\": \"넷이즈 클라우드 뮤직\", \"analysis\": {}}",
+      "contextGroupId": 1
+    },
+    {
+      "identifier": "noti_856_1741409100000",
+      "timestamp": 1741409100000,
+      "event_source": "NOTIFICATION",
+      "payload": "{\"packageName\": \"com.app.snowball\", \"postTime\": 1741409100000, \"key\": \"noti_856\", \"id\": 856, \"isOngoing\": false, \"isClearable\": false, \"title\": \"Snowball: Unusual Activity Detected in the Technology Stocks You Follow\", \"text\": \"【Snowball】The AI computing power sector stocks you follow are experiencing a rapid surge. It is 추천 to stay updated on related developments.\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"Snowball\", \"analysis\": {}}",
+      "contextGroupId": 67
+    },
+    {
+      "identifier": "sms_1860_1747550710000",
+      "timestamp": 1747550710000,
+      "event_source": "SMS",
+      "payload": "{\"messageTypeAndId\": \"sms_1860\", \"messageType\": 1, \"messageId\": 1860, \"threadId\": 17, \"date\": 1747550710000, \"address\": \"+8613510785678\", \"title\": \"Zhang Mingxuan\", \"body\": \"Guys, I'm home. Just finished my run and took a shower—feeling refreshed! What did you all do over the weekend?\", \"isIncoming\": 0, \"creator\": \"com.android.mms\"}",
+      "contextGroupId": 138
+    },
+    {
+      "identifier": "sms_2899_1754135100000",
+      "timestamp": 1754135100000,
+      "event_source": "SMS",
+      "payload": "{\"messageTypeAndId\": \"sms_2899\", \"messageType\": 0, \"messageId\": 2899, \"threadId\": 23, \"date\": 1754135100000, \"address\": \"1069008610086\", \"title\": \"China Mobile\", \"body\": \"【China Mobile】Dear customer, you currently have 5.2GB of data and 120 minutes of call time remaining in your plan. Click http://10086.cn for details.\", \"isIncoming\": 1, \"creator\": \"com.android.mms\"}",
+      "contextGroupId": 210
+    },
+    {
+      "identifier": "noti_3945_1760749500000",
+      "timestamp": 1760749500000,
+      "event_source": "NOTIFICATION",
+      "payload": "{\"packageName\": \"com.xingin.xhs\", \"postTime\": 1760749500000, \"key\": \"noti_3945\", \"id\": 3945, \"isOngoing\": false, \"isClearable\": false, \"title\": \"Xiaohongshu: Portrait Photography Lighting Techniques\", \"text\": \"【Xiaohongshu】The portrait photographer you follow has updated: A complete guide to indoor portrait lighting, with practical analysis of Rembrandt lighting and butterfly lighting. 눌러서 view and enhance your photography skills.\", \"subText\": \"\", \"category\": \"entertainment\", \"appName\": \"샤오홍수\", \"analysis\": {}}",
+      "contextGroupId": 286
+    }
+  ]
+}
