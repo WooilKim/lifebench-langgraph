@@ -7,109 +7,58 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>tailwind.config = { darkMode: 'class' }</script>
   <style>
-    /* ── Layout ─────────────────────────── */
-    .compare-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-    }
-    .col-orig  { border-right: 1px solid #1e293b; }
-    .col-new   {}
+    .compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; }
+    .col-orig { border-right:1px solid #1e293b; }
+    .row-sep { grid-column:1/-1; height:1px; background:#1e293b; }
+    .step-cell { padding:20px 24px; display:flex; flex-direction:column; gap:12px; }
+    .step-cell-orig { background:#0a0f1a; }
+    .step-cell-new  { background:#0a150e; }
+    .step-cell-na   { background:#0a0a0a; display:flex; align-items:center; justify-content:center; }
 
-    /* ── Step row ───────────────────────── */
-    .step-row {
-      display: contents; /* lets children participate in grid */
-    }
-    /* Row separator */
-    .row-sep {
-      grid-column: 1 / -1;
-      height: 1px;
-      background: #1e293b;
-    }
-
-    /* ── Step cell ──────────────────────── */
-    .step-cell {
-      padding: 20px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .step-cell-orig { background: #0a0f1a; }
-    .step-cell-new  { background: #0a150e; }
-    .step-cell-na   { background: #0a0a0a; display: flex; align-items: center; justify-content: center; }
-
-    /* ── Node pill ──────────────────────── */
-    .node-pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 6px 14px; border-radius: 8px;
-      font-size: 12px; font-weight: 700; font-family: ui-monospace, monospace;
-      width: fit-content;
-    }
+    .node-pill { display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:8px; font-size:12px; font-weight:700; font-family:ui-monospace,monospace; width:fit-content; }
     .np-orig { background:#1e293b; color:#94a3b8; border:1px solid #334155; }
     .np-new  { background:#14532d; color:#bbf7d0; border:1px solid #22c55e; }
     .np-sub  { background:#1e3a5f; color:#93c5fd; border:1px solid #3b82f6; font-size:11px; padding:4px 10px; }
     .np-na   { background:#111; color:#374151; border:1px dashed #1f2937; }
 
-    /* ── Arrow ──────────────────────────── */
-    .v-arrow { text-align:center; color:#374151; font-size:16px; line-height:1; margin:2px 0; }
-
-    /* ── Badge ──────────────────────────── */
     .badge { display:inline-block; font-size:9px; font-weight:800; padding:1px 5px; border-radius:3px; letter-spacing:0.06em; vertical-align:middle; }
     .b-llm  { background:#4c1d95; color:#c4b5fd; border:1px solid #7c3aed; }
     .b-rule { background:#1f2937; color:#6b7280; border:1px solid #374151; }
-    .b-orig { background:#1e293b; color:#64748b; border:1px solid #334155; }
     .b-new  { background:#14532d; color:#86efac; border:1px solid #22c55e; }
     .b-ko   { background:#7c2d12; color:#fdba74; border:1px solid #c2410c; }
     .b-zh   { background:#1e3a5f; color:#93c5fd; border:1px solid #2563eb; }
 
-    /* ── Data box ───────────────────────── */
-    .data-box {
-      background: #020617;
-      border: 1px solid #1e293b;
-      border-radius: 8px;
-      padding: 10px 12px;
-      font-family: ui-monospace, monospace;
-      font-size: 11px;
-      color: #94a3b8;
-      overflow-x: auto;
-    }
-    .data-box .k  { color: #64748b; }
-    .data-box .s  { color: #fbbf24; }
-    .data-box .n  { color: #34d399; }
-    .data-box .b  { color: #60a5fa; }
-    .data-box .r  { color: #f87171; }
-    .data-box .g  { color: #a3e635; }
+    .data-box { background:#020617; border:1px solid #1e293b; border-radius:8px; padding:10px 12px; font-family:ui-monospace,monospace; font-size:11px; color:#94a3b8; overflow-x:auto; }
+    .data-box .k { color:#64748b; }
+    .data-box .s { color:#fbbf24; }
+    .data-box .n { color:#34d399; }
+    .data-box .b { color:#60a5fa; }
+    .data-box .r { color:#f87171; }
+    .data-box .g { color:#a3e635; }
 
-    /* ── Prompt box ─────────────────────── */
+    /* Prompt box */
+    .prompt-wrap { position:relative; }
     .prompt-box {
-      background: #0f172a;
-      border: 1px solid #1e3a5f;
-      border-left: 3px solid #6366f1;
-      border-radius: 6px;
-      padding: 10px 12px;
-      font-size: 11px;
-      color: #94a3b8;
-      font-family: ui-monospace, monospace;
-      white-space: pre-wrap;
-      word-break: break-word;
+      background:#0f172a; border:1px solid #1e3a5f; border-left:3px solid #6366f1;
+      border-radius:6px; padding:10px 12px; font-size:11px; color:#94a3b8;
+      font-family:ui-monospace,monospace; white-space:pre-wrap; word-break:break-word;
+      max-height:260px; overflow-y:auto;
     }
-    .prompt-box-zh {
-      border-left-color: #3b82f6;
+    .prompt-box-zh { border-left-color:#3b82f6; color:#7dd3fc; }
+    .prompt-toggle-btn {
+      position:absolute; top:6px; right:6px;
+      font-size:9px; font-weight:800; padding:2px 7px; border-radius:4px; cursor:pointer;
+      background:#1e293b; color:#94a3b8; border:1px solid #334155;
+      letter-spacing:0.05em; transition:all 0.15s; z-index:10;
     }
+    .prompt-toggle-btn:hover { background:#334155; color:#e2e8f0; }
 
-    /* ── IO row ─────────────────────────── */
-    .io-row { display: flex; gap: 8px; }
-    .io-in  { flex:1; }
-    .io-out { flex:1; }
-    .io-label { font-size: 9px; font-weight: 800; letter-spacing: 0.08em; margin-bottom: 4px; }
+    .io-row { display:flex; gap:8px; }
+    .io-in, .io-out { flex:1; }
+    .io-label { font-size:9px; font-weight:800; letter-spacing:0.08em; margin-bottom:4px; }
+    .step-label { font-size:11px; font-weight:800; letter-spacing:0.08em; color:#475569; margin-bottom:4px; }
 
-    /* ── Step label ─────────────────────── */
-    .step-label {
-      font-size: 11px; font-weight: 800; letter-spacing: 0.08em;
-      color: #475569; margin-bottom: 4px;
-    }
-
-    pre { white-space: pre-wrap; word-break: break-word; margin: 0; }
+    pre { white-space:pre-wrap; word-break:break-word; margin:0; }
   </style>
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen font-sans">
@@ -121,12 +70,10 @@
     <p class="text-xs text-gray-500 mt-0.5">Original vs. LangGraph — Pipeline Comparison</p>
   </div>
   <div class="flex gap-3 items-center">
-    <a href="explorer.html"
-       class="text-xs bg-indigo-900/60 hover:bg-indigo-800/60 text-indigo-300 border border-indigo-700 px-3 py-1.5 rounded font-bold transition-all">
+    <a href="explorer.html" class="text-xs bg-indigo-900/60 hover:bg-indigo-800/60 text-indigo-300 border border-indigo-700 px-3 py-1.5 rounded font-bold transition-all">
       📊 데이터 탐색기 →
     </a>
-    <button onclick="document.documentElement.classList.toggle('dark')"
-      class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded border border-gray-700">
+    <button onclick="document.documentElement.classList.toggle('dark')" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded border border-gray-700">
       Toggle Dark
     </button>
   </div>
@@ -137,8 +84,7 @@
   <div class="col-orig px-6 py-3 flex items-center gap-3">
     <span class="text-sm font-bold text-blue-400">Original LifeBench</span>
     <span class="badge b-zh">중국어</span>
-    <span class="badge b-orig">고정 스크립트</span>
-    <span class="text-xs text-gray-600 ml-1">10명 · 1년치 데이터</span>
+    <span class="text-xs text-gray-600 ml-1">고정 스크립트 · 10명 · 1년치</span>
   </div>
   <div class="px-6 py-3 flex items-center gap-3">
     <span class="text-sm font-bold text-green-400">LangGraph (이 프로젝트)</span>
@@ -149,238 +95,491 @@
 </div>
 
 <!-- Main comparison grid -->
-<div class="compare-grid">
+<div class="compare-grid" id="grid-container">
+  <!-- Injected by JS -->
+</div>
 
-  <!-- ══════════════════════════════════════════════════════ -->
-  <!-- ROW 0: Persona Gen -->
-  <!-- ══════════════════════════════════════════════════════ -->
+<!-- Footer -->
+<div class="border-t border-gray-800 px-6 py-4">
+  <div class="max-w-4xl mx-auto flex flex-wrap gap-6 text-xs text-gray-500">
+    <div><span class="text-blue-400 font-bold">Original</span> — 중국어 고정 스크립트 · Step 3에서 JSON 파일 기반</div>
+    <div><span class="text-green-400 font-bold">LangGraph</span> — 한국어 LLM · 가변 인원 · 이벤트에서 직접 폰 데이터 합성</div>
+    <div class="ml-auto"><a href="explorer.html" class="text-indigo-400 hover:text-indigo-300 font-bold">📊 생성된 데이터 탐색 →</a></div>
+  </div>
+</div>
 
-  <!-- ORIG -->
+<script>
+// ── Prompt data (from lifebench-viz) ──────────────────────────────────────────
+// Korean translations by lifebench-viz repo (prompts_data.js)
+const KR = {
+  persona_gen: `당신은 인류학자, 작가, 논리 전문가입니다. 모델이 생성한 개인 정보 JSON 데이터를 처리합니다.
+목표: 기본 정보(이름/성별/나이 등)를 유지하면서, 인물의 성격·심리·행동 패턴·일상 습관 및
+사회경제적 속성을 보완합니다.
+
+입력 기본 정보와 아래 무작위 속성 참조:
+{random_attributes}
+
+출력 필드: name, age, gender, job, mbti, hobbies(4-8개),
+personality_traits, economic_level, home_address, relationships(10-15명)
+
+JSON만 출력하세요. 설명 없이.`,
+  persona_relations: `당신은 인류학자, 스토리 작가, 소셜 네트워크 전문가입니다.
+개인 정보를 기반으로 개인이 연락을 유지할 사회적 관계망을 생성합니다.
+
+인물의 직업·취미·생활 환경을 분석하여 가족/직장/학교/취미 등 소셜 서클을 추론하고
+연락을 유지할 20~26명의 관계 목록을 생성합니다.
+
+출력: [{name, relation, social_circle}]
+JSON만 출력하세요.`,
+  draft_gen: `인물 분석을 기반으로 2025년 내 발생 가능한 100개의 생활 이벤트를 생성합니다.
+
+## 핵심 창작 원칙
+1. 진실성과 부합성: 인물 설정에 부합하는 사건만 창작
+2. 시간 분포: 전체 연도에 고르게 분포, 계절·공휴일 반영
+3. 한국 공휴일: 설날(1/29), 어린이날(5/5), 추석(10/6) 등
+4. 카테고리 비율: Career 25%, Personal Life 20%, Health 15%, Social 20%, Other 20%
+5. 이벤트 간 인과관계 포함
+
+출력: [{"date","title","category","description"}]
+JSON만 출력.`,
+  simulator_subj: `역할에 완전히 몰입하여, **1인칭 "나"** 의 시각으로 깊이 생각하고,
+아래 정보를 종합 활용하여 오늘의 일정을 분석·계획하세요:
+- 자아인식 (성격 특성, 행동 습관, 개인 선호)
+- 기억 데이터 (과거 활동 궤적, 반복 이벤트 패턴)
+- 현재 상태 (아침에 깨어난 장소, 신체/정신 상태)
+- 오늘 날짜 속성 (평일/휴일 명확히 구분)
+- **오늘 초기 계획: {plan}**
+
+출력: {"thought": "...", "plan": [...]}`,
+  simulator_obj: `의인화된 사고 과정(개인의 당일 주관적 계획)을 기반으로,
+객관적 시각에서 당일 일정을 조정·보완·최적화합니다.
+
+## 내용 생성 핵심 요구사항
+1. 시간대 채우기: 모든 이벤트의 발생 시간대 명확화, 공백 시간대 채우기
+2. 일상 패턴 보완: 평일 출퇴근, 식사 등 일상 패턴 자동 추가
+3. 이벤트 다양성: 이전 며칠의 이벤트와 차이 필수
+4. 교통 이동 논리: 이벤트 간 이동 시간·방법 포함
+
+주관적 계획: {subjective_plan}
+날짜: {date}
+
+출력: 시간순 이벤트 배열 JSON`,
+  phone_call: `다음 이벤트 정보와 생성 지침에 따라 통화 데이터를 생성하세요.
+
+## 입력 정보
+- 날짜: {date}
+- 이벤트 정보: {event_info}
+- 생성 지침: {generate_guide}
+- 이벤트 ID: {event_id}
+
+## 생성 요구사항
+1. 이벤트와 연관된 통화 생성
+2. 통화 방향(발신/수신), 시간, 결과 포함
+3. 참여자 관계 반영 (가족/동료/친구)
+4. 현실적인 통화 시간`,
+  phone_sms: `다음 이벤트 정보와 생성 지침에 따라 문자(SMS) 데이터를 생성하세요.
+
+## 입력 정보
+- 날짜: {date}
+- 이벤트 정보: {event_info}
+- 생성 지침: {generate_guide}
+
+## 생성 요구사항
+1. 이벤트와 자연스럽게 연결되는 문자 대화 생성
+2. 참여자의 관계와 성격 반영
+3. 시간적 논리 유지
+4. 현실적인 문자 내용과 길이`,
+  phone_noti: `다음 이벤트 정보와 생성 지침에 따라 앱 알림(push) 데이터를 생성하세요.
+
+## 입력 정보
+- 날짜: {date}
+- 이벤트 정보: {event_info}
+- 생성 지침: {generate_guide}
+
+## 생성 요구사항
+1. 이벤트 맥락에 맞는 앱 알림 생성
+2. 앱 이름, 알림 제목, 내용, 시간 포함
+3. 인물의 앱 사용 패턴 반영`,
+};
+
+const ZH = {
+  persona_gen: `你是人类学家、作家、逻辑专家。处理模型生成的个人信息JSON数据。
+目标：保留基本信息(姓名/性别/年龄等)，补充人物性格·心理·行为模式·日常习惯及社会经济属性。
+
+输入基本信息和以下随机属性参考：
+{random_attributes}
+
+输出字段：name, age, gender, job, mbti, hobbies(4-8个),
+personality_traits, economic_level, home_address, relationships(10-15人)
+
+仅输出JSON。不含解释。`,
+  persona_relations: `你是人类学家、故事作家、社交网络专家。
+基于个人信息生成个人维持联系的社会关系网络。
+
+分析人物职业·爱好·生活环境，推断家庭/工作/学校/兴趣等社交圈，
+生成维持联系的20~26人关系列表。
+
+输出：[{name, relation, social_circle}]
+仅输出JSON。`,
+  draft_gen: `基于人物分析，生成2025年内可能发生的100个生活事件。
+
+## 核心创作原则
+1. 真实性：只创作符合人物设定的事件
+2. 时间分布：均匀分布在全年，反映季节·节假日
+3. 类别比例：Career 25%, Personal Life 20%, Health 15%, Social 20%, Other 20%
+4. 事件间包含因果关系
+
+输出：[{"date","title","category","description"}]
+仅输出JSON。`,
+  simulator_subj: `请完全代入指定角色，以第一人称"我"的视角进行深度思考，
+综合运用以下信息分析并制定今日事件安排：
+- 自我认知（性格特质、行为习惯、个人偏好）
+- 记忆数据（过往活动轨迹、重复事件模式）
+- 当下状态（早晨醒来地点、身体/精神状态）
+- 今日日期属性（明确区分工作日/休息日）
+- **今日初步计划：{plan}**
+
+输出：{"thought": "...", "plan": [...]}`,
+  simulator_obj: `基于拟人化思考过程（个人对当日的主观安排），
+从客观视角对全天事件进行调整、补充与优化。
+
+## 内容生成核心要求
+1. 时段填充：明确所有事件时段，填补空白时段
+2. 日常模式补充：补充通勤、用餐等日常模式
+3. 事件多样性：与前几日存在明显差异
+4. 交通轨迹：包含事件间移动时间·方式
+
+主观计划：{subjective_plan}
+日期：{date}
+
+输出：时间顺序事件数组JSON`,
+  phone_call: `请根据以下事件信息和生成指导生成通话数据。
+
+## 输入信息
+- 日期: {date}
+- 事件信息: {event_info}
+- 生成指导: {generate_guide}
+- 事件ID: {event_id}
+
+## 输出格式
+[{
+  "type": "call",
+  "phoneNumber": "<电话号码>",
+  "contactName": "<联系人>",
+  "datetime": "YYYY-MM-DD HH:MM:SS",
+  "datetime_end": "YYYY-MM-DD HH:MM:SS",
+  "direction": 0或1,
+  "call_result": "接通/未接通/拒接"
+}]`,
+  phone_sms: `请根据以下事件信息和生成指导生成短信数据。
+
+## 输入信息
+- 日期: {date}
+- 事件信息: {event_info}
+- 生成指导: {generate_guide}
+
+## 输出格式
+[{
+  "type": "sms",
+  "message_content": "<短信内容>",
+  "contactName": "<联系人>",
+  "phoneNumber": "<电话号码>",
+  "datetime": "YYYY-MM-DD HH:MM:SS",
+  "message_type": "接收/发送"
+}]`,
+  phone_noti: `请根据以下事件信息和生成指导生成手机推送通知数据。
+
+## 输入信息
+- 日期: {date}
+- 事件信息: {event_info}
+- 生成指导: {generate_guide}
+
+## 输出格式
+[{
+  "type": "push",
+  "title": "<通知标题>",
+  "content": "<通知内容>",
+  "source": "<应用名称>",
+  "datetime": "YYYY-MM-DD HH:MM:SS"
+}]`,
+};
+
+// ── Prompt box builder ────────────────────────────────────────────────────────
+let promptStates = {}; // key → 'kr' | 'zh'
+
+function makePromptBox(key, defaultLang='kr') {
+  promptStates[key] = defaultLang;
+  const kr = KR[key] || '';
+  const zh = ZH[key] || '';
+  const id = 'pb-' + key;
+  return `
+<div class="prompt-wrap" id="wrap-${key}">
+  <div class="prompt-box" id="${id}">${escHtml(kr)}</div>
+  ${zh ? `<button class="prompt-toggle-btn" onclick="togglePrompt('${key}')">원본 ZH</button>` : ''}
+</div>`;
+}
+
+function togglePrompt(key) {
+  const cur = promptStates[key];
+  const next = cur === 'kr' ? 'zh' : 'kr';
+  promptStates[key] = next;
+  const box = document.getElementById('pb-' + key);
+  const btn = box.parentElement.querySelector('.prompt-toggle-btn');
+  if (next === 'zh') {
+    box.textContent = ZH[key] || '';
+    box.classList.add('prompt-box-zh');
+    btn.textContent = '번역 KR';
+  } else {
+    box.textContent = KR[key] || '';
+    box.classList.remove('prompt-box-zh');
+    btn.textContent = '원본 ZH';
+  }
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── Row builder ───────────────────────────────────────────────────────────────
+function row(origHtml, newHtml, last=false) {
+  return `
+    ${origHtml}
+    ${newHtml}
+    ${last ? '' : '<div class="row-sep"></div>'}
+  `;
+}
+
+function ioBox(inHtml, outHtml) {
+  return `
+<div class="io-row">
+  <div class="io-in">
+    <div class="io-label text-blue-400">📥 INPUT</div>
+    <div class="data-box">${inHtml}</div>
+  </div>
+  <div class="io-out">
+    <div class="io-label text-green-400">📤 OUTPUT</div>
+    <div class="data-box">${outHtml}</div>
+  </div>
+</div>`;
+}
+
+// ── Grid content ──────────────────────────────────────────────────────────────
+function buildGrid() {
+  return `
+
+  <!-- ═══ STEP 0: Persona Gen ═══ -->
   <div class="step-cell step-cell-orig col-orig">
     <div class="step-label">STEP 0</div>
     <div class="node-pill np-orig">👤 PersonaGenerator</div>
     <div class="text-xs text-gray-400 leading-relaxed">
-      실제 수집된 10명의 기본 정보(person.json)와 속성 풀(refer.json)을 사용해
-      LLM으로 30+ 필드의 페르소나 생성. <span class="badge b-llm">LLM</span> <span class="badge b-zh">중국어 프롬프트</span>
+      실제 수집된 10명 기본 정보(person.json)와 속성 풀(refer.json) 기반으로 3단계 LLM 호출:
+      ① 기본 프로파일 생성 → ② 관계망 목록 생성 → ③ 각 연락처 상세 정보 생성.
+      <span class="badge b-llm">LLM ×3</span> <span class="badge b-zh">중국어</span>
     </div>
-    <div class="prompt-box prompt-box-zh">根据以下基本信息和随机属性，生成详细的人物画像。
-包含：MBTI、健康状况、经济状况、人际关系网络20~26人...
-输出JSON格式，不含解释。</div>
-    <div class="io-row">
-      <div class="io-in">
-        <div class="io-label text-blue-400">📥 INPUT</div>
-        <div class="data-box"><span class="k">// person.json</span>
-{<span class="k">"name"</span>: <span class="s">"冯浩然"</span>,
- <span class="k">"age"</span>: <span class="n">27</span>,
- <span class="k">"job"</span>: <span class="s">"金融投资顾问"</span>}</div>
-      </div>
-      <div class="io-out">
-        <div class="io-label text-green-400">📤 OUTPUT</div>
-        <div class="data-box"><span class="k">// persona.json (30+ fields)</span>
-{<span class="k">"mbti"</span>: <span class="s">"ENTJ"</span>,
- <span class="k">"relations"</span>: <span class="b">[26명]</span>,
- <span class="k">"health"</span>: <span class="s">"良好"</span>}</div>
-      </div>
-    </div>
+    <div class="text-xs text-gray-500 mb-1">① 기본 프로파일 생성 (template_refine)</div>
+    ${makePromptBox('persona_gen')}
+    <div class="text-xs text-gray-500 mb-1 mt-2">② 인간관계 목록 생성 (template_relation_1)</div>
+    ${makePromptBox('persona_relations')}
+    ${ioBox(
+      `<span class="k">// person.json</span>
+{"name": <span class="s">"冯浩然"</span>, "age": <span class="n">27</span>,
+ "job": <span class="s">"金融投资顾问"</span>}`,
+      `<span class="k">// persona.json (30+ 필드)</span>
+{"mbti": <span class="s">"ENTJ"</span>,
+ "relations": <span class="b">[26명]</span>,
+ "health": <span class="s">"良好"</span>}`
+    )}
   </div>
 
-  <!-- NEW -->
   <div class="step-cell step-cell-new">
     <div class="step-label">STEP 0</div>
     <div class="node-pill np-new">👤 persona_gen</div>
     <div class="text-xs text-gray-300 leading-relaxed">
-      count 수만큼 한국인 페르소나를 LLM으로 생성. 직업·도시·나이 다양성 조건을 프롬프트에 명시. <span class="badge b-llm">LLM</span> <span class="badge b-ko">한국어</span>
+      count 수만큼 한국인 페르소나를 LLM으로 생성. 직업·도시·나이 다양성 조건을 프롬프트에 명시.
+      <span class="badge b-llm">LLM ×1</span> <span class="badge b-ko">한국어</span>
     </div>
-    <div class="prompt-box">다음 조건으로 한국인 페르소나 {count}명의 JSON 배열을 생성하세요.
+    <div class="text-xs text-gray-500 mb-1">persona_gen.py</div>
+    <div class="prompt-box">${escHtml(`다음 조건으로 한국인 페르소나 {count}명의 JSON 배열을 생성하세요.
 필드: name, age, gender, job, mbti, hobbies(4-8개),
       economic_level(하/중/상), home_city, relationships(10-15명)
 다양성 조건 (반드시 준수):
 - 페르소나 1: 도시=인천, 직업=소프트웨어 개발자, 나이=46, 성별=남
-JSON 배열만 출력하세요.</div>
-    <div class="io-row">
-      <div class="io-in">
-        <div class="io-label text-blue-400">📥 INPUT</div>
-        <div class="data-box"><span class="k">// state</span>
-{<span class="k">"count"</span>: <span class="n">3</span>,
- <span class="k">"provider"</span>: <span class="s">"claude"</span>}</div>
-      </div>
-      <div class="io-out">
-        <div class="io-label text-green-400">📤 OUTPUT</div>
-        <div class="data-box"><span class="k">// state.personas[0]</span>
-{<span class="k">"name"</span>: <span class="s">"박준혁"</span>,
- <span class="k">"age"</span>: <span class="n">46</span>, <span class="k">"job"</span>: <span class="s">"개발자"</span>,
- <span class="k">"mbti"</span>: <span class="s">"INTJ"</span>,
- <span class="k">"relations"</span>: <span class="b">[15명]</span>}</div>
-      </div>
-    </div>
+- 페르소나 2: 도시=서울, 직업=의사, 나이=38, 성별=여
+JSON 배열만 출력하세요.`)}</div>
+    ${ioBox(
+      `<span class="k">// state</span>
+{"count": <span class="n">3</span>,
+ "provider": <span class="s">"claude"</span>}`,
+      `<span class="k">// state.personas[0]</span>
+{"name": <span class="s">"박준혁"</span>,
+ "age": <span class="n">46</span>, "job": <span class="s">"개발자"</span>,
+ "mbti": <span class="s">"INTJ"</span>,
+ "relations": <span class="b">[15명]</span>}`
+    )}
   </div>
 
   <div class="row-sep"></div>
 
-  <!-- ══════════════════════════════════════════════════════ -->
-  <!-- ROW 1: Draft Gen -->
-  <!-- ══════════════════════════════════════════════════════ -->
-
+  <!-- ═══ STEP 1: Draft Gen ═══ -->
   <div class="step-cell step-cell-orig col-orig">
     <div class="step-label">STEP 1</div>
     <div class="node-pill np-orig">📅 Scheduler</div>
     <div class="text-xs text-gray-400 leading-relaxed">
-      5단계 순차 LLM 호출로 연간 ~190개 이벤트 생성. 카테고리별 비율 지정, 타임라인 충돌 해결. <span class="badge b-llm">LLM ×5</span> <span class="badge b-zh">중국어</span>
+      5단계 순차 LLM 호출로 연간 ~190개 이벤트 생성.
+      카테고리별 비율 지정, 타임라인 충돌 해결.
+      <span class="badge b-llm">LLM ×5</span> <span class="badge b-zh">중국어</span>
     </div>
-    <div class="prompt-box prompt-box-zh">根据{persona}的职业、性格、爱好，生成2025年100个生活事件。
-类别比例: Career 25%, Personal Life 20%, Health 15%...
-包含因果关系，避免冲突。JSON格式输出。</div>
-    <div class="io-row">
-      <div class="io-in">
-        <div class="io-label text-blue-400">📥 INPUT</div>
-        <div class="data-box"><span class="k">// persona.json</span>
-{<span class="k">"name"</span>: <span class="s">"冯浩然"</span>,
- <span class="k">"job"</span>: <span class="s">"金融顾问"</span>}</div>
-      </div>
-      <div class="io-out">
-        <div class="io-label text-green-400">📤 OUTPUT</div>
-        <div class="data-box"><span class="k">// daily_draft.json</span>
-[{<span class="k">"date"</span>: <span class="s">"2025-02-01"</span>,
-  <span class="k">"title"</span>: <span class="s">"春节家庭聚会"</span>,
-  <span class="k">"category"</span>: <span class="s">"family"</span>},
- <span class="g">... 190개 이벤트</span>]</div>
-      </div>
-    </div>
+    <div class="text-xs text-gray-500 mb-1">① 연간 이벤트 1라운드 (template_yearterm_eventgen)</div>
+    ${makePromptBox('draft_gen')}
+    ${ioBox(
+      `<span class="k">// persona.json</span>
+{"name": <span class="s">"冯浩然"</span>,
+ "job": <span class="s">"金融顾问"</span>}`,
+      `<span class="k">// daily_draft.json</span>
+[{"date": <span class="s">"2025-02-01"</span>,
+  "title": <span class="s">"春节家庭聚会"</span>,
+  "category": <span class="s">"family"</span>},
+ <span class="g">... 190개 이벤트</span>]`
+    )}
   </div>
 
   <div class="step-cell step-cell-new">
     <div class="step-label">STEP 1</div>
     <div class="node-pill np-new">📅 draft_gen</div>
     <div class="text-xs text-gray-300 leading-relaxed">
-      한국 공휴일·직장 문화를 반영한 연간 이벤트 초안 생성. test 모드 10개 / 정식 40개. <span class="badge b-llm">LLM ×1</span> <span class="badge b-ko">한국어</span>
+      한국 공휴일·직장 문화를 반영한 연간 이벤트 초안.
+      test 모드 10개 / 정식 40개.
+      <span class="badge b-llm">LLM ×1</span> <span class="badge b-ko">한국어</span>
     </div>
-    <div class="prompt-box">박준혁(46세, 소프트웨어 개발자, 인천 거주)의
+    <div class="text-xs text-gray-500 mb-1">draft_gen.py</div>
+    <div class="prompt-box">${escHtml(`박준혁(46세, 소프트웨어 개발자, 인천 거주)의
 2025년 주요 생활 이벤트 40개를 JSON 배열로 생성하세요.
 취미: 독서, 등산, 체스, 커피 원두 수집
-한국 공휴일 반영: 설날(2025-01-29), 추석(2025-10-06)...
+한국 공휴일 반영:
+- 설날(2025-01-29), 삼일절(2025-03-01)
+- 어린이날(2025-05-05), 추석(2025-10-06)
+- 크리스마스(2025-12-25)
+한국 직장 문화 반영 (야근, 회식, 성과 평가)
 형식: [{"date","title","category","description"}]
-JSON만 출력하세요.</div>
-    <div class="io-row">
-      <div class="io-in">
-        <div class="io-label text-blue-400">📥 INPUT</div>
-        <div class="data-box"><span class="k">// state.personas[0]</span>
-{<span class="k">"name"</span>: <span class="s">"박준혁"</span>,
- <span class="k">"job"</span>: <span class="s">"소프트웨어 개발자"</span>,
- <span class="k">"home_city"</span>: <span class="s">"인천"</span>}</div>
-      </div>
-      <div class="io-out">
-        <div class="io-label text-green-400">📤 OUTPUT</div>
-        <div class="data-box"><span class="k">// state.daily_drafts["박준혁"]</span>
-[{<span class="k">"date"</span>: <span class="s">"2025-01-29"</span>,
-  <span class="k">"title"</span>: <span class="s">"설날 가족 모임"</span>,
-  <span class="k">"category"</span>: <span class="s">"family"</span>},
- <span class="g">... 40개 이벤트</span>]</div>
-      </div>
-    </div>
+JSON만 출력하세요.`)}</div>
+    ${ioBox(
+      `<span class="k">// state.personas[0]</span>
+{"name": <span class="s">"박준혁"</span>,
+ "job": <span class="s">"소프트웨어 개발자"</span>,
+ "home_city": <span class="s">"인천"</span>}`,
+      `<span class="k">// state.daily_drafts["박준혁"]</span>
+[{"date": <span class="s">"2025-01-29"</span>,
+  "title": <span class="s">"설날 가족 모임"</span>,
+  "category": <span class="s">"family"</span>},
+ <span class="g">... 40개 이벤트</span>]`
+    )}
   </div>
 
   <div class="row-sep"></div>
 
-  <!-- ══════════════════════════════════════════════════════ -->
-  <!-- ROW 2: Simulator -->
-  <!-- ══════════════════════════════════════════════════════ -->
-
+  <!-- ═══ STEP 2: Simulator ═══ -->
   <div class="step-cell step-cell-orig col-orig">
     <div class="step-label">STEP 2</div>
     <div class="node-pill np-orig">🎮 Mind (Simulator)</div>
     <div class="text-xs text-gray-400 leading-relaxed">
-      하루 7단계 LLM 호출: 주관적 계획 → 현실 제약 반영 → POI 매핑 → 이동경로 → 반성 → 장기기억. 365일 × max_workers=30 병렬. <span class="badge b-llm">LLM ×7/day</span>
+      하루 7단계 LLM 호출: 주관적 계획 → 현실 제약 반영 → POI 매핑 → 이동경로 → 반성 → 장기기억.
+      365일 × max_workers=30 병렬.
+      <span class="badge b-llm">LLM ×7/day</span>
     </div>
-    <div class="prompt-box prompt-box-zh">【主观计划】{persona}今天的主观规划是什么？
-考虑：MBTI性格、今日事件、长期记忆...
-【客观优化】考虑天气、交通、疲劳度...
-输出：时间顺序事件序列 JSON</div>
-    <div class="io-row">
-      <div class="io-in">
-        <div class="io-label text-blue-400">📥 INPUT</div>
-        <div class="data-box"><span class="k">// persona + daily_draft</span>
-{<span class="k">"date"</span>: <span class="s">"2025-01-29"</span>,
- <span class="k">"draft_event"</span>: <span class="s">"春节"</span>,
- <span class="k">"fuzzy_memory"</span>: <span class="s">"..."</span>}</div>
-      </div>
-      <div class="io-out">
-        <div class="io-label text-green-400">📤 OUTPUT</div>
-        <div class="data-box"><span class="k">// daily_event.json</span>
-[{<span class="k">"time"</span>: <span class="s">"07:00"</span>, <span class="k">"type"</span>: <span class="s">"起床"</span>,
-  <span class="k">"location"</span>: <span class="s">"上海市徐汇区"</span>},
- <span class="g">... 4,000~5,000개 총합</span>]</div>
-      </div>
-    </div>
+    <div class="text-xs text-gray-500 mb-1">① 주관적 계획 (template_daily_event_subjective_plan)</div>
+    ${makePromptBox('simulator_subj')}
+    <div class="text-xs text-gray-500 mb-1 mt-2">② 객관적 최적화 (template_daily_event_objective_optimize)</div>
+    ${makePromptBox('simulator_obj')}
+    ${ioBox(
+      `<span class="k">// persona + daily_draft + memory</span>
+{"date": <span class="s">"2025-01-29"</span>,
+ "draft": <span class="s">"春节"</span>,
+ "fuzzy_memory": <span class="s">"..."</span>}`,
+      `<span class="k">// daily_event.json</span>
+[{"time": <span class="s">"07:00"</span>,
+  "type": <span class="s">"起床"</span>,
+  "location": <span class="s">"上海市徐汇区"</span>},
+ <span class="g">... 4,000~5,000개 총합</span>]`
+    )}
   </div>
 
   <div class="step-cell step-cell-new">
     <div class="step-label">STEP 2</div>
     <div class="node-pill np-new">🎮 simulator</div>
     <div class="text-xs text-gray-300 leading-relaxed">
-      이벤트 있는 날: LLM으로 5~8개 상세 이벤트. 평범한 날: 직장인 템플릿 자동 적용. test 모드에서는 전부 템플릿만 사용. <span class="badge b-llm">LLM (이벤트 날만)</span>
+      이벤트 있는 날: LLM으로 5~8개 상세 이벤트.
+      평범한 날: 직장인 템플릿(기상→출근→점심→퇴근→취침) 자동 적용.
+      test 모드에서는 모든 날 템플릿만 사용.
+      <span class="badge b-llm">LLM (이벤트 날만)</span>
     </div>
-    <div class="prompt-box">박준혁(개발자, 인천)의 아래 날짜 상세 이벤트를 JSON으로 생성하세요.
+    <div class="text-xs text-gray-500 mb-1">simulator.py</div>
+    <div class="prompt-box">${escHtml(`박준혁(개발자, 인천)의 아래 날짜 상세 이벤트를 JSON으로 생성하세요.
+날짜별 주요 이벤트:
 - 2025-01-29: [family] 설날 가족 모임
-출력: {"2025-01-29": [
-  {"datetime":"YYYY-MM-DD HH:MM:SS",
-   "event_type":"...", "description":"...", "location":"..."}
-]}
-JSON만 출력.</div>
-    <div class="io-row">
-      <div class="io-in">
-        <div class="io-label text-blue-400">📥 INPUT</div>
-        <div class="data-box"><span class="k">// state.daily_drafts</span>
-{<span class="k">"date"</span>: <span class="s">"2025-01-29"</span>,
- <span class="k">"title"</span>: <span class="s">"설날 가족 모임"</span>}
-<span class="k">// + 평일 템플릿</span>
+
+출력: {
+  "2025-01-29": [
+    {"datetime": "YYYY-MM-DD HH:MM:SS",
+     "event_type": "...",
+     "description": "...",
+     "location": "..."}
+  ]
+}
+JSON만 출력.`)}</div>
+    ${ioBox(
+      `<span class="k">// state.daily_drafts + templates</span>
+<span class="k">// 이벤트 있는 날:</span>
+{"date": <span class="s">"2025-01-29"</span>,
+ "title": <span class="s">"설날 가족 모임"</span>}
+<span class="k">// 평범한 날 (템플릿):</span>
 07:00 기상 → 09:00 출근 →
-12:30 점심 → 18:00 퇴근</div>
-      </div>
-      <div class="io-out">
-        <div class="io-label text-green-400">📤 OUTPUT</div>
-        <div class="data-box"><span class="k">// state.daily_events_map["박준혁"]</span>
-[{<span class="k">"datetime"</span>: <span class="s">"2025-01-01 07:00:00"</span>,
-  <span class="k">"event_type"</span>: <span class="s">"기상"</span>,
-  <span class="k">"location"</span>: <span class="s">"집"</span>},
- <span class="g">... ~2,450개 이벤트</span>]</div>
-      </div>
-    </div>
+12:30 점심 → 18:00 퇴근`,
+      `<span class="k">// state.daily_events_map["박준혁"]</span>
+[{"datetime": <span class="s">"2025-01-01 07:00:00"</span>,
+  "event_type": <span class="s">"기상"</span>,
+  "location": <span class="s">"집"</span>},
+ <span class="g">... ~2,450개 이벤트</span>]`
+    )}
   </div>
 
   <div class="row-sep"></div>
 
-  <!-- ══════════════════════════════════════════════════════ -->
-  <!-- ROW 3: Phone Data Gen -->
-  <!-- ══════════════════════════════════════════════════════ -->
-
+  <!-- ═══ STEP 3: Phone Data Gen ═══ -->
   <div class="step-cell step-cell-orig col-orig">
     <div class="step-label">STEP 3</div>
     <div class="node-pill np-orig">📱 PhoneDataGenerator</div>
     <div class="text-xs text-gray-400 leading-relaxed">
-      daily_event.json 기반으로 7종 폰 데이터 생성. Communication·Push·NoteCalendar는 LLM, Gallery·Perception은 확률 기반. ThreadPoolExecutor(max_workers=7) 병렬. <span class="badge b-llm">LLM + 확률</span>
+      daily_event.json 기반 7종 폰 데이터 생성.
+      Communication·Push는 LLM, Gallery·Perception은 확률 기반.
+      ThreadPoolExecutor(max_workers=7) 병렬.
+      <span class="badge b-llm">LLM + 확률</span>
     </div>
-    <div class="prompt-box prompt-box-zh">根据{date}的事件序列，生成通话记录：
-事件: 和{contact}见面讨论工作
-→ 生成通话记录 JSON，包含时长、方向、号码...
-注意：transcriptDialog 留空字符串</div>
-    <div class="io-row">
-      <div class="io-in">
-        <div class="io-label text-blue-400">📥 INPUT</div>
-        <div class="data-box"><span class="k">// daily_event.json (일별)</span>
-{<span class="k">"date"</span>: <span class="s">"2025-01-02"</span>,
- <span class="k">"events"</span>: [{
-   <span class="k">"type"</span>: <span class="s">"工作会议"</span>,
-   <span class="k">"participants"</span>: [<span class="s">"张伟"</span>]}]}</div>
+    <div class="grid grid-cols-3 gap-2">
+      <div>
+        <div class="text-xs text-gray-500 mb-1">통화 (phone_generate_call_data)</div>
+        ${makePromptBox('phone_call')}
       </div>
-      <div class="io-out">
-        <div class="io-label text-green-400">📤 OUTPUT</div>
-        <div class="data-box"><span class="k">// phone_data/call.json</span>
-{<span class="k">"datetime"</span>: <span class="s">"2025-01-02 09:15:00"</span>,
- <span class="k">"contactName"</span>: <span class="s">"张伟"</span>,
- <span class="k">"direction"</span>: <span class="n">0</span>,
- <span class="k">"transcriptDialog"</span>: <span class="r">""</span>}</div>
+      <div>
+        <div class="text-xs text-gray-500 mb-1">문자 (phone_generate_sms_data)</div>
+        ${makePromptBox('phone_sms')}
+      </div>
+      <div>
+        <div class="text-xs text-gray-500 mb-1">알림 (phone_generate_notification_data)</div>
+        ${makePromptBox('phone_noti')}
       </div>
     </div>
+    ${ioBox(
+      `<span class="k">// daily_event.json (일별)</span>
+{"date": <span class="s">"2025-01-02"</span>,
+ "events": [{
+   "type": <span class="s">"工作会议"</span>,
+   "participants": [<span class="s">"张伟"</span>]}]}`,
+      `<span class="k">// phone_data/call.json</span>
+{"datetime": <span class="s">"2025-01-02 09:15:00"</span>,
+ "contactName": <span class="s">"张伟"</span>,
+ "direction": <span class="n">0</span>,
+ "transcriptDialog": <span class="r">""</span>}`
+    )}
   </div>
 
   <div class="step-cell step-cell-new">
@@ -388,93 +587,79 @@ JSON만 출력.</div>
     <div class="flex flex-col gap-2">
       <div class="node-pill np-new">📱 phone_data_gen <span class="badge b-rule ml-1">규칙 기반</span></div>
       <div class="flex gap-2 flex-wrap pl-2">
-        <div class="flex items-center gap-1">
-          <div class="w-3 h-px bg-gray-600"></div>
-          <div class="node-pill np-sub">📞 call_gen</div>
-        </div>
-        <div class="flex items-center gap-1">
-          <div class="w-3 h-px bg-gray-600"></div>
-          <div class="node-pill np-sub">💬 sms_gen</div>
-        </div>
-        <div class="flex items-center gap-1">
-          <div class="w-3 h-px bg-gray-600"></div>
-          <div class="node-pill np-sub">🔔 noti_gen</div>
-        </div>
-        <div class="flex items-center gap-1">
-          <div class="w-3 h-px bg-gray-600"></div>
-          <div class="node-pill np-sub">🗂️ formatter</div>
-        </div>
+        <div class="node-pill np-sub">📞 call_gen</div>
+        <div class="node-pill np-sub">💬 sms_gen</div>
+        <div class="node-pill np-sub">🔔 noti_gen</div>
+        <div class="node-pill np-sub">🗂️ formatter</div>
       </div>
     </div>
     <div class="text-xs text-gray-300 leading-relaxed">
       <b>phone_data_gen</b>: 이벤트에서 규칙 기반으로 raw 폰 데이터 합성 (LLM 없음)<br>
       <b>call/sms/noti_gen</b>: BehaviorEventEntity 변환 (원본 LifeBench 로직 유지)<br>
-      <b>formatter</b>: 병합·정렬·contextGroupId 부여·페르소나별 분리
+      <b>formatter</b>: 병합·정렬·contextGroupId·페르소나별 분리
     </div>
-    <div class="prompt-box"><span class="k">// 규칙 기반 로직 (phone_data_gen)</span>
-이벤트 유형 → 통화/문자 생성:
-  social/family 이벤트 → 관계인과 통화 레코드
-  앱 알림: 취미(독서→예스24), 직업(개발자→GitHub)
-  한국 앱: 카카오톡, 토스, 배달의민족, 쿠팡...
+    <div class="prompt-box" style="border-left-color:#374151;">${escHtml(`[규칙 기반 로직 — LLM 없음]
 
-<span class="k">// BehaviorEventEntity 변환 (call_gen)</span>
-direction=0 → type:0(발신), =1 → type:1(수신)
-"missed" in result → type:2(부재중)</div>
-    <div class="io-row">
-      <div class="io-in">
-        <div class="io-label text-blue-400">📥 INPUT</div>
-        <div class="data-box"><span class="k">// state.daily_events_map</span>
-{<span class="k">"datetime"</span>: <span class="s">"2025-01-02 09:00:00"</span>,
- <span class="k">"event_type"</span>: <span class="s">"업무 시작"</span>,
- <span class="k">"location"</span>: <span class="s">"인천 사무실"</span>}</div>
-      </div>
-      <div class="io-out">
-        <div class="io-label text-green-400">📤 OUTPUT</div>
-        <div class="data-box"><span class="k">// BehaviorEventEntity</span>
-{<span class="k">"identifier"</span>: <span class="s">"call_0_1735689300000"</span>,
- <span class="k">"event_source"</span>: <span class="b">"CALL_LOG"</span>,
- <span class="k">"payload"</span>: {
-   <span class="k">"name"</span>: <span class="s">"정우진"</span>,
-   <span class="k">"type"</span>: <span class="n">0</span>,
-   <span class="k">"duration"</span>: <span class="n">120</span>},
- <span class="k">"contextGroupId"</span>: <span class="n">1</span>}</div>
-      </div>
-    </div>
+통화 생성 규칙:
+  social/family 이벤트 → 관계인과 통화 레코드 생성
+  방향: 이벤트 유형에 따라 발신/수신 결정
+
+알림 생성 규칙 (취미 기반 앱 매핑):
+  독서 → 예스24, 리디북스
+  음악 → 멜론, 스포티파이
+  개발자 → GitHub, Slack
+  공통 → 카카오톡, 토스, 배달의민족
+
+BehaviorEventEntity 변환 (call_gen):
+  direction=0 → type:0(발신)
+  direction=1 → type:1(수신)
+  "missed" in result → type:2(부재중)`)}</div>
+    ${ioBox(
+      `<span class="k">// state.daily_events_map</span>
+{"datetime": <span class="s">"2025-01-02 09:00:00"</span>,
+ "event_type": <span class="s">"업무 시작"</span>,
+ "location": <span class="s">"인천 사무실"</span>}`,
+      `<span class="k">// BehaviorEventEntity</span>
+{"identifier": <span class="s">"call_0_1735689300000"</span>,
+ "event_source": <span class="b">"CALL_LOG"</span>,
+ "payload": {
+   "name": <span class="s">"정우진"</span>,
+   "type": <span class="n">0</span>, "duration": <span class="n">120</span>},
+ "contextGroupId": <span class="n">1</span>}`
+    )}
   </div>
 
   <div class="row-sep"></div>
 
-  <!-- ══════════════════════════════════════════════════════ -->
-  <!-- ROW 4: QA Gen -->
-  <!-- ══════════════════════════════════════════════════════ -->
-
+  <!-- ═══ STEP 4: QA Gen ═══ -->
   <div class="step-cell step-cell-orig col-orig">
     <div class="step-label">STEP 4</div>
     <div class="node-pill np-orig">❓ QAGenerator</div>
     <div class="text-xs text-gray-400 leading-relaxed">
-      생성된 모든 데이터로 LLM 평가용 Q&amp;A 생성. single-hop / multi-hop / temporal reasoning / updating 4가지 유형. <span class="badge b-llm">LLM</span>
+      생성된 모든 데이터로 LLM 평가용 Q&amp;A 생성.
+      single-hop / multi-hop / temporal / updating 4가지 유형.
+      <span class="badge b-llm">LLM</span>
     </div>
-    <div class="prompt-box prompt-box-zh">根据以下数据生成多跳推理问题：
+    <div class="prompt-box prompt-box-zh">${escHtml(`根据以下数据生成多跳推理问题：
 事件：1月睡眠时间推迟...
 Q: 冯浩然1月份睡眠时间有什么变化趋势？
-A: 逐渐推迟，原因是加班压力...</div>
-    <div class="io-row">
-      <div class="io-in">
-        <div class="io-label text-blue-400">📥 INPUT</div>
-        <div class="data-box"><span class="k">// daily_event + phone_data</span>
-모든 생성 데이터 종합</div>
-      </div>
-      <div class="io-out">
-        <div class="io-label text-green-400">📤 OUTPUT</div>
-        <div class="data-box"><span class="k">// QA/QA.json</span>
-{<span class="k">"question"</span>: <span class="s">"1월 수면 패턴은?"</span>,
- <span class="k">"answer"</span>: <span class="s">"점차 지연됨..."</span>,
- <span class="k">"type"</span>: <span class="s">"temporal_reasoning"</span>}</div>
-      </div>
-    </div>
+A: 逐渐推迟，原因是加班压力...
+
+유형:
+- single-hop: 단순 사실 확인
+- multi-hop: 여러 이벤트 연결 추론
+- temporal: 시간 순서 추론
+- updating: 상태 변화 추적`)}</div>
+    ${ioBox(
+      `<span class="k">// daily_event + phone_data</span>
+모든 생성 데이터 종합`,
+      `<span class="k">// QA/QA.json</span>
+{"question": <span class="s">"1월 수면 패턴은?"</span>,
+ "answer": <span class="s">"점차 지연됨..."</span>,
+ "type": <span class="s">"temporal_reasoning"</span>}`
+    )}
   </div>
 
-  <!-- NEW: not yet implemented -->
   <div class="step-cell step-cell-na">
     <div class="flex flex-col items-center gap-3 text-center">
       <div class="node-pill np-na">❓ qa_gen</div>
@@ -482,21 +667,10 @@ A: 逐渐推迟，原因是加班压力...</div>
       <p class="text-xs text-gray-800 leading-relaxed">향후 한국어 Q&amp;A<br>생성 노드 추가 예정</p>
     </div>
   </div>
+  `;
+}
 
-</div>
-
-<!-- Footer summary -->
-<div class="border-t border-gray-800 px-6 py-4 mt-0">
-  <div class="max-w-4xl mx-auto flex flex-wrap gap-6 text-xs text-gray-500">
-    <div><span class="text-blue-400 font-bold">Original</span> — 중국어 고정 스크립트 · 10명 · Step 3에서 JSON 파일 기반</div>
-    <div><span class="text-green-400 font-bold">LangGraph</span> — 한국어 LLM · 가변 인원 · 이벤트에서 직접 폰 데이터 합성 · 노드 교체 가능</div>
-    <div class="ml-auto">
-      <a href="explorer.html" class="text-indigo-400 hover:text-indigo-300 font-bold">
-        📊 생성된 데이터 탐색 →
-      </a>
-    </div>
-  </div>
-</div>
-
+document.getElementById('grid-container').innerHTML = buildGrid();
+</script>
 </body>
 </html>
