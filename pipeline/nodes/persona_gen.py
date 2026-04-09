@@ -1,21 +1,66 @@
 """persona_gen node — expands person skeletons into full personas (Step 0).
 
 Three sub-steps mirroring Original LifeBench:
-  gen_profile()   → template_refine equivalent: enrich basic profile fields
-  gen_relations() → template_relation_1 equivalent: generate relationship list
-  gen_persons()   → template_person equivalent: fill in contact details
+  gen_profile()   → template_refine: enriches profile using refer_kr.json random sampling
+  gen_relations() → template_relation_1: generates relationship skeleton list
+  gen_persons()   → template_person: fills in contact details
 
-Prompts are adapted from Original LifeBench (template_refine, template_relation_1,
-template_person) with minimal changes for Korean context.
+refer_kr.json is the Korean equivalent of LifeBench's refer.json.
+Same logic: random_select from each category pool, inject into prompt as hints.
 """
 import json
 import re
 import random
+from pathlib import Path
 
 from langchain_core.messages import HumanMessage
 from pipeline.full_state import FullPipelineState
 
 CITIES = ["서울", "부산", "대구", "인천", "광주", "대전"]
+
+
+# ── refer_kr.json 로더 (지연 로드) ───────────────────────────────────
+_REFER: dict | None = None
+_REFER_PATH = Path(__file__).parent.parent.parent / "data" / "refer_kr.json"
+
+
+def _load_refer() -> dict:
+    global _REFER
+    if _REFER is not None:
+        return _REFER
+    if _REFER_PATH.exists():
+        with open(_REFER_PATH, encoding="utf-8") as f:
+            _REFER = json.load(f)
+    else:
+        print(f"[persona_gen] refer_kr.json not found at {_REFER_PATH}")
+        _REFER = {}
+    return _REFER
+
+
+def _random_select(category: str, n: int) -> list:
+    """Randomly sample n items from refer_kr.json category (same as LifeBench random_select)."""
+    pool = _load_refer().get(category, [])
+    if not pool:
+        return []
+    return random.sample(pool, min(n, len(pool)))
+
+
+def _refer_const() -> str:
+    """Build the Ref string injected into gen_profile prompt.
+
+    Mirrors LifeBench PersonaGenerator.refer_const():
+      - 취미 12개 샘플 (원본: 兴趣 12개)
+      - 목표 후보 6개 (원본: 目标规划 6개)
+      - 가치관 후보 6개 (원본: 价値观 6개)
+    """
+    hobbies = _random_select("취미", 12)
+    aims    = _random_select("목표", 6)
+    values  = _random_select("가치관", 6)
+
+    ref  = f'"hobbies": {hobbies} — 4~8개를 인물 특성에 맞는 자연스러운 취미로 선택, 다른 취미 1개 추가 가능;\n'
+    ref += f'"aim": {aims} — 1~2개 선택 후 구체화(합리적 목표 없으면 생략 가능);\n'
+    ref += f'"traits": {values} — 2~4개 선택, 인물에 자연스러운 가치관;\n'
+    return ref
 
 
 # ── LLM helper ────────────────────────────────────────────────────────────────
@@ -44,47 +89,63 @@ def _parse_json(text: str):
     return json.loads(text.strip())
 
 
-# ── Sub-step 1: gen_profile (template_refine 기반) ────────────────────────────
+# ── Sub-step 1: gen_profile (template_refine 기반 + refer_kr.json) ─────────────
 
 def gen_profile(llm, person: dict, home_city: str) -> dict:
-    """Generate full profile fields from basic person skeleton.
+    """Generate full profile from basic skeleton.
 
-    Adapted from LifeBench template_refine:
-    - Kept: logic validation, field enrichment approach
-    - Changed: Chinese → Korean context, fields adapted to our schema
+    Mirrors LifeBench PersonaGenerator.gen_profile():
+    - _refer_const()로 취미 12개 / 목표 6개 / 가치관 6개 랜덤 추출 후 프롬프트에 주입
+    - template_refine 프롬프트 구조 거의 그대로, 한국어 컨텍스트로만 변경
     """
+    ref = _refer_const()
+
     skeleton_json = json.dumps({
-        "name":      person["name"],
-        "age":       person["age"],
-        "gender":    person["gender"],
-        "job":       person["job"],
+        "name": person["name"], "age": person["age"],
+        "gender": person["gender"], "job": person["job"],
         "home_city": home_city,
-    }, ensure_ascii=False)
+    }, ensure_ascii=False, indent=2)
 
-    prompt = f"""당신은 인류학자, 작가, 논리 전문가입니다. 아래 기본 인물 정보를 바탕으로 풍부하고 현실적인 한국인 프로파일을 생성하세요.
+    prompt = f"""당신은 인류학자, 작가, 논리 전문가입니다.
+목표: 아래 기본 정보를 기반으로, 비현실적이거나 비논리적이거나 특징이 너무 평범한 문제가 없는,
+진실하고 합리적이며 자기일관적이고 다양한 한국인 인물 정보를 생성하세요.
 
-기본 정보 (반드시 유지):
-{skeleton_json}
+수정 요구사항:
 
-생성할 필드:
-- mbti: MBTI 유형 (나이·직업·성별에 자연스러운 것)
-- hobbies: 취미 리스트 4~8개 (나이·직업에 어울리는 현실적 취미, 독특한 취미 1개 포함 가능)
-- personality_traits: 성격 특성 2~4개
-- economic_level: "하"/"중"/"상" (직업·나이 고려)
-- education: 최종 학력 (나이·직업에 맞게)
-- marital_status: 혼인 상태 (미혼/기혼/이혼/사별)
-- health_desc: 건강 상태 간단 설명 (1~2문장)
-- lifestyle_desc: 일상 생활 패턴 간단 설명 (1~2문장)
-- work_desc: 직장 관련 설명 (1~2문장)
-- description: 인물 종합 설명 (3~5문장, 성격·생활·특징 포함)
-- relation: [] (빈 배열, 다음 단계에서 채움)
+1. **엄격한 필드 요구사항**:
+   - 필드 추가 또는 삭제 불가, 반드시 입력 JSON의 key에 따라 생성.
+   - 모든 key는 영어 유지, value는 한국어 텍스트 또는 표준 숫자 사용.
 
-검증 사항:
-- 나이/학력/직업/수입 수준 상호 일치
-- 혼인 상태는 나이·직업에 자연스럽게
-- 취미/생활습관/건강 상태와 나이·직업 조화
+2. **정보 생성 전략**:
+   - 필드 간 논리 불일치 여부 확인.
+   - 나이/학력/직업/직위/수입 일치, 혼인상태와 나이·직업 부합.
+   - 거주 도시/수입/직업/학력 수준 합리적 대응.
+   - 취미/생활방식/건강 상태와 나이·직업·가족 조화.
+   - 취미에는 독특하고 비주류적인 항목 하나 추가 고려 가능.
+   - 성격 특성(가치관)은 추가하지 말 것.
 
-JSON만 출력하세요. 기본 정보 필드(name/age/gender/job/home_city)도 포함하세요."""
+3. **필드 의미**:
+   - mbti: MBTI 유형
+   - hobbies: 취미 리스트 (4~8개)
+   - personality_traits: 성격 특성 및 가치관
+   - economic_level: "하"/"중"/"상"
+   - education: 학력
+   - marital_status: 혼인상태
+   - health_desc: 건강상태/만성질환/운동습관
+   - lifestyle_desc: 여가/일상 생활습관
+   - work_desc: 직장 관련 설명
+   - description: 종합 설명 (3~5문장)
+   - relation: [] (다음 단계에서 채움)
+
+4. **출력 요구사항**:
+   - JSON 형식만 출력. ```json``` 태그 없이 직접 중괄호로 시작.
+   - 기본 정보(name/age/gender/job/home_city) 포함.
+   - 출력의 "relation" 필드 값은 빈 [].
+
+참조 리스트(Ref 힌트 — 이 중에서 자연스럽게 선택):
+{ref}
+수정할 원본 데이터:
+{skeleton_json}"""
 
     try:
         resp = llm.invoke([HumanMessage(content=prompt)])
@@ -121,7 +182,7 @@ def gen_relations(llm, profile: dict) -> list:
 
     Adapted from LifeBench template_relation_1:
     - Kept: social circle inference, 10~15 contacts
-    - Changed: Chinese → Korean social circles
+    - Changed: Chinese to Korean social circles
     """
     profile_summary = json.dumps({
         k: profile.get(k) for k in
@@ -228,9 +289,9 @@ def generate_personas(state: FullPipelineState) -> FullPipelineState:
     """Step 0: Expand person skeletons into full personas.
 
     Three sub-steps (mirrors Original LifeBench):
-      1. gen_profile()   — template_refine: enrich profile fields
-      2. gen_relations() — template_relation_1: generate relationship list
-      3. gen_persons()   — template_person: fill contact details
+      1. gen_profile()   - template_refine: enrich profile fields
+      2. gen_relations() - template_relation_1: generate relationship list
+      3. gen_persons()   - template_person: fill contact details
     """
     provider = state.get("provider", "claude")
     persons  = state.get("persons", [])
