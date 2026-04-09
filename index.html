@@ -72,6 +72,10 @@ function renderJobTable() {
   <style>
     /* ── Layout ─────────────────────────────────────────────────── */
     .cg{display:grid;grid-template-columns:1fr 1fr;gap:0}
+    /* sub-step paired row: spans full width, splits into ORIG|NEW side by side */
+    .sr{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid #0e1a2e}
+    .sr .oc{border-right:1px solid #1e293b}
+    .sr-sep{grid-column:1/-1;height:1px;background:#0e1a2e}
     .col-sep{border-right:1px solid #1e293b}
     .row-sep{grid-column:1/-1;height:2px;background:#0e1a2e;border-top:1px solid #1e293b}
     .step-hdr{
@@ -678,298 +682,235 @@ refer_kr.json 랜덤 추출 힌트(매 호출마다 다름):
   <span class="text-xs text-gray-600 ml-2">연간 이벤트 초안 생성</span>
 </div>
 
-<!-- ORIG Step 1 -->
-<div class="oc col-sep">
-
-  <div class="ss ss-io">
-    <div class="flex items-center gap-2">
-      <span class="badge b-in">INPUT</span>
-      <span class="ss-title" style="color:#60a5fa">persona.json</span>
+<!-- Step 1 INPUT row -->
+<div class="sr">
+  <div class="oc">
+    <div class="ss ss-io">
+      <div class="flex items-center gap-2"><span class="badge b-in">INPUT</span><span class="ss-title" style="color:#60a5fa">persona.json</span></div>
+      <div class="ss-path">output/persona.json</div>
+      <div class="ss-note">Step 0 생성 30+ 필드 페르소나</div>
     </div>
-    <div class="ss-path">output/persona.json</div>
-    <div class="ss-note">Step 0 생성 30+ 필드 페르소나</div>
   </div>
-  <div class="ss-arrow">↓</div>
+  <div class="nc">
+    <div class="ss ss-io">
+      <div class="flex items-center gap-2"><span class="badge b-in">INPUT</span><span class="ss-title" style="color:#86efac">state.personas</span></div>
+      <div class="ss-path">pipeline/nodes/draft_gen.py</div>
+      <div class="ss-note">persona_gen 생성 페르소나 (KO)</div>
+    </div>
+  </div>
+</div>
 
-  <div class="ss ss-orig">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="ss-title">Scheduler.genevent_yearterm() 1라운드</span>
-      <span class="badge b-llm">LLM</span>
-    </div>
-    <div class="ss-path">scheduler/scheduler.py → template_yearterm_eventgen</div>
-    <div class="pb-wrap">
-      <div class="pb pb-loading" data-k="template_yearterm_eventgen" data-lang="kr">프롬프트 로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// persona.json</span>
+<!-- Step 1 Round 1 row -->
+<div class="sr">
+  <div class="oc">
+    <div class="ss ss-orig">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="ss-title">Scheduler.genevent_yearterm() 1라운드</span>
+        <span class="badge b-llm">LLM</span>
+      </div>
+      <div class="ss-path">scheduler/scheduler.py → template_yearterm_eventgen</div>
+      <div class="pb-wrap">
+        <div class="pb pb-loading" data-k="template_yearterm_eventgen" data-lang="kr">프롬프트 로딩 중…</div>
+        <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+      </div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// persona.json</span>
 {"name":<span class="cs">"Feng Haoran"</span>,
- "job":<span class="cs">"Financial Investment Advisor"</span>,
- "mbti":<span class="cs">"ENTJ"</span>,
- "hobbies":[<span class="cs">"Running"</span>,...]
-}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 이벤트 100개 (1라운드)</span>
-{"date":<span class="cs">"2025-01-01"</span>,
- "title":<span class="cs">"New Year Morning Run"</span>,
- "category":<span class="cs">"Personal Life"</span>}
+ "job":<span class="cs">"Financial Advisor"</span>,
+ "mbti":<span class="cs">"ENTJ"</span>}</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 이벤트 100개 (1라운드)</span>
 <span class="cg">... 100개</span></pre></div>
+      </div>
     </div>
   </div>
-  <div class="ss-arrow">↓</div>
+  <div class="nc">
+    <div class="ss ss-new">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="npill np-new">📅 Round 1: yearterm_eventgen</span>
+        <span class="badge b-llm">LLM</span><span class="badge b-ko">KO</span>
+      </div>
+      <div class="ss-path">nodes/draft_gen.py → Round 1</div>
+      <div class="ss-note">9개 카테고리로 ~100개 연간 이벤트. test: 20개만.</div>
+      <div class="pb-wrap">
+        <div class="pb" data-new-k="draft_gen_r1" data-lang="kr">로딩 중…</div>
+        <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+      </div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// persona summary</span>
+박준혁(46세, 개발자, 인천)
+MBTI:INTJ / 취미:독서,등산</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>&lt;type&gt;Career（N개）&lt;/type&gt;
+  업계포럼 (2025-03-18): ...
+<span class="cg">... ~100개</span></pre></div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <div class="ss ss-orig">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="ss-title">Scheduler.genevent_yearterm() 2라운드</span>
-      <span class="badge b-llm">LLM</span>
-    </div>
-    <div class="ss-path">scheduler/scheduler.py → template_yearterm_complete</div>
-    <div class="pb-wrap">
-      <div class="pb pb-loading" data-k="template_yearterm_complete" data-lang="kr">프롬프트 로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 1라운드 100개 목록</span>
-[{"date":<span class="cs">"2025-01-01"</span>,
-  "title":<span class="cs">"New Year Run"</span>},
- <span class="cg">... 100개</span>]</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 2라운드 90개 추가</span>
-{"date":<span class="cs">"2025-02-03"</span>,
- "title":<span class="cs">"元宵节家庭聚餐"</span>,
- "category":<span class="cs">"Family"</span>}
+<!-- Step 1 Round 2 row -->
+<div class="sr">
+  <div class="oc">
+    <div class="ss ss-orig">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="ss-title">Scheduler.genevent_yearterm() 2라운드</span>
+        <span class="badge b-llm">LLM</span>
+      </div>
+      <div class="ss-path">scheduler/scheduler.py → template_yearterm_complete</div>
+      <div class="pb-wrap">
+        <div class="pb pb-loading" data-k="template_yearterm_complete" data-lang="kr">프롬프트 로딩 중…</div>
+        <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+      </div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 1라운드 100개 목록</span>
+<span class="cg">... 100개</span></pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 2라운드 90개 추가</span>
 <span class="cg">... 90개 (중복 없음)</span></pre></div>
+      </div>
     </div>
   </div>
-  <div class="ss-arrow">↓</div>
-
-  <div class="ss ss-orig">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="ss-title">Scheduler._extract_impact_events()</span>
-      <span class="badge b-llm">LLM</span>
-    </div>
-    <div class="ss-path">scheduler/scheduler.py → template_extract_impact_events</div>
-    <div class="pb-wrap">
-      <div class="pb pb-loading" data-k="template_extract_impact_events" data-lang="kr">프롬프트 로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 전체 190개 이벤트</span>
-[{"title":<span class="cs">"Job Promotion"</span>,
-  "date":<span class="cs">"2025-03-15"</span>},
- ...]</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 충격 이벤트만 추출</span>
-{"title":<span class="cs">"Promotion"</span>,
- "impact_type":<span class="cs">"profile_change"</span>,
- "date":<span class="cs">"2025-03-15"</span>}</pre></div>
+  <div class="nc">
+    <div class="ss ss-new">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="npill np-new">➕ Round 2: yearterm_complete</span>
+        <span class="badge b-llm">LLM</span><span class="badge b-ko">KO</span>
+      </div>
+      <div class="ss-path">nodes/draft_gen.py → Round 2</div>
+      <div class="ss-note">중복 없이 ~90개 추가. 한국 공휴일·계절·미사용 프로파일 집중 보완.</div>
+      <div class="pb-wrap">
+        <div class="pb" data-new-k="draft_gen_r2" data-lang="kr">로딩 중…</div>
+        <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+      </div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>프로파일 + R1 이벤트 목록</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>설날귀성, 어버이날...
+<span class="cg">... ~90개</span></pre></div>
+      </div>
     </div>
   </div>
-  <div class="ss-arrow">↓</div>
+</div>
 
-  <div class="ss ss-orig">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="ss-title">Scheduler._analyze_monthly_events()</span>
-      <span class="badge b-llm">LLM</span>
+<!-- Step 1 Round 3 row -->
+<div class="sr">
+  <div class="oc">
+    <div class="ss ss-orig">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="ss-title">Scheduler._extract_impact_events()</span>
+        <span class="badge b-llm">LLM</span>
+      </div>
+      <div class="ss-path">scheduler/scheduler.py → template_extract_impact_events</div>
+      <div class="pb-wrap">
+        <div class="pb pb-loading" data-k="template_extract_impact_events" data-lang="kr">프롬프트 로딩 중…</div>
+        <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+      </div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>전체 ~190개 이벤트</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>충격 이벤트만 추출</pre></div>
+      </div>
     </div>
-    <div class="ss-path">scheduler/scheduler.py → template_monthly_events_analysis</div>
-    <div class="pb-wrap">
-      <div class="pb pb-loading" data-k="template_monthly_events_analysis" data-lang="kr">프롬프트 로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+  </div>
+  <div class="nc">
+    <div class="ss ss-new">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="npill np-new">🔍 Round 3: extract_impact_events</span>
+        <span class="badge b-llm">LLM</span><span class="badge b-ko">KO</span>
+      </div>
+      <div class="ss-path">nodes/draft_gen.py → Round 3</div>
+      <div class="ss-note">①프로파일 변화 이벤트, ②생활 습관 영향 이벤트 두 가지만 추출.</div>
+      <div class="pb-wrap">
+        <div class="pb" data-new-k="draft_gen_r3" data-lang="kr">로딩 중…</div>
+        <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+      </div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>전체 ~190개 이벤트</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>[프로파일 변화] 팀장승진...
+[생활습관] 제주출장...</pre></div>
+      </div>
     </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 2025-01 이벤트</span>
-[{"date":<span class="cs">"2025-01-01"</span>,
-  "title":<span class="cs">"New Year Run"</span>,
-  "category":<span class="cs">"Personal Life"</span>},
- <span class="cg">...</span>]</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 월별 분석 결과</span>
-{"month":<span class="cs">"2025-01"</span>,
+  </div>
+</div>
+
+<!-- Step 1 Round 4 row -->
+<div class="sr">
+  <div class="oc">
+    <div class="ss ss-orig">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="ss-title">Scheduler._analyze_monthly_events()</span>
+        <span class="badge b-llm">LLM</span>
+      </div>
+      <div class="ss-path">scheduler/scheduler.py → template_monthly_events_analysis</div>
+      <div class="pb-wrap">
+        <div class="pb pb-loading" data-k="template_monthly_events_analysis" data-lang="kr">프롬프트 로딩 중…</div>
+        <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+      </div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>2025-01 이벤트 목록</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>{"month":"2025-01",
  "fixed_changes":[...],
- "proximity_impacts":[...],
- "daily_overview":<span class="cs">"..."</span>}</pre></div>
+ "proximity_impacts":[...]}</pre></div>
+      </div>
     </div>
   </div>
-  <div class="ss-arrow">↓</div>
-
-  <div class="ss ss-orig">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="ss-title">Scheduler.optimize_merged_timelines()</span>
-      <span class="badge b-llm">LLM</span>
-    </div>
-    <div class="ss-path">scheduler/scheduler.py → template_timeline_conflict_resolution</div>
-    <div class="pb-wrap">
-      <div class="pb pb-loading" data-k="template_timeline_conflict_resolution" data-lang="kr">프롬프트 로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 주제별 타임라인</span>
-[{"topic":<span class="cs">"Career"</span>,
-  "events":[...]},
- {"topic":<span class="cs">"Health"</span>,
-  "events":[...]}]</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// daily_draft.json</span>
-{"2025-01":[
-  {"date":<span class="cs">"2025-01-01"</span>,
-   "daily_overview":<span class="cs">"New Year holiday..."</span>,
-   "date_attribute":{"holiday":<span class="cs">"New Year's Day"</span>}}
-]}</pre></div>
+  <div class="nc">
+    <div class="ss ss-new">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="npill np-new">📆 Round 4: monthly_events_analysis</span>
+        <span class="badge b-llm">LLM ×12</span><span class="badge b-ko">KO</span>
+      </div>
+      <div class="ss-path">nodes/draft_gen.py → Round 4</div>
+      <div class="ss-note">1~12월 각 분석. 충돌 삭제·수정, 고정변화+근접영향 추출.</div>
+      <div class="pb-wrap">
+        <div class="pb" data-new-k="draft_gen_r4" data-lang="kr">로딩 중…</div>
+        <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+      </div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>{target_month:"2025-01",
+ monthly_events:[...]}</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>{"month":"2025-01",
+ "key_events":[...]} ×12</pre></div>
+      </div>
     </div>
   </div>
-  <div class="ss-arrow">↓</div>
-
-  <div class="ss ss-io">
-    <div class="flex items-center gap-2">
-      <span class="badge b-out">OUTPUT</span>
-      <span class="ss-title" style="color:#4ade80">daily_draft.json 저장</span>
-    </div>
-    <div class="ss-path">output/daily_draft.json</div>
-    <div class="ss-note">~190개 이벤트 · 1인당 5 LLM · 10명 × 5 = 50 호출</div>
-  </div>
-
 </div>
 
-<!-- NEW Step 1 -->
-<div class="nc">
-  <div class="vs-note">← ORIG 5단계 KO 동일 구조 (5 LLM/인 · test 모드 Round 1만)</div>
-
-  <!-- Round 1: yearterm_eventgen -->
-  <div class="ss ss-new">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">📅 Round 1: yearterm_eventgen</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-ko">KO</span>
-    </div>
-    <div class="ss-path">nodes/draft_gen.py → Round 1 (template_yearterm_eventgen 기반)</div>
-    <div class="ss-note">9개 카테고리로 약 100개 연간 이벤트 생성. test 모드: 20개만 생성 후 이후 단계 생략.</div>
-    <div class="pb-wrap">
-      <div class="pb" data-new-k="draft_gen_r1" data-lang="kr">로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// persona summary</span>
-박준혁(46세, 소프트웨어 개발자,
-인천 거주)
-MBTI: INTJ / 취미: 독서, 등산
-work_desc: ...</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// events_r1 (카테고리별 텍스트)</span>
-&lt;type&gt;Career（N개）&lt;/type&gt;
-  업계 포럼 참가 (2025-03-18): ...
-  성과 평가 (2025-12-10): ...
-&lt;type&gt;Health（N개）&lt;/type&gt;
-  건강검진 (2025-04-05): ...
-  <span class="cg">... ~100개 이벤트</span></pre></div>
+<!-- Step 1 Round 5 row -->
+<div class="sr">
+  <div class="oc">
+    <div class="ss ss-orig">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="ss-title">Scheduler.optimize_merged_timelines()</span>
+        <span class="badge b-llm">LLM</span>
+      </div>
+      <div class="ss-path">scheduler/scheduler.py → template_timeline_conflict_resolution</div>
+      <div class="pb-wrap">
+        <div class="pb pb-loading" data-k="template_timeline_conflict_resolution" data-lang="kr">프롬프트 로딩 중…</div>
+        <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+      </div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>주제별 타임라인 목록</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>daily_draft.json 저장</pre></div>
+      </div>
     </div>
   </div>
-  <div class="ss-arrow ss-arrow-g">↓</div>
-
-  <!-- Round 2: yearterm_complete -->
-  <div class="ss ss-new">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">➕ Round 2: yearterm_complete</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-ko">KO</span>
-    </div>
-    <div class="ss-path">nodes/draft_gen.py → Round 2 (template_yearterm_complete 기반)</div>
-    <div class="ss-note">Round 1과 중복 없이 약 90개 추가 이벤트 생성. 한국 공휴일·계절 특색·미사용 프로파일 정보 집중 보완.</div>
-    <div class="pb-wrap">
-      <div class="pb" data-new-k="draft_gen_r2" data-lang="kr">로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// persona + Round 1 이벤트 목록</span>
-인물 프로파일: 박준혁...
-1라운드 이벤트:
-  2025-03-18: [Career] 업계 포럼...
-  <span class="cg">... 100개</span></pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// events_r2 (~90개 추가)</span>
-&lt;type&gt;Relationships（N개）&lt;/type&gt;
-  설날 귀성 (2025-01-28): ...
-  어버이날 카네이션 (2025-05-08): ...
-  <span class="cg">... ~90개 이벤트</span></pre></div>
+  <div class="nc">
+    <div class="ss ss-new">
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="npill np-new">⚖️ Round 5: conflict_resolution</span>
+        <span class="badge b-llm">LLM</span><span class="badge b-ko">KO</span>
+      </div>
+      <div class="ss-path">nodes/draft_gen.py → Round 5</div>
+      <div class="ss-note">월별 타임라인 충돌 해소 + 연간 개요 생성.</div>
+      <div class="pb-wrap">
+        <div class="pb" data-new-k="draft_gen_r5" data-lang="kr">로딩 중…</div>
+        <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+      </div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>12개 월별 타임라인</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>state.daily_drafts (최종)
+<span class="cg">... ~190개 이벤트</span></pre></div>
+      </div>
     </div>
   </div>
-  <div class="ss-arrow ss-arrow-g">↓</div>
-
-  <!-- Round 3: extract_impact_events -->
-  <div class="ss ss-new">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">🔍 Round 3: extract_impact_events</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-ko">KO</span>
-    </div>
-    <div class="ss-path">nodes/draft_gen.py → Round 3 (template_extract_impact_events 기반)</div>
-    <div class="ss-note">①프로파일 변화 이벤트 (이직·이사·건강 변화 등), ②생활 습관 영향 이벤트 (출장·야근·질병 등) 두 가지만 추출.</div>
-    <div class="pb-wrap">
-      <div class="pb" data-new-k="draft_gen_r3" data-lang="kr">로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// persona + 전체 이벤트 목록(R1+R2)</span>
-총 ~190개 이벤트</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// impact_text (타임라인 형식)</span>
-[프로파일 변화]
-  2025-07-01: 팀장 승진
-  → 직책·책임 변화
-[생활 습관 영향]
-  2025-09-10~15: 제주 출장
-  → 이 기간 자택 부재</pre></div>
-    </div>
-  </div>
-  <div class="ss-arrow ss-arrow-g">↓</div>
-
-  <!-- Round 4: monthly_events_analysis × 12 -->
-  <div class="ss ss-new">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">📆 Round 4: monthly_events_analysis</span>
-      <span class="badge b-llm">LLM ×12</span><span class="badge b-ko">KO</span>
-    </div>
-    <div class="ss-path">nodes/draft_gen.py → Round 4 (template_monthly_events_analysis 기반)</div>
-    <div class="ss-note">1~12월 각각 분석. 불합리한 충돌 이벤트 삭제·수정, 고정 변화(long-term) + 근접 영향(short-term) 추출. JSON 구조화 출력.</div>
-    <div class="pb-wrap">
-      <div class="pb" data-new-k="draft_gen_r4" data-lang="kr">로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 월별 × 12</span>
-{persona, target_month: "2025-01",
- monthly_events: [...],
- category_summaries: ...}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// JSON × 12</span>
-{"month":"2025-01",
- "month_overview":"설날 귀성...",
- "key_events":[{
-   "time_point":"2025-01-29",
-   "event":"설날 가족 모임",
-   "fixed_changes":[...],
-   "short_term_impacts":[...]}]}</pre></div>
-    </div>
-  </div>
-  <div class="ss-arrow ss-arrow-g">↓</div>
-
-  <!-- Round 5: timeline_conflict_resolution -->
-  <div class="ss ss-new">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">⚖️ Round 5: conflict_resolution</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-ko">KO</span>
-    </div>
-    <div class="ss-path">nodes/draft_gen.py → Round 5 (template_timeline_conflict_resolution 기반)</div>
-    <div class="ss-note">월별 타임라인 간 충돌 해소 + 2025년 전체 연간 개요(annual_overview) 생성. state.daily_drafts에 최종 이벤트 저장.</div>
-    <div class="pb-wrap">
-      <div class="pb" data-new-k="draft_gen_r5" data-lang="kr">로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// persona + 12개 월별 타임라인</span>
-timelines_list: [
-  {topic:"2025-01 타임라인",
-   events:[...]},
-  <span class="cg">... ×12</span>]</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// state.daily_drafts (최종)</span>
-[{"date":"2025-01-29",
-  "title":"설날 가족 모임",
-  "category":"family",
-  "description":"..."},
- <span class="cg">... ~190개 이벤트</span>]</pre></div>
-    </div>
-  </div>
-
 </div>
-
 <div class="row-sep"></div>
 
 <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  STEP 2: SIMULATOR  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
@@ -980,427 +921,232 @@ timelines_list: [
   <span class="text-xs text-gray-600 ml-2">일별 상세 이벤트 생성</span>
 </div>
 
-<!-- ORIG Step 2 -->
-<div class="oc col-sep">
-
-  <div class="ss ss-orig">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="ss-title">FuzzyMemoryBuilder.build_all_summaries()</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-mon">월별 1회</span>
-    </div>
-    <div class="ss-path">memory/fuzzy_memory.py → fuzzy_memory_monthly</div>
-    <div class="pb-wrap">
-      <div class="pb pb-loading" data-k="fuzzy_memory_monthly" data-lang="kr">프롬프트 로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// persona + 이벤트 목록</span>
-{"persona":"Feng Haoran",
- "year":2025, "month":1,
- "events_desc":"Jan 1: Morning run..."}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// monthly_summaries.json</span>
-{"2025-01":"1월 마라톤 등록 및
- 훈련 시작. 연말 회고 설정..."}</pre></div>
+<!-- Step 2 Sub-1 row: fuzzy_memory_monthly -->
+<div class="sr">
+  <div class="oc">
+    <div class="ss ss-orig">
+      <div class="flex items-center gap-2 flex-wrap"><span class="ss-title">FuzzyMemoryBuilder.build_all_summaries()</span><span class="badge b-llm">LLM</span><span class="badge b-mon">월별 1회</span></div>
+      <div class="ss-path">memory/fuzzy_memory.py → fuzzy_memory_monthly</div>
+      <div class="pb-wrap"><div class="pb pb-loading" data-k="fuzzy_memory_monthly" data-lang="kr">프롬프트 로딩 중…</div><button class="pb-btn" onclick="togglePb(this)">원본 ZH</button></div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>persona + 월별 이벤트 목록</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>{"2025-01":"1월 마라톤 등록..."}</pre></div>
+      </div>
     </div>
   </div>
-  <div class="ss-arrow">↓</div>
-
-  <div class="ss ss-orig">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="ss-title">Mind.get_plan4(date)</span>
-      <span class="badge b-rule">규칙 기반</span><span class="badge b-daily">매일</span>
-    </div>
-    <div class="ss-path">mind/mind.py → 일정 추출 (LLM 없음)</div>
-    <div class="ss-note">draft에서 해당 날짜 이벤트를 추출하여 당일 계획 구성</div>
-  </div>
-  <div class="ss-arrow">↓</div>
-
-  <div class="ss ss-orig">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="ss-title">Mind._generate_subjective_thought()</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-daily">매일</span>
-    </div>
-    <div class="ss-path">mind/mind.py → template_daily_event_subjective_plan</div>
-    <div class="pb-wrap">
-      <div class="pb pb-loading" data-k="template_daily_event_subjective_plan" data-lang="kr">프롬프트 로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 2025-01-01</span>
-{"cognition":"ENTJ 투자 조언사",
- "plan":"New Year holiday",
- "memory":"1월 퍼지 기억..."}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 1인칭 주관적 계획</span>
-{"thought":"새해 첫날, 일찍
-일어나 유주산 달리기...",
- "plan":["06:40 기상",
- "08:00 마라톤 훈련"...]}</pre></div>
+  <div class="nc">
+    <div class="ss ss-new">
+      <div class="flex items-center gap-2 flex-wrap"><span class="npill np-new">🧠 Sub-1: fuzzy_memory_monthly</span><span class="badge b-llm">LLM ×12</span><span class="badge b-ko">KO</span></div>
+      <div class="ss-path">nodes/simulator.py → Sub-step 1</div>
+      <div class="ss-note">1~12월 각 draft 이벤트 → 월별 퍼지 기억 요약. 이후 주관적 계획에 리콜 데이터로 활용.</div>
+      <div class="pb-wrap"><div class="pb" data-new-k="sim_fuzzy" data-lang="kr">로딩 중…</div><button class="pb-btn" onclick="togglePb(this)">원본 ZH</button></div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>persona + 월별 draft 이벤트 ×12</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>{"2025-01":"설날 귀성, 가족과...", "2025-02":"활발한 업무..."}</pre></div>
+      </div>
     </div>
   </div>
-  <div class="ss-arrow">↓</div>
-
-  <div class="ss ss-orig">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="ss-title">Mind._generate_objective_events()</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-daily">매일</span>
-    </div>
-    <div class="ss-path">mind/mind.py → template_daily_event_objective_optimize</div>
-    <div class="pb-wrap">
-      <div class="pb pb-loading" data-k="template_daily_event_objective_optimize" data-lang="kr">프롬프트 로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 주관적 계획</span>
-{"thought":"...",
- "date":"2025-01-01",
- "is_holiday":true}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 시간순 이벤트 표</span>
-{"시간":"06:40-08:00",
- "이벤트":"Morning run",
- "장소":"Yuelu Mountain"}
-<span class="cg">... 하루 전체</span></pre></div>
-    </div>
-  </div>
-  <div class="ss-arrow">↓</div>
-
-  <div class="ss ss-orig">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="ss-title">Mind.map() + _adjust_event_trajectory()</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-daily">매일</span>
-    </div>
-    <div class="ss-path">mind/mind.py → template_event_traffic_adjust</div>
-    <div class="pb-wrap">
-      <div class="pb pb-loading" data-k="template_event_traffic_adjust" data-lang="kr">프롬프트 로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 이벤트 + POI 검색</span>
-{"event":"Morning run",
- "location_type":"outdoor_sports",
- "city":"Changsha"}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 실제 주소 + 이동시간</span>
-{"location":"Yuelu Mountain,
-  No.9 Lushan Rd...",
- "gps":{"lat":28.18,"lng":112.93},
- "commute_min":20}</pre></div>
-    </div>
-  </div>
-  <div class="ss-arrow">↓</div>
-
-  <div class="ss ss-orig">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="ss-title">Mind._generate_reflection()</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-daily">매일</span>
-    </div>
-    <div class="ss-path">mind/mind.py → template_daily_reflection</div>
-    <div class="pb-wrap">
-      <div class="pb pb-loading" data-k="template_daily_reflection" data-lang="kr">프롬프트 로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 2025-01-01 전체 이벤트</span>
-[{"time":"06:40",
-  "event":"Morning run"},
- {"time":"13:30",
-  "event":"Family lunch"},
- <span class="cg">...</span>]</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// daily_reflection</span>
-{"date":"2025-01-01",
- "topic":"New Year goals",
- "events":"유주산 마라톤 후
-가족과 점심...",
- "thought":"충실한 하루"}</pre></div>
-    </div>
-  </div>
-  <div class="ss-arrow">↓</div>
-
-  <div class="ss ss-orig">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="ss-title">Mind._update_long_term_memory()</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-daily">매일</span>
-    </div>
-    <div class="ss-path">mind/mind.py → template_update_long_term_memory</div>
-    <div class="pb-wrap">
-      <div class="pb pb-loading" data-k="template_update_long_term_memory" data-lang="kr">프롬프트 로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 회고 + 기존 장기기억</span>
-{"life":"Jan 1: marathon...",
- "memory":"I enjoy running",
- "ref":"ENTJ 투자 조언사"}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 업데이트된 장기기억</span>
-{"health":"Running 1h/day",
- "goals":"Marathon in April",
- "habits":"Morning run"}</pre></div>
-    </div>
-  </div>
-  <div class="ss-arrow">↓</div>
-
-  <div class="ss ss-orig">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="ss-title">EventRefiner.health_analysis()</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-mon">월별</span>
-    </div>
-    <div class="ss-path">refiner/event_refiner.py → template_impact_events_analysis</div>
-    <div class="pb-wrap">
-      <div class="pb pb-loading" data-k="template_impact_events_analysis" data-lang="kr">프롬프트 로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 2025-01 이벤트 + 충격</span>
-{"health_init":"Good",
- "impact_events":[
-  {"title":"Promotion",
-   "date":"2025-03-15"}]}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 월말 건강 상태</span>
-{"mid_state":"Stressed",
- "end_state":"Energized",
- "changes":["Sleep improved",
- "Appetite normal"]}</pre></div>
-    </div>
-  </div>
-  <div class="ss-arrow">↓</div>
-
-  <div class="ss ss-orig">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="ss-title">EventFormatter._extract_events()</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-daily">매일</span>
-    </div>
-    <div class="ss-path">formatter/event_formatter.py → template_event_format_sequence</div>
-    <div class="pb-wrap">
-      <div class="pb pb-loading" data-k="template_event_format_sequence" data-lang="kr">프롬프트 로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 표 형식 이벤트 텍스트</span>
-"06:40-08:00 유주산 달리기
-08:30 집 귀환 세면..."
-<span class="ck">// POI 데이터</span></pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// daily_event.json</span>
-{"event_id":"1",
- "name":"Morning run at Yuelu",
- "date":["06:40 to 08:00 on Jan 1"],
- "type":"Personal Life",
- "location":"Yuelu Mountain..."}</pre></div>
-    </div>
-  </div>
-  <div class="ss-arrow">↓</div>
-
-  <div class="ss ss-io">
-    <div class="flex items-center gap-2">
-      <span class="badge b-out">OUTPUT</span>
-      <span class="ss-title" style="color:#4ade80">daily_event.json 저장</span>
-    </div>
-    <div class="ss-path">output/daily_event.json</div>
-    <div class="ss-note">4,000~5,000개 이벤트 · 365일 × 7 LLM ≈ 2,555 호출/인</div>
-  </div>
-
 </div>
 
-<!-- NEW Step 2 -->
-<div class="nc">
-  <div class="vs-note">← ORIG 동일 8단계 KO 구조 (이벤트 날 LLM ×7 / 평일 템플릿 · test 모드 전체 템플릿)</div>
-
-  <!-- Sub-step 1: fuzzy_memory_monthly -->
-  <div class="ss ss-new">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">🧠 Sub-1: fuzzy_memory_monthly</span>
-      <span class="badge b-llm">LLM ×12</span><span class="badge b-ko">KO</span>
-    </div>
-    <div class="ss-path">nodes/simulator.py → Sub-step 1 (fuzzy_memory_monthly 기반)</div>
-    <div class="ss-note">1~12월 각각 draft 이벤트를 분석하여 월별 퍼지 기억 요약 생성. 이후 단계의 주관적 계획에 리콜 데이터로 활용.</div>
-    <div class="pb-wrap">
-      <div class="pb" data-new-k="sim_fuzzy" data-lang="kr">로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// persona + 월별 draft 이벤트 ×12</span>
-{persona, year:2025, month:1,
- events_desc:
-  "2025-01-29: [설날] ..."
-  "2025-01-15: [건강] ..."}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// monthly_memory (1~12월)</span>
-{"2025-01":"설날 귀성, 가족과 시간...",
- "2025-02":"활발한 업무 로드...",
- <span class="cg">...</span>}</pre></div>
+<!-- Step 2 Sub-2 row: get_plan4 -->
+<div class="sr">
+  <div class="oc">
+    <div class="ss ss-orig">
+      <div class="flex items-center gap-2 flex-wrap"><span class="ss-title">Mind.get_plan4(date)</span><span class="badge b-rule">규칙 기반</span><span class="badge b-daily">매일</span></div>
+      <div class="ss-path">mind/mind.py → 일정 추출 (LLM 없음)</div>
+      <div class="ss-note">draft에서 해당 날짜 이벤트를 추출하여 당일 계획 구성</div>
     </div>
   </div>
-  <div class="ss-arrow ss-arrow-g">↓</div>
-
-  <!-- Sub-step 2: get_plan4 (rule-based) -->
-  <div class="ss ss-new">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">📄 Sub-2: get_plan4</span>
-      <span class="badge b-rule">규칙 기반</span>
-    </div>
-    <div class="ss-path">nodes/simulator.py → Sub-step 2 (draft 이벤트 추출)</div>
-    <div class="ss-note">해당 날짜의 draft 이벤트를 추출하여 당일 계획으로 구성. LLM 호출 없음.</div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>dt: "2025-01-29"
-draft_by_date: {
-  "2025-01-29": [{"title":"설날"}]}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// plan_events</span>
-[{"category":"family",
-  "title":"설날 가족 모임",
-  "description":"..."}]</pre></div>
+  <div class="nc">
+    <div class="ss ss-new">
+      <div class="flex items-center gap-2 flex-wrap"><span class="npill np-new">📄 Sub-2: get_plan4</span><span class="badge b-rule">규칙 기반</span></div>
+      <div class="ss-path">nodes/simulator.py → Sub-step 2</div>
+      <div class="ss-note">해당 날짜의 draft 이벤트 추출. LLM 호출 없음.</div>
     </div>
   </div>
-  <div class="ss-arrow ss-arrow-g">↓</div>
-
-  <!-- Sub-step 3: subjective_plan -->
-  <div class="ss ss-new">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">💭 Sub-3: subjective_plan</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-daily">이벤트 날마다</span><span class="badge b-ko">KO</span>
-    </div>
-    <div class="ss-path">nodes/simulator.py → Sub-step 3 (template_daily_event_subjective_plan 기반)</div>
-    <div class="ss-note">1인칭 "나"의 시각으로 오늘 일정을 주관적으로 계획. 퍼지 기억 + 인지 상태 + draft 이벤트 종합.</div>
-    <div class="pb-wrap">
-      <div class="pb" data-new-k="sim_subjective" data-lang="kr">로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// cognition + plan + memory</span>
-{cognition:"INTJ 개발자",
- plan:["설날 가족 모임"],
- memory:"1월 퍼지 기억..."}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 1인칭 주관적 계획</span>
-{"thought":"오늘은 설날.
-부모님 찾아뽐야...",
- "plan":["09:00 기상",
- "10:30 정신 차려"]}</pre></div>
-    </div>
-  </div>
-  <div class="ss-arrow ss-arrow-g">↓</div>
-
-  <!-- Sub-step 4: objective_optimize -->
-  <div class="ss ss-new">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">✅ Sub-4: objective_optimize</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-daily">이벤트 날마다</span><span class="badge b-ko">KO</span>
-    </div>
-    <div class="ss-path">nodes/simulator.py → Sub-step 4 (template_daily_event_objective_optimize 기반)</div>
-    <div class="ss-note">주관적 계획을 객관적 시각으로 조정·보완·최적화. 공백 시간대 채우기, 일상 패턴 보완, 이벤트 상세화.</div>
-    <div class="pb-wrap">
-      <div class="pb" data-new-k="sim_objective" data-lang="kr">로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 주관적 계획 + 날짜</span>
-{subjective_plan: "...",
- date: "2025-01-29"}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 시간순 이벤트 텍스트</span>
-09:00-10:00 기상 및 준비
-10:30 대중교통 이동
-11:00-13:00 정신 차례
-<span class="cg">... 하루 전체</span></pre></div>
-    </div>
-  </div>
-  <div class="ss-arrow ss-arrow-g">↓</div>
-
-  <!-- Sub-step 5: traffic_adjust -->
-  <div class="ss ss-new">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">📍 Sub-5: traffic_adjust</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-daily">이벤트 날마다</span><span class="badge b-ko">KO</span>
-    </div>
-    <div class="ss-path">nodes/simulator.py → Sub-step 5 (template_event_traffic_adjust 기반)</div>
-    <div class="ss-note">실제 주소 + 이동 시간 배분. 이동 방식(지하철/버스/자가용/도보) + 시간(분 단위) 명시. 원래 이벤트 배치 최대한 유지.</div>
-    <div class="pb-wrap">
-      <div class="pb" data-new-k="sim_traffic" data-lang="kr">로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 이벤트 배치 텍스트 + 도시</span>
-이전 단계 출력 + 도시: 인천</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 상세 주소 + 이동시간</span>
-09:00 기상 (인천 부평자택 가의 주소)
-10:00 도보 20분 동인청 이동
-11:00 정신차례 (인천 유역 꿈티 식당)</pre></div>
-    </div>
-  </div>
-  <div class="ss-arrow ss-arrow-g">↓</div>
-
-  <!-- Sub-step 6: reflection + long_term_memory -->
-  <div class="ss ss-new">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">📝 Sub-6: reflection + long_term_memory</span>
-      <span class="badge b-llm">LLM ×2</span><span class="badge b-daily">이벤트 날마다</span><span class="badge b-ko">KO</span>
-    </div>
-    <div class="ss-path">nodes/simulator.py → Sub-step 6 (template_daily_reflection + template_update_long_term_memory 기반)</div>
-    <div class="ss-note">하루 일일 일지 작성 (1인칭 회고 + 미래 계획), 이를 바탕으로 장기기억 업데이트. 다음 날 주관적 계획에 연속성 보장.</div>
-    <div class="pb-wrap">
-      <div class="pb" data-new-k="sim_reflection" data-lang="kr">로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 전체 이벤트 + 기존 장기기억</span>
-{events: "...", plan: [...],
- memory: "현재 장기기억..."}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// reflection + 업데이트된 장기기억</span>
-{"thought":"오늘 설날...",
- "future_plans":[{"date":"2025-02-01",
-   "plan":"횟 사헙 예약"}]}
-+ 수정된 장기기억 텍스트</pre></div>
-    </div>
-  </div>
-  <div class="ss-arrow ss-arrow-g">↓</div>
-
-  <!-- Sub-step 7: impact_events_analysis -->
-  <div class="ss ss-new">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">📊 Sub-7: impact_events_analysis</span>
-      <span class="badge b-llm">LLM ×12</span><span class="badge b-ko">KO</span>
-    </div>
-    <div class="ss-path">nodes/simulator.py → Sub-step 7 (template_impact_events_analysis 기반)</div>
-    <div class="ss-note">월별 건강/상태 변화 분석. 월 15일 중간 상태 + 원말 상태 + 변화 노드 기록. 다음 달 초기 건강 상태로 연속.</div>
-    <div class="pb-wrap">
-      <div class="pb" data-new-k="sim_impact" data-lang="kr">로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// persona + 초기 건강상태 + 월별 이벤트</span>
-{persona, initial_health:"건강한 편",
- daily_data:"1월 이벤트 목록..."}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 월별 상태</span>
-{"mid_month_state":{
-  "health_status":{"summary":"주 3회 운동 유지..."}},
- "end_of_month_state":{...},
- "change_nodes":[{"date":"2025-01-22",
-   "event":"야근으로 수면 부족"}]}</pre></div>
-    </div>
-  </div>
-  <div class="ss-arrow ss-arrow-g">↓</div>
-
-  <!-- Sub-step 8: event_format_sequence -->
-  <div class="ss ss-new">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">🗂️ Sub-8: event_format_sequence</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-daily">이벤트 날마다</span><span class="badge b-ko">KO</span>
-    </div>
-    <div class="ss-path">nodes/simulator.py → Sub-step 8 (template_event_format_sequence 기반)</div>
-    <div class="ss-note">하루 전체 이벤트 텍스트를 20개 이하 정형화된 JSON 시퀀스로 변환. type/name/description/location/date/participant 필드 포함.</div>
-    <div class="pb-wrap">
-      <div class="pb" data-new-k="sim_format" data-lang="kr">로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 시간 구간 + 이벤트 텍스트</span>
-"09:00-10:00 기상 및 준비...
-11:00-13:00 정신차례..."</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// state.daily_events_map (최종)</span>
-[{"type":"Relationships",
-  "name":"정신 차례",
-  "date":"2025-01-29 11:00:00至2025-01-29 13:00:00",
-  "location":"인천 부평구...",
-  "participant":[{"name":"박준혁","relation":"자신"}]},
- <span class="cg">... ≤20개/일</span>]</pre></div>
-    </div>
-  </div>
-
 </div>
 
+<!-- Step 2 Sub-3 row: subjective_plan -->
+<div class="sr">
+  <div class="oc">
+    <div class="ss ss-orig">
+      <div class="flex items-center gap-2 flex-wrap"><span class="ss-title">Mind._generate_subjective_thought()</span><span class="badge b-llm">LLM</span><span class="badge b-daily">매일</span></div>
+      <div class="ss-path">mind/mind.py → template_daily_event_subjective_plan</div>
+      <div class="pb-wrap"><div class="pb pb-loading" data-k="template_daily_event_subjective_plan" data-lang="kr">프롬프트 로딩 중…</div><button class="pb-btn" onclick="togglePb(this)">원본 ZH</button></div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>{"cognition":"ENTJ 투자 조언사", "plan":"New Year holiday", "memory":"1월 퍼지 기억..."}</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>{"thought":"새해 첫날...", "plan":["06:40 기상",...]}</pre></div>
+      </div>
+    </div>
+  </div>
+  <div class="nc">
+    <div class="ss ss-new">
+      <div class="flex items-center gap-2 flex-wrap"><span class="npill np-new">💭 Sub-3: subjective_plan</span><span class="badge b-llm">LLM</span><span class="badge b-daily">이벤트 날</span><span class="badge b-ko">KO</span></div>
+      <div class="ss-path">nodes/simulator.py → Sub-step 3</div>
+      <div class="ss-note">1인칭 "나"의 시각으로 오늘 일정 주관적 계획. 퍼지 기억 + 인지 상태 + draft 이벤트 종합.</div>
+      <div class="pb-wrap"><div class="pb" data-new-k="sim_subjective" data-lang="kr">로딩 중…</div><button class="pb-btn" onclick="togglePb(this)">원본 ZH</button></div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>cognition:"INTJ 개발자" plan:[설날] memory:"1월 기억..."</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>{"thought":"오늘은 설날...", "plan":["09:00 기상",...]}</pre></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 2 Sub-4 row: objective_optimize -->
+<div class="sr">
+  <div class="oc">
+    <div class="ss ss-orig">
+      <div class="flex items-center gap-2 flex-wrap"><span class="ss-title">Mind._generate_objective_events()</span><span class="badge b-llm">LLM</span><span class="badge b-daily">매일</span></div>
+      <div class="ss-path">mind/mind.py → template_daily_event_objective_optimize</div>
+      <div class="pb-wrap"><div class="pb pb-loading" data-k="template_daily_event_objective_optimize" data-lang="kr">프롬프트 로딩 중…</div><button class="pb-btn" onclick="togglePb(this)">원본 ZH</button></div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>주관적 계획 + 날짜</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>시간순 이벤트 표 (하루 전체)</pre></div>
+      </div>
+    </div>
+  </div>
+  <div class="nc">
+    <div class="ss ss-new">
+      <div class="flex items-center gap-2 flex-wrap"><span class="npill np-new">✅ Sub-4: objective_optimize</span><span class="badge b-llm">LLM</span><span class="badge b-daily">이벤트 날</span><span class="badge b-ko">KO</span></div>
+      <div class="ss-path">nodes/simulator.py → Sub-step 4</div>
+      <div class="ss-note">주관적 계획을 객관적 시각으로 조정·보완. 공백 시간대 채우기, 일상 패턴 보완, 이벤트 상세화.</div>
+      <div class="pb-wrap"><div class="pb" data-new-k="sim_objective" data-lang="kr">로딩 중…</div><button class="pb-btn" onclick="togglePb(this)">원본 ZH</button></div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>주관적 계획 + 날짜</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>09:00-10:00 기상 및 준비&#10;11:00-13:00 정신 차례&#10;<span class="cg">... 하루 전체</span></pre></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 2 Sub-5 row: traffic_adjust -->
+<div class="sr">
+  <div class="oc">
+    <div class="ss ss-orig">
+      <div class="flex items-center gap-2 flex-wrap"><span class="ss-title">Mind.map() + _adjust_event_trajectory()</span><span class="badge b-llm">LLM</span><span class="badge b-daily">매일</span></div>
+      <div class="ss-path">mind/mind.py → template_event_traffic_adjust</div>
+      <div class="pb-wrap"><div class="pb pb-loading" data-k="template_event_traffic_adjust" data-lang="kr">프롬프트 로딩 중…</div><button class="pb-btn" onclick="togglePb(this)">원본 ZH</button></div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>이벤트 배치 + POI 검색 결과</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>실제 주소 + 이동시간 배분</pre></div>
+      </div>
+    </div>
+  </div>
+  <div class="nc">
+    <div class="ss ss-new">
+      <div class="flex items-center gap-2 flex-wrap"><span class="npill np-new">📍 Sub-5: traffic_adjust</span><span class="badge b-llm">LLM</span><span class="badge b-daily">이벤트 날</span><span class="badge b-ko">KO</span></div>
+      <div class="ss-path">nodes/simulator.py → Sub-step 5</div>
+      <div class="ss-note">실제 주소 + 이동 시간 배분. 이동 방식(지하철/버스/자가용/도보) + 분 단위 명시.</div>
+      <div class="pb-wrap"><div class="pb" data-new-k="sim_traffic" data-lang="kr">로딩 중…</div><button class="pb-btn" onclick="togglePb(this)">원본 ZH</button></div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>이벤트 배치 텍스트 + 도시: 인천</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>09:00 인천 부평자택&#10;도보 20분 → 동인청</pre></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 2 Sub-6 row: reflection -->
+<div class="sr">
+  <div class="oc">
+    <div class="ss ss-orig">
+      <div class="flex items-center gap-2 flex-wrap"><span class="ss-title">Mind._generate_reflection()</span><span class="badge b-llm">LLM</span><span class="badge b-daily">매일</span></div>
+      <div class="ss-path">mind/mind.py → template_daily_reflection</div>
+      <div class="pb-wrap"><div class="pb pb-loading" data-k="template_daily_reflection" data-lang="kr">프롬프트 로딩 중…</div><button class="pb-btn" onclick="togglePb(this)">원본 ZH</button></div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>2025-01-01 전체 이벤트</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>{"thought":"충실한 하루", "future_plans":[...]}</pre></div>
+      </div>
+    </div>
+  </div>
+  <div class="nc">
+    <div class="ss ss-new">
+      <div class="flex items-center gap-2 flex-wrap"><span class="npill np-new">📝 Sub-6: reflection + long_term_memory</span><span class="badge b-llm">LLM ×2</span><span class="badge b-daily">이벤트 날</span><span class="badge b-ko">KO</span></div>
+      <div class="ss-path">nodes/simulator.py → Sub-step 6</div>
+      <div class="ss-note">일일 회고(1인칭) + 장기기억 업데이트. 다음 날 연속성 보장.</div>
+      <div class="pb-wrap"><div class="pb" data-new-k="sim_reflection" data-lang="kr">로딩 중…</div><button class="pb-btn" onclick="togglePb(this)">원본 ZH</button></div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>전체 이벤트 + 기존 장기기억</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>{"thought":"오늘 설날..."} + 업데이트된 장기기억</pre></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 2 Sub-6b row: update_long_term_memory (ORIG) -->
+<div class="sr">
+  <div class="oc">
+    <div class="ss ss-orig">
+      <div class="flex items-center gap-2 flex-wrap"><span class="ss-title">Mind._update_long_term_memory()</span><span class="badge b-llm">LLM</span><span class="badge b-daily">매일</span></div>
+      <div class="ss-path">mind/mind.py → template_update_long_term_memory</div>
+      <div class="pb-wrap"><div class="pb pb-loading" data-k="template_update_long_term_memory" data-lang="kr">프롬프트 로딩 중…</div><button class="pb-btn" onclick="togglePb(this)">원본 ZH</button></div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>회고 + 기존 장기기억</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>업데이트된 장기기억</pre></div>
+      </div>
+    </div>
+  </div>
+  <div class="nc">
+    <div class="ss ss-new" style="opacity:0.4;border-style:dashed">
+      <div class="ss-note" style="color:#374151;font-size:10px">Sub-6에 통합됨 (reflection과 함께 처리)</div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 2 Sub-7 row: impact_events_analysis -->
+<div class="sr">
+  <div class="oc">
+    <div class="ss ss-orig">
+      <div class="flex items-center gap-2 flex-wrap"><span class="ss-title">EventRefiner.health_analysis()</span><span class="badge b-llm">LLM</span><span class="badge b-mon">월별</span></div>
+      <div class="ss-path">refiner/event_refiner.py → template_impact_events_analysis</div>
+      <div class="pb-wrap"><div class="pb pb-loading" data-k="template_impact_events_analysis" data-lang="kr">프롬프트 로딩 중…</div><button class="pb-btn" onclick="togglePb(this)">원본 ZH</button></div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>건강 초기 상태 + 충격 이벤트</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>월말 건강 상태 분석</pre></div>
+      </div>
+    </div>
+  </div>
+  <div class="nc">
+    <div class="ss ss-new">
+      <div class="flex items-center gap-2 flex-wrap"><span class="npill np-new">📊 Sub-7: impact_events_analysis</span><span class="badge b-llm">LLM ×12</span><span class="badge b-ko">KO</span></div>
+      <div class="ss-path">nodes/simulator.py → Sub-step 7</div>
+      <div class="ss-note">월별 건강/상태 변화 분석. 월 15일 중간 상태 + 월말 상태 + 변화 노드 기록.</div>
+      <div class="pb-wrap"><div class="pb" data-new-k="sim_impact" data-lang="kr">로딩 중…</div><button class="pb-btn" onclick="togglePb(this)">원본 ZH</button></div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>초기 건강상태 + 월별 이벤트</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>{"mid_month_state":{...}, "end_of_month_state":{...}, "change_nodes":[...]}</pre></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step 2 Sub-8 row: event_format_sequence -->
+<div class="sr">
+  <div class="oc">
+    <div class="ss ss-orig">
+      <div class="flex items-center gap-2 flex-wrap"><span class="ss-title">EventFormatter._extract_events()</span><span class="badge b-llm">LLM</span><span class="badge b-daily">매일</span></div>
+      <div class="ss-path">formatter/event_formatter.py → template_event_format_sequence</div>
+      <div class="pb-wrap"><div class="pb pb-loading" data-k="template_event_format_sequence" data-lang="kr">프롬프트 로딩 중…</div><button class="pb-btn" onclick="togglePb(this)">원본 ZH</button></div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>표 형식 이벤트 텍스트</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>daily_event.json 저장</pre></div>
+      </div>
+    </div>
+  </div>
+  <div class="nc">
+    <div class="ss ss-new">
+      <div class="flex items-center gap-2 flex-wrap"><span class="npill np-new">🗃️ Sub-8: event_format_sequence</span><span class="badge b-llm">LLM</span><span class="badge b-daily">이벤트 날</span><span class="badge b-ko">KO</span></div>
+      <div class="ss-path">nodes/simulator.py → Sub-step 8</div>
+      <div class="ss-note">하루 이벤트 텍스트 → 20개 이하 정형화 JSON. type/name/description/location/date/participant 포함.</div>
+      <div class="pb-wrap"><div class="pb" data-new-k="sim_format" data-lang="kr">로딩 중…</div><button class="pb-btn" onclick="togglePb(this)">원본 ZH</button></div>
+      <div class="io">
+        <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>시간 구간 + 이벤트 텍스트</pre></div>
+        <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>state.daily_events_map (최종) <span class="cg">... ≤20개/일</span></pre></div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="row-sep"></div>
 
 <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  STEP 3: PHONE DATA GEN  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
