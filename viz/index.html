@@ -482,29 +482,32 @@ traits:  [<span class="cs">"家庭导向"</span>...]
     <div class="ss-path">nodes/persona_gen.py → gen_profile() (template_refine 기반)</div>
     <div class="ss-note">person_gen 결과를 받아 MBTI·취미·성격·학력·혼인 상태·건강·생활습관·직장 설명·종합 설명 생성. 나이/학력/직업/수입 일치 검증.</div>
     <div class="pb-wrap">
-      <div class="pb" style="border-left-color:#22c55e;color:#94a3b8"><span style="color:#4ade80">// template_refine 기반 + refer_kr.json 랜덤 주입 (원본과 동일 로직)</span>
+      <div class="pb" style="border-left-color:#22c55e;color:#94a3b8"><span style="color:#4ade80">// template_refine 원문 구조 그대로, 한국어 컨텍스트만 변경</span>
 당신은 인류학자, 작가, 논리 전문가입니다.
-목표: 진실하고 합리적이며 자기일관적이고 다양한
-한국인 인물 정보를 생성하세요.
+목표: 비현실적·불합리·논리 오류·너무 평범한 특징 등을
+판단·수정하여, 진실하고 합리적이며 다양한 한국인 인물 정보 생성.
 
-수정 요구사항:
-1. 필드 추가/삭제 불가, 입력 JSON key에 따라 생성
-2. 필드 간 논리 일치 확인
+1. 엄격한 필드 요구사항: 필드 추가/삭제 불가
+2. 정보 수정 전략:
    - 나이/학력/직업/수입 일치
    - 취미/생활습관/건강과 나이·직업 조화
+   - 비설명 필드는 불합리하지 않으면 수정 최소화
+   - desc 필드: 정보 삭제 불가, 추가만 가능
    - 취미에 독특·비주류적 항목 1개 추가 가능
    - 성격 특성(가치관)은 추가하지 말 것
-3. 출력 요구사항:
-   - JSON만 출력 (```json``` 태그 없이)
-   - relation 필드 값은 빈 []
+3. 필드 의미: mbti / hobbies / personality_traits /
+   economic_level / education / marital_status /
+   health_desc / lifestyle_desc / work_desc /
+   description / relation: []
+4. 형식: 숫자→int/float, 텍스트→자연스러운 한국어
+5. 출력: JSON만 출력, relation=[], note 필드 추가
 
-<span style="color:#6366f1">// refer_kr.json에서 랜덤 추출 (매 호출마다 다름)</span>
+<span style="color:#6366f1">// refer_kr.json 랜덤 추출 (매 호출마다 다름, 원본과 동일 로직)</span>
 <span style="color:#4ade80">"hobbies"</span>: [취미 100개 중 12개 샘플] ← 선택 힌트
 <span style="color:#4ade80">"aim"</span>:     [목표 20개 중 6개 샘플]  ← 선택 힌트
 <span style="color:#4ade80">"traits"</span>:  [가치관 17개 중 6개 샘플] ← 선택 힌트
 
-수정할 원본 데이터:
-{name, age, gender, job, home_city}</div>
+처리할 원본 데이터: {name, age, gender, job, home_city}</div>
     </div>
     <div class="io">
       <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// state.persons (고정값 유지)</span>
