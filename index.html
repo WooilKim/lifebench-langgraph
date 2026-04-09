@@ -369,7 +369,7 @@ function renderJobTable() {
 
 <div style="grid-column:1/-1;display:flex;align-items:center;gap:8px;padding:5px 24px;background:#07090f;border-top:1px solid #1e293b;border-bottom:1px solid #1e293b;">
   <div style="flex:1;height:1px;background:linear-gradient(to right,#1e3a5f,transparent)"></div>
-  <span style="font-size:9px;color:#334155;font-weight:800;letter-spacing:.08em;white-space:nowrap">ORIG: gen_profile → gen_relations → gen_persons (3 LLM)&nbsp;&nbsp;↔&nbsp;&nbsp;NEW: persona_gen (1 LLM)</span>
+  <span style="font-size:9px;color:#334155;font-weight:800;letter-spacing:.08em;white-space:nowrap">ORIG: gen_profile → gen_relations → gen_persons (3 LLM)&nbsp;&nbsp;↔&nbsp;&nbsp;NEW: gen_profile → gen_relations → gen_persons (3 LLM, KO)</span>
   <div style="flex:1;height:1px;background:linear-gradient(to left,#166534,transparent)"></div>
 </div>
 
@@ -473,43 +473,90 @@ traits:  [<span class="cs">"家庭导向"</span>...]
 
 </div>
 
-<!-- NEW Step 0 Sub-row B: persona_gen -->
+<!-- NEW Step 0 Sub-row B: gen_profile / gen_relations / gen_persons -->
 <div class="nc">
-<!-- persona_gen: 나머지 필드 확장 -->
+
+  <!-- gen_profile -->
   <div class="ss ss-new">
     <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">👤 persona_gen</span>
-      <span class="badge b-llm">LLM ×1</span><span class="badge b-ko">KO</span>
-        <div class="ss-path">nodes/persona_gen.py</div>
-    <div class="ss-note">
-      person_gen의 name/age/gender/job을 고정하고 3단계 LLM 호출로 확장:<br>
-      <b>gen_profile()</b>: MBTI·취미·성격·학력·건강·생활 설명 생성 (template_refine 기반)<br>
-      <b>gen_relations()</b>: 관계망 10~15명 뼈대 생성 (template_relation_1 기반)<br>
-      <b>gen_persons()</b>: 각 연락처 상세 정보 생성 (template_person 기반)
+      <span class="npill np-new">👤 gen_profile()</span>
+      <span class="badge b-llm">LLM</span>
     </div>
+    <div class="ss-path">nodes/persona_gen.py → gen_profile() (template_refine 기반)</div>
+    <div class="ss-note">person_gen 결과를 받아 MBTI·취미·성격·학력·혼인 상태·건강·생활습관·직장 설명·종합 설명 생성. 나이/학력/직업/수입 일치 검증.</div>
     <div class="pb-wrap">
       <div class="pb" data-new-k="persona_gen" data-lang="kr">로딩 중…</div>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// state.persons (고정값)</span>
-{"name":<span class="cs">"박준혁"</span>,
- "age":<span class="cn">46</span>,
- "gender":<span class="cs">"남"</span>,
- "job":<span class="cs">"소프트웨어 개발자"</span>}
-<span class="ck">// ↑ 이 값들은 반드시 유지</span></pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// state.personas[0]</span>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// state.persons (고정값 유지)</span>
 {"name":<span class="cs">"박준혁"</span>,
  "age":<span class="cn">46</span>,
  "gender":<span class="cs">"남"</span>,
  "job":<span class="cs">"소프트웨어 개발자"</span>,
- "mbti":<span class="cs">"INTJ"</span>,
- "hobbies":[<span class="cs">"독서"</span>,<span class="cs">"등산"</span>...],
- "home_city":<span class="cs">"인천"</span>,
- "relationships":<span class="cb">[15명]</span>}</pre></div>
+ "home_city":<span class="cs">"인천"</span>}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 기본 프로파일</span>
+{"mbti":<span class="cs">"INTJ"</span>,
+ "hobbies":[<span class="cs">"코딩"</span>,<span class="cs">"독서"</span>...],
+ "education":<span class="cs">"대학교 졸업"</span>,
+ "marital_status":<span class="cs">"기혼"</span>,
+ "health_desc":<span class="cs">"건강한 편..."</span>,
+ "description":<span class="cs">"박준혁은..."</span>,
+ "relation":[]}</pre></div>
     </div>
   </div>
-</div>
+  <div class="ss-arrow ss-arrow-g">↓</div>
 
+  <!-- gen_relations -->
+  <div class="ss ss-new">
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="npill np-new">🔗 gen_relations()</span>
+      <span class="badge b-llm">LLM</span>
+    </div>
+    <div class="ss-path">nodes/persona_gen.py → gen_relations() (template_relation_1 기반)</div>
+    <div class="ss-note">프로파일을 분석해 가족·직장·학교·취미 등 소셜서클을 추론하고, 연락을 유지할 10~15명의 관계 뼈대 생성. 이름·관계·소셜서클만 포함.</div>
+    <div class="io">
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// gen_profile() 결과</span>
+{"name":<span class="cs">"박준혁"</span>,
+ "job":<span class="cs">"소프트웨어 개발자"</span>,
+ "mbti":<span class="cs">"INTJ"</span>,
+ "marital_status":<span class="cs">"기혼"</span>,
+ "hobbies":[<span class="cs">"코딩"</span>...]}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 관계망 뼈대</span>
+[{"name":<span class="cs">"박민정"</span>,
+  "relation":<span class="cs">"배우자"</span>,
+  "social_circle":<span class="cs">"가족"</span>},
+ {"name":<span class="cs">"김팀장"</span>,
+  "relation":<span class="cs">"팀장"</span>,
+  "social_circle":<span class="cs">"직장"</span>},
+ <span class="cg">... 10~15명 뼈대</span>]</pre></div>
+    </div>
+  </div>
+  <div class="ss-arrow ss-arrow-g">↓</div>
+
+  <!-- gen_persons -->
+  <div class="ss ss-new">
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="npill np-new">👥 gen_persons()</span>
+      <span class="badge b-llm">LLM</span>
+    </div>
+    <div class="ss-path">nodes/persona_gen.py → gen_persons() (template_person 기반)</div>
+    <div class="ss-note">관계 뼈대에 상세 정보 추가. 각 연락처마다 나이·성별·직업·도시·관계 설명 생성. 같은 소셜서클끼리 정보 일관성 유지.</div>
+    <div class="io">
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 프로파일 + 관계 뼈대</span>
+{"profile":{...},
+ "relations":[
+  {"name":<span class="cs">"박민정"</span>,
+   "relation":<span class="cs">"배우자"</span>,
+   "social_circle":<span class="cs">"가족"</span>}...]}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// state.personas[0].relationships</span>
+[{"name":<span class="cs">"박민정"</span>,
+  "age":<span class="cn">44</span>, "gender":<span class="cs">"여"</span>,
+  "job":<span class="cs">"초등학교 교사"</span>,
+  "home_city":<span class="cs">"인천"</span>,
+  "description":<span class="cs">"대학 동문으로..."</span>},
+ <span class="cg">... 총 14명</span>]</pre></div>
+    </div>
+  </div>
 
 </div>
 <div class="row-sep"></div>
