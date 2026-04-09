@@ -10,6 +10,10 @@ Two-phase approach:
 
   Phase 2 (LLM):
     - Job: LLM selects from age × gender-appropriate candidate list
+    - Candidates sourced from:
+        · LifeBench person.json survey occupations (Korean-translated)
+        · LifeBench refer.json job pool 137개 (Korean-mapped)
+        · Original candidates
 """
 import json
 import random
@@ -59,17 +63,13 @@ def _load_name_data() -> dict:
 def _sample_name(gender: str) -> str:
     """Sample a full Korean name (no LLM).
 
-    Algorithm:
-    - Surname: weighted sampling from 2020 census (김 19.3%, 이 14.1%, 박 8.4%...)
-    - Given name: gender-matched pool from koreanname.me
-                  (male names → 남, female names → 여, never crossed)
-                  top 500 sampled by count weight
+    - Surname: weighted from 2020 census
+    - Given name: gender-specific pool from koreanname.me, count-weighted top 500
+      Male names → 남 only / Female names → 여 only (never crossed)
     """
     surname = random.choices(_SURNAMES, weights=_SURNAME_WEIGHTS, k=1)[0]
-
-    data = _load_name_data()
-    pool = data.get("male" if gender == "남" else "female", [])
-
+    data    = _load_name_data()
+    pool    = data.get("male" if gender == "남" else "female", [])
     if pool:
         top     = pool[:500]
         names   = [n["name"] for n in top]
@@ -77,91 +77,136 @@ def _sample_name(gender: str) -> str:
         given   = random.choices(names, weights=weights, k=1)[0]
     else:
         given = random.choice(_FALLBACK_MALE if gender == "남" else _FALLBACK_FEMALE)
-
     return surname + given
 
 
 # ── 나이 × 성별 직업 후보 테이블 ──────────────────────────────────────────────
 # (job, male_weight, female_weight)
-# weight: 해당 성별·나이대에서 이 직업이 선택될 상대적 확률
-# 0 = 해당 성별에 자연스럽지 않은 직업 (완전 제외는 아니지만 거의 안 뽑힘)
+# Sources:
+#   - LifeBench person.json 설문 직업 (한국어 번역)
+#   - LifeBench refer.json 직업 풀 137개 (한국어 매핑)
+#   - 기존 직업 후보
 _JOB_TABLE = {
     (18, 22): [
-        ("대학생",         10, 10),
-        ("아르바이트생",   5,  5),
-        ("카페 바리스타",  2,  4),
-        ("편의점 직원",    3,  2),
+        ("대학생",                  10, 10),
+        ("아르바이트생",             5,  5),
+        ("카페 바리스타",             2,  4),
+        ("편의점 직원",              3,  2),
+        ("소셜 마케터 인턴",          1,  3),  # refer.json
+        ("유튜버·크리에이터",         2,  3),  # person.json (학생 겸 자유기고가)
+        ("배달 라이더",              3,  1),
     ],
     (23, 27): [
-        ("신입 개발자",    5,  3),
-        ("마케터",         3,  5),
-        ("영업 사원",      5,  3),
-        ("은행 창구 직원", 3,  5),
-        ("간호사",         1,  7),
-        ("초등학교 교사",  2,  6),
-        ("물류 직원",      5,  2),
-        ("회사원",         5,  5),
+        ("신입 개발자",              5,  3),
+        ("마케터",                  3,  5),
+        ("영업 사원",                5,  3),
+        ("은행 창구 직원",            3,  5),
+        ("간호사",                  1,  7),
+        ("조산사",                  0,  3),  # refer.json 助产士
+        ("초등학교 교사",             2,  6),
+        ("보험 에이전트",             3,  4),  # person.json 保险代理人
+        ("통신 엔지니어",             4,  2),  # refer.json 通信工程技术人员
+        ("광고 디자이너",             2,  4),  # refer.json 广告设计人员
+        ("번역가",                  3,  4),  # refer.json 翻译
+        ("물류 직원",                5,  2),
+        ("회사원",                  5,  5),
     ],
     (28, 35): [
-        ("소프트웨어 개발자", 7, 3),
-        ("UI/UX 디자이너",    4, 5),
-        ("마케터",             3, 6),
-        ("회계사",             4, 5),
-        ("간호사",             1, 8),
-        ("중학교 교사",        3, 6),
-        ("공무원",             5, 5),
-        ("영업 관리자",        5, 3),
-        ("HR 담당자",          2, 6),
-        ("의사",               4, 3),
-        ("약사",               3, 5),
-        ("변호사",             4, 4),
-        ("스타트업 창업자",    5, 2),
-        ("프리랜서 작가",      3, 4),
+        ("소프트웨어 개발자",          7,  3),
+        ("컴퓨터 소프트웨어 기술자",    5,  3),  # refer.json 计算机软件技术人员
+        ("UI/UX 디자이너",           4,  5),
+        ("실내 인테리어 디자이너",      3,  5),  # refer.json 室内装饰设计人员
+        ("마케터",                  3,  6),
+        ("회계사",                  4,  5),  # refer.json 会计人员
+        ("감사 담당자",               3,  4),  # refer.json 审计人员
+        ("통계 연구원",               3,  4),  # refer.json 统计人员
+        ("경제 계획 담당자",           4,  3),  # refer.json 经济计划人员
+        ("간호사",                  1,  8),
+        ("중학교 교사",               3,  6),
+        ("공무원",                  5,  5),
+        ("영업 관리자",               5,  3),
+        ("HR 담당자",                2,  6),
+        ("의사",                    4,  3),
+        ("주치의",                  4,  3),  # person.json 住院医师
+        ("수의사",                  3,  2),  # refer.json 兽医
+        ("약사",                    3,  5),
+        ("변호사",                  4,  4),
+        ("공증인",                  3,  3),  # refer.json 公证员
+        ("기계 엔지니어",             5,  2),  # person.json 机械工程师
+        ("수치제어 조작원",            5,  1),  # person.json 数控机床操作员
+        ("스타트업 창업자",            5,  2),
+        ("유튜버·스트리머",            3,  4),  # person.json
+        ("프리랜서 작가",             3,  4),  # refer.json 文学作家
+        ("연구원",                  4,  4),
+        ("의류 매장 운영자",           1,  5),  # person.json 精品服饰店店主
+        ("동영상 편집자",             2,  4),
     ],
     (36, 45): [
-        ("팀장",               6, 3),
-        ("부장",               6, 2),
-        ("IT 프로젝트 매니저", 5, 3),
-        ("병원 과장",          4, 3),
-        ("법무팀장",           4, 3),
-        ("고등학교 교사",      3, 5),
-        ("대학 교수",          4, 4),
-        ("자영업자",           5, 5),
-        ("중소기업 대표",      6, 2),
-        ("부동산 중개사",      4, 5),
-        ("세무사",             4, 4),
-        ("건축사",             5, 2),
+        ("팀장",                    6,  3),
+        ("부장",                    6,  2),
+        ("IT 프로젝트 매니저",         5,  3),
+        ("병원 과장",                 4,  3),
+        ("법무팀장",                  4,  3),
+        ("고등학교 교사",              3,  5),
+        ("대학 교수",                 4,  4),
+        ("고등 교육 교사",             4,  4),  # refer.json 高等教育教师
+        ("자영업자",                  5,  5),
+        ("중소기업 대표",              6,  2),
+        ("부동산 중개사",              4,  5),
+        ("세무사",                   4,  4),
+        ("건축사",                   5,  2),
+        ("라디오 아나운서",            2,  4),  # refer.json 播音员
+        ("방송 진행자",               2,  4),  # refer.json 节目主持人
+        ("항공 승무원",               2,  6),  # refer.json 民用航空维修
+        ("운동선수·코치",              3,  3),  # refer.json 运动员/教练员
+        ("경제 통계 연구원",           4,  4),  # refer.json 经济学研究人员
+        ("언론인 기자",               3,  4),  # refer.json 文字记者
+        ("도서관 사서",               3,  5),  # refer.json 图书资料业务人员
+        ("사회복지사",                3,  6),
     ],
     (46, 55): [
-        ("이사",               6, 2),
-        ("임원",               6, 2),
-        ("교장",               4, 4),
-        ("대학 교수",          4, 4),
-        ("의원급 의사",        5, 3),
-        ("변호사",             5, 3),
-        ("자영업자",           5, 5),
-        ("건설 현장 소장",     7, 1),
-        ("공기업 부장",        6, 2),
+        ("이사",                    6,  2),
+        ("임원",                    6,  2),
+        ("회사 직능부서 임원",          6,  3),  # refer.json 企业职能部门经理或主管
+        ("교장",                    4,  4),
+        ("대학 교수",                 4,  4),
+        ("의원급 의사",                5,  3),
+        ("변호사",                   5,  3),
+        ("법관",                    4,  2),  # refer.json 法官
+        ("검사",                    4,  2),  # refer.json 检察官
+        ("자영업자",                  5,  5),
+        ("건설 현장 소장",             7,  1),
+        ("공기업 부장",               6,  2),
+        ("입법기관 후보원",             4,  2),  # refer.json 法学研究人员
+        ("위생단위 책임자",             4,  4),  # refer.json 卫生单位负责人
+        ("도서관장",                  3,  5),
+        ("항공기 조종사",              5,  1),  # refer.json 飞行驾驶员
     ],
     (56, 70): [
-        ("명예 교수",   4, 3),
-        ("자영업자",    5, 5),
-        ("컨설턴트",    5, 3),
-        ("농업인",      5, 4),
-        ("은퇴 준비 중", 4, 4),
-        ("공장 관리자", 6, 2),
-        ("사회복지사",  3, 6),
+        ("명예 교수",                 4,  3),
+        ("자영업자",                  5,  5),
+        ("컨설턴트",                  5,  3),
+        ("농업인",                   5,  4),  # person.json 家庭主妇/兼职零工
+        ("은퇴 준비 중",               4,  4),
+        ("퇴직자",                   4,  4),  # refer.json 退休人员
+        ("공장 관리자",               6,  2),
+        ("사회복지사",                3,  6),
+        ("환경 미화원",               4,  5),  # refer.json 环卫工
+        ("문화재 관리사",              3,  4),  # refer.json 文物鉴定和保管人员
+        ("전통 악기 연주자",           2,  3),  # refer.json 民族乐器演奏员
+        ("스포츠 심판원",              3,  2),  # refer.json 裁判员
+        ("시장 상인",                 4,  4),  # refer.json 超市老板
+        ("약국 운영자",               3,  5),  # refer.json 药店老板
     ],
 }
 
 
 def _candidate_jobs(age: int, gender: str) -> list:
-    """Return ordered job candidates for (age, gender), weighted list for display."""
+    """Return jobs sorted by gender-appropriate weight (descending)."""
     for (lo, hi), entries in _JOB_TABLE.items():
         if lo <= age <= hi:
-            weights = [(e[0], e[1] if gender == "남" else e[2]) for e in entries]
-            # Sort by weight descending, return names only
-            return [e[0] for e in sorted(weights, key=lambda x: -x[1])]
+            weighted = [(e[0], e[1] if gender == "남" else e[2]) for e in entries]
+            return [e[0] for e in sorted(weighted, key=lambda x: -x[1])]
     return ["자영업자", "프리랜서"]
 
 
@@ -184,10 +229,10 @@ def _get_llm(provider: str):
 
 # ── Age pool ──────────────────────────────────────────────────────────────────
 _AGE_POOL = (
-    list(range(18, 24)) * 1 +   # 대학생 (6개)
-    list(range(24, 40)) * 3 +   # 주니어~미드 (48개)
-    list(range(40, 56)) * 2 +   # 시니어 (32개)
-    list(range(56, 71)) * 1     # 노년 (15개)
+    list(range(18, 24)) * 1 +
+    list(range(24, 40)) * 3 +
+    list(range(40, 56)) * 2 +
+    list(range(56, 71)) * 1
 )
 
 
@@ -196,18 +241,18 @@ def generate_persons(state: FullPipelineState) -> FullPipelineState:
 
     Phase 1 — Rule-based (no LLM):
       1. Gender assigned 50/50, shuffled
-      2. Surname sampled from 2020 census distribution
-      3. Given name from gender-specific koreanname.me pool (count-weighted)
-         → Male names only → 남, Female names only → 여 (never crossed)
+      2. Surname from 2020 census distribution
+      3. Given name from gender-specific koreanname.me pool (count-weighted top 500)
       4. Age from working-age weighted pool
 
     Phase 2 — LLM:
-      5. Job: LLM selects from age×gender-appropriate candidate list
+      5. Job selected from age×gender-appropriate candidate list
+         (candidates from person.json survey + refer.json 137 jobs, Korean-mapped)
     """
     provider = state.get("provider", "claude")
     count    = max(1, state.get("count", 1))
 
-    # ── Phase 1: rule-based name/age/gender ─────────────────────────────────────
+    # ── Phase 1 ──────────────────────────────────────────────────────────────
     genders = (["남"] * ((count + 1) // 2) + ["여"] * (count // 2))
     random.shuffle(genders)
 
@@ -223,19 +268,19 @@ def generate_persons(state: FullPipelineState) -> FullPipelineState:
         used_names.add(name)
         skeletons.append({"name": name, "age": age, "gender": gender})
 
-    print(f"[person_gen] Phase 1 done: {[(s['name'], s['age'], s['gender']) for s in skeletons]}")
+    print(f"[person_gen] Phase 1: {[(s['name'], s['age'], s['gender']) for s in skeletons]}")
 
-    # ── Phase 2: LLM assigns job ─────────────────────────────────────────
-    llm = _get_llm(provider)
+    # ── Phase 2 ──────────────────────────────────────────────────────────────
+    llm     = _get_llm(provider)
     persons = []
     for i, s in enumerate(skeletons):
         candidates = _candidate_jobs(s["age"], s["gender"])
         prompt = (
             f"{s['name']}({s['age']}세, {s['gender']}성)에게 가장 자연스러운 직업 하나를 고르세요.\n"
-            f"후보: {', '.join(candidates[:8])}\n"
+            f"후보: {', '.join(candidates[:10])}\n"
             f"직업 이름만 출력하세요. 설명 없이."
         )
-        job = candidates[0]  # fallback
+        job = candidates[0]
         try:
             resp = llm.invoke([HumanMessage(content=prompt)])
             raw  = resp.content.strip().strip('"').strip("'")
