@@ -203,24 +203,32 @@ def gen_relations(llm, profile: dict) -> list:
          "education", "marital_status", "hobbies", "work_desc"]
     }, ensure_ascii=False)
 
-    prompt = f"""당신은 인류학자, 스토리 작가, 소셜 네트워크 전문가입니다.
-아래 인물 프로파일을 분석하여 이 인물이 연락을 유지하는 사람 10~15명의 관계망을 생성하세요.
+    profile_json = json.dumps({k: profile.get(k) for k in ["name","age","gender","home_city","job","mbti","hobbies","personality_traits","economic_level","education","marital_status","health_desc","lifestyle_desc","work_desc","description"]}, ensure_ascii=False, indent=2)
+    prompt = f"""당신은 인류학자, 스토리 작가, 데이터 보완·정제 전문가, 소셜 네트워크 전문가입니다.
+당신의 과제는 개인 정보 JSON 데이터를 처리하고, 해당 개인 정보에 근거하여 진실하고 합리적이며 자기일관적이고 다양한, 해당 개인이 연락을 유지할 수 있는 관계를 추론·생성하여 개인 정보의 비어있는 relation 필드를 채우는 것입니다.
 
-인물 프로파일:
-{profile_summary}
+1. **연락처 추론 생성 요구사항**:
+   - 역사적 대화나 사적 정보 사용 금지, 입력 JSON과 현실 상식으로만 추론.
+   - 먼저 해당 개인이 성장 과정에서 어떤 소셜 서클과 접촉했는지 추론: (유년 서클, 초등학교 서클, 대학교 서클, 직장 서클, 취미 서클, 가족 서클, 의료 서클, 재무 서클, 고객 서클 등). 각 서클에 기반하여 구체적인 연락처를 채우되 각 서클은 포괄적으로, 서클은 다양하게.
+   - 같은 서클 내 서로 아는 사람이나 그룹 관계 고려 (예: 셋이서 절친, 네 명의 룸메이트).
+   - 서클은 최대한 다양하되, 혼자 하는 취미는 서클 불필요. 사교성 강하거나 여러 명이 하는 취미는 서클 생성 가능.
+   - 재무/건강 관련: 설명에 관련 활동이 없으면 서클 불필요, 관련 활동이 있으면 서클 추론 생성 가능.
+   - 앞으로 연락을 유지할 가능성이 있는 사람 선별. 가능한 모든 관계 나열 금지.
+   - 다른 사람의 친구 같은 2차 관계 설명 금지 (예: 부모님 친구).
+   - 사용자의 학력에 맞는 관계만 생성.
+   - 최종 총 10~15명의 연락처 생성.
+   - 생성되는 인물 관계는 이 사람에게 중요하거나, 수요가 있거나, 자주 만나거나, 깊은 경험이 있는 사람이어야 함. 먼 친척, 피상적 지인 등 일반적 관계는 생성하지 말 것.
 
-소셜 서클 예시: 가족, 직장, 대학 동기, 고등학교 동기, 동네, 취미 모임, 연인
+2. **개인 정보 JSON 필드 설명**: (name/age/gender/home_city/job/mbti/hobbies/personality_traits/economic_level/education/marital_status/health_desc/lifestyle_desc/work_desc/description/relation)
 
-각 관계는 다음 형식의 JSON 배열로 출력:
-[{{"name": "이름", "relation": "관계", "social_circle": "소셜서클"}}]
+3. **출력 요구사항**:
+   - 아래 형식의 JSON으로 출력: [{{"name":"이름","relation":"관계","social_circle":"소셜서클"}}]
+   - ```json``` 태그 없이 직접 배열 괄호로 시작.
+   - relation은 한 단어로 간결하게.
+   - social_circle: 구체적 서클명 (예: 대학 동창, 배드민턴 모임).
 
-조건:
-- 이름은 한국인 이름
-- 직업·나이·생활에 어울리는 관계 구성
-- 가족(부모·형제 등), 직장 동료, 친구 등 다양하게 포함
-- 같은 서클의 사람들은 서로 연결될 수 있음
-
-JSON 배열만 출력하세요."""
+아래는 개인 정보 JSON 데이터:
+{profile_json}"""
 
     try:
         resp = llm.invoke([HumanMessage(content=prompt)])
@@ -253,31 +261,42 @@ def gen_persons(llm, profile: dict, relations: list) -> list:
         ["name", "age", "gender", "job", "home_city", "mbti", "marital_status"]
     }, ensure_ascii=False)
 
-    prompt = f"""당신은 인류학자, 스토리 작가, 데이터 전문가입니다.
-아래 인물의 관계 목록에 있는 각 연락처에 대해 상세 정보를 생성하세요.
+    relations_json2 = json.dumps(relations, ensure_ascii=False, indent=2)
+    profile_json2 = json.dumps({k: profile.get(k) for k in ["name","age","gender","home_city","job","mbti","marital_status"]}, ensure_ascii=False, indent=2)
+    prompt = f"""당신은 인류학자, 스토리 작가, 데이터 보완·정제 전문가입니다.
+당신의 과제는 개인 정보 JSON 데이터를 처리하고, 기존 개인 정보와 연락처 관계를 바탕으로 진실하고 합리적이며 자기일관적이고 다양한 연락처 정보를 생성하는 것입니다.
 
-주인공 프로파일:
-{profile_summary}
+1. **엄격한 필드 요구사항**: 필드 추가 또는 삭제 불가, 인물 참조 데이터 형식의 JSON key에 따라 생성.
 
-관계 목록:
-{relations_json}
+2. **연락처 정보 생성**:
+   - 역사적 대화나 사적 정보 사용 금지.
+   - 같은 서클의 사람들은 서로 연결될 수 있음. 각 인물 데이터 생성 시 경험·정보 일관성 조율.
+   - 관계를 추가 또는 삭제 불가, 관계 시퀀스에 제시된 관계에 따라 엄격히 인물 생성.
+   - 온라인으로 알게 된 친구나 오래 못 만난 친구는 다른 성·도시에 있을 수 있음.
 
-각 연락처에 대해 다음 필드를 포함한 JSON 배열 생성:
-- name: 이름 (관계 목록의 이름 유지)
-- relation: 관계 (유지)
-- social_circle: 소셜서클 (유지)
-- age: 나이 (주인공과의 관계에 맞는 나이)
-- gender: 성별 (이름·직업에 일치)
-- job: 직업
-- home_city: 거주 도시 (서울/부산/대구/인천/광주/대전 중 하나, 일부는 다른 도시 가능)
-- description: 이 사람과의 관계·만남 방식·연락 빈도 (1~2문장)
+3. **필드 구체화 및 논리 조율**:
+   - name: 연락처 이름. 부자 성씨 불일치 등 불합리한 경우 재생성.
+   - relation: 두 사람 간의 사교 관계.
+   - age/birth_date: 합리적으로 생성.
+   - gender: 이름 및 직업과 일치.
+   - home_city: 도시 다양성 고려. 일부 친구는 다른 도시에 있을 수 있음.
+   - birth_city: 출생 도시 (선택)
+   - social circle: 소셜 서클.
+   - job: 직업
+   - home_city: 거주 도시
+   - personality: MBTI.
+   - description: 상식 방법, 교류 습관, 연락 이유, 만남 방식, 연락 빈도. 같은 서클의 그룹 관계 설명에 융합 가능.
 
-조건:
-- 같은 소셜서클 사람들 간 정보 일관성 유지
-- 나이는 주인공과 관계에 따라 자연스럽게
-- 온라인 친구나 오래 못 만난 친구는 다른 도시에 있을 수 있음
+4. **출력 요구사항**: JSON 배열 형식. ```json``` 태그 없이 직접 배열 괄호로 시작. 필드 완전성 유지.
 
-JSON 배열만 출력하세요."""
+아래는 주인공 개인 정보 JSON 데이터:
+{profile_json2}
+
+아래는 관계 시퀀스 데이터:
+{relations_json2}
+
+아래는 출력 참조 형식:
+[{{"name":"이름","relation":"관계","social_circle":"소셜서클","age":30,"gender":"남","job":"직업","home_city":"도시","description":"설명"}}]"""
 
     try:
         resp = llm.invoke([HumanMessage(content=prompt)])
@@ -317,7 +336,7 @@ def generate_personas(state: FullPipelineState) -> FullPipelineState:
             for i in range(count)
         ]
 
-    llm = _get_llm(provider, max_tokens=4096)
+    llm = _get_llm(provider, max_tokens=8192)
     city_pool = CITIES * ((len(persons) // len(CITIES)) + 1)
     random.shuffle(city_pool)
 
