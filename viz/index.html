@@ -201,8 +201,8 @@ window.addEventListener('DOMContentLoaded', () => { setTimeout(renderJobTable, 2
   <span class="text-xs text-gray-600 ml-2">인물 프로파일 생성</span>
 </div>
 
-<!-- ORIG Step 0 -->
-<div class="oc col-sep">
+<!-- ORIG Step 0 Sub-row A: 수집 데이터 -->
+<div class="oc col-sep" style="border-bottom:1px solid #1e3a5f33">
 
   <div class="ss ss-io">
     <div class="flex items-center gap-2">
@@ -233,105 +233,11 @@ window.addEventListener('DOMContentLoaded', () => { setTimeout(renderJobTable, 2
 <span class="cg">... 총 20개 카테고리</span></pre></div>
     </div>
   </div>
-  <div class="ss-arrow">↓</div>
-
-  <div class="ss ss-orig">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="ss-title">PersonaGenerator.gen_profile()</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-zh">ZH</span>
-    </div>
-    <div class="ss-path">persona/persona_gen.py → template_refine</div>
-    <div class="pb-wrap">
-      <div class="pb pb-loading" data-k="template_refine" data-lang="kr">프롬프트 로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// person.json + refer.json 랜덤 선택</span>
-{"name":<span class="cs">"冯浩然"</span>, "age":<span class="cn">27</span>}
-
-<span class="ck">// refer.json 랜덤 추출 (3개만 실제 사용)</span>
-hobbies: [<span class="cs">"跑步"</span>, <span class="cs">"弹吉他"</span>...]
-         <span class="cb">// 兴趣 100개 → 12개 샘플</span>
-aim:     [<span class="cs">"长期职业目标"</span>...]
-         <span class="cb">// 目标规划 20개 → 6개 샘플</span>
-traits:  [<span class="cs">"家庭导向"</span>...]
-         <span class="cb">// 价值观 17개 → 6개 샘플</span>
-<span class="cr">직업은 person.json 원본 그대로</span></pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 기본 프로파일</span>
-{"mbti":<span class="cs">"ENTJ"</span>,
- "economic_level":<span class="cs">"高"</span>,
- "personality_traits":[...]}</pre></div>
-    </div>
-  </div>
-  <div class="ss-arrow">↓</div>
-
-  <div class="ss ss-orig">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="ss-title">PersonaGenerator.gen_relations()</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-zh">ZH</span>
-    </div>
-    <div class="ss-path">persona/persona_gen.py → template_relation_1</div>
-    <div class="pb-wrap">
-      <div class="pb pb-loading" data-k="template_relation_1" data-lang="kr">프롬프트 로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// gen_profile() 결과</span>
-{"name":<span class="cs">"冯浩然"</span>,
- "mbti":<span class="cs">"ENTJ"</span>,
- "job":<span class="cs">"金融投资顾问"</span>,
- "hobbies":[<span class="cs">"跑步"</span>, ...],
- "relation":[] <span class="cb">// 아직 빈 배열</span>}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 관계망 목록</span>
-[{"name":<span class="cs">"张伟"</span>,
-  "relation":<span class="cs">"동료"</span>,
-  "circle":<span class="cs">"직장"</span>},
- <span class="cg">... 20~26명</span>]</pre></div>
-    </div>
-  </div>
-  <div class="ss-arrow">↓</div>
-
-  <div class="ss ss-orig">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="ss-title">PersonaGenerator.gen_persons()</span>
-      <span class="badge b-llm">LLM</span><span class="badge b-zh">ZH</span>
-    </div>
-    <div class="ss-path">persona/persona_gen.py → template_person</div>
-    <div class="pb-wrap">
-      <div class="pb pb-loading" data-k="template_person" data-lang="kr">프롬프트 로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
-    </div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 페르소나 + 관계망 뼈대</span>
-{"persona": {...},
- "relations": [
-  {"name":<span class="cs">"张伟"</span>,
-   "relation":<span class="cs">"同事"</span>,
-   "social_circle":<span class="cs">"职场"</span>},
-  <span class="cg">... 20~26명 뼈대</span>]}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 연락처 상세</span>
-{"name":<span class="cs">"张伟"</span>,
- "phone":<span class="cs">"138..."</span>,
- "age":<span class="cn">30</span>}</pre></div>
-    </div>
-  </div>
-  <div class="ss-arrow">↓</div>
-
-  <div class="ss ss-io">
-    <div class="flex items-center gap-2">
-      <span class="badge b-out">OUTPUT</span>
-      <span class="ss-title" style="color:#4ade80">persona.json 저장</span>
-    </div>
-    <div class="ss-path">output/persona.json</div>
-    <div class="ss-note">30+ 필드 · 인간관계망 20~26명 · 10명 × 3 LLM = 30 호출</div>
-  </div>
-
+  
 </div>
 
-<!-- NEW Step 0 -->
-<div class="nc">
-  <div class="vs-note">← ORIG 5단계 → 2단계 (person_gen + persona_gen)</div>
-
+<!-- NEW Step 0 Sub-row A: person_gen -->
+<div class="nc" style="border-bottom:1px solid #22c55e22">
   <!-- person_gen Phase 1: 이름·나이·성별 (규칙 기반) -->
   <div class="ss ss-new">
     <div class="flex items-center gap-2 flex-wrap">
@@ -426,13 +332,123 @@ traits:  [<span class="cs">"家庭导向"</span>...]
 
   <div class="ss-arrow ss-arrow-g">↓</div>
 
-  <!-- persona_gen: 나머지 필드 확장 -->
+  
+</div>
+
+<div style="grid-column:1/-1;display:flex;align-items:center;gap:8px;padding:5px 24px;background:#07090f;border-top:1px solid #1e293b;border-bottom:1px solid #1e293b;">
+  <div style="flex:1;height:1px;background:linear-gradient(to right,#1e3a5f,transparent)"></div>
+  <span style="font-size:9px;color:#334155;font-weight:800;letter-spacing:.08em;white-space:nowrap">ORIG: gen_profile → gen_relations → gen_persons (3 LLM)&nbsp;&nbsp;↔&nbsp;&nbsp;NEW: persona_gen (1 LLM)</span>
+  <div style="flex:1;height:1px;background:linear-gradient(to left,#166534,transparent)"></div>
+</div>
+
+<!-- ORIG Step 0 Sub-row B: gen_profile/relations/persons -->
+<div class="oc col-sep">
+<div class="ss-arrow">↓</div>
+
+  <div class="ss ss-orig">
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="ss-title">PersonaGenerator.gen_profile()</span>
+      <span class="badge b-llm">LLM</span><span class="badge b-zh">ZH</span>
+    </div>
+    <div class="ss-path">persona/persona_gen.py → template_refine</div>
+    <div class="pb-wrap">
+      <div class="pb pb-loading" data-k="template_refine" data-lang="kr">프롬프트 로딩 중…</div>
+      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+    </div>
+    <div class="io">
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// person.json + refer.json 랜덤 선택</span>
+{"name":<span class="cs">"冯浩然"</span>, "age":<span class="cn">27</span>}
+
+<span class="ck">// refer.json 랜덤 추출 (3개만 실제 사용)</span>
+hobbies: [<span class="cs">"跑步"</span>, <span class="cs">"弹吉他"</span>...]
+         <span class="cb">// 兴趣 100개 → 12개 샘플</span>
+aim:     [<span class="cs">"长期职业目标"</span>...]
+         <span class="cb">// 目标规划 20개 → 6개 샘플</span>
+traits:  [<span class="cs">"家庭导向"</span>...]
+         <span class="cb">// 价值观 17개 → 6개 샘플</span>
+<span class="cr">직업은 person.json 원본 그대로</span></pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 기본 프로파일</span>
+{"mbti":<span class="cs">"ENTJ"</span>,
+ "economic_level":<span class="cs">"高"</span>,
+ "personality_traits":[...]}</pre></div>
+    </div>
+  </div>
+  <div class="ss-arrow">↓</div>
+
+  <div class="ss ss-orig">
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="ss-title">PersonaGenerator.gen_relations()</span>
+      <span class="badge b-llm">LLM</span><span class="badge b-zh">ZH</span>
+    </div>
+    <div class="ss-path">persona/persona_gen.py → template_relation_1</div>
+    <div class="pb-wrap">
+      <div class="pb pb-loading" data-k="template_relation_1" data-lang="kr">프롬프트 로딩 중…</div>
+      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+    </div>
+    <div class="io">
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// gen_profile() 결과</span>
+{"name":<span class="cs">"冯浩然"</span>,
+ "mbti":<span class="cs">"ENTJ"</span>,
+ "job":<span class="cs">"金融投资顾问"</span>,
+ "hobbies":[<span class="cs">"跑步"</span>, ...],
+ "relation":[] <span class="cb">// 아직 빈 배열</span>}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 관계망 목록</span>
+[{"name":<span class="cs">"张伟"</span>,
+  "relation":<span class="cs">"동료"</span>,
+  "circle":<span class="cs">"직장"</span>},
+ <span class="cg">... 20~26명</span>]</pre></div>
+    </div>
+  </div>
+  <div class="ss-arrow">↓</div>
+
+  <div class="ss ss-orig">
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="ss-title">PersonaGenerator.gen_persons()</span>
+      <span class="badge b-llm">LLM</span><span class="badge b-zh">ZH</span>
+    </div>
+    <div class="ss-path">persona/persona_gen.py → template_person</div>
+    <div class="pb-wrap">
+      <div class="pb pb-loading" data-k="template_person" data-lang="kr">프롬프트 로딩 중…</div>
+      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+    </div>
+    <div class="io">
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 페르소나 + 관계망 뼈대</span>
+{"persona": {...},
+ "relations": [
+  {"name":<span class="cs">"张伟"</span>,
+   "relation":<span class="cs">"同事"</span>,
+   "social_circle":<span class="cs">"职场"</span>},
+  <span class="cg">... 20~26명 뼈대</span>]}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 연락처 상세</span>
+{"name":<span class="cs">"张伟"</span>,
+ "phone":<span class="cs">"138..."</span>,
+ "age":<span class="cn">30</span>}</pre></div>
+    </div>
+  </div>
+  <div class="ss-arrow">↓</div>
+
+  <div class="ss ss-io">
+    <div class="flex items-center gap-2">
+      <span class="badge b-out">OUTPUT</span>
+      <span class="ss-title" style="color:#4ade80">persona.json 저장</span>
+    </div>
+    <div class="ss-path">output/persona.json</div>
+    <div class="ss-note">30+ 필드 · 인간관계망 20~26명 · 10명 × 3 LLM = 30 호출</div>
+  </div>
+
+</div>
+
+
+</div>
+
+<!-- NEW Step 0 Sub-row B: persona_gen -->
+<div class="nc">
+<!-- persona_gen: 나머지 필드 확장 -->
   <div class="ss ss-new">
     <div class="flex items-center gap-2 flex-wrap">
       <span class="npill np-new">👤 persona_gen</span>
       <span class="badge b-llm">LLM ×1</span><span class="badge b-ko">KO</span>
-    </div>
-    <div class="ss-path">nodes/persona_gen.py</div>
+        <div class="ss-path">nodes/persona_gen.py</div>
     <div class="ss-note">person_gen의 name/age/gender/job을 고정하고 나머지 필드를 LLM으로 일괄 확장. 직업·나이에 어울리는 MBTI·취미·성격·인간관계 생성.</div>
     <div class="pb-wrap">
       <div class="pb" data-new-k="persona_gen" data-lang="kr">로딩 중…</div>
@@ -457,6 +473,8 @@ traits:  [<span class="cs">"家庭导向"</span>...]
   </div>
 </div>
 
+
+</div>
 <div class="row-sep"></div>
 
 <!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  STEP 1: DRAFT GEN  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
