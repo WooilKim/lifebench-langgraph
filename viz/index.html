@@ -120,7 +120,7 @@
   <div class="px-6 py-2.5 flex items-center gap-3">
     <span class="text-sm font-bold text-green-400">LangGraph (이 프로젝트)</span>
     <span class="badge b-ko">한국어</span>
-    <span class="text-xs text-gray-600 ml-1">예시: 박준혁 · 46세 · 개발자 · 인천</span>
+    <span class="text-xs text-gray-600 ml-1">예시: 박준혁 · 46세 · 남 · 개발자 · 인천</span>
   </div>
 </div>
 
@@ -258,28 +258,76 @@ traits:  [<span class="cs">"家庭导向"</span>, <span class="cs">"事业导向
 
 <!-- NEW Step 0 -->
 <div class="nc">
-  <div class="vs-note">← ORIG 5단계 → 1단계 통합 (3 LLM → 1 LLM)</div>
+  <div class="vs-note">← ORIG 5단계 → 2단계 (person_gen + persona_gen)</div>
 
+  <!-- person_gen: 이름·나이·성별·직업 생성 -->
+  <div class="ss ss-new">
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="npill np-new">🪪 person_gen</span>
+      <span class="badge b-rule">성씨 분포</span>
+      <span class="badge b-llm">LLM (직업)</span>
+    </div>
+    <div class="ss-path">nodes/person_gen.py</div>
+    <div class="ss-note">
+      이름: 2020 통계청 성씨 분포 × koreanname.me 이름 랭킹 (count 가중치 top 500)<br>
+      나이: 25~55 가중 분포 (18~70 전범위)<br>
+      성별: 50/50 랜덤 배분<br>
+      직업: 나이대별 후보 목록에서 LLM이 가장 자연스러운 직업 선택
+    </div>
+    <div class="io">
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// state</span>
+{"count":<span class="cn">3</span>,
+ "provider":<span class="cs">"claude"</span>}
+
+<span class="ck">// 성씨 분포 (통계청 2020)</span>
+김(19.3%) 이(14.1%) 박(8.4%)
+최(4.7%) 정(4.4%) ...
+
+<span class="ck">// koreanname.me top 500</span>
+남: 민준·서준·도윤·예준...
+여: 서윤·서연·지우·하윤...</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// state.persons</span>
+[{"name":<span class="cs">"박준혁"</span>,
+  "age":<span class="cn">46</span>,
+  "gender":<span class="cs">"남"</span>,
+  "job":<span class="cs">"소프트웨어 개발자"</span>},
+ {"name":<span class="cs">"김서연"</span>,
+  "age":<span class="cn">32</span>,
+  "gender":<span class="cs">"여"</span>,
+  "job":<span class="cs">"간호사"</span>},
+ <span class="cg">...</span>]</pre></div>
+    </div>
+  </div>
+  <div class="ss-arrow ss-arrow-g">↓</div>
+
+  <!-- persona_gen: 나머지 필드 확장 -->
   <div class="ss ss-new">
     <div class="flex items-center gap-2 flex-wrap">
       <span class="npill np-new">👤 persona_gen</span>
       <span class="badge b-llm">LLM ×1</span><span class="badge b-ko">KO</span>
     </div>
     <div class="ss-path">nodes/persona_gen.py</div>
-    <div class="ss-note">count 수만큼 한국인 페르소나를 단일 LLM 호출로 일괄 생성. 직업·도시·나이 다양성 조건을 프롬프트에 명시.</div>
+    <div class="ss-note">person_gen의 name/age/gender/job을 고정하고 나머지 필드를 LLM으로 일괄 확장. 직업·나이에 어울리는 MBTI·취미·성격·인간관계 생성.</div>
     <div class="pb-wrap">
       <div class="pb" data-new-k="persona_gen" data-lang="kr">로딩 중…</div>
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// state</span>
-{"count":<span class="cn">3</span>,
- "provider":<span class="cs">"claude"</span>}</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// state.persons (고정값)</span>
+{"name":<span class="cs">"박준혁"</span>,
+ "age":<span class="cn">46</span>,
+ "gender":<span class="cs">"남"</span>,
+ "job":<span class="cs">"소프트웨어 개발자"</span>}
+<span class="ck">// ↑ 이 값들은 반드시 유지</span></pre></div>
       <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// state.personas[0]</span>
 {"name":<span class="cs">"박준혁"</span>,
  "age":<span class="cn">46</span>,
- "job":<span class="cs">"개발자"</span>,
- "relations":<span class="cb">[15명]</span>}</pre></div>
+ "gender":<span class="cs">"남"</span>,
+ "job":<span class="cs">"소프트웨어 개발자"</span>,
+ "mbti":<span class="cs">"INTJ"</span>,
+ "hobbies":[<span class="cs">"독서"</span>,<span class="cs">"등산"</span>...],
+ "home_city":<span class="cs">"인천"</span>,
+ "relationships":<span class="cb">[15명]</span>}</pre></div>
     </div>
   </div>
 </div>
