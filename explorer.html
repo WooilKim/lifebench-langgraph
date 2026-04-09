@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LifeBench LangGraph — Pipeline Visualizer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <style>
+    /* Tabs */
+    .tab-btn { padding:6px 14px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer; border:2px solid transparent; transition:all 0.15s; }
+    .tab-active-new    { background:#14532d; color:#bbf7d0; border-color:#22c55e; }
+    .tab-active-phone  { background:#1e3a5f; color:#bfdbfe; border-color:#3b82f6; }
+    .tab-inactive      { background:#1f2937; color:#6b7280; border-color:#374151; }
+
+    /* Step card */
+    .step-card { border-radius:12px; border:2px solid; transition:all 0.2s; }
+    .step-new   { border-color:#22c55e; background:#0f2818; }
+    .step-phone { border-color:#3b82f6; background:#0f1e33; }
+
+    /* Persona card */
+    .persona-card { border-radius:10px; border:2px solid #334155; background:#1e293b; cursor:pointer; transition:all 0.15s; }
+    .persona-card:hover { border-color:#6366f1; transform:translateY(-2px); }
+    .persona-card.selected { border-color:#6366f1; background:#1a1437; box-shadow:0 0 16px rgba(99,102,241,0.3); }
+
+    /* Code block */
+    .code-block { background:#020617; border:1px solid #1e293b; border-radius:8px; padding:12px; font-size:12px; font-family:ui-monospace,monospace; overflow-x:auto; }
+
+    /* Badge */
+    .badge { display:inline-block; font-size:10px; font-weight:800; padding:2px 7px; border-radius:4px; letter-spacing:0.05em; }
+
+    /* Data panel */
+    .data-panel { background:#020617; border:1px solid #1e293b; border-radius:8px; padding:10px; }
+    .event-row { border-bottom:1px solid #1e293b; padding:6px 0; }
+    .event-row:last-child { border-bottom:none; }
+
+    pre { white-space:pre-wrap; word-break:break-word; }
+    .truncate-2 { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen font-sans">
+
+<!-- Header -->
+<header class="border-b border-gray-800 px-6 py-4 flex items-center justify-between sticky top-0 z-40 bg-gray-950/95 backdrop-blur">
+  <div class="flex items-center gap-4">
+    <div>
+      <h1 class="text-lg font-bold text-green-400 leading-none">LifeBench LangGraph</h1>
+      <p class="text-xs text-gray-500 mt-0.5">Full Pipeline Visualizer</p>
+    </div>
+    <div class="hidden md:flex gap-1" id="step-nav"></div>
+  </div>
+  <button onclick="toggleDark()" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded border border-gray-700">Toggle Dark</button>
+</header>
+
+<div class="max-w-6xl mx-auto px-4 py-6 space-y-8">
+
+  <!-- Persona Selector -->
+  <section>
+    <div class="flex items-center gap-2 mb-3">
+      <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400">Personas</h2>
+      <span id="persona-count" class="text-xs text-gray-600"></span>
+    </div>
+    <div id="persona-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3"></div>
+  </section>
+
+  <!-- Selected Persona Detail -->
+  <section id="persona-detail" class="hidden">
+    <div class="bg-gray-900 rounded-xl border border-indigo-900/50 p-5">
+      <div class="flex items-start justify-between flex-wrap gap-4">
+        <div class="flex items-center gap-4">
+          <div id="pd-avatar" class="w-14 h-14 rounded-full flex items-center justify-center text-2xl font-bold bg-indigo-900 text-indigo-200 border-2 border-indigo-500 flex-shrink-0"></div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 id="pd-name" class="text-xl font-bold text-white"></h3>
+              <span id="pd-mbti" class="badge bg-indigo-900/60 text-indigo-300 border border-indigo-700"></span>
+              <span id="pd-econ" class="badge bg-gray-800 text-gray-400"></span>
+            </div>
+            <p id="pd-meta" class="text-sm text-gray-400 mt-0.5"></p>
+            <div id="pd-hobbies" class="flex flex-wrap gap-1 mt-2"></div>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-3 text-center">
+          <div class="bg-blue-900/30 rounded-lg px-4 py-2 border border-blue-800/40">
+            <div id="pd-calls" class="text-xl font-bold text-blue-300"></div>
+            <div class="text-xs text-gray-500">통화</div>
+          </div>
+          <div class="bg-green-900/30 rounded-lg px-4 py-2 border border-green-800/40">
+            <div id="pd-sms" class="text-xl font-bold text-green-300"></div>
+            <div class="text-xs text-gray-500">문자</div>
+          </div>
+          <div class="bg-amber-900/30 rounded-lg px-4 py-2 border border-amber-800/40">
+            <div id="pd-noti" class="text-xl font-bold text-amber-300"></div>
+            <div class="text-xs text-gray-500">알림</div>
+          </div>
+        </div>
+      </div>
+      <!-- Relationships -->
+      <div class="mt-4">
+        <p class="text-xs text-gray-500 uppercase font-bold tracking-wider mb-2">인간관계</p>
+        <div id="pd-relations" class="flex flex-wrap gap-2"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pipeline Steps -->
+  <section>
+    <div class="flex items-center gap-2 mb-4">
+      <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400">Pipeline Steps</h2>
+      <span class="text-xs text-gray-600">— 각 단계 클릭해서 상세 보기</span>
+    </div>
+    <div class="space-y-4" id="pipeline-steps"></div>
+  </section>
+
+</div>
+
+<script>
+// ── Pipeline step definitions ────────────────────────────────────────────────
+const STEPS = [
+  {
+    id: 'persona_gen', emoji: '👤', label: 'persona_gen', group: 'new',
+    title: 'Step 0 — 페르소나 생성',
+    desc: 'LLM이 한국인 페르소나를 count 수만큼 생성합니다. 각 페르소나는 이름·나이·직업·MBTI·취미·인간관계(10~15명)를 포함합니다. 페르소나 간 직업·도시·나이 중복이 없도록 다양성 조건을 프롬프트에 명시합니다.',
+    file: 'pipeline/nodes/persona_gen.py',
+    llm: true,
+    prompt: `다음 조건으로 한국인 페르소나 {count}명의 JSON 배열을 생성하세요.
+
+각 페르소나 필드:
+- name: 한국 이름 (문자열)
+- age: 20~60 사이 정수
+- gender: "남" 또는 "여"
+- job: 직업
+- mbti: MBTI 유형
+- hobbies: 취미 리스트 (4~8개)
+- personality_traits: 성격 특성 리스트 (2~4개)
+- economic_level: "하", "중", "상" 중 하나
+- home_city: 서울/부산/대구/인천/광주/대전 중 하나
+- relationships: 10~15명 리스트
+  [{"name": "...", "relation": "...", "social_circle": "..."}]
+
+아래 다양성 조건을 반드시 따르세요:
+- 페르소나 1: 도시=서울, 직업=소프트웨어 개발자, 나이=34, 성별=남
+- 페르소나 2: 도시=부산, 직업=의사, 나이=41, 성별=여
+- 페르소나 3: 도시=대구, 직업=교사, 나이=29, 성별=남
+
+JSON 배열만 출력하세요. 마크다운, 설명 없이.`,
+    input_desc: '`state.count` (생성할 페르소나 수), `state.provider` (LLM 제공자)',
+    output_desc: '`state.personas` — 페르소나 dict 리스트',
+    input_key: null,
+    output_key: 'persona',
+  },
+  {
+    id: 'draft_gen', emoji: '📅', label: 'draft_gen', group: 'new',
+    title: 'Step 1 — 연간 이벤트 초안',
+    desc: '페르소나별로 2025년 연간 주요 생활 이벤트를 LLM으로 생성합니다. 한국 공휴일(설날·추석·광복절 등)과 직장 문화(회식·야근·성과평가)를 반영합니다. test 모드에서는 10개, 정식 실행에서는 40개.',
+    file: 'pipeline/nodes/draft_gen.py',
+    llm: true,
+    prompt: `{name}({age}세, {job}, {city} 거주)의 2025년 주요 생활 이벤트 40개를 JSON 배열로 생성하세요.
+
+취미: {hobbies}
+
+조건:
+- 날짜는 2025-01-01 ~ 2025-12-31 사이에 고르게 분포
+- 한국 공휴일 반영: 설날(2025-01-29), 삼일절(2025-03-01), 어린이날(2025-05-05),
+  현충일(2025-06-06), 광복절(2025-08-15), 추석(2025-10-06), 크리스마스(2025-12-25)
+- 한국 직장 문화 반영 (야근, 회식, 성과 평가 등)
+- 개인 취미 활동, 가족 이벤트 포함
+- description은 30자 이내로 간결하게
+
+출력 형식 (JSON 배열):
+[{"date": "YYYY-MM-DD", "title": "이벤트명",
+  "category": "work|family|health|social|hobby|finance",
+  "description": "간단설명"}]
+
+JSON 배열만 출력하세요. 마크다운, 설명 없이.`,
+    input_desc: '`state.personas` — 페르소나 리스트',
+    output_desc: '`state.daily_drafts` — {persona_name: [{date, title, category, description}]}',
+    input_key: null,
+    output_key: null,
+  },
+  {
+    id: 'simulator', emoji: '🎮', label: 'simulator', group: 'new',
+    title: 'Step 2 — 일상 시뮬레이션',
+    desc: '이벤트 초안을 365일 상세 일정으로 확장합니다. 이벤트 있는 날은 LLM으로 5~8개 상세 이벤트를 생성하고, 평범한 날은 직장인 템플릿(기상→출근→점심→퇴근→취침)을 사용합니다. test 모드에서는 모든 날 템플릿만 사용합니다.',
+    file: 'pipeline/nodes/simulator.py',
+    llm: true,
+    prompt: `{name}({job}, {city})의 아래 날짜들에 대한 상세 이벤트를 JSON으로 생성하세요.
+
+날짜별 주요 이벤트:
+- 2025-01-29: [family] 설날 가족 모임 — 고향 방문
+- 2025-03-15: [social] 동창 모임 — 오랜 친구들과 만남
+- 2025-07-20: [hobby] 여름 휴가 — 제주도 여행
+
+각 날짜당 5~8개의 상세 이벤트를 생성하세요.
+출력 형식:
+{
+  "2025-01-29": [
+    {"datetime": "2025-01-29 07:00:00", "event_type": "기상",
+     "description": "명절 준비", "location": "집"}
+  ]
+}
+
+JSON만 출력하세요. 마크다운, 설명 없이.`,
+    input_desc: '`state.daily_drafts`, `state.personas`',
+    output_desc: '`state.daily_events_map` — {persona_name: [{datetime, event_type, description, location}]}',
+    input_key: null,
+    output_key: null,
+  },
+  {
+    id: 'phone_data_gen', emoji: '📱', label: 'phone_data_gen', group: 'new',
+    title: 'Step 3 — 폰 데이터 합성',
+    desc: 'LLM 없이 규칙 기반으로 일상 이벤트에서 폰 데이터를 합성합니다. 이벤트 유형에 따라 통화/문자를 생성하고, 페르소나의 취미/직업에 맞는 한국 앱 알림(카카오톡·토스·배달의민족·쿠팡 등)을 생성합니다.',
+    file: 'pipeline/nodes/phone_data_gen.py',
+    llm: false,
+    prompt: `[규칙 기반, LLM 없음]
+
+통화 생성 규칙:
+- 이벤트에 관계인 포함 → 해당 연락처와 통화 레코드 생성
+- 방향: 이벤트 유형에 따라 발신/수신 결정
+- 시간: 이벤트 datetime 기준 ±30분
+
+문자 생성 규칙:
+- 사회적 이벤트(social/family) → 인간관계에서 상대방 선택
+- 메시지 내용: 이벤트 description 기반 템플릿
+
+알림 생성 규칙 (앱별 매핑):
+- 취미=독서 → 예스24, 리디북스 알림
+- 취미=음악 → 멜론, 스포티파이 알림
+- 직업=개발자 → GitHub, Slack 알림
+- 매일: 카카오톡, 네이버, 배달의민족 기본 알림`,
+    input_desc: '`state.daily_events_map`, `state.personas`',
+    output_desc: '`state.raw_calls`, `state.raw_sms`, `state.raw_push`, `state.persona_event_id_map`',
+    input_key: null,
+    output_key: null,
+  },
+  {
+    id: 'call_gen', emoji: '📞', label: 'call_gen', group: 'phone',
+    title: 'Step 4 — 통화 변환',
+    desc: '원본 LifeBench 로직 유지. raw_calls를 BehaviorEventEntity 포맷으로 변환합니다. direction과 call_result를 call_type(0=발신/1=수신/2=부재중)으로 매핑합니다. llm_enriched variant에서는 이 노드가 LLM으로 transcriptDialog를 생성하는 버전으로 교체됩니다.',
+    file: 'pipeline/nodes/call_gen.py',
+    llm: false,
+    prompt: `[규칙 기반 변환, LLM 없음]
+
+raw_call → BehaviorEventEntity 매핑:
+- identifier: "call_{event_id}_{timestamp_ms}"
+- event_source: "CALL_LOG"
+- payload.type: direction=0 → 0(발신), direction=1 → 1(수신)
+               call_result에 "missed" 포함 → 2(부재중)
+- payload.duration: datetime_end - datetime (초)
+- payload.transcriptDialog: "" (base) / LLM 생성 (llm_enriched variant)`,
+    input_desc: '`state.raw_calls` — 통화 레코드 리스트',
+    output_desc: '`state.generated_calls` — BehaviorEventEntity list (CALL_LOG)',
+    input_key: 'call_input',
+    output_key: 'call',
+  },
+  {
+    id: 'sms_gen', emoji: '💬', label: 'sms_gen', group: 'phone',
+    title: 'Step 5 — 문자 변환',
+    desc: '원본 LifeBench 로직 유지. raw_sms를 BehaviorEventEntity 포맷으로 변환합니다. 연락처별로 안정적인 thread_id를 부여합니다. llm_enriched variant에서는 SMS 본문을 LLM이 더 자연스럽게 재작성합니다.',
+    file: 'pipeline/nodes/sms_gen.py',
+    llm: false,
+    prompt: `[규칙 기반 변환, LLM 없음]
+
+raw_sms → BehaviorEventEntity 매핑:
+- identifier: "sms_{event_id}_{timestamp_ms}"
+- event_source: "SMS"
+- payload.threadId: 연락처별 순차 할당 (안정적 매핑)
+- payload.messageType: "Send" → 1(발신), 그 외 → 0(수신)
+- payload.isIncoming: messageType=1 → 0, 그 외 → 1
+- payload.body: 원본 그대로 (llm_enriched에서는 LLM이 자연스럽게 재작성)`,
+    input_desc: '`state.raw_sms` — SMS 레코드 리스트',
+    output_desc: '`state.generated_sms` — BehaviorEventEntity list (SMS)',
+    input_key: 'sms_input',
+    output_key: 'sms',
+  },
+  {
+    id: 'noti_gen', emoji: '🔔', label: 'noti_gen', group: 'phone',
+    title: 'Step 6 — 알림 변환',
+    desc: '원본 LifeBench 로직 기반. raw_push를 BehaviorEventEntity 포맷으로 변환합니다. 앱 이름을 Android 패키지명으로 매핑합니다. korean_local variant에서는 이 노드가 한국 앱 패키지명과 한국어 앱 이름을 사용하는 버전으로 교체됩니다.',
+    file: 'pipeline/nodes/noti_gen.py',
+    llm: false,
+    prompt: `[규칙 기반 변환, LLM 없음]
+
+raw_push → BehaviorEventEntity 매핑:
+- identifier: "noti_{event_id}_{timestamp_ms}"
+- event_source: "NOTIFICATION"
+- payload.packageName: 앱 이름 → Android 패키지명 매핑
+  예: "카카오톡" → "com.kakao.talk"
+      "네이버" → "com.naver.search"
+      "배달의민족" → "com.baemin.android"
+      "토스" → "viva.republica.toss"
+- payload.category: 앱 유형에 따라 자동 분류`,
+    input_desc: '`state.raw_push` — 알림 레코드 리스트',
+    output_desc: '`state.generated_noti` — BehaviorEventEntity list (NOTIFICATION)',
+    input_key: 'noti_input',
+    output_key: 'noti',
+  },
+  {
+    id: 'formatter', emoji: '🗂️', label: 'formatter', group: 'phone',
+    title: 'Step 7 — 포맷 & 병합',
+    desc: '모든 이벤트를 timestamp 기준으로 정렬 후 날짜별 contextGroupId를 부여합니다. persona_event_id_map을 이용해 페르소나별로 이벤트를 분리합니다. 최종 결과는 output/{name}/behavior_events.json으로 저장됩니다.',
+    file: 'pipeline/full_graph.py (multi_formatter)',
+    llm: false,
+    prompt: `[규칙 기반, LLM 없음]
+
+1. 모든 이벤트 병합:
+   generated_calls + generated_sms + generated_noti
+
+2. timestamp 오름차순 정렬
+
+3. contextGroupId 부여:
+   - 같은 날짜(YYYY-MM-DD) → 같은 정수 ID
+   - 날짜 순서대로 1, 2, 3, ...
+
+4. 페르소나별 분리:
+   - persona_event_id_map[name] = {call_ids, sms_ids, noti_ids}
+   - 각 identifier가 어느 페르소나 것인지 추적
+   - behavior_events_map[name] = 해당 페르소나 이벤트만 필터`,
+    input_desc: '`state.generated_calls/sms/noti`, `state.persona_event_id_map`',
+    output_desc: '`state.behavior_events_map` — {persona_name: [BehaviorEventEntity]}',
+    input_key: null,
+    output_key: 'all',
+  },
+];
+
+// ── App state ─────────────────────────────────────────────────────────────────
+let allPersonas = [];
+let selectedIdx = 0;
+let expandedStep = null;
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  fetch('./pipeline_data.json')
+    .then(r => r.json())
+    .then(data => { allPersonas = data; init(); })
+    .catch(() => { showFallback(); });
+});
+
+function showFallback() {
+  // Show pipeline steps without persona data
+  allPersonas = [];
+  renderPersonaGrid();
+  renderPipeline();
+  renderStepNav();
+}
+
+function init() {
+  renderPersonaGrid();
+  renderPipeline();
+  renderStepNav();
+  if (allPersonas.length > 0) selectPersona(0);
+}
+
+function toggleDark() { document.documentElement.classList.toggle('dark'); }
+
+// ── Step nav ──────────────────────────────────────────────────────────────────
+function renderStepNav() {
+  const nav = document.getElementById('step-nav');
+  nav.innerHTML = STEPS.map((s, i) => `
+    <button onclick="scrollToStep('${s.id}')"
+      class="text-xs px-2 py-1 rounded font-mono text-gray-500 hover:text-gray-200 hover:bg-gray-800 transition-all">
+      ${s.emoji} ${s.id}
+    </button>`).join('');
+}
+
+function scrollToStep(id) {
+  const el = document.getElementById('step-' + id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  expandStep(id);
+}
+
+// ── Persona grid ──────────────────────────────────────────────────────────────
+function renderPersonaGrid() {
+  const grid = document.getElementById('persona-grid');
+  const count = document.getElementById('persona-count');
+  count.textContent = allPersonas.length ? `${allPersonas.length}명 생성됨` : '데이터 없음';
+
+  if (!allPersonas.length) {
+    grid.innerHTML = `<div class="col-span-full text-center text-gray-600 py-8">
+      <p class="text-sm">python3 run_full.py --count 3 --test 실행 후 새로고침</p>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = allPersonas.map((d, i) => {
+    const p = d.persona;
+    const initials = p.name.slice(-1);
+    const mbtiColors = { I:'bg-blue-900 text-blue-300', E:'bg-green-900 text-green-300' };
+    const mbtiCls = mbtiColors[p.mbti?.[0]] || 'bg-gray-800 text-gray-300';
+    return `
+    <div class="persona-card p-3" onclick="selectPersona(${i})" id="pcard-${i}">
+      <div class="flex items-center gap-2 mb-2">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${mbtiCls} flex-shrink-0">${initials}</div>
+        <div class="min-w-0">
+          <div class="font-bold text-sm text-white truncate">${p.name}</div>
+          <div class="text-xs text-gray-500 truncate">${p.age}세 · ${p.gender}</div>
+        </div>
+      </div>
+      <div class="text-xs text-gray-400 truncate">${p.job}</div>
+      <div class="text-xs text-gray-600">${p.home_city} · ${p.mbti}</div>
+      <div class="mt-2 flex gap-1 text-xs">
+        <span class="text-blue-400">${d.stats.calls}📞</span>
+        <span class="text-green-400">${d.stats.sms}💬</span>
+        <span class="text-amber-400">${d.stats.noti}🔔</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function selectPersona(idx) {
+  selectedIdx = idx;
+  // Update card selection
+  document.querySelectorAll('.persona-card').forEach((el, i) => {
+    el.classList.toggle('selected', i === idx);
+  });
+  renderPersonaDetail(allPersonas[idx]);
+  renderPipeline();
+}
+
+// ── Persona detail ────────────────────────────────────────────────────────────
+function renderPersonaDetail(data) {
+  const p = data.persona;
+  const detail = document.getElementById('persona-detail');
+  detail.classList.remove('hidden');
+
+  document.getElementById('pd-avatar').textContent = p.name.slice(-1);
+  document.getElementById('pd-name').textContent = p.name;
+  document.getElementById('pd-mbti').textContent = p.mbti;
+  document.getElementById('pd-econ').textContent = '경제수준 ' + p.economic_level;
+  document.getElementById('pd-meta').textContent =
+    `${p.age}세 · ${p.gender} · ${p.job} · ${p.home_city} · 총 ${data.stats.total.toLocaleString()}개 이벤트`;
+
+  document.getElementById('pd-hobbies').innerHTML =
+    (p.hobbies||[]).map(h => `<span class="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded">${h}</span>`).join('');
+
+  document.getElementById('pd-calls').textContent = data.stats.calls.toLocaleString();
+  document.getElementById('pd-sms').textContent   = data.stats.sms.toLocaleString();
+  document.getElementById('pd-noti').textContent  = data.stats.noti.toLocaleString();
+
+  const circleColors = {
+    '가족':'bg-rose-900/50 text-rose-300 border-rose-800',
+    '직장':'bg-blue-900/50 text-blue-300 border-blue-800',
+    '연인':'bg-pink-900/50 text-pink-300 border-pink-800',
+    '대학 동기':'bg-purple-900/50 text-purple-300 border-purple-800',
+    '고등학교 동기':'bg-indigo-900/50 text-indigo-300 border-indigo-800',
+    '동네':'bg-green-900/50 text-green-300 border-green-800',
+  };
+  document.getElementById('pd-relations').innerHTML =
+    (p.relationships||[]).map(r => {
+      const cls = circleColors[r.social_circle] || 'bg-gray-800 text-gray-300 border-gray-700';
+      return `<span class="text-xs border px-2 py-0.5 rounded ${cls}">${r.name} <span class="opacity-60">${r.relation}</span></span>`;
+    }).join('');
+}
+
+// ── Pipeline ──────────────────────────────────────────────────────────────────
+function renderPipeline() {
+  const container = document.getElementById('pipeline-steps');
+  container.innerHTML = STEPS.map((s, i) => buildStepCard(s, i)).join('');
+}
+
+function buildStepCard(step, idx) {
+  const data = allPersonas[selectedIdx];
+  const isNew = step.group === 'new';
+  const cardCls = isNew ? 'step-new' : 'step-phone';
+  const groupBadge = isNew
+    ? '<span class="badge bg-green-900/60 text-green-300 border border-green-700">🆕 NEW</span>'
+    : '<span class="badge bg-blue-900/50 text-blue-300 border border-blue-700">📱 ORIGINAL</span>';
+  const llmBadge = step.llm
+    ? '<span class="badge bg-purple-900/50 text-purple-300 border border-purple-700 ml-1">LLM</span>'
+    : '<span class="badge bg-gray-800 text-gray-400 border border-gray-700 ml-1">규칙 기반</span>';
+
+  const isExpanded = expandedStep === step.id;
+
+  // Sample data for this step
+  const sampleHtml = data ? buildSampleData(step, data) : '';
+
+  return `
+  <div class="step-card ${cardCls}" id="step-${step.id}">
+    <!-- Header (always visible) -->
+    <div class="px-5 py-4 cursor-pointer flex items-center justify-between"
+         onclick="toggleStep('${step.id}')">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl">${step.emoji}</span>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="font-bold text-white font-mono">${step.label}</span>
+            ${groupBadge}${llmBadge}
+          </div>
+          <p class="text-xs text-gray-400 mt-0.5">${step.title}</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="text-xs text-gray-600 hidden md:block font-mono">${step.file}</div>
+        <span class="text-gray-500 text-lg">${isExpanded ? '▲' : '▼'}</span>
+      </div>
+    </div>
+
+    <!-- Expanded content -->
+    <div id="step-body-${step.id}" class="${isExpanded ? '' : 'hidden'} border-t border-gray-800/50">
+      <div class="p-5 grid md:grid-cols-2 gap-5">
+
+        <!-- Left: description + prompt -->
+        <div class="space-y-4">
+          <div>
+            <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">설명</p>
+            <p class="text-sm text-gray-300 leading-relaxed">${step.desc}</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <p class="text-xs text-blue-400 font-bold uppercase tracking-wider mb-1">📥 Input</p>
+              <p class="text-xs text-gray-400 leading-relaxed">${step.input_desc}</p>
+            </div>
+            <div>
+              <p class="text-xs text-green-400 font-bold uppercase tracking-wider mb-1">📤 Output</p>
+              <p class="text-xs text-gray-400 leading-relaxed">${step.output_desc}</p>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-xs text-purple-400 font-bold uppercase tracking-wider mb-2">
+              ${step.llm ? '🤖 LLM Prompt' : '⚙️ 처리 로직'}
+            </p>
+            <pre class="code-block text-gray-300 text-xs">${escHtml(step.prompt)}</pre>
+          </div>
+        </div>
+
+        <!-- Right: actual data for selected persona -->
+        <div class="space-y-4">
+          <div>
+            <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-2">
+              ${data ? `📊 실제 데이터 — ${data.persona.name}` : '📊 실제 데이터'}
+            </p>
+            ${sampleHtml || '<p class="text-xs text-gray-600">페르소나를 선택하면 실제 데이터가 표시됩니다</p>'}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>`;
+}
+
+function toggleStep(id) {
+  expandedStep = expandedStep === id ? null : id;
+  renderPipeline();
+  // re-select persona card
+  document.querySelectorAll('.persona-card').forEach((el, i) => {
+    el.classList.toggle('selected', i === selectedIdx);
+  });
+}
+
+function expandStep(id) {
+  expandedStep = id;
+  renderPipeline();
+  document.querySelectorAll('.persona-card').forEach((el, i) => {
+    el.classList.toggle('selected', i === selectedIdx);
+  });
+}
+
+// ── Sample data per step ──────────────────────────────────────────────────────
+function buildSampleData(step, data) {
+  const p = data.persona;
+  const samples = data.samples;
+
+  if (step.id === 'persona_gen') {
+    return `<div class="code-block text-xs text-gray-300">
+<span class="text-green-400">// 생성된 페르소나</span>
+{
+  "name": "${p.name}",
+  "age": ${p.age},
+  "gender": "${p.gender}",
+  "job": "${p.job}",
+  "mbti": "${p.mbti}",
+  "hobbies": ${JSON.stringify(p.hobbies?.slice(0,3))},
+  "economic_level": "${p.economic_level}",
+  "home_city": "${p.home_city}",
+  "relationships": <span class="text-blue-400">[${p.relationships?.length || 0}명]</span>
+}</div>`;
+  }
+
+  if (step.id === 'draft_gen') {
+    const holidays = [
+      {date:'2025-01-29', title:'설날 가족 모임', category:'family'},
+      {date:'2025-05-05', title:'어린이날 나들이', category:'family'},
+      {date:'2025-07-15', title:'여름 휴가', category:'hobby'},
+    ];
+    return `<div class="code-block text-xs text-gray-300">
+<span class="text-green-400">// 연간 이벤트 초안 (예시)</span>
+[
+  {"date": "2025-01-29", "title": "설날 가족 모임",
+   "category": <span class="text-amber-400">"family"</span>, "description": "고향 방문 및 세배"},
+  {"date": "2025-04-${10+p.age%15}", "title": "${p.job} 관련 업무",
+   "category": <span class="text-blue-400">"work"</span>, "description": "분기 성과 평가"},
+  {"date": "2025-07-${15+p.age%10}", "title": "${p.hobbies?.[0]||'취미'} 활동",
+   "category": <span class="text-green-400">"hobby"</span>, "description": "주말 취미 활동"},
+  <span class="text-gray-600">... 총 40개 이벤트</span>
+]</div>`;
+  }
+
+  if (step.id === 'simulator') {
+    return `<div class="code-block text-xs text-gray-300">
+<span class="text-green-400">// 하루 상세 이벤트 (설날 예시)</span>
+{
+  "2025-01-29": [
+    {"datetime": "2025-01-29 07:00:00",
+     "event_type": <span class="text-purple-400">"기상"</span>, "location": "집"},
+    {"datetime": "2025-01-29 09:30:00",
+     "event_type": <span class="text-amber-400">"이동"</span>,
+     "description": "${p.home_city}행 KTX", "location": "역"},
+    {"datetime": "2025-01-29 13:00:00",
+     "event_type": <span class="text-rose-400">"가족 모임"</span>,
+     "description": "세배 및 떡국", "location": "본가"},
+  ],
+  <span class="text-gray-600">// 365일 × 평균 7개 이벤트 = ~2,500개</span>
+}</div>`;
+  }
+
+  if (step.id === 'phone_data_gen') {
+    return `<div class="code-block text-xs text-gray-300">
+<span class="text-green-400">// 합성된 폰 데이터</span>
+통화: <span class="text-blue-400">${data.stats.calls}건</span>
+문자: <span class="text-green-400">${data.stats.sms}건</span>
+알림: <span class="text-amber-400">${data.stats.noti}건</span>
+
+<span class="text-green-400">// 알림 앱 (취미 기반)</span>
+${buildAppList(p)}</div>`;
+  }
+
+  if (step.id === 'call_gen' && samples.calls?.length) {
+    const ev = samples.calls[0];
+    let pl = {}; try { pl = JSON.parse(ev.payload); } catch {}
+    return `<div class="space-y-2">
+      <p class="text-xs text-gray-500">통화 기록 ${data.stats.calls}건 중 샘플:</p>
+      <div class="code-block text-xs text-gray-300">
+{
+  "identifier": "${ev.identifier}",
+  "event_source": <span class="text-blue-400">"CALL_LOG"</span>,
+  "payload": {
+    "name": "${pl.name||''}",
+    "number": "${pl.number||''}",
+    "type": <span class="text-amber-400">${pl.type}</span>,
+    "duration": <span class="text-green-400">${pl.duration}s</span>,
+    "transcriptDialog": <span class="text-gray-600">""</span>
+  }
+}</div></div>`;
+  }
+
+  if (step.id === 'sms_gen' && samples.sms?.length) {
+    const ev = samples.sms[0];
+    let pl = {}; try { pl = JSON.parse(ev.payload); } catch {}
+    return `<div class="space-y-2">
+      <p class="text-xs text-gray-500">문자 기록 ${data.stats.sms}건 중 샘플:</p>
+      <div class="code-block text-xs text-gray-300">
+{
+  "identifier": "${ev.identifier}",
+  "event_source": <span class="text-green-400">"SMS"</span>,
+  "payload": {
+    "title": "${pl.title||''}",
+    "body": <span class="text-yellow-300">"${escHtml((pl.body||'').slice(0,40))}"</span>,
+    "threadId": <span class="text-blue-400">${pl.threadId}</span>,
+    "isIncoming": ${pl.isIncoming}
+  }
+}</div></div>`;
+  }
+
+  if (step.id === 'noti_gen' && samples.noti?.length) {
+    const ev = samples.noti[0];
+    let pl = {}; try { pl = JSON.parse(ev.payload); } catch {}
+    return `<div class="space-y-2">
+      <p class="text-xs text-gray-500">알림 기록 ${data.stats.noti}건 중 샘플:</p>
+      <div class="code-block text-xs text-gray-300">
+{
+  "identifier": "${ev.identifier}",
+  "event_source": <span class="text-amber-400">"NOTIFICATION"</span>,
+  "payload": {
+    "appName": <span class="text-green-400">"${pl.appName||''}"</span>,
+    "packageName": <span class="text-blue-400">"${pl.packageName||''}"</span>,
+    "title": "${escHtml((pl.title||'').slice(0,30))}",
+    "category": "${pl.category||''}"
+  }
+}</div></div>`;
+  }
+
+  if (step.id === 'formatter') {
+    return `<div class="code-block text-xs text-gray-300">
+<span class="text-green-400">// 최종 output/${p.name}/behavior_events.json</span>
+총 이벤트: <span class="text-white font-bold">${data.stats.total.toLocaleString()}개</span>
+
+breakdown:
+  CALL_LOG:     <span class="text-blue-400">${data.stats.calls}</span>
+  SMS:          <span class="text-green-400">${data.stats.sms}</span>
+  NOTIFICATION: <span class="text-amber-400">${data.stats.noti}</span>
+
+contextGroupId:
+  날짜별 그룹 → 1~365 정수 부여
+  같은 날 이벤트는 같은 ID 공유</div>`;
+  }
+
+  return '<p class="text-xs text-gray-600">샘플 데이터 없음</p>';
+}
+
+function buildAppList(persona) {
+  const hobbyApps = {
+    '독서': '예스24, 리디북스',
+    '음악': '멜론, 스포티파이',
+    '요리': '만개의레시피, 배달의민족',
+    '게임': '스팀, 카카오게임즈',
+    '영화': '넷플릭스, 왓챠',
+    '운동': '나이키런클럽, 카카오맵',
+  };
+  const jobApps = {
+    '개발자': 'GitHub, Slack',
+    '의사': '의사랑, 카카오헬스',
+    '교사': '클래스팅, 네이버카페',
+  };
+  const hobbies = (persona.hobbies || []).slice(0, 2).map(h => {
+    for (const [k, v] of Object.entries(hobbyApps)) {
+      if (h.includes(k) || k.includes(h)) return `  ${h}: ${v}`;
+    }
+    return `  ${h}: 카카오톡, 네이버`;
+  });
+  const jobApp = Object.entries(jobApps).find(([k]) => (persona.job||'').includes(k));
+  return [...hobbies, jobApp ? `  ${persona.job}: ${jobApp[1]}` : '  공통: 카카오톡, 토스'].join('\n');
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
