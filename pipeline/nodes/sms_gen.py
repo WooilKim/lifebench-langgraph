@@ -45,7 +45,7 @@ def _convert_sms(sms, thread_id_map):  # type: (dict, dict) -> dict
         "identifier": f"sms_{message_id}_{timestamp}",
         "timestamp": timestamp,
         "event_source": "SMS",
-        "payload": json.dumps(payload, ensure_ascii=False),
+        "payload": payload,
         "contextGroupId": None,
     }
 

@@ -78,7 +78,7 @@ def _convert_call(call: dict) -> dict:
         "identifier": f"call_{call['event_id']}_{timestamp}",
         "timestamp": timestamp,
         "event_source": "CALL_LOG",
-        "payload": json.dumps(payload, ensure_ascii=False),
+        "payload": payload,
         "contextGroupId": None,
         "_raw": call,   # temporary: removed before final output
     }
@@ -196,8 +196,7 @@ def generate_calls(state: FullPipelineState) -> FullPipelineState:
         for ev in converted:
             raw = ev.get("_raw", {})
             pname = raw.get("persona_name", "")
-            payload = json.loads(ev["payload"])
-            if payload["type"] != 2:
+            if ev["payload"]["type"] != 2:
                 persona_calls.setdefault(pname, []).append(raw)
 
         transcript_map: dict[int, str] = {}
@@ -214,11 +213,9 @@ def generate_calls(state: FullPipelineState) -> FullPipelineState:
         results = []
         for ev in converted:
             raw = ev.pop("_raw", {})
-            payload = json.loads(ev["payload"])
             eid = raw.get("event_id")
-            if eid is not None and payload["type"] != 2:
-                payload["transcriptDialog"] = transcript_map.get(int(eid), "")
-                ev["payload"] = json.dumps(payload, ensure_ascii=False)
+            if eid is not None and ev["payload"]["type"] != 2:
+                ev["payload"]["transcriptDialog"] = transcript_map.get(int(eid), "")
             results.append(ev)
         return {**state, "generated_calls": results}
 
@@ -230,8 +227,7 @@ def generate_calls(state: FullPipelineState) -> FullPipelineState:
     for ev in converted:
         raw = ev.get("_raw", {})
         pname = raw.get("persona_name", "")
-        payload = json.loads(ev["payload"])
-        if payload["type"] == 2:  # missed → no transcript needed
+        if ev["payload"]["type"] == 2:  # missed → no transcript needed
             continue
         persona_calls.setdefault(pname, []).append(raw)
 
@@ -250,12 +246,9 @@ def generate_calls(state: FullPipelineState) -> FullPipelineState:
     results = []
     for ev in converted:
         raw = ev.pop("_raw", {})
-        payload = json.loads(ev["payload"])
         eid = raw.get("event_id")
-        if eid is not None and payload["type"] != 2:
-            transcript = transcript_map.get(int(eid), "")
-            payload["transcriptDialog"] = transcript
-            ev["payload"] = json.dumps(payload, ensure_ascii=False)
+        if eid is not None and ev["payload"]["type"] != 2:
+            ev["payload"]["transcriptDialog"] = transcript_map.get(int(eid), "")
         results.append(ev)
 
     print(f"[call_gen] Total {len(results)} calls, {len(transcript_map)} transcripts generated")

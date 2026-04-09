@@ -37,7 +37,7 @@ def _convert_email(email: dict) -> dict:
         "identifier": f"gmail_{event_id}_{timestamp}",
         "timestamp": timestamp,
         "event_source": "GMAIL",
-        "payload": json.dumps(payload, ensure_ascii=False),
+        "payload": payload,
         "contextGroupId": None,
     }
 

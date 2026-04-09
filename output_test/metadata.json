@@ -1,17 +1,17 @@
 {
-  "start_time": 1775737652.796865,
+  "start_time": 1775739517.1848938,
   "provider": "claude",
-  "finish_time": 1775738746.971074,
-  "total_events": 14939,
+  "finish_time": 1775740661.562342,
+  "total_events": 14996,
   "event_counts": {
-    "calls": 593,
-    "sms": 639,
-    "notifications": 10975
+    "calls": 592,
+    "sms": 706,
+    "notifications": 10961
   },
   "personas": [
-    "이서연",
-    "김윤호",
-    "이승민"
+    "오다온",
+    "김찬영",
+    "박수지"
   ],
-  "elapsed_seconds": 1094.1744027137756
+  "elapsed_seconds": 1144.3780360221863
 }

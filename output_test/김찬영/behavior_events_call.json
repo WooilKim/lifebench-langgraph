@@ -1,0 +1,3154 @@
+[
+  {
+    "identifier": "call_100000_1735856100000",
+    "timestamp": 1735856100000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-0091-8871",
+      "name": "임재훈",
+      "date": 1735856100000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 720,
+      "missedReason": "",
+      "transcriptDialog": "임재훈: 김 매니저, 나야. 지금 통화 가능해?\n김찬영: 네, 부장님. 말씀하세요.\n임재훈: 다음 주 월요일 클라이언트 미팅 있는 거 알지? 그 전에 우리 내부적으로 한 번 정리가 필요할 것 같아서. 현재 프로젝트 진행 상황이 어떻게 돼?\n김찬영: 현재 2단계 개발은 거의 마무리 단계고요, QA 테스트는 이번 주 금요일까지 완료 예정입니다. 다만 백엔드 쪽에서 API 연동 이슈가 하나 있어서 개발팀이랑 오늘 오후에 확인 미팅 잡아뒀습니다.\n임재훈: API 이슈? 그게 일정에 영향 줄 것 같아?\n김찬영: 최대한 이번 주 내로 해결하려고 하는데요, 만약 길어지면 QA 일정을 다음 주 초까지 하루 이틀 정도 미뤄야 할 수도 있습니다.\n임재훈: 그렇구나. 클라이언트한테는 아직 말 안 했지?\n김찬영: 네, 아직입니다. 일단 오늘 개발팀 미팅 결과 보고 나서 부장님께 먼저 보고드리고 판단하려고 했습니다.\n임재훈: 그래, 잘 생각했어. 오늘 미팅 끝나고 나 좀 연락줘. 상황 봐서 클라이언트 쪽에 어떻게 커뮤니케이션할지 같이 결정하자고.\n김찬영: 알겠습니다. 미팅 끝나는 대로 바로 연락드리겠습니다. 혹시 오늘 저녁 늦게 연락드려도 괜찮으실까요?\n임재훈: 응, 괜찮아. 9시 이전으로만 해줘. 그리고 월요일 미팅 자료도 이번 주 목요일까지는 초안 공유해줄 수 있어?\n김찬영: 네, 목요일까지 초안 보내드리겠습니다. 혹시 특별히 강조하셨으면 하는 부분 있으세요?\n임재훈: 일정 준수랑 리스크 관리 부분 좀 명확하게 해줘. 클라이언트가 그 부분 민감하게 보거든.\n김찬영: 알겠습니다, 부장님. 해당 부분 중점적으로 작성해서 보내드리겠습니다.\n임재훈: 수고해. 오늘 미팅 잘 마무리하고 연락줘."
+    },
+    "contextGroupId": 3
+  },
+  {
+    "identifier": "call_100001_1735894680000",
+    "timestamp": 1735894680000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-0091-8871",
+      "name": "임재훈",
+      "date": 1735894680000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 420,
+      "missedReason": "",
+      "transcriptDialog": "김찬영: 부장님, 저 김찬영입니다. 아까 개발팀 미팅 끝났습니다.\n임재훈: 어, 그래. 어떻게 됐어?\n김찬영: API 이슈 원인 파악은 됐는데요, 수정 작업이 생각보다 조금 더 걸릴 것 같습니다. 개발팀에서 내일 오후까지는 픽스 가능하다고 했고요, 그러면 QA를 다음 주 월요일부터 시작해서 수요일까지 완료하는 일정으로 조정해야 할 것 같습니다.\n임재훈: 그러면 클라이언트 미팅이 월요일인데, 완전한 테스트 결과는 못 보여주겠네.\n김찬영: 맞습니다. 그래서 제 생각에는 월요일 미팅에서는 현재까지 완료된 기능 위주로 데모를 보여드리고, QA 완료 일정을 수요일로 명시하는 게 나을 것 같습니다. 자료에 리스크 관리 항목으로 일정 변경 사유도 투명하게 넣는 게 좋을 것 같고요.\n임재훈: 음... 클라이언트가 좋아하진 않겠지만 솔직하게 가는 게 낫긴 하지. 알겠어, 그렇게 준비해봐. 대신 데모 퀄리티는 확실하게 챙겨.\n김찬영: 네, 알겠습니다. 목요일 초안에 해당 내용 반영해서 보내드리겠습니다.\n임재훈: 수고했어. 오늘 늦게까지 고생했네."
+    },
+    "contextGroupId": 3
+  },
+  {
+    "identifier": "call_100002_1736114460000",
+    "timestamp": 1736114460000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1736114460000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 480,
+      "missedReason": "",
+      "transcriptDialog": "김찬영: 안녕하세요, 윤 대리님. 저 ABC솔루션 김찬영입니다.\n윤세진: 아, 김 매니저님! 네, 안녕하세요. 연락 기다리고 있었어요.\n김찬영: 다음 주 월요일 미팅 관련해서 말씀드릴 게 있어서 연락드렸습니다. 죄송하게도 QA 일정이 소폭 조정됐습니다.\n윤세진: 아, 그래요? 어느 정도 조정되는 건가요?\n김찬영: 백엔드 API 연동 부분에서 기술적 이슈가 발생했고요, 이 부분 수정 후 QA를 다음 주 수요일까지 완료하는 걸로 조정됐습니다. 월요일 미팅 일정 자체는 그대로 진행되고요, 미팅에서는 현재까지 완성된 주요 기능들 데모를 보여드릴 수 있습니다.\n윤세진: 음... 저희 내부에서도 수요일 이후로 검토 일정 잡아야 하는 거네요.\n김찬영: 네, 맞습니다. 불편을 드려서 정말 죄송합니다. 다만 수요일 QA 완료 후 바로 결과 리포트 공유드리고, 필요하시면 그 주 목요일에 추가 미팅도 가능합니다.\n윤세진: 알겠습니다. 저도 내부에 공유해야 하니까 변경된 일정 이메일로도 한 번 보내주실 수 있어요?\n김찬영: 물론입니다. 오늘 중으로 공문 형식으로 보내드리겠습니다. 월요일 미팅 장소는 저희 회사 쪽으로 오시는 거 맞죠?\n윤세진: 네, 그렇게 알고 있어요. 오전 10시 맞나요?\n김찬영: 네, 맞습니다. 10시에 저희 쪽 3층 회의실로 오시면 됩니다. 주차는 지하 2층에 방문객 공간 있으니 말씀드려 두겠습니다.\n윤세진: 감사합니다. 그럼 월요일에 뵙겠습니다.\n김찬영: 네, 감사합니다. 이메일은 오늘 오후에 확인하실 수 있도록 바로 보내드리겠습니다."
+    },
+    "contextGroupId": 6
+  },
+  {
+    "identifier": "call_100003_1736172900000",
+    "timestamp": 1736172900000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-2960-0015",
+      "name": "배찬호",
+      "date": 1736172900000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 300,
+      "missedReason": "",
+      "transcriptDialog": "김찬영: 야, 찬호야. 나 찬영이.\n배찬호: 어, 왜? 무슨 일이야?\n김찬영: 이번 주 토요일 보드게임 모임 하는 거 맞지? 몇 시야?\n배찬호: 응응, 오후 3시. 혜화역 근처 그 카페 맞아. 저번에 갔던 데.\n김찬영: 아 거기? 알겠어. 근데 나 좀 늦을 수도 있어. 오전에 일 처리하고 가야 해서.\n배찬호: 얼마나 늦을 것 같은데?\n김찬영: 한 30분? 최대 40분? 미리 시작하고 있으면 돼.\n배찬호: 알겠어. 이번에 새 게임 가져올게. 작년에 핫했던 거.\n김찬영: 오, 뭔데?\n배찬호: 가면 알려줄게. 재미있어 진짜.\n김찬영: 그래 알겠어. 토요일에 보자."
+    },
+    "contextGroupId": 6
+  },
+  {
+    "identifier": "call_100004_1736208540000",
+    "timestamp": 1736208540000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-1972-2297",
+      "name": "박소연",
+      "date": 1736208540000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 600,
+      "missedReason": "",
+      "transcriptDialog": "박소연: 찬영아, 나 소연이야!\n김찬영: 어, 소연아! 오랜만이다. 잘 지냈어?\n박소연: 응 그럭저럭. 너는? 아직도 그 프로젝트 매니저로 있어?\n김찬영: 응, 아직. 요즘 프로젝트 하나 진행 중이라 좀 바빠.\n박소연: 고생이다. 근데 있잖아, 있잖아, 나 이번에 이직했거든?\n김찬영: 진짜? 어디로?\n박소연: 강남 쪽 IT 스타트업인데, 마케팅 팀장으로 갔어. 규모는 작은데 성장 가능성 보고 갔지.\n김찬영: 와, 팀장이야? 대박이다. 거기 어때?\n박소연: 바쁘긴 한데 재미있어. 내가 직접 결정할 수 있는 게 많아서. 근데 있잖아, 사실 연락한 건 그것 때문이기도 한데, 우리 회사 SI 쪽 파트너사 찾고 있거든. 혹시 네가 있는 회사가 그쪽도 해?\n김찬영: 아, 우리 회사 SI도 하긴 해. 근데 어느 정도 규모 생각하고 있어?\n박소연: 자체 서비스 앱 리뉴얼이랑 어드민 시스템 구축인데, 아직 예산 확정은 안 됐어.\n김찬영: 음, 일단 나 담당이 있으니까 연결해줄게. 공식 문의는 거기로 해야 하는데, 대략적인 요구사항 정리해서 나한테 먼저 보내봐. 내가 영업팀이랑 먼저 얘기해볼게.\n박소연: 진짜? 고마워! 역시 아는 사람 있으면 다르네.\n김찬영: 친구 도움이 되면 좋지. 아, 우리 오랜만에 밥 한번 먹어야 하지 않아?\n박소연: 맞아, 졸업하고 거의 못 봤잖아. 이번 달 말에 시간 돼?\n김찬영: 이번 달 말이면... 프로젝트 마무리되면 괜찮을 것 같아. 날짜 잡아봐.\n박소연: 오케이, 문자로 조율하자. 요구사항 문서도 이번 주 중으로 보낼게!\n김찬영: 응, 기다릴게. 잘 됐으면 좋겠다."
+    },
+    "contextGroupId": 7
+  },
+  {
+    "identifier": "call_100005_1736380740000",
+    "timestamp": 1736380740000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9319-3529",
+      "name": "강동원",
+      "date": 1736380740000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 600,
+      "missedReason": "",
+      "transcriptDialog": "강동원: 찬영아"
+    },
+    "contextGroupId": 9
+  },
+  {
+    "identifier": "call_100006_1736985540000",
+    "timestamp": 1736985540000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-2960-0015",
+      "name": "배찬호",
+      "date": 1736985540000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 600,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 16
+  },
+  {
+    "identifier": "call_100007_1737064680000",
+    "timestamp": 1737064680000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-2960-0015",
+      "name": "배찬호",
+      "date": 1737064680000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 360,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 17
+  },
+  {
+    "identifier": "call_100008_1737072840000",
+    "timestamp": 1737072840000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9288-0098",
+      "name": "정다은",
+      "date": 1737072840000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 660,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 17
+  },
+  {
+    "identifier": "call_100009_1737363420000",
+    "timestamp": 1737363420000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3776-6503",
+      "name": "오지현",
+      "date": 1737363420000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 420,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 20
+  },
+  {
+    "identifier": "call_100010_1737417660000",
+    "timestamp": 1737417660000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-0091-8871",
+      "name": "임재훈",
+      "date": 1737417660000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 21
+  },
+  {
+    "identifier": "call_100011_1737503880000",
+    "timestamp": 1737503880000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1737503880000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 660,
+      "missedReason": "",
+      "transcriptDialog": "김찬영: 승우야, 나야. 지금 통화 괜찮아?\n한승우: 네, 팀장님. 말씀하세요.\n김찬영: 어, 이번 주 금요일 납기 건 말이야. 진행 상황이 어떻게 돼? 어제 공유해준 문서 봤는데 API 연동 부분이 아직 미완료로 돼 있던데.\n한승우: 아, 그게요. 외부 API 쪽에서 응답 스펙이 갑자기 바뀌어서요. 어제 저녁에 담당자한테 연락은 해뒀는데 아직 회신이 없는 상태예요.\n김찬영: 아 진짜? 그거 언제 바뀐 거야? 공지는 받았어?\n한승우: 공지는 따로 없었고요, 실제로 붙여보다가 에러 나서 확인했더니 스펙이 달라져 있었어요. v2에서 v3로 업데이트된 것 같은데 마이그레이션 가이드가 아직 없어서 저희가 직접 파악하고 있는 중이에요.\n김찬영: 아 이거 좀 골치 아프네. 그럼 지금 예상하기로 언제까지 해결 가능할 것 같아?\n한승우: 빠르면 내일 오전 중에는 윤곽이 나올 것 같고요, 최악의 경우 목요일까지 볼 수도 있을 것 같아요.\n김찬영: 목요일이면 납기 하루 전인데... 알겠어. 내가 고객사 쪽이랑 한번 조율을 해볼게. 혹시 인력이 더 필요하면 말해. 문지훈 씨 붙여줄 수도 있으니까.\n한승우: 일단 오늘 저녁까지 더 파보고 안 되면 말씀드릴게요.\n김찬영: 응, 그래. 그리고 외부 API 담당자한테 오늘 중으로 꼭 답 받아야 해. 답장 안 오면 나한테 알려줘, 내가 직접 연락해볼게.\n한승우: 네, 알겠습니다. 바로 다시 연락해볼게요.\n김찬영: 수고해. 진행 상황 수시로 공유해줘."
+    },
+    "contextGroupId": 22
+  },
+  {
+    "identifier": "call_100012_1737554100000",
+    "timestamp": 1737554100000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3689-9563",
+      "name": "이준혁",
+      "date": 1737554100000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 240,
+      "missedReason": "",
+      "transcriptDialog": "이준혁: 야, 찬영아!\n김찬영: 어, 준혁아. 오랜만이다. 무슨 일이야?\n이준혁: 무슨 일이긴, 그냥 연락하면 안 돼? 요즘 어떻게 지내?\n김찬영: 나야 뭐 정신없이 살지. 프로젝트가 겹쳐서 요즘 좀 바빠. 너는?\n이준혁: 나도 그냥 비슷해. 야 근데 있잖아, 다음 달에 동기 모임 하려고 하는데 너 올 수 있어?\n김찬영: 다음 달? 몇 월 몇 일인데?\n이준혁: 아직 날짜 확정은 아닌데 대충 2월 중순 주말로 잡으려고. 단톡방에 올릴 건데 미리 물어보는 거야.\n김찬영: 2월 중순이면... 아마 괜찮을 것 같은데. 확정되면 알려줘. 최대한 맞춰볼게.\n이준혁: 그래, 이번엔 꼭 나와라. 지난번에 빠졌잖아.\n김찬영: 알았어 알았어. 이번엔 갈게. 단톡방 확인할게."
+    },
+    "contextGroupId": 22
+  },
+  {
+    "identifier": "call_100013_1737588900000",
+    "timestamp": 1737588900000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5395-6767",
+      "name": "김태양",
+      "date": 1737588900000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 23
+  },
+  {
+    "identifier": "call_100014_1737603240000",
+    "timestamp": 1737603240000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5395-6767",
+      "name": "김태양",
+      "date": 1737603240000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 120,
+      "missedReason": "",
+      "transcriptDialog": "김태양: 아빠!\n김찬영: 어, 태양아. 왜? 무슨 일 있어?\n김태양: 아니 그냥. 아빠 오늘 몇 시에 와?\n김찬영: 아, 오늘 좀 늦을 것 같아. 왜, 뭐 필요한 거 있어?\n김태양: 숙제 모르는 거 있는데 엄마한테 물어봤더니 아빠한테 물어보래.\n김찬영: 무슨 숙제?\n김태양: 수학. 분수 나누기.\n김찬영: 아 그거. 아빠 집에 가면 같이 봐줄게. 오늘 좀 늦더라도 자지 말고 기다려.\n김태양: 응, 알겠어. 빨리 와.\n김찬영: 그래, 이따 봐."
+    },
+    "contextGroupId": 23
+  },
+  {
+    "identifier": "call_100015_1737934260000",
+    "timestamp": 1737934260000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8830-4361",
+      "name": "문지훈",
+      "date": 1737934260000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 240,
+      "missedReason": "",
+      "transcriptDialog": "김찬영: 지훈 씨, 나 찬영이에요. 지금 잠깐 통화 돼요?\n문지훈: 네, 팀장님. 말씀하세요.\n김찬영: 다름이 아니라 승우 씨 작업 좀 도와줄 수 있어요? API 스펙 변경 건 알죠?\n문지훈: 아, 그 v3 업데이트 건요? 저도 어제 들었어요.\n김찬영: 맞아요. 승우 씨 혼자 보고 있는데 오늘 안으로 방향을 잡아야 할 것 같거든요. 지훈 씨가 외부 API 쪽 경험이 있으니까 같이 좀 봐줄 수 있을까요?\n문지훈: 네, 저 지금 하는 작업이 오후까지는 마무리될 것 같으니까 그 다음에 붙을 수 있을 것 같아요.\n김찬영: 좋아요. 그럼 오후 3시쯤 승우 씨랑 같이 한번 보는 걸로 해요. 제가 승우 씨한테도 얘기해놓을게요.\n문지훈: 알겠습니다. 혹시 관련 스펙 문서 있으면 미리 좀 공유해주시면 좋겠어요.\n김찬영: 그거는 승우 씨가 가지고 있을 거예요. 바로 연락해서 공유하라고 할게요. 수고해요."
+    },
+    "contextGroupId": 27
+  },
+  {
+    "identifier": "call_100016_1738020360000",
+    "timestamp": 1738020360000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9288-0098",
+      "name": "정다은",
+      "date": 1738020360000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 900,
+      "missedReason": "",
+      "transcriptDialog": "정다은: 여보, 나야.\n김찬영: 어, 왜? 뭐 필요해?\n정다은: 아니 그냥 오늘 저녁 뭐 먹을지 해서. 태양이가 치킨 먹고 싶다는데.\n김찬영: 아 나도 치킨 좋지. 오늘 늦을 것 같긴 한데 시켜놔도 될 것 같아.\n정다은: 몇 시쯤 올 것 같아?\n김찬영: 음... 빠르면 8시? 요즘 프로젝트가 좀 빡빡해서. 미안해.\n정다은: 또? 이번 주 내내 늦었잖아. 밥은 제대로 먹고 있어?\n김찬영: 점심은 먹었어. 저녁은 회사에서 때울 것 같고.\n정다은: 그러지 말고 집에 와서 먹어. 치킨 주문 늦게 해서 맞춰놓을게.\n김찬영: 그럴게. 근데 진짜 늦어지면 먼저 먹어, 태양이 굶기지 말고.\n정다은: 알았어. 그리고 있잖아, 이번 주 토요일에 어머니 생신이잖아. 잊지 않았지?\n김찬영: 아, 맞다. 토요일이었지. 선물은 준비했어?\n정다은: 내가 해뒀어. 근데 같이 가야 하니까 일정 비워놔.\n김찬영: 응, 토요일은 비울게. 특별한 거 없으면 괜찮아.\n정다은: 그리고 태양이 학원 등록 건은 어떻게 할 거야? 저번에 얘기했잖아.\n김찬영: 아 수학 학원? 이번 주말에 같이 알아보자. 토요일 어머니 뵙고 나서 시간 있으면 돌아오는 길에 들르자.\n정다은: 그게 좋겠다. 알겠어. 오늘 너무 무리하지 마.\n김찬영: 응, 고마워. 이따 봐."
+    },
+    "contextGroupId": 28
+  },
+  {
+    "identifier": "call_100017_1738108860000",
+    "timestamp": 1738108860000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1738108860000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 360,
+      "missedReason": "",
+      "transcriptDialog": "최민준: 야 찬영아!\n김찬영: 어, 민준아. 오랜만이네.\n최민준: 야 요즘 연락도 없이 뭐 하냐, 바빠?\n김찬영: 미칠 것 같이 바빠. 프로젝트가 두 개가 겹쳐서 지금 거의 매일 야근 중이야.\n최민준: 아이고, 그래도 밥은 먹고 다녀야지. 야 근데 이번에 같이 여행 갈 수 있어? 너한테 얘기하려고 전화했어.\n김찬영: 여행? 어디?\n최민준: 3월에 일본 2박 3일 어떠냐. 나 포함해서 우리 네 명 다 된다고 했거든.\n김찬영: 3월이면... 이번 프로젝트만 넘기면 좀 숨통 트일 것 같긴 한데. 날짜가 언제야?\n최민준: 3월 14일 금요일부터 16일 일요일까지.\n김찬영: 아 그건 좀 확인해봐야 해. 다은이한테도 얘기해봐야 하고.\n최민준: 그래, 빨리 확인해봐. 항공권 빨리 잡아야 하거든.\n김찬영: 이번 주 안에 알려줄게. 나도 오랜만에 나가고 싶긴 하다.\n최민준: 그래, 빨리 연락해. 기다린다."
+    },
+    "contextGroupId": 29
+  },
+  {
+    "identifier": "call_100018_1738195860000",
+    "timestamp": 1738195860000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9288-0098",
+      "name": "정다은",
+      "date": 1738195860000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 30
+  },
+  {
+    "identifier": "call_100019_1738245960000",
+    "timestamp": 1738245960000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5625-6917",
+      "name": "신유리",
+      "date": 1738245960000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 900,
+      "missedReason": "",
+      "transcriptDialog": "김찬영: 유리 씨"
+    },
+    "contextGroupId": 30
+  },
+  {
+    "identifier": "call_100020_1738538700000",
+    "timestamp": 1738538700000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1738538700000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 60,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 34
+  },
+  {
+    "identifier": "call_100021_1738541100000",
+    "timestamp": 1738541100000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9288-0098",
+      "name": "정다은",
+      "date": 1738541100000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 420,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 34
+  },
+  {
+    "identifier": "call_100022_1738626960000",
+    "timestamp": 1738626960000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1738626960000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 60,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 35
+  },
+  {
+    "identifier": "call_100023_1738714140000",
+    "timestamp": 1738714140000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-1972-2297",
+      "name": "박소연",
+      "date": 1738714140000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 840,
+      "missedReason": "",
+      "transcriptDialog": "박소연: 야, 찬영아! 오랜만이다, 잘 지냈어?\n김찬영: 소연아! 어, 오랜만이네. 잘 지냈지? 너는?\n박소연: 나야 뭐 그럭저럭. 근데 너 요즘 엄청 바쁘다며? 카톡도 읽씹하고.\n김찬영: 아 미안미안, 요즘 프로젝트가 하나 크게 터져가지고... 진짜 숨 돌릴 틈이 없었어.\n박소연: 어머, 무슨 프로젝트? 또 야근 폭탄 맞은 거야?\n김찬영: 응, 이번에 금융사 쪽 시스템 고도화 프로젝트인데 일정이 너무 빡빡하게 잡혀서. 팀원들도 힘들어하고 나도 좀 지쳐있어.\n박소연: 에휴, 그래도 건강 챙겨야지. 밥은 제대로 먹고 다녀?\n김찬영: 뭐 대충은 먹지. 근데 너는 무슨 일 있어서 전화했어? 그냥 생각났어?\n박소연: 응 사실 다음 주에 동기 모임 있거든. 승준이가 주도해서 만들었는데, 너 올 수 있어?\n김찬영: 다음 주? 언제?\n박소연: 토요일 저녁, 홍대 쪽으로 생각하고 있대.\n김찬영: 흠, 토요일이면... 일단 프로젝트 상황 봐야 할 것 같은데. 주말에도 나와야 할 수도 있어서.\n박소연: 에이, 주말까지 나오면 어떡해. 그래도 한번 조율해봐. 다들 너 보고 싶어한다고.\n김찬영: 알겠어, 최대한 맞춰볼게. 승준이한테 나 참고로 넣어달라고 해줘.\n박소연: 오케이! 근데 찬영아, 너 스트레스 너무 받는 거 아니야? 목소리 들어보니까 좀 피곤해 보이는데.\n김찬영: 티 나? 하하. 뭐 이것도 지나가겠지. 프로젝트 마무리되면 좀 숨 좀 쉬겠지.\n박소연: 그래도 너무 무리하지 마. 몸이 자본이잖아. 모임 때 봐, 꼭 와야 해!\n김찬영: 응, 노력할게. 연락 줘서 고마워, 소연아.\n박소연: 그래, 파이팅하고! 끊을게~"
+    },
+    "contextGroupId": 36
+  },
+  {
+    "identifier": "call_100024_1738726020000",
+    "timestamp": 1738726020000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-0091-8871",
+      "name": "임재훈",
+      "date": 1738726020000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 420,
+      "missedReason": "",
+      "transcriptDialog": "김찬영: 팀장님, 안녕하세요. 김찬영입니다.\n임재훈: 어, 김 매니저. 무슨 일이야?\n김찬영: 네, 다름이 아니라 이번 금융사 프로젝트 일정 관련해서 말씀드릴 게 있어서요. 현재 개발 진척률이 예상보다 약 15% 정도 지연되고 있는 상황입니다.\n임재훈: 15%? 왜? 무슨 문제 생긴 거야?\n김찬영: 클라이언트 측에서 중간에 요구사항을 추가로 제시해서요. API 연동 스펙이 바뀐 부분이 있어서 개발팀이 재작업을 해야 하는 상황이 생겼습니다.\n임재훈: 에이, 그걸 왜 이제 얘기해. 진작 보고했어야지.\n김찬영: 죄송합니다. 자체적으로 조율해보려고 했는데, 이게 일정에 영향을 주는 게 확실해져서 보고 드리는 겁니다. 현재 예비 일정을 활용하면 납기는 맞출 수 있을 것 같고요.\n임재훈: 납기는 절대 밀리면 안 되는 거 알지? 클라이언트랑 계약 조건이 있어서.\n김찬영: 네, 알고 있습니다. 이번 주 내로 개발팀이랑 다시 스프린트 계획 조정해서 월요일 오전에 수정된 일정표 공유드리겠습니다.\n임재훈: 그래, 그렇게 해. 그리고 앞으로 이런 변경사항은 발생하는 즉시 보고해줘. 나도 위에 공유해야 하니까.\n김찬영: 네, 명심하겠습니다. 그리고 필요하시면 이번 주 금요일에 중간 보고 자리 잡을까요?\n임재훈: 그래, 금요일 오후 3시로 잡아봐. 자료 미리 준비해서 와.\n김찬영: 알겠습니다, 팀장님. 준비해서 보고 드리겠습니다."
+    },
+    "contextGroupId": 36
+  },
+  {
+    "identifier": "call_100025_1739196480000",
+    "timestamp": 1739196480000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9288-0098",
+      "name": "정다은",
+      "date": 1739196480000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 120,
+      "missedReason": "",
+      "transcriptDialog": "김찬영: 여보, 나야.\n정다은: 응, 왜? 무슨 일 있어?\n김찬영: 아니, 오늘 저녁에 좀 늦을 것 같아서. 팀장님이랑 미팅이 길어질 것 같아.\n정다은: 얼마나 늦어? 애 저녁은?\n김찬영: 한 9시쯤 될 것 같아. 태양이 밥은 먹여놓고 올게.\n정다은: 알겠어. 나도 밖에서 먹고 들어갈게. 조심해서 와.\n김찬영: 응, 알겠어. 끊을게."
+    },
+    "contextGroupId": 41
+  },
+  {
+    "identifier": "call_100026_1739232480000",
+    "timestamp": 1739232480000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1739232480000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 900,
+      "missedReason": "",
+      "transcriptDialog": "한승우: 매니저님, 저 한승우인데요, 지금 통화 괜찮으세요?\n김찬영: 어, 승우야. 응, 괜찮아. 무슨 일이야?\n한승우: 다름이 아니라 오늘 오전에 클라이언트 측 담당자한테 메일이 왔는데요. 추가 기능 요건을 공식으로 요청한 내용이에요.\n김찬영: 또? 어떤 내용인데?\n한승우: 기존 대시보드에 실시간 알림 기능을 추가해달라고 하는데요. 웹소켓 기반으로요. 근데 이게 현재 아키텍처랑 좀 충돌이 날 수 있다고 문지훈 씨가 얘기하더라고요.\n김찬영: 아 진짜? 일정 상으로는 어때? 반영 가능해?\n한승우: 제가 문지훈 씨랑 간단히 얘기해봤는데, 최소 3일에서 4일은 추가로 필요하다고 해요. 근데 현재 남은 버퍼가 거의 없어서요.\n김찬영: 맞아, 이미 지난번에 스펙 변경으로 버퍼 거의 다 썼잖아. 이건 클라이언트한테 범위 외 요청이라고 정식으로 회신해야 할 것 같은데.\n한승우: 그렇죠? 저도 그렇게 생각하긴 했는데, 제가 선에서 그냥 안 된다고 하기가 좀 애매해서요.\n김찬영: 응, 그건 내가 직접 클라이언트 담당자한테 연락할게. 추가 요건이면 별도 계약 또는 2차 프로젝트로 넘기는 방향으로. 승우야, 메일 내용 나한테 포워딩해줘.\n한승우: 네, 바로 포워딩 드릴게요. 그리고 매니저님, 이번 스프린트 리뷰가 내일 오전인데, 현재 완료된 태스크 기준으로 데모 준비하면 될까요?\n김찬영: 응, 완료된 것만 데모하면 돼. 진행 중인 건 상태 보고만 해줘. 데모 자료는 오늘 EOD까지 나한테 공유해줄 수 있어?\n한승우: 네, 알겠습니다. 오후 5시까지 드릴게요.\n김찬영: 고마워. 수고해."
+    },
+    "contextGroupId": 42
+  },
+  {
+    "identifier": "call_100027_1739319240000",
+    "timestamp": 1739319240000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1739319240000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 420,
+      "missedReason": "",
+      "transcriptDialog": "최민준: 야 찬영아! 나야 나, 민준이.\n김찬영: 오 민준아! 갑자기 웬일이야?\n최민준: 그냥 생각나서. 너 요즘 어때? 살아는 있냐?\n김찬영: 하하, 뭐 겨우 살아있지. 요즘 프로젝트가 하나 크게 있어서 좀 정신없어.\n최민준: 아 맞다 너 PM이잖아. 힘들겠다. 근데 야, 이번 주말에 뭐 해? 우리 오랜만에 한잔 어때?\n김찬영: 이번 주말? 토요일은 좀 힘들 것 같고... 일요일은 어때?\n최민준: 일요일도 괜찮지! 어디서 볼까, 우리 자주 가던 홍대 그 집?\n김찬영: 거기 아직 있어? 한참 안 갔는데.\n최민준: 응 아직 있더라고. 나 지난주에 지나가다 봤어.\n김찬영: 그럼 거기로 하자. 몇 시?\n최민준: 저녁 7시 어때?\n김찬영: 오케이, 7시에 거기서 보자. 야, 오랜만에 만나겠다.\n최민준: 그러게. 할 말도 쌓였지? 그때 보자 임마!\n김찬영: 응, 일요일에 봐!"
+    },
+    "contextGroupId": 43
+  },
+  {
+    "identifier": "call_100028_1739489520000",
+    "timestamp": 1739489520000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3689-9563",
+      "name": "이준혁",
+      "date": 1739489520000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 45
+  },
+  {
+    "identifier": "call_100029_1739529840000",
+    "timestamp": 1739529840000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8830-4361",
+      "name": "문지훈",
+      "date": 1739529840000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 780,
+      "missedReason": "",
+      "transcriptDialog": "김찬영: 지훈아, 나야. 지금 잠깐 통화 돼?\n문지훈: 네 매니저님, 잠깐 자리 옮길게요. 네, 됩니다.\n김찬영: 어, 다름이 아니라 클라이언트 추가 요건 건 있잖아, 웹소켓 알림 기능. 내가 클라이언트한테는 별도 건으로 협의하자고 공식 회신했거든.\n문지훈: 아, 그렇게 됐군요. 잘 됐다 싶네요, 솔직히.\n김찬영: 그렇지? 근데 클라이언트 담당자가 그 기능 없으면 납품 검수 때 문제 될 수 있다고 살짝 압박을 넣더라고.\n문지훈: 에이, 그건 처음 계약 스코프에 없던 건데요. 저희가 무조건 해줄 수는 없죠.\n김찬영: 맞아. 근데 만약에 최악의 경우, 우리가 이 기능을 최소 버전으로 구현한다면 어느 정도 공수가 드는지 대략적으로 파악하고 싶어서.\n문지훈: 최소 버전이라면... 실시간 푸시 알림 대신 폴링 방식으로 단순화한다면 하루 이틀 정도면 될 것 같긴 해요. 근데 그게 클라이언트 원하는 스펙이랑은 많이 다를 거예요.\n김찬영: 응, 그 차이를 클라이언트한테 명확하게 설명해주는 게 필요할 것 같아. 지훈아, 가능하면 오늘 내일 중으로 두 가지 옵션 정리해서, 공수랑 기술적 제약사항 간단하게 문서로 만들어줄 수 있어?\n문지훈: 네, 할 수 있어요. 내일 오전까지 드릴게요.\n김찬영: 고마워. 그리고 지훈아, 현재 메인 작업은 잘 돼가고 있어?\n문지훈: 네, 결제 모듈은 거의 마무리됐고요. 오늘 중으로 개발 환경 테스트 마칠 것 같아요.\n김찬영: 잘 됐다. 테스트 결과도 공유해줘. 내일 팀장님한테 보고 있어서.\n문지훈: 알겠습니다. 오늘 저녁에 정리해서 슬랙으로 공유할게요.\n김찬영: 응, 고마워. 수고해."
+    },
+    "contextGroupId": 45
+  },
+  {
+    "identifier": "call_100030_1739577780000",
+    "timestamp": 1739577780000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1739577780000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 480,
+      "missedReason": "",
+      "transcriptDialog": "한승우: 매니저님"
+    },
+    "contextGroupId": 46
+  },
+  {
+    "identifier": "call_100031_1739887020000",
+    "timestamp": 1739887020000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3689-9563",
+      "name": "이준혁",
+      "date": 1739887020000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 480,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 49
+  },
+  {
+    "identifier": "call_100032_1739923080000",
+    "timestamp": 1739923080000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5395-6767",
+      "name": "김태양",
+      "date": 1739923080000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 420,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 50
+  },
+  {
+    "identifier": "call_100033_1740096240000",
+    "timestamp": 1740096240000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8830-4361",
+      "name": "문지훈",
+      "date": 1740096240000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 900,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 52
+  },
+  {
+    "identifier": "call_100034_1740356100000",
+    "timestamp": 1740356100000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1740356100000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 240,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 55
+  },
+  {
+    "identifier": "call_100035_1740528660000",
+    "timestamp": 1740528660000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1740528660000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 780,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 57
+  },
+  {
+    "identifier": "call_100036_1740700860000",
+    "timestamp": 1740700860000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1740700860000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 420,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 59
+  },
+  {
+    "identifier": "call_100037_1740874080000",
+    "timestamp": 1740874080000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1740874080000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 61
+  },
+  {
+    "identifier": "call_100038_1740993000000",
+    "timestamp": 1740993000000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9475-9837",
+      "name": "류성민",
+      "date": 1740993000000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 540,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 62
+  },
+  {
+    "identifier": "call_100039_1741046460000",
+    "timestamp": 1741046460000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1741046460000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 63
+  },
+  {
+    "identifier": "call_100040_1741084260000",
+    "timestamp": 1741084260000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3776-6503",
+      "name": "오지현",
+      "date": 1741084260000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 900,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 63
+  },
+  {
+    "identifier": "call_100041_1741131000000",
+    "timestamp": 1741131000000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1741131000000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 720,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 64
+  },
+  {
+    "identifier": "call_100042_1741220040000",
+    "timestamp": 1741220040000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5625-6917",
+      "name": "신유리",
+      "date": 1741220040000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 360,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 65
+  },
+  {
+    "identifier": "call_100043_1741565220000",
+    "timestamp": 1741565220000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5625-6917",
+      "name": "신유리",
+      "date": 1741565220000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 480,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 69
+  },
+  {
+    "identifier": "call_100044_1741603020000",
+    "timestamp": 1741603020000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-2960-0015",
+      "name": "배찬호",
+      "date": 1741603020000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 840,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 69
+  },
+  {
+    "identifier": "call_100045_1741651920000",
+    "timestamp": 1741651920000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5395-6767",
+      "name": "김태양",
+      "date": 1741651920000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 540,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 70
+  },
+  {
+    "identifier": "call_100046_1741775160000",
+    "timestamp": 1741775160000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-1972-2297",
+      "name": "박소연",
+      "date": 1741775160000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 240,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 71
+  },
+  {
+    "identifier": "call_100047_1741961700000",
+    "timestamp": 1741961700000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-0091-8871",
+      "name": "임재훈",
+      "date": 1741961700000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 780,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 73
+  },
+  {
+    "identifier": "call_100048_1742255760000",
+    "timestamp": 1742255760000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9319-3529",
+      "name": "강동원",
+      "date": 1742255760000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 840,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 77
+  },
+  {
+    "identifier": "call_100049_1742429700000",
+    "timestamp": 1742429700000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-0091-8871",
+      "name": "임재훈",
+      "date": 1742429700000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 240,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 79
+  },
+  {
+    "identifier": "call_100050_1742514180000",
+    "timestamp": 1742514180000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5395-6767",
+      "name": "김태양",
+      "date": 1742514180000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 300,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 80
+  },
+  {
+    "identifier": "call_100051_1742774760000",
+    "timestamp": 1742774760000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3776-6503",
+      "name": "오지현",
+      "date": 1742774760000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 540,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 83
+  },
+  {
+    "identifier": "call_100052_1742861040000",
+    "timestamp": 1742861040000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1742861040000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 120,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 84
+  },
+  {
+    "identifier": "call_100053_1742980080000",
+    "timestamp": 1742980080000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-2960-0015",
+      "name": "배찬호",
+      "date": 1742980080000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 540,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 85
+  },
+  {
+    "identifier": "call_100054_1743466080000",
+    "timestamp": 1743466080000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9288-0098",
+      "name": "정다은",
+      "date": 1743466080000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 780,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 91
+  },
+  {
+    "identifier": "call_100055_1743552540000",
+    "timestamp": 1743552540000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5625-6917",
+      "name": "신유리",
+      "date": 1743552540000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 840,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 92
+  },
+  {
+    "identifier": "call_100056_1743725700000",
+    "timestamp": 1743725700000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1743725700000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 240,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 94
+  },
+  {
+    "identifier": "call_100057_1743982260000",
+    "timestamp": 1743982260000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-1972-2297",
+      "name": "박소연",
+      "date": 1743982260000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 480,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 97
+  },
+  {
+    "identifier": "call_100058_1743984420000",
+    "timestamp": 1743984420000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9475-9837",
+      "name": "류성민",
+      "date": 1743984420000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 600,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 97
+  },
+  {
+    "identifier": "call_100059_1744022220000",
+    "timestamp": 1744022220000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-1972-2297",
+      "name": "박소연",
+      "date": 1744022220000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 480,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 97
+  },
+  {
+    "identifier": "call_100060_1744063800000",
+    "timestamp": 1744063800000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1744063800000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 780,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 98
+  },
+  {
+    "identifier": "call_100061_1744071060000",
+    "timestamp": 1744071060000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8830-4361",
+      "name": "문지훈",
+      "date": 1744071060000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 540,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 98
+  },
+  {
+    "identifier": "call_100062_1744380120000",
+    "timestamp": 1744380120000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9319-3529",
+      "name": "강동원",
+      "date": 1744380120000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 101
+  },
+  {
+    "identifier": "call_100063_1744452600000",
+    "timestamp": 1744452600000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8830-4361",
+      "name": "문지훈",
+      "date": 1744452600000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 600,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 102
+  },
+  {
+    "identifier": "call_100064_1744601520000",
+    "timestamp": 1744601520000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9475-9837",
+      "name": "류성민",
+      "date": 1744601520000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 180,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 104
+  },
+  {
+    "identifier": "call_100065_1744847820000",
+    "timestamp": 1744847820000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3689-9563",
+      "name": "이준혁",
+      "date": 1744847820000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 540,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 107
+  },
+  {
+    "identifier": "call_100066_1745273340000",
+    "timestamp": 1745273340000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5395-6767",
+      "name": "김태양",
+      "date": 1745273340000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 780,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 112
+  },
+  {
+    "identifier": "call_100067_1745678520000",
+    "timestamp": 1745678520000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-0091-8871",
+      "name": "임재훈",
+      "date": 1745678520000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 116
+  },
+  {
+    "identifier": "call_100068_1745984640000",
+    "timestamp": 1745984640000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-1972-2297",
+      "name": "박소연",
+      "date": 1745984640000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 840,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 120
+  },
+  {
+    "identifier": "call_100069_1746182100000",
+    "timestamp": 1746182100000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9288-0098",
+      "name": "정다은",
+      "date": 1746182100000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 360,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 122
+  },
+  {
+    "identifier": "call_100070_1746252600000",
+    "timestamp": 1746252600000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-2960-0015",
+      "name": "배찬호",
+      "date": 1746252600000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 660,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 123
+  },
+  {
+    "identifier": "call_100071_1746401820000",
+    "timestamp": 1746401820000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5395-6767",
+      "name": "김태양",
+      "date": 1746401820000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 480,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 125
+  },
+  {
+    "identifier": "call_100072_1746575880000",
+    "timestamp": 1746575880000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-1972-2297",
+      "name": "박소연",
+      "date": 1746575880000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 127
+  },
+  {
+    "identifier": "call_100073_1746588300000",
+    "timestamp": 1746588300000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3776-6503",
+      "name": "오지현",
+      "date": 1746588300000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 180,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 127
+  },
+  {
+    "identifier": "call_100074_1747008120000",
+    "timestamp": 1747008120000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8830-4361",
+      "name": "문지훈",
+      "date": 1747008120000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 180,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 132
+  },
+  {
+    "identifier": "call_100075_1747094580000",
+    "timestamp": 1747094580000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8830-4361",
+      "name": "문지훈",
+      "date": 1747094580000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 720,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 133
+  },
+  {
+    "identifier": "call_100076_1747181580000",
+    "timestamp": 1747181580000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-1972-2297",
+      "name": "박소연",
+      "date": 1747181580000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 180,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 134
+  },
+  {
+    "identifier": "call_100077_1747279920000",
+    "timestamp": 1747279920000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1747279920000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 600,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 135
+  },
+  {
+    "identifier": "call_100078_1747606500000",
+    "timestamp": 1747606500000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9319-3529",
+      "name": "강동원",
+      "date": 1747606500000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 120,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 139
+  },
+  {
+    "identifier": "call_100079_1747613220000",
+    "timestamp": 1747613220000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3689-9563",
+      "name": "이준혁",
+      "date": 1747613220000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 660,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 139
+  },
+  {
+    "identifier": "call_100080_1747699860000",
+    "timestamp": 1747699860000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1747699860000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 900,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 140
+  },
+  {
+    "identifier": "call_100081_1747750260000",
+    "timestamp": 1747750260000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9319-3529",
+      "name": "강동원",
+      "date": 1747750260000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 900,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 140
+  },
+  {
+    "identifier": "call_100082_1747785660000",
+    "timestamp": 1747785660000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9288-0098",
+      "name": "정다은",
+      "date": 1747785660000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 660,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 141
+  },
+  {
+    "identifier": "call_100083_1747872420000",
+    "timestamp": 1747872420000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5395-6767",
+      "name": "김태양",
+      "date": 1747872420000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 300,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 142
+  },
+  {
+    "identifier": "call_100084_1747958340000",
+    "timestamp": 1747958340000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9475-9837",
+      "name": "류성민",
+      "date": 1747958340000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 300,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 143
+  },
+  {
+    "identifier": "call_100085_1748210760000",
+    "timestamp": 1748210760000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3776-6503",
+      "name": "오지현",
+      "date": 1748210760000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 840,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 146
+  },
+  {
+    "identifier": "call_100086_1748218380000",
+    "timestamp": 1748218380000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1748218380000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 900,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 146
+  },
+  {
+    "identifier": "call_100087_1748256060000",
+    "timestamp": 1748256060000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-1972-2297",
+      "name": "박소연",
+      "date": 1748256060000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 180,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 146
+  },
+  {
+    "identifier": "call_100088_1748304660000",
+    "timestamp": 1748304660000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5395-6767",
+      "name": "김태양",
+      "date": 1748304660000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 420,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 147
+  },
+  {
+    "identifier": "call_100089_1748476920000",
+    "timestamp": 1748476920000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1748476920000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 149
+  },
+  {
+    "identifier": "call_100090_1748563260000",
+    "timestamp": 1748563260000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5625-6917",
+      "name": "신유리",
+      "date": 1748563260000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 600,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 150
+  },
+  {
+    "identifier": "call_100091_1748750880000",
+    "timestamp": 1748750880000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1748750880000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 900,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 152
+  },
+  {
+    "identifier": "call_100092_1748873040000",
+    "timestamp": 1748873040000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9475-9837",
+      "name": "류성민",
+      "date": 1748873040000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 120,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 153
+  },
+  {
+    "identifier": "call_100093_1748908740000",
+    "timestamp": 1748908740000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1748908740000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 840,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 154
+  },
+  {
+    "identifier": "call_100094_1748995920000",
+    "timestamp": 1748995920000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-2960-0015",
+      "name": "배찬호",
+      "date": 1748995920000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 300,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 155
+  },
+  {
+    "identifier": "call_100095_1749393900000",
+    "timestamp": 1749393900000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1749393900000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 900,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 159
+  },
+  {
+    "identifier": "call_100096_1749719520000",
+    "timestamp": 1749719520000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1749719520000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 420,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 163
+  },
+  {
+    "identifier": "call_100097_1750031820000",
+    "timestamp": 1750031820000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8830-4361",
+      "name": "문지훈",
+      "date": 1750031820000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 420,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 167
+  },
+  {
+    "identifier": "call_100098_1750375560000",
+    "timestamp": 1750375560000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9288-0098",
+      "name": "정다은",
+      "date": 1750375560000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 480,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 171
+  },
+  {
+    "identifier": "call_100099_1750464360000",
+    "timestamp": 1750464360000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1750464360000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 360,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 172
+  },
+  {
+    "identifier": "call_100100_1750637220000",
+    "timestamp": 1750637220000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8830-4361",
+      "name": "문지훈",
+      "date": 1750637220000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 120,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 174
+  },
+  {
+    "identifier": "call_100101_1750669320000",
+    "timestamp": 1750669320000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1750669320000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 240,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 174
+  },
+  {
+    "identifier": "call_100102_1750895880000",
+    "timestamp": 1750895880000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1750895880000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 420,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 177
+  },
+  {
+    "identifier": "call_100103_1751412960000",
+    "timestamp": 1751412960000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-0091-8871",
+      "name": "임재훈",
+      "date": 1751412960000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 480,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 183
+  },
+  {
+    "identifier": "call_100104_1751587500000",
+    "timestamp": 1751587500000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5625-6917",
+      "name": "신유리",
+      "date": 1751587500000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 840,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 185
+  },
+  {
+    "identifier": "call_100105_1751687880000",
+    "timestamp": 1751687880000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9288-0098",
+      "name": "정다은",
+      "date": 1751687880000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 900,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 186
+  },
+  {
+    "identifier": "call_100106_1751847240000",
+    "timestamp": 1751847240000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3689-9563",
+      "name": "이준혁",
+      "date": 1751847240000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 540,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 188
+  },
+  {
+    "identifier": "call_100107_1752019680000",
+    "timestamp": 1752019680000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9475-9837",
+      "name": "류성민",
+      "date": 1752019680000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 60,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 190
+  },
+  {
+    "identifier": "call_100108_1752192060000",
+    "timestamp": 1752192060000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9288-0098",
+      "name": "정다은",
+      "date": 1752192060000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 360,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 192
+  },
+  {
+    "identifier": "call_100109_1752710880000",
+    "timestamp": 1752710880000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9475-9837",
+      "name": "류성민",
+      "date": 1752710880000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 720,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 198
+  },
+  {
+    "identifier": "call_100110_1753055760000",
+    "timestamp": 1753055760000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-0091-8871",
+      "name": "임재훈",
+      "date": 1753055760000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 600,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 202
+  },
+  {
+    "identifier": "call_100111_1753142520000",
+    "timestamp": 1753142520000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8830-4361",
+      "name": "문지훈",
+      "date": 1753142520000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 180,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 203
+  },
+  {
+    "identifier": "call_100112_1753711560000",
+    "timestamp": 1753711560000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-2960-0015",
+      "name": "배찬호",
+      "date": 1753711560000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 180,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 209
+  },
+  {
+    "identifier": "call_100113_1753747860000",
+    "timestamp": 1753747860000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9288-0098",
+      "name": "정다은",
+      "date": 1753747860000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 210
+  },
+  {
+    "identifier": "call_100114_1753834080000",
+    "timestamp": 1753834080000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-0091-8871",
+      "name": "임재훈",
+      "date": 1753834080000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 300,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 211
+  },
+  {
+    "identifier": "call_100115_1754007240000",
+    "timestamp": 1754007240000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9475-9837",
+      "name": "류성민",
+      "date": 1754007240000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 720,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 213
+  },
+  {
+    "identifier": "call_100116_1754215020000",
+    "timestamp": 1754215020000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5395-6767",
+      "name": "김태양",
+      "date": 1754215020000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 420,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 215
+  },
+  {
+    "identifier": "call_100117_1754266500000",
+    "timestamp": 1754266500000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1754266500000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 240,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 216
+  },
+  {
+    "identifier": "call_100118_1754525100000",
+    "timestamp": 1754525100000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1754525100000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 60,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 219
+  },
+  {
+    "identifier": "call_100119_1754537880000",
+    "timestamp": 1754537880000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1754537880000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 540,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 219
+  },
+  {
+    "identifier": "call_100120_1754957220000",
+    "timestamp": 1754957220000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1754957220000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 360,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 224
+  },
+  {
+    "identifier": "call_100121_1755043440000",
+    "timestamp": 1755043440000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9319-3529",
+      "name": "강동원",
+      "date": 1755043440000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 600,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 225
+  },
+  {
+    "identifier": "call_100122_1755215700000",
+    "timestamp": 1755215700000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1755215700000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 900,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 227
+  },
+  {
+    "identifier": "call_100123_1755389400000",
+    "timestamp": 1755389400000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3776-6503",
+      "name": "오지현",
+      "date": 1755389400000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 780,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 229
+  },
+  {
+    "identifier": "call_100124_1755574020000",
+    "timestamp": 1755574020000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5625-6917",
+      "name": "신유리",
+      "date": 1755574020000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 231
+  },
+  {
+    "identifier": "call_100125_1755612840000",
+    "timestamp": 1755612840000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9475-9837",
+      "name": "류성민",
+      "date": 1755612840000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 840,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 231
+  },
+  {
+    "identifier": "call_100126_1755732780000",
+    "timestamp": 1755732780000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1755732780000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 660,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 233
+  },
+  {
+    "identifier": "call_100127_1755813300000",
+    "timestamp": 1755813300000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9288-0098",
+      "name": "정다은",
+      "date": 1755813300000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 780,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 234
+  },
+  {
+    "identifier": "call_100128_1755960120000",
+    "timestamp": 1755960120000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3776-6503",
+      "name": "오지현",
+      "date": 1755960120000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 300,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 235
+  },
+  {
+    "identifier": "call_100129_1756080300000",
+    "timestamp": 1756080300000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3689-9563",
+      "name": "이준혁",
+      "date": 1756080300000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 720,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 237
+  },
+  {
+    "identifier": "call_100130_1756252980000",
+    "timestamp": 1756252980000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-1972-2297",
+      "name": "박소연",
+      "date": 1756252980000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 600,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 239
+  },
+  {
+    "identifier": "call_100131_1756331940000",
+    "timestamp": 1756331940000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-2960-0015",
+      "name": "배찬호",
+      "date": 1756331940000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 300,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 240
+  },
+  {
+    "identifier": "call_100132_1756390260000",
+    "timestamp": 1756390260000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3689-9563",
+      "name": "이준혁",
+      "date": 1756390260000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 300,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 240
+  },
+  {
+    "identifier": "call_100133_1756857600000",
+    "timestamp": 1756857600000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9288-0098",
+      "name": "정다은",
+      "date": 1756857600000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 720,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 246
+  },
+  {
+    "identifier": "call_100134_1756943700000",
+    "timestamp": 1756943700000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8830-4361",
+      "name": "문지훈",
+      "date": 1756943700000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 540,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 247
+  },
+  {
+    "identifier": "call_100135_1757287620000",
+    "timestamp": 1757287620000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-0091-8871",
+      "name": "임재훈",
+      "date": 1757287620000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 60,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 251
+  },
+  {
+    "identifier": "call_100136_1757462640000",
+    "timestamp": 1757462640000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9319-3529",
+      "name": "강동원",
+      "date": 1757462640000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 253
+  },
+  {
+    "identifier": "call_100137_1757635560000",
+    "timestamp": 1757635560000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1757635560000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 600,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 255
+  },
+  {
+    "identifier": "call_100138_1757981220000",
+    "timestamp": 1757981220000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1757981220000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 120,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 259
+  },
+  {
+    "identifier": "call_100139_1758067080000",
+    "timestamp": 1758067080000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9475-9837",
+      "name": "류성민",
+      "date": 1758067080000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 900,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 260
+  },
+  {
+    "identifier": "call_100140_1758191520000",
+    "timestamp": 1758191520000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-1972-2297",
+      "name": "박소연",
+      "date": 1758191520000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 420,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 261
+  },
+  {
+    "identifier": "call_100141_1758499680000",
+    "timestamp": 1758499680000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9319-3529",
+      "name": "강동원",
+      "date": 1758499680000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 780,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 265
+  },
+  {
+    "identifier": "call_100142_1758672360000",
+    "timestamp": 1758672360000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9288-0098",
+      "name": "정다은",
+      "date": 1758672360000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 300,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 267
+  },
+  {
+    "identifier": "call_100143_1758791100000",
+    "timestamp": 1758791100000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1758791100000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 420,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 268
+  },
+  {
+    "identifier": "call_100144_1759222920000",
+    "timestamp": 1759222920000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9475-9837",
+      "name": "류성민",
+      "date": 1759222920000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 720,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 273
+  },
+  {
+    "identifier": "call_100145_1759363260000",
+    "timestamp": 1759363260000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5625-6917",
+      "name": "신유리",
+      "date": 1759363260000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 275
+  },
+  {
+    "identifier": "call_100146_1759376520000",
+    "timestamp": 1759376520000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1759376520000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 275
+  },
+  {
+    "identifier": "call_100147_1759541220000",
+    "timestamp": 1759541220000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1759541220000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 540,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 277
+  },
+  {
+    "identifier": "call_100148_1759572480000",
+    "timestamp": 1759572480000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5625-6917",
+      "name": "신유리",
+      "date": 1759572480000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 720,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 277
+  },
+  {
+    "identifier": "call_100149_1759637340000",
+    "timestamp": 1759637340000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9475-9837",
+      "name": "류성민",
+      "date": 1759637340000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 420,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 278
+  },
+  {
+    "identifier": "call_100150_1759967700000",
+    "timestamp": 1759967700000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5625-6917",
+      "name": "신유리",
+      "date": 1759967700000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 840,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 282
+  },
+  {
+    "identifier": "call_100151_1760054580000",
+    "timestamp": 1760054580000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9475-9837",
+      "name": "류성민",
+      "date": 1760054580000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 600,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 283
+  },
+  {
+    "identifier": "call_100152_1760232540000",
+    "timestamp": 1760232540000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8830-4361",
+      "name": "문지훈",
+      "date": 1760232540000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 180,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 285
+  },
+  {
+    "identifier": "call_100153_1760565420000",
+    "timestamp": 1760565420000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3689-9563",
+      "name": "이준혁",
+      "date": 1760565420000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 840,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 289
+  },
+  {
+    "identifier": "call_100154_1760572740000",
+    "timestamp": 1760572740000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9319-3529",
+      "name": "강동원",
+      "date": 1760572740000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 720,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 289
+  },
+  {
+    "identifier": "call_100155_1760868540000",
+    "timestamp": 1760868540000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9288-0098",
+      "name": "정다은",
+      "date": 1760868540000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 120,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 292
+  },
+  {
+    "identifier": "call_100156_1760918460000",
+    "timestamp": 1760918460000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3776-6503",
+      "name": "오지현",
+      "date": 1760918460000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 120,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 293
+  },
+  {
+    "identifier": "call_100157_1760931300000",
+    "timestamp": 1760931300000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-0091-8871",
+      "name": "임재훈",
+      "date": 1760931300000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 840,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 293
+  },
+  {
+    "identifier": "call_100158_1761264900000",
+    "timestamp": 1761264900000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-2960-0015",
+      "name": "배찬호",
+      "date": 1761264900000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 480,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 297
+  },
+  {
+    "identifier": "call_100159_1761696480000",
+    "timestamp": 1761696480000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-1972-2297",
+      "name": "박소연",
+      "date": 1761696480000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 240,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 302
+  },
+  {
+    "identifier": "call_100160_1761734280000",
+    "timestamp": 1761734280000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1761734280000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 300,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 302
+  },
+  {
+    "identifier": "call_100161_1762042260000",
+    "timestamp": 1762042260000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-1972-2297",
+      "name": "박소연",
+      "date": 1762042260000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 600,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 306
+  },
+  {
+    "identifier": "call_100162_1762047300000",
+    "timestamp": 1762047300000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-0091-8871",
+      "name": "임재훈",
+      "date": 1762047300000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 900,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 306
+  },
+  {
+    "identifier": "call_100163_1762056300000",
+    "timestamp": 1762056300000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1762056300000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 900,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 306
+  },
+  {
+    "identifier": "call_100164_1762214760000",
+    "timestamp": 1762214760000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1762214760000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 780,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 308
+  },
+  {
+    "identifier": "call_100165_1762300500000",
+    "timestamp": 1762300500000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8830-4361",
+      "name": "문지훈",
+      "date": 1762300500000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 840,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 309
+  },
+  {
+    "identifier": "call_100166_1762387680000",
+    "timestamp": 1762387680000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1762387680000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 660,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 310
+  },
+  {
+    "identifier": "call_100167_1762511820000",
+    "timestamp": 1762511820000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1762511820000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 480,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 311
+  },
+  {
+    "identifier": "call_100168_1762524480000",
+    "timestamp": 1762524480000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1762524480000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 540,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 311
+  },
+  {
+    "identifier": "call_100169_1762732800000",
+    "timestamp": 1762732800000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-1972-2297",
+      "name": "박소연",
+      "date": 1762732800000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 300,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 314
+  },
+  {
+    "identifier": "call_100170_1763024940000",
+    "timestamp": 1763024940000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5625-6917",
+      "name": "신유리",
+      "date": 1763024940000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 317
+  },
+  {
+    "identifier": "call_100171_1763424900000",
+    "timestamp": 1763424900000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-2960-0015",
+      "name": "배찬호",
+      "date": 1763424900000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 540,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 322
+  },
+  {
+    "identifier": "call_100172_1763942100000",
+    "timestamp": 1763942100000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8830-4361",
+      "name": "문지훈",
+      "date": 1763942100000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 720,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 328
+  },
+  {
+    "identifier": "call_100173_1764028680000",
+    "timestamp": 1764028680000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1764028680000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 60,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 329
+  },
+  {
+    "identifier": "call_100174_1764166500000",
+    "timestamp": 1764166500000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8830-4361",
+      "name": "문지훈",
+      "date": 1764166500000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 330
+  },
+  {
+    "identifier": "call_100175_1764320460000",
+    "timestamp": 1764320460000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-0091-8871",
+      "name": "임재훈",
+      "date": 1764320460000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 600,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 332
+  },
+  {
+    "identifier": "call_100176_1764585300000",
+    "timestamp": 1764585300000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9288-0098",
+      "name": "정다은",
+      "date": 1764585300000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 900,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 335
+  },
+  {
+    "identifier": "call_100177_1764671100000",
+    "timestamp": 1764671100000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3776-6503",
+      "name": "오지현",
+      "date": 1764671100000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 720,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 336
+  },
+  {
+    "identifier": "call_100178_1764684540000",
+    "timestamp": 1764684540000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1764684540000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 336
+  },
+  {
+    "identifier": "call_100179_1764720540000",
+    "timestamp": 1764720540000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9319-3529",
+      "name": "강동원",
+      "date": 1764720540000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 780,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 337
+  },
+  {
+    "identifier": "call_100180_1764806160000",
+    "timestamp": 1764806160000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1764806160000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 360,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 338
+  },
+  {
+    "identifier": "call_100181_1764893100000",
+    "timestamp": 1764893100000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5395-6767",
+      "name": "김태양",
+      "date": 1764893100000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 840,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 339
+  },
+  {
+    "identifier": "call_100182_1764943560000",
+    "timestamp": 1764943560000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3776-6503",
+      "name": "오지현",
+      "date": 1764943560000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 240,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 339
+  },
+  {
+    "identifier": "call_100183_1764993960000",
+    "timestamp": 1764993960000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8830-4361",
+      "name": "문지훈",
+      "date": 1764993960000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 720,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 340
+  },
+  {
+    "identifier": "call_100184_1765102080000",
+    "timestamp": 1765102080000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3776-6503",
+      "name": "오지현",
+      "date": 1765102080000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 360,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 341
+  },
+  {
+    "identifier": "call_100185_1765375020000",
+    "timestamp": 1765375020000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-8368-4804",
+      "name": "한승우",
+      "date": 1765375020000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 344
+  },
+  {
+    "identifier": "call_100186_1765461660000",
+    "timestamp": 1765461660000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-1972-2297",
+      "name": "박소연",
+      "date": 1765461660000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 780,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 345
+  },
+  {
+    "identifier": "call_100187_1765589700000",
+    "timestamp": 1765589700000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1765589700000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 240,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 347
+  },
+  {
+    "identifier": "call_100188_1765842300000",
+    "timestamp": 1765842300000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3776-6503",
+      "name": "오지현",
+      "date": 1765842300000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 660,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 350
+  },
+  {
+    "identifier": "call_100189_1766016000000",
+    "timestamp": 1766016000000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1766016000000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 360,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 352
+  },
+  {
+    "identifier": "call_100190_1766448540000",
+    "timestamp": 1766448540000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-7108-3379",
+      "name": "윤세진",
+      "date": 1766448540000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 357
+  },
+  {
+    "identifier": "call_100191_1766535060000",
+    "timestamp": 1766535060000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1766535060000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 540,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 358
+  },
+  {
+    "identifier": "call_100192_1766567040000",
+    "timestamp": 1766567040000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1766567040000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 300,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 358
+  },
+  {
+    "identifier": "call_100193_1766620860000",
+    "timestamp": 1766620860000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-3776-6503",
+      "name": "오지현",
+      "date": 1766620860000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 180,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 359
+  },
+  {
+    "identifier": "call_100194_1766707500000",
+    "timestamp": 1766707500000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5625-6917",
+      "name": "신유리",
+      "date": 1766707500000,
+      "type": 2,
+      "geocodedLocation": "",
+      "duration": 0,
+      "missedReason": "No answer",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 360
+  },
+  {
+    "identifier": "call_100195_1767065400000",
+    "timestamp": 1767065400000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-5395-6767",
+      "name": "김태양",
+      "date": 1767065400000,
+      "type": 1,
+      "geocodedLocation": "",
+      "duration": 780,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 364
+  },
+  {
+    "identifier": "call_100196_1767139020000",
+    "timestamp": 1767139020000,
+    "event_source": "CALL_LOG",
+    "payload": {
+      "number": "010-9410-6362",
+      "name": "최민준",
+      "date": 1767139020000,
+      "type": 0,
+      "geocodedLocation": "",
+      "duration": 900,
+      "missedReason": "",
+      "transcriptDialog": ""
+    },
+    "contextGroupId": 365
+  }
+]

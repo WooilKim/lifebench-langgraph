@@ -1,0 +1,4214 @@
+[
+  {
+    "identifier": "sms_10000_1736114220000",
+    "timestamp": 1736114220000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10000",
+      "messageType": 1,
+      "messageId": 10000,
+      "threadId": 1,
+      "date": 1736114220000,
+      "address": "010-5873-8527",
+      "title": "노지훈",
+      "body": "오늘 회식이래. 올 수 있어?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 6
+  },
+  {
+    "identifier": "sms_10001_1736115540000",
+    "timestamp": 1736115540000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10001",
+      "messageType": 0,
+      "messageId": 10001,
+      "threadId": 1,
+      "date": 1736115540000,
+      "address": "010-5873-8527",
+      "title": "노지훈",
+      "body": "알겠어, 확인해볼게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 6
+  },
+  {
+    "identifier": "sms_10002_1736294280000",
+    "timestamp": 1736294280000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10002",
+      "messageType": 0,
+      "messageId": 10002,
+      "threadId": 2,
+      "date": 1736294280000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "잠깐만, 지금 확인할게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 8
+  },
+  {
+    "identifier": "sms_10003_1736295720000",
+    "timestamp": 1736295720000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10003",
+      "messageType": 1,
+      "messageId": 10003,
+      "threadId": 2,
+      "date": 1736295720000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "퇴근 후 저녁 어때요? 팀 회식해요",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 8
+  },
+  {
+    "identifier": "sms_10004_1736344200000",
+    "timestamp": 1736344200000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10004",
+      "messageType": 0,
+      "messageId": 10004,
+      "threadId": 3,
+      "date": 1736344200000,
+      "address": "010-1357-1526",
+      "title": "정하은",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 8
+  },
+  {
+    "identifier": "sms_10005_1736418540000",
+    "timestamp": 1736418540000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10005",
+      "messageType": 1,
+      "messageId": 10005,
+      "threadId": 4,
+      "date": 1736418540000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "저번에 얘기한 거 어떻게 됐어?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 9
+  },
+  {
+    "identifier": "sms_10006_1736466840000",
+    "timestamp": 1736466840000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10006",
+      "messageType": 0,
+      "messageId": 10006,
+      "threadId": 5,
+      "date": 1736466840000,
+      "address": "010-7603-2369",
+      "title": "임도경",
+      "body": "오케이 알겠어!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 10
+  },
+  {
+    "identifier": "sms_10007_1736467440000",
+    "timestamp": 1736467440000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10007",
+      "messageType": 1,
+      "messageId": 10007,
+      "threadId": 5,
+      "date": 1736467440000,
+      "address": "010-7603-2369",
+      "title": "임도경",
+      "body": "내일 오전 회의 준비됐어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 10
+  },
+  {
+    "identifier": "sms_10008_1736553900000",
+    "timestamp": 1736553900000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10008",
+      "messageType": 1,
+      "messageId": 10008,
+      "threadId": 6,
+      "date": 1736553900000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "주말에 뭐 해? 같이 나가자",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 11
+  },
+  {
+    "identifier": "sms_10009_1736555400000",
+    "timestamp": 1736555400000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10009",
+      "messageType": 0,
+      "messageId": 10009,
+      "threadId": 6,
+      "date": 1736555400000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "알겠어, 확인해볼게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 11
+  },
+  {
+    "identifier": "sms_10010_1736985360000",
+    "timestamp": 1736985360000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10010",
+      "messageType": 1,
+      "messageId": 10010,
+      "threadId": 2,
+      "date": 1736985360000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "내일 오전 회의 준비됐어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 16
+  },
+  {
+    "identifier": "sms_10011_1736986500000",
+    "timestamp": 1736986500000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10011",
+      "messageType": 0,
+      "messageId": 10011,
+      "threadId": 2,
+      "date": 1736986500000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "좋아! 기대된다",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 16
+  },
+  {
+    "identifier": "sms_10012_1737628260000",
+    "timestamp": 1737628260000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10012",
+      "messageType": 0,
+      "messageId": 10012,
+      "threadId": 1,
+      "date": 1737628260000,
+      "address": "010-5873-8527",
+      "title": "노지훈",
+      "body": "응, 가능해!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 23
+  },
+  {
+    "identifier": "sms_10013_1738280340000",
+    "timestamp": 1738280340000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10013",
+      "messageType": 1,
+      "messageId": 10013,
+      "threadId": 7,
+      "date": 1738280340000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "주말에 모임 있는데 참석 가능해?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 31
+  },
+  {
+    "identifier": "sms_10014_1738659900000",
+    "timestamp": 1738659900000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10014",
+      "messageType": 0,
+      "messageId": 10014,
+      "threadId": 8,
+      "date": 1738659900000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "그래, 거기서 만나자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 35
+  },
+  {
+    "identifier": "sms_10015_1738713240000",
+    "timestamp": 1738713240000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10015",
+      "messageType": 0,
+      "messageId": 10015,
+      "threadId": 9,
+      "date": 1738713240000,
+      "address": "010-7057-1701",
+      "title": "백승아",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 36
+  },
+  {
+    "identifier": "sms_10016_1739138520000",
+    "timestamp": 1739138520000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10016",
+      "messageType": 1,
+      "messageId": 10016,
+      "threadId": 6,
+      "date": 1739138520000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "주말에 뭐 해? 같이 나가자",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 41
+  },
+  {
+    "identifier": "sms_10017_1739224380000",
+    "timestamp": 1739224380000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10017",
+      "messageType": 1,
+      "messageId": 10017,
+      "threadId": 6,
+      "date": 1739224380000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "오늘 회식이래. 올 수 있어?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 42
+  },
+  {
+    "identifier": "sms_10018_1739232540000",
+    "timestamp": 1739232540000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10018",
+      "messageType": 0,
+      "messageId": 10018,
+      "threadId": 1,
+      "date": 1739232540000,
+      "address": "010-5873-8527",
+      "title": "노지훈",
+      "body": "잠깐만, 지금 확인할게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 42
+  },
+  {
+    "identifier": "sms_10019_1739233140000",
+    "timestamp": 1739233140000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10019",
+      "messageType": 1,
+      "messageId": 10019,
+      "threadId": 1,
+      "date": 1739233140000,
+      "address": "010-5873-8527",
+      "title": "노지훈",
+      "body": "오늘 오후에 클라이언트 미팅이에요",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 42
+  },
+  {
+    "identifier": "sms_10020_1739837220000",
+    "timestamp": 1739837220000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10020",
+      "messageType": 1,
+      "messageId": 10020,
+      "threadId": 10,
+      "date": 1739837220000,
+      "address": "010-6108-0635",
+      "title": "한미경",
+      "body": "방금 메일 확인했어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 49
+  },
+  {
+    "identifier": "sms_10021_1739848980000",
+    "timestamp": 1739848980000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10021",
+      "messageType": 1,
+      "messageId": 10021,
+      "threadId": 10,
+      "date": 1739848980000,
+      "address": "010-6108-0635",
+      "title": "한미경",
+      "body": "주말에 뭐 해? 같이 나가자",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 49
+  },
+  {
+    "identifier": "sms_10022_1739923560000",
+    "timestamp": 1739923560000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10022",
+      "messageType": 0,
+      "messageId": 10022,
+      "threadId": 3,
+      "date": 1739923560000,
+      "address": "010-1357-1526",
+      "title": "정하은",
+      "body": "그래, 거기서 만나자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 50
+  },
+  {
+    "identifier": "sms_10023_1739924760000",
+    "timestamp": 1739924760000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10023",
+      "messageType": 1,
+      "messageId": 10023,
+      "threadId": 3,
+      "date": 1739924760000,
+      "address": "010-1357-1526",
+      "title": "정하은",
+      "body": "자료 공유해 줄 수 있어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 50
+  },
+  {
+    "identifier": "sms_10024_1740474120000",
+    "timestamp": 1740474120000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10024",
+      "messageType": 1,
+      "messageId": 10024,
+      "threadId": 7,
+      "date": 1740474120000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "사진 보냈어. 확인해봐!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 56
+  },
+  {
+    "identifier": "sms_10025_1740474900000",
+    "timestamp": 1740474900000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10025",
+      "messageType": 0,
+      "messageId": 10025,
+      "threadId": 7,
+      "date": 1740474900000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "오늘은 좀 어렵고 다음에 하자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 56
+  },
+  {
+    "identifier": "sms_10026_1740540660000",
+    "timestamp": 1740540660000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10026",
+      "messageType": 0,
+      "messageId": 10026,
+      "threadId": 2,
+      "date": 1740540660000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "오케이 알겠어!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 57
+  },
+  {
+    "identifier": "sms_10027_1740541920000",
+    "timestamp": 1740541920000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10027",
+      "messageType": 1,
+      "messageId": 10027,
+      "threadId": 2,
+      "date": 1740541920000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "오늘 시간 있어? 밥 한번 먹자!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 57
+  },
+  {
+    "identifier": "sms_10028_1740700620000",
+    "timestamp": 1740700620000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10028",
+      "messageType": 1,
+      "messageId": 10028,
+      "threadId": 7,
+      "date": 1740700620000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "자료 공유해 줄 수 있어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 59
+  },
+  {
+    "identifier": "sms_10029_1740738720000",
+    "timestamp": 1740738720000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10029",
+      "messageType": 0,
+      "messageId": 10029,
+      "threadId": 5,
+      "date": 1740738720000,
+      "address": "010-7603-2369",
+      "title": "임도경",
+      "body": "오늘은 좀 어렵고 다음에 하자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 59
+  },
+  {
+    "identifier": "sms_10030_1741038660000",
+    "timestamp": 1741038660000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10030",
+      "messageType": 0,
+      "messageId": 10030,
+      "threadId": 10,
+      "date": 1741038660000,
+      "address": "010-6108-0635",
+      "title": "한미경",
+      "body": "알려줘서 고마워",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 63
+  },
+  {
+    "identifier": "sms_10031_1741132200000",
+    "timestamp": 1741132200000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10031",
+      "messageType": 0,
+      "messageId": 10031,
+      "threadId": 8,
+      "date": 1741132200000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "오케이 알겠어!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 64
+  },
+  {
+    "identifier": "sms_10032_1741170120000",
+    "timestamp": 1741170120000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10032",
+      "messageType": 1,
+      "messageId": 10032,
+      "threadId": 11,
+      "date": 1741170120000,
+      "address": "010-2199-4519",
+      "title": "김서준",
+      "body": "주말에 모임 있는데 참석 가능해?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 64
+  },
+  {
+    "identifier": "sms_10033_1741171860000",
+    "timestamp": 1741171860000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10033",
+      "messageType": 0,
+      "messageId": 10033,
+      "threadId": 11,
+      "date": 1741171860000,
+      "address": "010-2199-4519",
+      "title": "김서준",
+      "body": "그래, 거기서 만나자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 64
+  },
+  {
+    "identifier": "sms_10034_1741874940000",
+    "timestamp": 1741874940000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10034",
+      "messageType": 1,
+      "messageId": 10034,
+      "threadId": 12,
+      "date": 1741874940000,
+      "address": "010-0037-8594",
+      "title": "박연희",
+      "body": "오늘 회식이래. 올 수 있어?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 72
+  },
+  {
+    "identifier": "sms_10035_1741876320000",
+    "timestamp": 1741876320000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10035",
+      "messageType": 0,
+      "messageId": 10035,
+      "threadId": 12,
+      "date": 1741876320000,
+      "address": "010-0037-8594",
+      "title": "박연희",
+      "body": "알겠어, 확인해볼게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 72
+  },
+  {
+    "identifier": "sms_10036_1741947600000",
+    "timestamp": 1741947600000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10036",
+      "messageType": 0,
+      "messageId": 10036,
+      "threadId": 13,
+      "date": 1741947600000,
+      "address": "010-8926-9159",
+      "title": "장의철",
+      "body": "좋아! 기대된다",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 73
+  },
+  {
+    "identifier": "sms_10037_1742019000000",
+    "timestamp": 1742019000000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10037",
+      "messageType": 1,
+      "messageId": 10037,
+      "threadId": 4,
+      "date": 1742019000000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "오랜만이야~ 잘 지내지?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 74
+  },
+  {
+    "identifier": "sms_10038_1742514660000",
+    "timestamp": 1742514660000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10038",
+      "messageType": 0,
+      "messageId": 10038,
+      "threadId": 14,
+      "date": 1742514660000,
+      "address": "010-5561-4506",
+      "title": "오태윤",
+      "body": "그래, 거기서 만나자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 80
+  },
+  {
+    "identifier": "sms_10039_1742623140000",
+    "timestamp": 1742623140000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10039",
+      "messageType": 1,
+      "messageId": 10039,
+      "threadId": 8,
+      "date": 1742623140000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "주말에 뭐 해? 같이 나가자",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 81
+  },
+  {
+    "identifier": "sms_10040_1742653320000",
+    "timestamp": 1742653320000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10040",
+      "messageType": 0,
+      "messageId": 10040,
+      "threadId": 10,
+      "date": 1742653320000,
+      "address": "010-6108-0635",
+      "title": "한미경",
+      "body": "알려줘서 고마워",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 81
+  },
+  {
+    "identifier": "sms_10041_1742654700000",
+    "timestamp": 1742654700000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10041",
+      "messageType": 1,
+      "messageId": 10041,
+      "threadId": 10,
+      "date": 1742654700000,
+      "address": "010-6108-0635",
+      "title": "한미경",
+      "body": "오랜만이야~ 잘 지내지?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 81
+  },
+  {
+    "identifier": "sms_10042_1742710140000",
+    "timestamp": 1742710140000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10042",
+      "messageType": 1,
+      "messageId": 10042,
+      "threadId": 8,
+      "date": 1742710140000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "사진 보냈어. 확인해봐!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 82
+  },
+  {
+    "identifier": "sms_10043_1742710200000",
+    "timestamp": 1742710200000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10043",
+      "messageType": 0,
+      "messageId": 10043,
+      "threadId": 8,
+      "date": 1742710200000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "오늘은 좀 어렵고 다음에 하자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 82
+  },
+  {
+    "identifier": "sms_10044_1742997300000",
+    "timestamp": 1742997300000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10044",
+      "messageType": 0,
+      "messageId": 10044,
+      "threadId": 12,
+      "date": 1742997300000,
+      "address": "010-0037-8594",
+      "title": "박연희",
+      "body": "좋아! 기대된다",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 85
+  },
+  {
+    "identifier": "sms_10045_1742998440000",
+    "timestamp": 1742998440000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10045",
+      "messageType": 1,
+      "messageId": 10045,
+      "threadId": 12,
+      "date": 1742998440000,
+      "address": "010-0037-8594",
+      "title": "박연희",
+      "body": "주말에 뭐 해? 같이 나가자",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 85
+  },
+  {
+    "identifier": "sms_10046_1743378900000",
+    "timestamp": 1743378900000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10046",
+      "messageType": 0,
+      "messageId": 10046,
+      "threadId": 11,
+      "date": 1743378900000,
+      "address": "010-2199-4519",
+      "title": "김서준",
+      "body": "알겠어, 확인해볼게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 90
+  },
+  {
+    "identifier": "sms_10047_1743379020000",
+    "timestamp": 1743379020000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10047",
+      "messageType": 1,
+      "messageId": 10047,
+      "threadId": 11,
+      "date": 1743379020000,
+      "address": "010-2199-4519",
+      "title": "김서준",
+      "body": "오늘 오후에 클라이언트 미팅이에요",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 90
+  },
+  {
+    "identifier": "sms_10048_1743976320000",
+    "timestamp": 1743976320000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10048",
+      "messageType": 0,
+      "messageId": 10048,
+      "threadId": 13,
+      "date": 1743976320000,
+      "address": "010-8926-9159",
+      "title": "장의철",
+      "body": "그래, 거기서 만나자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 97
+  },
+  {
+    "identifier": "sms_10049_1744034100000",
+    "timestamp": 1744034100000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10049",
+      "messageType": 1,
+      "messageId": 10049,
+      "threadId": 11,
+      "date": 1744034100000,
+      "address": "010-2199-4519",
+      "title": "김서준",
+      "body": "그때 빌려준 거 다음에 줄게!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 97
+  },
+  {
+    "identifier": "sms_10050_1744035420000",
+    "timestamp": 1744035420000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10050",
+      "messageType": 0,
+      "messageId": 10050,
+      "threadId": 11,
+      "date": 1744035420000,
+      "address": "010-2199-4519",
+      "title": "김서준",
+      "body": "응, 가능해!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 97
+  },
+  {
+    "identifier": "sms_10051_1744194780000",
+    "timestamp": 1744194780000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10051",
+      "messageType": 0,
+      "messageId": 10051,
+      "threadId": 12,
+      "date": 1744194780000,
+      "address": "010-0037-8594",
+      "title": "박연희",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 99
+  },
+  {
+    "identifier": "sms_10052_1744195740000",
+    "timestamp": 1744195740000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10052",
+      "messageType": 1,
+      "messageId": 10052,
+      "threadId": 12,
+      "date": 1744195740000,
+      "address": "010-0037-8594",
+      "title": "박연희",
+      "body": "그때 빌려준 거 다음에 줄게!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 99
+  },
+  {
+    "identifier": "sms_10053_1744329120000",
+    "timestamp": 1744329120000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10053",
+      "messageType": 0,
+      "messageId": 10053,
+      "threadId": 14,
+      "date": 1744329120000,
+      "address": "010-5561-4506",
+      "title": "오태윤",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 101
+  },
+  {
+    "identifier": "sms_10054_1744329360000",
+    "timestamp": 1744329360000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10054",
+      "messageType": 1,
+      "messageId": 10054,
+      "threadId": 14,
+      "date": 1744329360000,
+      "address": "010-5561-4506",
+      "title": "오태윤",
+      "body": "보고서 언제까지 될 것 같아요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 101
+  },
+  {
+    "identifier": "sms_10055_1744588320000",
+    "timestamp": 1744588320000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10055",
+      "messageType": 1,
+      "messageId": 10055,
+      "threadId": 4,
+      "date": 1744588320000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "오늘 오후에 클라이언트 미팅이에요",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 104
+  },
+  {
+    "identifier": "sms_10056_1744934040000",
+    "timestamp": 1744934040000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10056",
+      "messageType": 0,
+      "messageId": 10056,
+      "threadId": 8,
+      "date": 1744934040000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "잠깐만, 지금 확인할게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 108
+  },
+  {
+    "identifier": "sms_10057_1744934280000",
+    "timestamp": 1744934280000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10057",
+      "messageType": 1,
+      "messageId": 10057,
+      "threadId": 8,
+      "date": 1744934280000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "자료 공유해 줄 수 있어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 108
+  },
+  {
+    "identifier": "sms_10058_1745971800000",
+    "timestamp": 1745971800000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10058",
+      "messageType": 0,
+      "messageId": 10058,
+      "threadId": 2,
+      "date": 1745971800000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "오케이 알겠어!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 120
+  },
+  {
+    "identifier": "sms_10059_1746230700000",
+    "timestamp": 1746230700000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10059",
+      "messageType": 0,
+      "messageId": 10059,
+      "threadId": 13,
+      "date": 1746230700000,
+      "address": "010-8926-9159",
+      "title": "장의철",
+      "body": "좋아! 기대된다",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 123
+  },
+  {
+    "identifier": "sms_10060_1746232140000",
+    "timestamp": 1746232140000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10060",
+      "messageType": 1,
+      "messageId": 10060,
+      "threadId": 13,
+      "date": 1746232140000,
+      "address": "010-8926-9159",
+      "title": "장의철",
+      "body": "오랜만이야~ 잘 지내지?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 123
+  },
+  {
+    "identifier": "sms_10061_1746540240000",
+    "timestamp": 1746540240000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10061",
+      "messageType": 0,
+      "messageId": 10061,
+      "threadId": 12,
+      "date": 1746540240000,
+      "address": "010-0037-8594",
+      "title": "박연희",
+      "body": "오늘은 좀 어렵고 다음에 하자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 126
+  },
+  {
+    "identifier": "sms_10062_1746699900000",
+    "timestamp": 1746699900000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10062",
+      "messageType": 1,
+      "messageId": 10062,
+      "threadId": 3,
+      "date": 1746699900000,
+      "address": "010-1357-1526",
+      "title": "정하은",
+      "body": "주말에 뭐 해? 같이 나가자",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 128
+  },
+  {
+    "identifier": "sms_10063_1746700860000",
+    "timestamp": 1746700860000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10063",
+      "messageType": 0,
+      "messageId": 10063,
+      "threadId": 3,
+      "date": 1746700860000,
+      "address": "010-1357-1526",
+      "title": "정하은",
+      "body": "잠깐만, 지금 확인할게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 128
+  },
+  {
+    "identifier": "sms_10064_1746849780000",
+    "timestamp": 1746849780000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10064",
+      "messageType": 1,
+      "messageId": 10064,
+      "threadId": 3,
+      "date": 1746849780000,
+      "address": "010-1357-1526",
+      "title": "정하은",
+      "body": "오랜만이야~ 잘 지내지?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 130
+  },
+  {
+    "identifier": "sms_10065_1747132020000",
+    "timestamp": 1747132020000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10065",
+      "messageType": 0,
+      "messageId": 10065,
+      "threadId": 12,
+      "date": 1747132020000,
+      "address": "010-0037-8594",
+      "title": "박연희",
+      "body": "잠깐만, 지금 확인할게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 133
+  },
+  {
+    "identifier": "sms_10066_1747266840000",
+    "timestamp": 1747266840000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10066",
+      "messageType": 0,
+      "messageId": 10066,
+      "threadId": 11,
+      "date": 1747266840000,
+      "address": "010-2199-4519",
+      "title": "김서준",
+      "body": "응, 가능해!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 135
+  },
+  {
+    "identifier": "sms_10067_1747353420000",
+    "timestamp": 1747353420000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10067",
+      "messageType": 1,
+      "messageId": 10067,
+      "threadId": 9,
+      "date": 1747353420000,
+      "address": "010-7057-1701",
+      "title": "백승아",
+      "body": "오늘 오후에 클라이언트 미팅이에요",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 136
+  },
+  {
+    "identifier": "sms_10068_1747476420000",
+    "timestamp": 1747476420000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10068",
+      "messageType": 0,
+      "messageId": 10068,
+      "threadId": 14,
+      "date": 1747476420000,
+      "address": "010-5561-4506",
+      "title": "오태윤",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 137
+  },
+  {
+    "identifier": "sms_10069_1747605060000",
+    "timestamp": 1747605060000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10069",
+      "messageType": 1,
+      "messageId": 10069,
+      "threadId": 13,
+      "date": 1747605060000,
+      "address": "010-8926-9159",
+      "title": "장의철",
+      "body": "그때 빌려준 거 다음에 줄게!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 139
+  },
+  {
+    "identifier": "sms_10070_1747606440000",
+    "timestamp": 1747606440000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10070",
+      "messageType": 0,
+      "messageId": 10070,
+      "threadId": 13,
+      "date": 1747606440000,
+      "address": "010-8926-9159",
+      "title": "장의철",
+      "body": "잠깐만, 지금 확인할게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 139
+  },
+  {
+    "identifier": "sms_10071_1747957980000",
+    "timestamp": 1747957980000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10071",
+      "messageType": 0,
+      "messageId": 10071,
+      "threadId": 12,
+      "date": 1747957980000,
+      "address": "010-0037-8594",
+      "title": "박연희",
+      "body": "알려줘서 고마워",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 143
+  },
+  {
+    "identifier": "sms_10072_1747990500000",
+    "timestamp": 1747990500000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10072",
+      "messageType": 0,
+      "messageId": 10072,
+      "threadId": 3,
+      "date": 1747990500000,
+      "address": "010-1357-1526",
+      "title": "정하은",
+      "body": "그래, 거기서 만나자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 143
+  },
+  {
+    "identifier": "sms_10073_1748097600000",
+    "timestamp": 1748097600000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10073",
+      "messageType": 1,
+      "messageId": 10073,
+      "threadId": 4,
+      "date": 1748097600000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "오늘 회식이래. 올 수 있어?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 144
+  },
+  {
+    "identifier": "sms_10074_1748209860000",
+    "timestamp": 1748209860000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10074",
+      "messageType": 0,
+      "messageId": 10074,
+      "threadId": 14,
+      "date": 1748209860000,
+      "address": "010-5561-4506",
+      "title": "오태윤",
+      "body": "응, 가능해!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 146
+  },
+  {
+    "identifier": "sms_10075_1748562900000",
+    "timestamp": 1748562900000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10075",
+      "messageType": 1,
+      "messageId": 10075,
+      "threadId": 11,
+      "date": 1748562900000,
+      "address": "010-2199-4519",
+      "title": "김서준",
+      "body": "자료 공유해 줄 수 있어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 150
+  },
+  {
+    "identifier": "sms_10076_1748702100000",
+    "timestamp": 1748702100000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10076",
+      "messageType": 1,
+      "messageId": 10076,
+      "threadId": 4,
+      "date": 1748702100000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "생일 축하해! 🎂",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 151
+  },
+  {
+    "identifier": "sms_10077_1748823000000",
+    "timestamp": 1748823000000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10077",
+      "messageType": 1,
+      "messageId": 10077,
+      "threadId": 2,
+      "date": 1748823000000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "프로젝트 일정 다시 확인 부탁해요",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 153
+  },
+  {
+    "identifier": "sms_10078_1748823540000",
+    "timestamp": 1748823540000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10078",
+      "messageType": 0,
+      "messageId": 10078,
+      "threadId": 2,
+      "date": 1748823540000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 153
+  },
+  {
+    "identifier": "sms_10079_1748854680000",
+    "timestamp": 1748854680000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10079",
+      "messageType": 0,
+      "messageId": 10079,
+      "threadId": 7,
+      "date": 1748854680000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "좋아! 기대된다",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 153
+  },
+  {
+    "identifier": "sms_10080_1748921280000",
+    "timestamp": 1748921280000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10080",
+      "messageType": 1,
+      "messageId": 10080,
+      "threadId": 4,
+      "date": 1748921280000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "오늘 회식이래. 올 수 있어?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 154
+  },
+  {
+    "identifier": "sms_10081_1748922480000",
+    "timestamp": 1748922480000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10081",
+      "messageType": 0,
+      "messageId": 10081,
+      "threadId": 4,
+      "date": 1748922480000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "오케이 알겠어!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 154
+  },
+  {
+    "identifier": "sms_10082_1749180240000",
+    "timestamp": 1749180240000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10082",
+      "messageType": 0,
+      "messageId": 10082,
+      "threadId": 6,
+      "date": 1749180240000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "잠깐만, 지금 확인할게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 157
+  },
+  {
+    "identifier": "sms_10083_1749506820000",
+    "timestamp": 1749506820000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10083",
+      "messageType": 0,
+      "messageId": 10083,
+      "threadId": 5,
+      "date": 1749506820000,
+      "address": "010-7603-2369",
+      "title": "임도경",
+      "body": "알겠어, 확인해볼게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 161
+  },
+  {
+    "identifier": "sms_10084_1749507840000",
+    "timestamp": 1749507840000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10084",
+      "messageType": 1,
+      "messageId": 10084,
+      "threadId": 5,
+      "date": 1749507840000,
+      "address": "010-7603-2369",
+      "title": "임도경",
+      "body": "생일 축하해! 🎂",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 161
+  },
+  {
+    "identifier": "sms_10085_1749525840000",
+    "timestamp": 1749525840000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10085",
+      "messageType": 0,
+      "messageId": 10085,
+      "threadId": 8,
+      "date": 1749525840000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "잠깐만, 지금 확인할게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 161
+  },
+  {
+    "identifier": "sms_10086_1749551940000",
+    "timestamp": 1749551940000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10086",
+      "messageType": 0,
+      "messageId": 10086,
+      "threadId": 8,
+      "date": 1749551940000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "좋아! 기대된다",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 161
+  },
+  {
+    "identifier": "sms_10087_1749553260000",
+    "timestamp": 1749553260000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10087",
+      "messageType": 1,
+      "messageId": 10087,
+      "threadId": 8,
+      "date": 1749553260000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "저번에 얘기한 거 어떻게 됐어?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 161
+  },
+  {
+    "identifier": "sms_10088_1749686640000",
+    "timestamp": 1749686640000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10088",
+      "messageType": 1,
+      "messageId": 10088,
+      "threadId": 4,
+      "date": 1749686640000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "보고서 언제까지 될 것 같아요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 163
+  },
+  {
+    "identifier": "sms_10089_1749982020000",
+    "timestamp": 1749982020000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10089",
+      "messageType": 0,
+      "messageId": 10089,
+      "threadId": 6,
+      "date": 1749982020000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "오케이 알겠어!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 166
+  },
+  {
+    "identifier": "sms_10090_1749982200000",
+    "timestamp": 1749982200000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10090",
+      "messageType": 1,
+      "messageId": 10090,
+      "threadId": 6,
+      "date": 1749982200000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "오늘 시간 있어? 밥 한번 먹자!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 166
+  },
+  {
+    "identifier": "sms_10091_1750118640000",
+    "timestamp": 1750118640000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10091",
+      "messageType": 0,
+      "messageId": 10091,
+      "threadId": 7,
+      "date": 1750118640000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "오케이 알겠어!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 168
+  },
+  {
+    "identifier": "sms_10092_1750549800000",
+    "timestamp": 1750549800000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10092",
+      "messageType": 0,
+      "messageId": 10092,
+      "threadId": 6,
+      "date": 1750549800000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 173
+  },
+  {
+    "identifier": "sms_10093_1750636440000",
+    "timestamp": 1750636440000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10093",
+      "messageType": 0,
+      "messageId": 10093,
+      "threadId": 6,
+      "date": 1750636440000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "알려줘서 고마워",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 174
+  },
+  {
+    "identifier": "sms_10094_1750638180000",
+    "timestamp": 1750638180000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10094",
+      "messageType": 1,
+      "messageId": 10094,
+      "threadId": 6,
+      "date": 1750638180000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "방금 메일 확인했어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 174
+  },
+  {
+    "identifier": "sms_10095_1750721340000",
+    "timestamp": 1750721340000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10095",
+      "messageType": 0,
+      "messageId": 10095,
+      "threadId": 11,
+      "date": 1750721340000,
+      "address": "010-2199-4519",
+      "title": "김서준",
+      "body": "응, 가능해!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 175
+  },
+  {
+    "identifier": "sms_10096_1750722960000",
+    "timestamp": 1750722960000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10096",
+      "messageType": 1,
+      "messageId": 10096,
+      "threadId": 9,
+      "date": 1750722960000,
+      "address": "010-7057-1701",
+      "title": "백승아",
+      "body": "내일 오전 회의 준비됐어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 175
+  },
+  {
+    "identifier": "sms_10097_1750809420000",
+    "timestamp": 1750809420000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10097",
+      "messageType": 1,
+      "messageId": 10097,
+      "threadId": 1,
+      "date": 1750809420000,
+      "address": "010-5873-8527",
+      "title": "노지훈",
+      "body": "내일 오전 회의 준비됐어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 176
+  },
+  {
+    "identifier": "sms_10098_1750810800000",
+    "timestamp": 1750810800000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10098",
+      "messageType": 0,
+      "messageId": 10098,
+      "threadId": 1,
+      "date": 1750810800000,
+      "address": "010-5873-8527",
+      "title": "노지훈",
+      "body": "응, 가능해!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 176
+  },
+  {
+    "identifier": "sms_10099_1751500920000",
+    "timestamp": 1751500920000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10099",
+      "messageType": 1,
+      "messageId": 10099,
+      "threadId": 4,
+      "date": 1751500920000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "내일 오전 회의 준비됐어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 184
+  },
+  {
+    "identifier": "sms_10100_1751782020000",
+    "timestamp": 1751782020000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10100",
+      "messageType": 0,
+      "messageId": 10100,
+      "threadId": 1,
+      "date": 1751782020000,
+      "address": "010-5873-8527",
+      "title": "노지훈",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 187
+  },
+  {
+    "identifier": "sms_10101_1751878560000",
+    "timestamp": 1751878560000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10101",
+      "messageType": 1,
+      "messageId": 10101,
+      "threadId": 9,
+      "date": 1751878560000,
+      "address": "010-7057-1701",
+      "title": "백승아",
+      "body": "저번에 얘기한 거 어떻게 됐어?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 188
+  },
+  {
+    "identifier": "sms_10102_1751964780000",
+    "timestamp": 1751964780000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10102",
+      "messageType": 0,
+      "messageId": 10102,
+      "threadId": 9,
+      "date": 1751964780000,
+      "address": "010-7057-1701",
+      "title": "백승아",
+      "body": "좋아! 기대된다",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 189
+  },
+  {
+    "identifier": "sms_10103_1751965620000",
+    "timestamp": 1751965620000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10103",
+      "messageType": 1,
+      "messageId": 10103,
+      "threadId": 9,
+      "date": 1751965620000,
+      "address": "010-7057-1701",
+      "title": "백승아",
+      "body": "오랜만이야~ 잘 지내지?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 189
+  },
+  {
+    "identifier": "sms_10104_1752019020000",
+    "timestamp": 1752019020000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10104",
+      "messageType": 1,
+      "messageId": 10104,
+      "threadId": 4,
+      "date": 1752019020000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "업무 관련해서 잠깐 통화 가능해요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 190
+  },
+  {
+    "identifier": "sms_10105_1752019080000",
+    "timestamp": 1752019080000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10105",
+      "messageType": 0,
+      "messageId": 10105,
+      "threadId": 4,
+      "date": 1752019080000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "그래, 거기서 만나자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 190
+  },
+  {
+    "identifier": "sms_10106_1752331200000",
+    "timestamp": 1752331200000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10106",
+      "messageType": 1,
+      "messageId": 10106,
+      "threadId": 14,
+      "date": 1752331200000,
+      "address": "010-5561-4506",
+      "title": "오태윤",
+      "body": "지금 어디야? 나 근처야",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 193
+  },
+  {
+    "identifier": "sms_10107_1752450960000",
+    "timestamp": 1752450960000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10107",
+      "messageType": 1,
+      "messageId": 10107,
+      "threadId": 13,
+      "date": 1752450960000,
+      "address": "010-8926-9159",
+      "title": "장의철",
+      "body": "프로젝트 일정 다시 확인 부탁해요",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 195
+  },
+  {
+    "identifier": "sms_10108_1752760980000",
+    "timestamp": 1752760980000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10108",
+      "messageType": 0,
+      "messageId": 10108,
+      "threadId": 8,
+      "date": 1752760980000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "잠깐만, 지금 확인할게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 198
+  },
+  {
+    "identifier": "sms_10109_1752762000000",
+    "timestamp": 1752762000000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10109",
+      "messageType": 1,
+      "messageId": 10109,
+      "threadId": 8,
+      "date": 1752762000000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "생일 축하해! 🎂",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 198
+  },
+  {
+    "identifier": "sms_10110_1753022280000",
+    "timestamp": 1753022280000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10110",
+      "messageType": 0,
+      "messageId": 10110,
+      "threadId": 9,
+      "date": 1753022280000,
+      "address": "010-7057-1701",
+      "title": "백승아",
+      "body": "그래, 거기서 만나자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 201
+  },
+  {
+    "identifier": "sms_10111_1753142640000",
+    "timestamp": 1753142640000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10111",
+      "messageType": 1,
+      "messageId": 10111,
+      "threadId": 7,
+      "date": 1753142640000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "방금 메일 확인했어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 203
+  },
+  {
+    "identifier": "sms_10112_1753143000000",
+    "timestamp": 1753143000000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10112",
+      "messageType": 0,
+      "messageId": 10112,
+      "threadId": 7,
+      "date": 1753143000000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "오늘은 좀 어렵고 다음에 하자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 203
+  },
+  {
+    "identifier": "sms_10113_1754231880000",
+    "timestamp": 1754231880000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10113",
+      "messageType": 1,
+      "messageId": 10113,
+      "threadId": 8,
+      "date": 1754231880000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "오랜만이야~ 잘 지내지?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 215
+  },
+  {
+    "identifier": "sms_10114_1754233620000",
+    "timestamp": 1754233620000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10114",
+      "messageType": 0,
+      "messageId": 10114,
+      "threadId": 8,
+      "date": 1754233620000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "잠깐만, 지금 확인할게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 216
+  },
+  {
+    "identifier": "sms_10115_1754258820000",
+    "timestamp": 1754258820000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10115",
+      "messageType": 1,
+      "messageId": 10115,
+      "threadId": 7,
+      "date": 1754258820000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "사진 보냈어. 확인해봐!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 216
+  },
+  {
+    "identifier": "sms_10116_1754304000000",
+    "timestamp": 1754304000000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10116",
+      "messageType": 1,
+      "messageId": 10116,
+      "threadId": 6,
+      "date": 1754304000000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "지금 어디야? 나 근처야",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 216
+  },
+  {
+    "identifier": "sms_10117_1754316240000",
+    "timestamp": 1754316240000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10117",
+      "messageType": 0,
+      "messageId": 10117,
+      "threadId": 7,
+      "date": 1754316240000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "오늘은 좀 어렵고 다음에 하자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 216
+  },
+  {
+    "identifier": "sms_10118_1754351880000",
+    "timestamp": 1754351880000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10118",
+      "messageType": 1,
+      "messageId": 10118,
+      "threadId": 6,
+      "date": 1754351880000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "자료 공유해 줄 수 있어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 217
+  },
+  {
+    "identifier": "sms_10119_1754611140000",
+    "timestamp": 1754611140000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10119",
+      "messageType": 1,
+      "messageId": 10119,
+      "threadId": 3,
+      "date": 1754611140000,
+      "address": "010-1357-1526",
+      "title": "정하은",
+      "body": "방금 메일 확인했어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 220
+  },
+  {
+    "identifier": "sms_10120_1754712360000",
+    "timestamp": 1754712360000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10120",
+      "messageType": 0,
+      "messageId": 10120,
+      "threadId": 1,
+      "date": 1754712360000,
+      "address": "010-5873-8527",
+      "title": "노지훈",
+      "body": "오늘은 좀 어렵고 다음에 하자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 221
+  },
+  {
+    "identifier": "sms_10121_1754836020000",
+    "timestamp": 1754836020000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10121",
+      "messageType": 1,
+      "messageId": 10121,
+      "threadId": 6,
+      "date": 1754836020000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "생일 축하해! 🎂",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 222
+  },
+  {
+    "identifier": "sms_10122_1754837460000",
+    "timestamp": 1754837460000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10122",
+      "messageType": 0,
+      "messageId": 10122,
+      "threadId": 6,
+      "date": 1754837460000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 222
+  },
+  {
+    "identifier": "sms_10123_1754954400000",
+    "timestamp": 1754954400000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10123",
+      "messageType": 1,
+      "messageId": 10123,
+      "threadId": 9,
+      "date": 1754954400000,
+      "address": "010-7057-1701",
+      "title": "백승아",
+      "body": "지금 어디야? 나 근처야",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 224
+  },
+  {
+    "identifier": "sms_10124_1754957160000",
+    "timestamp": 1754957160000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10124",
+      "messageType": 0,
+      "messageId": 10124,
+      "threadId": 3,
+      "date": 1754957160000,
+      "address": "010-1357-1526",
+      "title": "정하은",
+      "body": "좋아! 기대된다",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 224
+  },
+  {
+    "identifier": "sms_10125_1754957520000",
+    "timestamp": 1754957520000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10125",
+      "messageType": 1,
+      "messageId": 10125,
+      "threadId": 3,
+      "date": 1754957520000,
+      "address": "010-1357-1526",
+      "title": "정하은",
+      "body": "퇴근 후 저녁 어때요? 팀 회식해요",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 224
+  },
+  {
+    "identifier": "sms_10126_1754989680000",
+    "timestamp": 1754989680000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10126",
+      "messageType": 1,
+      "messageId": 10126,
+      "threadId": 2,
+      "date": 1754989680000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "그때 빌려준 거 다음에 줄게!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 224
+  },
+  {
+    "identifier": "sms_10127_1754989980000",
+    "timestamp": 1754989980000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10127",
+      "messageType": 0,
+      "messageId": 10127,
+      "threadId": 2,
+      "date": 1754989980000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "좋아! 기대된다",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 224
+  },
+  {
+    "identifier": "sms_10128_1755042600000",
+    "timestamp": 1755042600000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10128",
+      "messageType": 1,
+      "messageId": 10128,
+      "threadId": 10,
+      "date": 1755042600000,
+      "address": "010-6108-0635",
+      "title": "한미경",
+      "body": "퇴근 후 저녁 어때요? 팀 회식해요",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 225
+  },
+  {
+    "identifier": "sms_10129_1755129780000",
+    "timestamp": 1755129780000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10129",
+      "messageType": 1,
+      "messageId": 10129,
+      "threadId": 11,
+      "date": 1755129780000,
+      "address": "010-2199-4519",
+      "title": "김서준",
+      "body": "프로젝트 일정 다시 확인 부탁해요",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 226
+  },
+  {
+    "identifier": "sms_10130_1755388800000",
+    "timestamp": 1755388800000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10130",
+      "messageType": 1,
+      "messageId": 10130,
+      "threadId": 7,
+      "date": 1755388800000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "사진 보냈어. 확인해봐!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 229
+  },
+  {
+    "identifier": "sms_10131_1755390180000",
+    "timestamp": 1755390180000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10131",
+      "messageType": 0,
+      "messageId": 10131,
+      "threadId": 7,
+      "date": 1755390180000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "좋아! 기대된다",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 229
+  },
+  {
+    "identifier": "sms_10132_1755698460000",
+    "timestamp": 1755698460000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10132",
+      "messageType": 0,
+      "messageId": 10132,
+      "threadId": 5,
+      "date": 1755698460000,
+      "address": "010-7603-2369",
+      "title": "임도경",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 232
+  },
+  {
+    "identifier": "sms_10133_1755699660000",
+    "timestamp": 1755699660000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10133",
+      "messageType": 1,
+      "messageId": 10133,
+      "threadId": 5,
+      "date": 1755699660000,
+      "address": "010-7603-2369",
+      "title": "임도경",
+      "body": "오늘 회식이래. 올 수 있어?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 232
+  },
+  {
+    "identifier": "sms_10134_1755734280000",
+    "timestamp": 1755734280000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10134",
+      "messageType": 1,
+      "messageId": 10134,
+      "threadId": 5,
+      "date": 1755734280000,
+      "address": "010-7603-2369",
+      "title": "임도경",
+      "body": "프로젝트 일정 다시 확인 부탁해요",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 233
+  },
+  {
+    "identifier": "sms_10135_1755820800000",
+    "timestamp": 1755820800000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10135",
+      "messageType": 1,
+      "messageId": 10135,
+      "threadId": 12,
+      "date": 1755820800000,
+      "address": "010-0037-8594",
+      "title": "박연희",
+      "body": "프로젝트 일정 다시 확인 부탁해요",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 234
+  },
+  {
+    "identifier": "sms_10136_1755822000000",
+    "timestamp": 1755822000000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10136",
+      "messageType": 0,
+      "messageId": 10136,
+      "threadId": 12,
+      "date": 1755822000000,
+      "address": "010-0037-8594",
+      "title": "박연희",
+      "body": "응, 가능해!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 234
+  },
+  {
+    "identifier": "sms_10137_1756252740000",
+    "timestamp": 1756252740000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10137",
+      "messageType": 0,
+      "messageId": 10137,
+      "threadId": 7,
+      "date": 1756252740000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 239
+  },
+  {
+    "identifier": "sms_10138_1756603800000",
+    "timestamp": 1756603800000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10138",
+      "messageType": 0,
+      "messageId": 10138,
+      "threadId": 6,
+      "date": 1756603800000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "알겠어, 확인해볼게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 243
+  },
+  {
+    "identifier": "sms_10139_1756612740000",
+    "timestamp": 1756612740000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10139",
+      "messageType": 0,
+      "messageId": 10139,
+      "threadId": 8,
+      "date": 1756612740000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 243
+  },
+  {
+    "identifier": "sms_10140_1757289660000",
+    "timestamp": 1757289660000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10140",
+      "messageType": 0,
+      "messageId": 10140,
+      "threadId": 13,
+      "date": 1757289660000,
+      "address": "010-8926-9159",
+      "title": "장의철",
+      "body": "알겠어, 확인해볼게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 251
+  },
+  {
+    "identifier": "sms_10141_1757375460000",
+    "timestamp": 1757375460000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10141",
+      "messageType": 0,
+      "messageId": 10141,
+      "threadId": 9,
+      "date": 1757375460000,
+      "address": "010-7057-1701",
+      "title": "백승아",
+      "body": "알려줘서 고마워",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 252
+  },
+  {
+    "identifier": "sms_10142_1757822700000",
+    "timestamp": 1757822700000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10142",
+      "messageType": 0,
+      "messageId": 10142,
+      "threadId": 2,
+      "date": 1757822700000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "응, 가능해!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 257
+  },
+  {
+    "identifier": "sms_10143_1758066900000",
+    "timestamp": 1758066900000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10143",
+      "messageType": 1,
+      "messageId": 10143,
+      "threadId": 6,
+      "date": 1758066900000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "방금 메일 확인했어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 260
+  },
+  {
+    "identifier": "sms_10144_1758146640000",
+    "timestamp": 1758146640000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10144",
+      "messageType": 1,
+      "messageId": 10144,
+      "threadId": 7,
+      "date": 1758146640000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "그때 빌려준 거 다음에 줄게!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 261
+  },
+  {
+    "identifier": "sms_10145_1758153540000",
+    "timestamp": 1758153540000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10145",
+      "messageType": 0,
+      "messageId": 10145,
+      "threadId": 8,
+      "date": 1758153540000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "오케이 알겠어!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 261
+  },
+  {
+    "identifier": "sms_10146_1758153900000",
+    "timestamp": 1758153900000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10146",
+      "messageType": 1,
+      "messageId": 10146,
+      "threadId": 8,
+      "date": 1758153900000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "내일 오전 회의 준비됐어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 261
+  },
+  {
+    "identifier": "sms_10147_1758290520000",
+    "timestamp": 1758290520000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10147",
+      "messageType": 0,
+      "messageId": 10147,
+      "threadId": 3,
+      "date": 1758290520000,
+      "address": "010-1357-1526",
+      "title": "정하은",
+      "body": "오케이 알겠어!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 262
+  },
+  {
+    "identifier": "sms_10148_1758292200000",
+    "timestamp": 1758292200000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10148",
+      "messageType": 1,
+      "messageId": 10148,
+      "threadId": 3,
+      "date": 1758292200000,
+      "address": "010-1357-1526",
+      "title": "정하은",
+      "body": "지금 어디야? 나 근처야",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 262
+  },
+  {
+    "identifier": "sms_10149_1758378360000",
+    "timestamp": 1758378360000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10149",
+      "messageType": 0,
+      "messageId": 10149,
+      "threadId": 7,
+      "date": 1758378360000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 263
+  },
+  {
+    "identifier": "sms_10150_1758379140000",
+    "timestamp": 1758379140000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10150",
+      "messageType": 1,
+      "messageId": 10150,
+      "threadId": 7,
+      "date": 1758379140000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "저번에 얘기한 거 어떻게 됐어?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 263
+  },
+  {
+    "identifier": "sms_10151_1758771600000",
+    "timestamp": 1758771600000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10151",
+      "messageType": 0,
+      "messageId": 10151,
+      "threadId": 7,
+      "date": 1758771600000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "잠깐만, 지금 확인할게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 268
+  },
+  {
+    "identifier": "sms_10152_1758771780000",
+    "timestamp": 1758771780000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10152",
+      "messageType": 1,
+      "messageId": 10152,
+      "threadId": 7,
+      "date": 1758771780000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "주말에 모임 있는데 참석 가능해?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 268
+  },
+  {
+    "identifier": "sms_10153_1758837480000",
+    "timestamp": 1758837480000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10153",
+      "messageType": 0,
+      "messageId": 10153,
+      "threadId": 5,
+      "date": 1758837480000,
+      "address": "010-7603-2369",
+      "title": "임도경",
+      "body": "그래, 거기서 만나자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 269
+  },
+  {
+    "identifier": "sms_10154_1758844740000",
+    "timestamp": 1758844740000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10154",
+      "messageType": 1,
+      "messageId": 10154,
+      "threadId": 4,
+      "date": 1758844740000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "퇴근 후 저녁 어때요? 팀 회식해요",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 269
+  },
+  {
+    "identifier": "sms_10155_1758844920000",
+    "timestamp": 1758844920000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10155",
+      "messageType": 0,
+      "messageId": 10155,
+      "threadId": 4,
+      "date": 1758844920000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "잠깐만, 지금 확인할게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 269
+  },
+  {
+    "identifier": "sms_10156_1758952440000",
+    "timestamp": 1758952440000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10156",
+      "messageType": 0,
+      "messageId": 10156,
+      "threadId": 12,
+      "date": 1758952440000,
+      "address": "010-0037-8594",
+      "title": "박연희",
+      "body": "오늘은 좀 어렵고 다음에 하자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 270
+  },
+  {
+    "identifier": "sms_10157_1758954240000",
+    "timestamp": 1758954240000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10157",
+      "messageType": 1,
+      "messageId": 10157,
+      "threadId": 12,
+      "date": 1758954240000,
+      "address": "010-0037-8594",
+      "title": "박연희",
+      "body": "오랜만이야~ 잘 지내지?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 270
+  },
+  {
+    "identifier": "sms_10158_1759053360000",
+    "timestamp": 1759053360000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10158",
+      "messageType": 0,
+      "messageId": 10158,
+      "threadId": 6,
+      "date": 1759053360000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "그래, 거기서 만나자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 271
+  },
+  {
+    "identifier": "sms_10159_1759190640000",
+    "timestamp": 1759190640000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10159",
+      "messageType": 1,
+      "messageId": 10159,
+      "threadId": 8,
+      "date": 1759190640000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "내일 오전 회의 준비됐어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 273
+  },
+  {
+    "identifier": "sms_10160_1759276860000",
+    "timestamp": 1759276860000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10160",
+      "messageType": 1,
+      "messageId": 10160,
+      "threadId": 2,
+      "date": 1759276860000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "내일 오전 회의 준비됐어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 274
+  },
+  {
+    "identifier": "sms_10161_1759277820000",
+    "timestamp": 1759277820000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10161",
+      "messageType": 0,
+      "messageId": 10161,
+      "threadId": 2,
+      "date": 1759277820000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "오케이 알겠어!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 274
+  },
+  {
+    "identifier": "sms_10162_1759792980000",
+    "timestamp": 1759792980000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10162",
+      "messageType": 0,
+      "messageId": 10162,
+      "threadId": 4,
+      "date": 1759792980000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "좋아! 기대된다",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 280
+  },
+  {
+    "identifier": "sms_10163_1759793640000",
+    "timestamp": 1759793640000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10163",
+      "messageType": 1,
+      "messageId": 10163,
+      "threadId": 4,
+      "date": 1759793640000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "사진 보냈어. 확인해봐!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 280
+  },
+  {
+    "identifier": "sms_10164_1760055000000",
+    "timestamp": 1760055000000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10164",
+      "messageType": 1,
+      "messageId": 10164,
+      "threadId": 11,
+      "date": 1760055000000,
+      "address": "010-2199-4519",
+      "title": "김서준",
+      "body": "업무 관련해서 잠깐 통화 가능해요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 283
+  },
+  {
+    "identifier": "sms_10165_1760055600000",
+    "timestamp": 1760055600000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10165",
+      "messageType": 0,
+      "messageId": 10165,
+      "threadId": 11,
+      "date": 1760055600000,
+      "address": "010-2199-4519",
+      "title": "김서준",
+      "body": "오케이 알겠어!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 283
+  },
+  {
+    "identifier": "sms_10166_1760313900000",
+    "timestamp": 1760313900000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10166",
+      "messageType": 0,
+      "messageId": 10166,
+      "threadId": 7,
+      "date": 1760313900000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "좋아! 기대된다",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 286
+  },
+  {
+    "identifier": "sms_10167_1760399880000",
+    "timestamp": 1760399880000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10167",
+      "messageType": 1,
+      "messageId": 10167,
+      "threadId": 2,
+      "date": 1760399880000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "퇴근 후 저녁 어때요? 팀 회식해요",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 287
+  },
+  {
+    "identifier": "sms_10168_1760499180000",
+    "timestamp": 1760499180000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10168",
+      "messageType": 0,
+      "messageId": 10168,
+      "threadId": 8,
+      "date": 1760499180000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "좋아! 기대된다",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 288
+  },
+  {
+    "identifier": "sms_10169_1760671680000",
+    "timestamp": 1760671680000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10169",
+      "messageType": 1,
+      "messageId": 10169,
+      "threadId": 1,
+      "date": 1760671680000,
+      "address": "010-5873-8527",
+      "title": "노지훈",
+      "body": "지금 어디야? 나 근처야",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 290
+  },
+  {
+    "identifier": "sms_10170_1760671860000",
+    "timestamp": 1760671860000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10170",
+      "messageType": 0,
+      "messageId": 10170,
+      "threadId": 1,
+      "date": 1760671860000,
+      "address": "010-5873-8527",
+      "title": "노지훈",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 290
+  },
+  {
+    "identifier": "sms_10171_1761005280000",
+    "timestamp": 1761005280000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10171",
+      "messageType": 0,
+      "messageId": 10171,
+      "threadId": 8,
+      "date": 1761005280000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 294
+  },
+  {
+    "identifier": "sms_10172_1761036660000",
+    "timestamp": 1761036660000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10172",
+      "messageType": 1,
+      "messageId": 10172,
+      "threadId": 2,
+      "date": 1761036660000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "생일 축하해! 🎂",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 294
+  },
+  {
+    "identifier": "sms_10173_1761302100000",
+    "timestamp": 1761302100000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10173",
+      "messageType": 0,
+      "messageId": 10173,
+      "threadId": 4,
+      "date": 1761302100000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "오케이 알겠어!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 297
+  },
+  {
+    "identifier": "sms_10174_1761622320000",
+    "timestamp": 1761622320000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10174",
+      "messageType": 0,
+      "messageId": 10174,
+      "threadId": 4,
+      "date": 1761622320000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "잠깐만, 지금 확인할게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 301
+  },
+  {
+    "identifier": "sms_10175_1761622380000",
+    "timestamp": 1761622380000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10175",
+      "messageType": 1,
+      "messageId": 10175,
+      "threadId": 4,
+      "date": 1761622380000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "지금 어디야? 나 근처야",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 301
+  },
+  {
+    "identifier": "sms_10176_1761642240000",
+    "timestamp": 1761642240000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10176",
+      "messageType": 1,
+      "messageId": 10176,
+      "threadId": 8,
+      "date": 1761642240000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "사진 보냈어. 확인해봐!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 301
+  },
+  {
+    "identifier": "sms_10177_1761643500000",
+    "timestamp": 1761643500000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10177",
+      "messageType": 0,
+      "messageId": 10177,
+      "threadId": 8,
+      "date": 1761643500000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "그래, 거기서 만나자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 301
+  },
+  {
+    "identifier": "sms_10178_1761782700000",
+    "timestamp": 1761782700000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10178",
+      "messageType": 1,
+      "messageId": 10178,
+      "threadId": 12,
+      "date": 1761782700000,
+      "address": "010-0037-8594",
+      "title": "박연희",
+      "body": "내일 오전 회의 준비됐어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 303
+  },
+  {
+    "identifier": "sms_10179_1761867360000",
+    "timestamp": 1761867360000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10179",
+      "messageType": 1,
+      "messageId": 10179,
+      "threadId": 14,
+      "date": 1761867360000,
+      "address": "010-5561-4506",
+      "title": "오태윤",
+      "body": "오늘 시간 있어? 밥 한번 먹자!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 304
+  },
+  {
+    "identifier": "sms_10180_1761868200000",
+    "timestamp": 1761868200000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10180",
+      "messageType": 0,
+      "messageId": 10180,
+      "threadId": 14,
+      "date": 1761868200000,
+      "address": "010-5561-4506",
+      "title": "오태윤",
+      "body": "응, 가능해!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 304
+  },
+  {
+    "identifier": "sms_10181_1762128060000",
+    "timestamp": 1762128060000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10181",
+      "messageType": 1,
+      "messageId": 10181,
+      "threadId": 2,
+      "date": 1762128060000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "자료 공유해 줄 수 있어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 307
+  },
+  {
+    "identifier": "sms_10182_1762301400000",
+    "timestamp": 1762301400000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10182",
+      "messageType": 0,
+      "messageId": 10182,
+      "threadId": 6,
+      "date": 1762301400000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "그래, 거기서 만나자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 309
+  },
+  {
+    "identifier": "sms_10183_1762302540000",
+    "timestamp": 1762302540000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10183",
+      "messageType": 1,
+      "messageId": 10183,
+      "threadId": 6,
+      "date": 1762302540000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "보고서 언제까지 될 것 같아요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 309
+  },
+  {
+    "identifier": "sms_10184_1762437780000",
+    "timestamp": 1762437780000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10184",
+      "messageType": 1,
+      "messageId": 10184,
+      "threadId": 12,
+      "date": 1762437780000,
+      "address": "010-0037-8594",
+      "title": "박연희",
+      "body": "지금 어디야? 나 근처야",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 310
+  },
+  {
+    "identifier": "sms_10185_1762439400000",
+    "timestamp": 1762439400000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10185",
+      "messageType": 0,
+      "messageId": 10185,
+      "threadId": 12,
+      "date": 1762439400000,
+      "address": "010-0037-8594",
+      "title": "박연희",
+      "body": "알려줘서 고마워",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 310
+  },
+  {
+    "identifier": "sms_10186_1762473180000",
+    "timestamp": 1762473180000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10186",
+      "messageType": 1,
+      "messageId": 10186,
+      "threadId": 5,
+      "date": 1762473180000,
+      "address": "010-7603-2369",
+      "title": "임도경",
+      "body": "자료 공유해 줄 수 있어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 311
+  },
+  {
+    "identifier": "sms_10187_1762473300000",
+    "timestamp": 1762473300000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10187",
+      "messageType": 0,
+      "messageId": 10187,
+      "threadId": 5,
+      "date": 1762473300000,
+      "address": "010-7603-2369",
+      "title": "임도경",
+      "body": "좋아! 기대된다",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 311
+  },
+  {
+    "identifier": "sms_10188_1762524600000",
+    "timestamp": 1762524600000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10188",
+      "messageType": 0,
+      "messageId": 10188,
+      "threadId": 8,
+      "date": 1762524600000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "알겠어, 확인해볼게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 311
+  },
+  {
+    "identifier": "sms_10189_1762525020000",
+    "timestamp": 1762525020000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10189",
+      "messageType": 1,
+      "messageId": 10189,
+      "threadId": 8,
+      "date": 1762525020000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "그때 빌려준 거 다음에 줄게!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 311
+  },
+  {
+    "identifier": "sms_10190_1763071140000",
+    "timestamp": 1763071140000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10190",
+      "messageType": 1,
+      "messageId": 10190,
+      "threadId": 13,
+      "date": 1763071140000,
+      "address": "010-8926-9159",
+      "title": "장의철",
+      "body": "생일 축하해! 🎂",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 318
+  },
+  {
+    "identifier": "sms_10191_1763071920000",
+    "timestamp": 1763071920000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10191",
+      "messageType": 0,
+      "messageId": 10191,
+      "threadId": 13,
+      "date": 1763071920000,
+      "address": "010-8926-9159",
+      "title": "장의철",
+      "body": "알려줘서 고마워",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 318
+  },
+  {
+    "identifier": "sms_10192_1763424000000",
+    "timestamp": 1763424000000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10192",
+      "messageType": 1,
+      "messageId": 10192,
+      "threadId": 1,
+      "date": 1763424000000,
+      "address": "010-5873-8527",
+      "title": "노지훈",
+      "body": "프로젝트 일정 다시 확인 부탁해요",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 322
+  },
+  {
+    "identifier": "sms_10193_1763510520000",
+    "timestamp": 1763510520000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10193",
+      "messageType": 0,
+      "messageId": 10193,
+      "threadId": 14,
+      "date": 1763510520000,
+      "address": "010-5561-4506",
+      "title": "오태윤",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 323
+  },
+  {
+    "identifier": "sms_10194_1763511120000",
+    "timestamp": 1763511120000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10194",
+      "messageType": 1,
+      "messageId": 10194,
+      "threadId": 14,
+      "date": 1763511120000,
+      "address": "010-5561-4506",
+      "title": "오태윤",
+      "body": "자료 공유해 줄 수 있어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 323
+  },
+  {
+    "identifier": "sms_10195_1763596980000",
+    "timestamp": 1763596980000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10195",
+      "messageType": 1,
+      "messageId": 10195,
+      "threadId": 7,
+      "date": 1763596980000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "자료 공유해 줄 수 있어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 324
+  },
+  {
+    "identifier": "sms_10196_1763597520000",
+    "timestamp": 1763597520000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10196",
+      "messageType": 0,
+      "messageId": 10196,
+      "threadId": 7,
+      "date": 1763597520000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "오늘은 좀 어렵고 다음에 하자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 324
+  },
+  {
+    "identifier": "sms_10197_1763647320000",
+    "timestamp": 1763647320000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10197",
+      "messageType": 0,
+      "messageId": 10197,
+      "threadId": 3,
+      "date": 1763647320000,
+      "address": "010-1357-1526",
+      "title": "정하은",
+      "body": "오케이 알겠어!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 324
+  },
+  {
+    "identifier": "sms_10198_1763878020000",
+    "timestamp": 1763878020000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10198",
+      "messageType": 1,
+      "messageId": 10198,
+      "threadId": 6,
+      "date": 1763878020000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "주말에 모임 있는데 참석 가능해?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 327
+  },
+  {
+    "identifier": "sms_10199_1763878320000",
+    "timestamp": 1763878320000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10199",
+      "messageType": 0,
+      "messageId": 10199,
+      "threadId": 6,
+      "date": 1763878320000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 327
+  },
+  {
+    "identifier": "sms_10200_1763942280000",
+    "timestamp": 1763942280000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10200",
+      "messageType": 1,
+      "messageId": 10200,
+      "threadId": 10,
+      "date": 1763942280000,
+      "address": "010-6108-0635",
+      "title": "한미경",
+      "body": "방금 메일 확인했어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 328
+  },
+  {
+    "identifier": "sms_10201_1763942700000",
+    "timestamp": 1763942700000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10201",
+      "messageType": 0,
+      "messageId": 10201,
+      "threadId": 10,
+      "date": 1763942700000,
+      "address": "010-6108-0635",
+      "title": "한미경",
+      "body": "ㅋㅋ 맞아맞아",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 328
+  },
+  {
+    "identifier": "sms_10202_1764127260000",
+    "timestamp": 1764127260000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10202",
+      "messageType": 0,
+      "messageId": 10202,
+      "threadId": 8,
+      "date": 1764127260000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "오늘은 좀 어렵고 다음에 하자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 330
+  },
+  {
+    "identifier": "sms_10203_1764128940000",
+    "timestamp": 1764128940000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10203",
+      "messageType": 1,
+      "messageId": 10203,
+      "threadId": 8,
+      "date": 1764128940000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "오랜만이야~ 잘 지내지?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 330
+  },
+  {
+    "identifier": "sms_10204_1764201420000",
+    "timestamp": 1764201420000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10204",
+      "messageType": 0,
+      "messageId": 10204,
+      "threadId": 8,
+      "date": 1764201420000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "알겠어, 확인해볼게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 331
+  },
+  {
+    "identifier": "sms_10205_1764380220000",
+    "timestamp": 1764380220000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10205",
+      "messageType": 1,
+      "messageId": 10205,
+      "threadId": 7,
+      "date": 1764380220000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "사진 보냈어. 확인해봐!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 333
+  },
+  {
+    "identifier": "sms_10206_1764381900000",
+    "timestamp": 1764381900000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10206",
+      "messageType": 0,
+      "messageId": 10206,
+      "threadId": 7,
+      "date": 1764381900000,
+      "address": "010-2854-6928",
+      "title": "최병훈",
+      "body": "알려줘서 고마워",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 333
+  },
+  {
+    "identifier": "sms_10207_1764545640000",
+    "timestamp": 1764545640000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10207",
+      "messageType": 0,
+      "messageId": 10207,
+      "threadId": 10,
+      "date": 1764545640000,
+      "address": "010-6108-0635",
+      "title": "한미경",
+      "body": "알겠어, 확인해볼게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 335
+  },
+  {
+    "identifier": "sms_10208_1764719700000",
+    "timestamp": 1764719700000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10208",
+      "messageType": 1,
+      "messageId": 10208,
+      "threadId": 13,
+      "date": 1764719700000,
+      "address": "010-8926-9159",
+      "title": "장의철",
+      "body": "방금 메일 확인했어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 337
+  },
+  {
+    "identifier": "sms_10209_1764752640000",
+    "timestamp": 1764752640000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10209",
+      "messageType": 1,
+      "messageId": 10209,
+      "threadId": 3,
+      "date": 1764752640000,
+      "address": "010-1357-1526",
+      "title": "정하은",
+      "body": "지금 어디야? 나 근처야",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 337
+  },
+  {
+    "identifier": "sms_10210_1764753600000",
+    "timestamp": 1764753600000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10210",
+      "messageType": 0,
+      "messageId": 10210,
+      "threadId": 3,
+      "date": 1764753600000,
+      "address": "010-1357-1526",
+      "title": "정하은",
+      "body": "알겠어, 확인해볼게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 337
+  },
+  {
+    "identifier": "sms_10211_1764905940000",
+    "timestamp": 1764905940000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10211",
+      "messageType": 0,
+      "messageId": 10211,
+      "threadId": 14,
+      "date": 1764905940000,
+      "address": "010-5561-4506",
+      "title": "오태윤",
+      "body": "알겠어, 확인해볼게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 339
+  },
+  {
+    "identifier": "sms_10212_1764907140000",
+    "timestamp": 1764907140000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10212",
+      "messageType": 1,
+      "messageId": 10212,
+      "threadId": 14,
+      "date": 1764907140000,
+      "address": "010-5561-4506",
+      "title": "오태윤",
+      "body": "그때 빌려준 거 다음에 줄게!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 339
+  },
+  {
+    "identifier": "sms_10213_1764924780000",
+    "timestamp": 1764924780000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10213",
+      "messageType": 1,
+      "messageId": 10213,
+      "threadId": 6,
+      "date": 1764924780000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "사진 보냈어. 확인해봐!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 339
+  },
+  {
+    "identifier": "sms_10214_1764925620000",
+    "timestamp": 1764925620000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10214",
+      "messageType": 0,
+      "messageId": 10214,
+      "threadId": 6,
+      "date": 1764925620000,
+      "address": "010-7833-8721",
+      "title": "윤재호",
+      "body": "그래, 거기서 만나자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 339
+  },
+  {
+    "identifier": "sms_10215_1765001220000",
+    "timestamp": 1765001220000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10215",
+      "messageType": 1,
+      "messageId": 10215,
+      "threadId": 5,
+      "date": 1765001220000,
+      "address": "010-7603-2369",
+      "title": "임도경",
+      "body": "사진 보냈어. 확인해봐!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 340
+  },
+  {
+    "identifier": "sms_10216_1765015680000",
+    "timestamp": 1765015680000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10216",
+      "messageType": 1,
+      "messageId": 10216,
+      "threadId": 13,
+      "date": 1765015680000,
+      "address": "010-8926-9159",
+      "title": "장의철",
+      "body": "오늘 시간 있어? 밥 한번 먹자!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 340
+  },
+  {
+    "identifier": "sms_10217_1765151400000",
+    "timestamp": 1765151400000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10217",
+      "messageType": 0,
+      "messageId": 10217,
+      "threadId": 13,
+      "date": 1765151400000,
+      "address": "010-8926-9159",
+      "title": "장의철",
+      "body": "잠깐만, 지금 확인할게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 342
+  },
+  {
+    "identifier": "sms_10218_1765153140000",
+    "timestamp": 1765153140000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10218",
+      "messageType": 1,
+      "messageId": 10218,
+      "threadId": 13,
+      "date": 1765153140000,
+      "address": "010-8926-9159",
+      "title": "장의철",
+      "body": "오늘 오후에 클라이언트 미팅이에요",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 342
+  },
+  {
+    "identifier": "sms_10219_1765164360000",
+    "timestamp": 1765164360000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10219",
+      "messageType": 1,
+      "messageId": 10219,
+      "threadId": 5,
+      "date": 1765164360000,
+      "address": "010-7603-2369",
+      "title": "임도경",
+      "body": "그때 빌려준 거 다음에 줄게!",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 342
+  },
+  {
+    "identifier": "sms_10220_1765289040000",
+    "timestamp": 1765289040000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10220",
+      "messageType": 1,
+      "messageId": 10220,
+      "threadId": 14,
+      "date": 1765289040000,
+      "address": "010-5561-4506",
+      "title": "오태윤",
+      "body": "주말에 뭐 해? 같이 나가자",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 343
+  },
+  {
+    "identifier": "sms_10221_1765289460000",
+    "timestamp": 1765289460000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10221",
+      "messageType": 0,
+      "messageId": 10221,
+      "threadId": 14,
+      "date": 1765289460000,
+      "address": "010-5561-4506",
+      "title": "오태윤",
+      "body": "그래, 거기서 만나자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 343
+  },
+  {
+    "identifier": "sms_10222_1765497780000",
+    "timestamp": 1765497780000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10222",
+      "messageType": 1,
+      "messageId": 10222,
+      "threadId": 5,
+      "date": 1765497780000,
+      "address": "010-7603-2369",
+      "title": "임도경",
+      "body": "오늘 오후에 클라이언트 미팅이에요",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 346
+  },
+  {
+    "identifier": "sms_10223_1765530240000",
+    "timestamp": 1765530240000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10223",
+      "messageType": 0,
+      "messageId": 10223,
+      "threadId": 14,
+      "date": 1765530240000,
+      "address": "010-5561-4506",
+      "title": "오태윤",
+      "body": "그래, 거기서 만나자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 346
+  },
+  {
+    "identifier": "sms_10224_1765756560000",
+    "timestamp": 1765756560000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10224",
+      "messageType": 0,
+      "messageId": 10224,
+      "threadId": 1,
+      "date": 1765756560000,
+      "address": "010-5873-8527",
+      "title": "노지훈",
+      "body": "그래, 거기서 만나자",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 349
+  },
+  {
+    "identifier": "sms_10225_1765758300000",
+    "timestamp": 1765758300000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10225",
+      "messageType": 1,
+      "messageId": 10225,
+      "threadId": 1,
+      "date": 1765758300000,
+      "address": "010-5873-8527",
+      "title": "노지훈",
+      "body": "방금 메일 확인했어요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 349
+  },
+  {
+    "identifier": "sms_10226_1765843620000",
+    "timestamp": 1765843620000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10226",
+      "messageType": 0,
+      "messageId": 10226,
+      "threadId": 14,
+      "date": 1765843620000,
+      "address": "010-5561-4506",
+      "title": "오태윤",
+      "body": "오케이 알겠어!",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 350
+  },
+  {
+    "identifier": "sms_10227_1765929480000",
+    "timestamp": 1765929480000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10227",
+      "messageType": 0,
+      "messageId": 10227,
+      "threadId": 5,
+      "date": 1765929480000,
+      "address": "010-7603-2369",
+      "title": "임도경",
+      "body": "알려줘서 고마워",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 351
+  },
+  {
+    "identifier": "sms_10228_1766016540000",
+    "timestamp": 1766016540000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10228",
+      "messageType": 0,
+      "messageId": 10228,
+      "threadId": 8,
+      "date": 1766016540000,
+      "address": "010-5152-7532",
+      "title": "이수민",
+      "body": "잠깐만, 지금 확인할게",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 352
+  },
+  {
+    "identifier": "sms_10229_1766274660000",
+    "timestamp": 1766274660000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10229",
+      "messageType": 1,
+      "messageId": 10229,
+      "threadId": 2,
+      "date": 1766274660000,
+      "address": "010-7512-2646",
+      "title": "권성배",
+      "body": "생일 축하해! 🎂",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 355
+  },
+  {
+    "identifier": "sms_10230_1766448480000",
+    "timestamp": 1766448480000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10230",
+      "messageType": 1,
+      "messageId": 10230,
+      "threadId": 4,
+      "date": 1766448480000,
+      "address": "010-9318-3569",
+      "title": "송철민",
+      "body": "업무 관련해서 잠깐 통화 가능해요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 357
+  },
+  {
+    "identifier": "sms_10231_1767139140000",
+    "timestamp": 1767139140000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10231",
+      "messageType": 1,
+      "messageId": 10231,
+      "threadId": 1,
+      "date": 1767139140000,
+      "address": "010-5873-8527",
+      "title": "노지훈",
+      "body": "업무 관련해서 잠깐 통화 가능해요?",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 365
+  },
+  {
+    "identifier": "sms_10232_1767140820000",
+    "timestamp": 1767140820000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10232",
+      "messageType": 0,
+      "messageId": 10232,
+      "threadId": 1,
+      "date": 1767140820000,
+      "address": "010-5873-8527",
+      "title": "노지훈",
+      "body": "좋아! 기대된다",
+      "isIncoming": 1,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 365
+  },
+  {
+    "identifier": "sms_10233_1767189180000",
+    "timestamp": 1767189180000,
+    "event_source": "SMS",
+    "payload": {
+      "messageTypeAndId": "sms_10233",
+      "messageType": 1,
+      "messageId": 10233,
+      "threadId": 13,
+      "date": 1767189180000,
+      "address": "010-8926-9159",
+      "title": "장의철",
+      "body": "지금 어디야? 나 근처야",
+      "isIncoming": 0,
+      "creator": "com.android.mms"
+    },
+    "contextGroupId": 365
+  }
+]

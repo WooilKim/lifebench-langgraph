@@ -139,7 +139,7 @@ def _convert_notification(noti):  # type: (dict) -> dict
         "identifier": f"noti_{event_id}_{timestamp}",
         "timestamp": timestamp,
         "event_source": "NOTIFICATION",
-        "payload": json.dumps(payload, ensure_ascii=False),
+        "payload": payload,
         "contextGroupId": None,
     }
 
