@@ -145,20 +145,26 @@
       <span class="ss-title" style="color:#60a5fa">실제 수집 데이터 (10명)</span>
     </div>
     <div class="ss-path">data/person.json + data/refer.json</div>
-    <div class="ss-note">설문·수집으로 확보한 기본 인물 정보 (이름·나이·직업) + 속성 풀 (취미·성격·직업 후보값)</div>
+    <div class="ss-note">설문·수집으로 확보한 기본 인물 정보 (이름·나이·<b>직업·소속</b>) + 속성 풀 (취미·목표·가치관 후보값)<br>
+    <span style="color:#f87171;font-size:10px">※ refer.json에 직업 137개가 있으나 실제 프롬프트에 사용되지 않음. 직업은 설문 데이터 그대로 사용.</span></div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 person.json</div><pre><span class="ck">// 실제 수집 데이터 10명</span>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 person.json</div><pre><span class="ck">// 실제 설문 수집 10명</span>
 {"name":<span class="cs">"冯浩然"</span>,
  "age":<span class="cn">27</span>,
+ "gender":<span class="cs">"男"</span>,
  "job":<span class="cs">"金融投资顾问"</span>,
- "gender":<span class="cs">"男"</span>}</pre></div>
+ "occupation":<span class="cs">"华泰证券股份有限公司"</span>}
+<span class="ck">// ↑ 직업은 설문 원본 그대로 사용</span>
+<span class="ck">// refer.json 직업 137개는 미사용</span></pre></div>
       <div class="io-box"><div class="io-lbl text-amber-400">📦 refer.json</div><pre><span class="ck">// 랜덤 속성 풀 (20개 카테고리)</span>
 <span class="cs">"兴趣"</span>: 100개 취미 후보
 <span class="cs">"价值观"</span>: 17개 가치관 후보
 <span class="cs">"目标规划"</span>: 20개 목표 후보
-<span class="cs">"职业"</span>: 137개 직업 후보
-<span class="cs">"人格"</span>: 16개 MBTI 후보
-<span class="cs">"健康状况"</span>: 4개 건강 상태
+<span class="cs">"兴趣"</span>: 100개 취미 후보 <span class="cb">← 실제 사용</span>
+<span class="cs">"目标规划"</span>: 20개 목표 후보 <span class="cb">← 실제 사용</span>
+<span class="cs">"价值观"</span>: 17개 가치관 후보 <span class="cb">← 실제 사용</span>
+<span class="cr">"职业"</span>: 137개 <span class="cr">← 미사용</span>
+<span class="cr">"人格"</span>: 16개 MBTI <span class="cr">← 미사용</span>
 <span class="cg">... 총 20개 카테고리</span></pre></div>
     </div>
   </div>
@@ -178,13 +184,14 @@
       <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// person.json + refer.json 랜덤 선택</span>
 {"name":<span class="cs">"冯浩然"</span>, "age":<span class="cn">27</span>}
 
-<span class="ck">// refer.json에서 랜덤 추출 (매 호출마다 다름)</span>
-hobbies: [<span class="cs">"跑步"</span>, <span class="cs">"弹吉他"</span>, <span class="cs">"摄影"</span> ...]
-         <span class="cb">// 100개 중 12개 무작위 선택</span>
-aim:     [<span class="cs">"长期职业目标"</span>, <span class="cs">"短期健康目标"</span> ...]
-         <span class="cb">// 20개 중 6개 무작위 선택</span>
-traits:  [<span class="cs">"家庭导向"</span>, <span class="cs">"事业导向"</span> ...]
-         <span class="cb">// 17개 중 6개 무작위 선택</span></pre></div>
+<span class="ck">// refer.json 랜덤 추출 (3개만 실제 사용)</span>
+hobbies: [<span class="cs">"跑步"</span>, <span class="cs">"弹吉他"</span>...]
+         <span class="cb">// 兴趣 100개 → 12개 샘플</span>
+aim:     [<span class="cs">"长期职业目标"</span>...]
+         <span class="cb">// 目标规划 20개 → 6개 샘플</span>
+traits:  [<span class="cs">"家庭导向"</span>...]
+         <span class="cb">// 价值观 17개 → 6개 샘플</span>
+<span class="cr">직업은 person.json 원본 그대로</span></pre></div>
       <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 기본 프로파일</span>
 {"mbti":<span class="cs">"ENTJ"</span>,
  "economic_level":<span class="cs">"高"</span>,
