@@ -146,6 +146,21 @@
     </div>
     <div class="ss-path">data/person.json + data/refer.json</div>
     <div class="ss-note">설문·수집으로 확보한 기본 인물 정보 (이름·나이·직업) + 속성 풀 (취미·성격·직업 후보값)</div>
+    <div class="io">
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 person.json</div><pre><span class="ck">// 실제 수집 데이터 10명</span>
+{"name":<span class="cs">"冯浩然"</span>,
+ "age":<span class="cn">27</span>,
+ "job":<span class="cs">"金融投资顾问"</span>,
+ "gender":<span class="cs">"男"</span>}</pre></div>
+      <div class="io-box"><div class="io-lbl text-amber-400">📦 refer.json</div><pre><span class="ck">// 랜덤 속성 풀 (20개 카테고리)</span>
+<span class="cs">"兴趣"</span>: 100개 취미 후보
+<span class="cs">"价值观"</span>: 17개 가치관 후보
+<span class="cs">"目标规划"</span>: 20개 목표 후보
+<span class="cs">"职业"</span>: 137개 직업 후보
+<span class="cs">"人格"</span>: 16개 MBTI 후보
+<span class="cs">"健康状况"</span>: 4개 건강 상태
+<span class="cg">... 총 20개 카테고리</span></pre></div>
+    </div>
   </div>
   <div class="ss-arrow">↓</div>
 
@@ -160,10 +175,16 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// person.json 1개</span>
-{"name":<span class="cs">"冯浩然"</span>,
- "age":<span class="cn">27</span>,
- "job":<span class="cs">"金融投资顾问"</span>}</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// person.json + refer.json 랜덤 선택</span>
+{"name":<span class="cs">"冯浩然"</span>, "age":<span class="cn">27</span>}
+
+<span class="ck">// refer.json에서 랜덤 추출 (매 호출마다 다름)</span>
+hobbies: [<span class="cs">"跑步"</span>, <span class="cs">"弹吉他"</span>, <span class="cs">"摄影"</span> ...]
+         <span class="cb">// 100개 중 12개 무작위 선택</span>
+aim:     [<span class="cs">"长期职业目标"</span>, <span class="cs">"短期健康目标"</span> ...]
+         <span class="cb">// 20개 중 6개 무작위 선택</span>
+traits:  [<span class="cs">"家庭导向"</span>, <span class="cs">"事业导向"</span> ...]
+         <span class="cb">// 17개 중 6개 무작위 선택</span></pre></div>
       <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 기본 프로파일</span>
 {"mbti":<span class="cs">"ENTJ"</span>,
  "economic_level":<span class="cs">"高"</span>,
@@ -183,8 +204,12 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>기본 프로파일
-(직업·취미·거주지)</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// gen_profile() 결과</span>
+{"name":<span class="cs">"冯浩然"</span>,
+ "mbti":<span class="cs">"ENTJ"</span>,
+ "job":<span class="cs">"金融投资顾问"</span>,
+ "hobbies":[<span class="cs">"跑步"</span>, ...],
+ "relation":[] <span class="cb">// 아직 빈 배열</span>}</pre></div>
       <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 관계망 목록</span>
 [{"name":<span class="cs">"张伟"</span>,
   "relation":<span class="cs">"동료"</span>,
@@ -205,8 +230,13 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>관계망 각 연락처
-(이름·관계)</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 페르소나 + 관계망 뼈대</span>
+{"persona": {...},
+ "relations": [
+  {"name":<span class="cs">"张伟"</span>,
+   "relation":<span class="cs">"同事"</span>,
+   "social_circle":<span class="cs">"职场"</span>},
+  <span class="cg">... 20~26명 뼈대</span>]}</pre></div>
       <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 연락처 상세</span>
 {"name":<span class="cs">"张伟"</span>,
  "phone":<span class="cs">"138..."</span>,
