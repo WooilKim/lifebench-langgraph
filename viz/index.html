@@ -481,7 +481,12 @@ traits:  [<span class="cs">"家庭导向"</span>...]
       <span class="npill np-new">👤 persona_gen</span>
       <span class="badge b-llm">LLM ×1</span><span class="badge b-ko">KO</span>
         <div class="ss-path">nodes/persona_gen.py</div>
-    <div class="ss-note">person_gen의 name/age/gender/job을 고정하고 나머지 필드를 LLM으로 일괄 확장. 직업·나이에 어울리는 MBTI·취미·성격·인간관계 생성.</div>
+    <div class="ss-note">
+      person_gen의 name/age/gender/job을 고정하고 3단계 LLM 호출로 확장:<br>
+      <b>gen_profile()</b>: MBTI·취미·성격·학력·건강·생활 설명 생성 (template_refine 기반)<br>
+      <b>gen_relations()</b>: 관계망 10~15명 뼈대 생성 (template_relation_1 기반)<br>
+      <b>gen_persons()</b>: 각 연락처 상세 정보 생성 (template_person 기반)
+    </div>
     <div class="pb-wrap">
       <div class="pb" data-new-k="persona_gen" data-lang="kr">로딩 중…</div>
     </div>
