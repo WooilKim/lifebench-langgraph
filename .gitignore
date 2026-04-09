@@ -4,3 +4,4 @@ __pycache__/
 *.pyo
 output/
 .DS_Store
+data/korean_names.json
