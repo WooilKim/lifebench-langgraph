@@ -260,33 +260,66 @@ traits:  [<span class="cs">"家庭导向"</span>, <span class="cs">"事业导向
 <div class="nc">
   <div class="vs-note">← ORIG 5단계 → 2단계 (person_gen + persona_gen)</div>
 
-  <!-- person_gen: 이름·나이·성별·직업 생성 -->
+  <!-- person_gen Phase 1: 이름·나이·성별 (규칙 기반) -->
   <div class="ss ss-new">
     <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">🪪 person_gen</span>
-      <span class="badge b-rule">완전 규칙 기반</span>
-      <span class="badge b-ko">LLM 없음</span>
+      <span class="npill np-new">🪪 person_gen <span style="font-size:9px;opacity:0.7">Phase 1</span></span>
+      <span class="badge b-rule">규칙 기반</span>
     </div>
-    <div class="ss-path">nodes/person_gen.py</div>
+    <div class="ss-path">nodes/person_gen.py — generate_persons() Phase 1</div>
     <div class="ss-note">
-      <b>성별</b>: 50/50 랜덤 배분 후 섞기<br>
-      <b>이름</b>: 성씨(통계청 분포) + 이름(koreanname.me 성별 전용 풀, count 가중치)<br>
-      &nbsp;&nbsp;→ 남성 이름 풀 ↔ 여성 이름 풀 교차 없음<br>
-      <b>나이</b>: 25~55 가중 분포 (18~70 전범위)<br>
-      <b>직업</b>: 나이대 × 성별 가중치 테이블에서 랜덤 선택 <span class="badge b-rule">LLM 없음</span>
+      <b>성별</b>: 50/50 배분 후 shuffle<br>
+      <b>성씨</b>: 통계청 2020 분포 가중 샘플링<br>
+      <b>이름</b>: 성별 전용 풀(koreanname.me top 500)에서 count 가중치 샘플링<br>
+      &nbsp;&nbsp;&nbsp;→ 남성 이름은 남성에게만, 여성 이름은 여성에게만<br>
+      <b>나이</b>: 18~70 가중 랜덤 (25~55 구간 가중치 높음)
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// state</span>
-{"count":<span class="cn">3</span>,
- "provider":<span class="cs">"claude"</span>}
-
-<span class="ck">// 성씨 분포 (통계청 2020)</span>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 통계청 성씨 분포</span>
 김(19.3%) 이(14.1%) 박(8.4%)
 최(4.7%) 정(4.4%) ...
 
-<span class="ck">// koreanname.me top 500</span>
-남: 민준·서준·도윤·예준...
-여: 서윤·서연·지우·하윤...</pre></div>
+<span class="ck">// koreanname.me 성별 전용 풀</span>
+남자 이름: 민준(39302) 서준(36516)
+          도윤(33689) 예준(31247)...
+여자 이름: 서윤(42856) 서연(38921)
+          지우(35102) 하윤(33654)...</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// skeletons (직업 없음)</span>
+[{"name":<span class="cs">"박준혁"</span>,
+  "age":<span class="cn">46</span>,
+  "gender":<span class="cs">"남"</span>},
+ {"name":<span class="cs">"김서연"</span>,
+  "age":<span class="cn">32</span>,
+  "gender":<span class="cs">"여"</span>},
+ <span class="cg">...</span>]</pre></div>
+    </div>
+  </div>
+  <div class="ss-arrow ss-arrow-g">↓</div>
+
+  <!-- person_gen Phase 2: 직업 (LLM) -->
+  <div class="ss ss-new">
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="npill np-new">💼 person_gen <span style="font-size:9px;opacity:0.7">Phase 2</span></span>
+      <span class="badge b-llm">LLM</span>
+    </div>
+    <div class="ss-path">nodes/person_gen.py — generate_persons() Phase 2</div>
+    <div class="ss-note">
+      나이대 × 성별 가중치 후보 목록 생성 후 LLM이 가장 자연스러운 직업 선택.<br>
+      예: 29세 여성 → [간호사(8), 초등학교 교사(6), 회계사(5)...] 중 선택
+    </div>
+    <div class="pb-wrap">
+      <div class="pb pb-rule">{name}({age}세, {gender}성)에게 가장 자연스러운 직업 하나를 고르세요.
+후보: {candidates[:8]}
+직업 이름만 출력하세요. 설명 없이.</div>
+    </div>
+    <div class="io">
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// skeleton + 후보 목록</span>
+{"name":<span class="cs">"박준혁"</span>,
+ "age":<span class="cn">46</span>, "gender":<span class="cs">"남"</span>}
+
+<span class="ck">// 나이×성별 후보 (가중치순)</span>
+이사(6) 임원(6) 공기업부장(6)
+자영업자(5) 교장(4) 의사(5)...</pre></div>
       <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// state.persons</span>
 [{"name":<span class="cs">"박준혁"</span>,
   "age":<span class="cn">46</span>,
@@ -295,8 +328,7 @@ traits:  [<span class="cs">"家庭导向"</span>, <span class="cs">"事业导向
  {"name":<span class="cs">"김서연"</span>,
   "age":<span class="cn">32</span>,
   "gender":<span class="cs">"여"</span>,
-  "job":<span class="cs">"간호사"</span>},
- <span class="cg">...</span>]</pre></div>
+  "job":<span class="cs">"간호사"</span>}]</pre></div>
     </div>
   </div>
   <div class="ss-arrow ss-arrow-g">↓</div>
@@ -311,7 +343,6 @@ traits:  [<span class="cs">"家庭导向"</span>, <span class="cs">"事业导向
     <div class="ss-note">person_gen의 name/age/gender/job을 고정하고 나머지 필드를 LLM으로 일괄 확장. 직업·나이에 어울리는 MBTI·취미·성격·인간관계 생성.</div>
     <div class="pb-wrap">
       <div class="pb" data-new-k="persona_gen" data-lang="kr">로딩 중…</div>
-      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
       <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// state.persons (고정값)</span>

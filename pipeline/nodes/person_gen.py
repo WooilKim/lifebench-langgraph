@@ -1,17 +1,21 @@
 """person_gen node — generates basic person records (name, age, gender, job).
 
-All generation is rule-based (no LLM):
-  - Gender: 50/50 random
-  - Surname: 2020 census distribution (top 30)
-  - Given name: koreanname.me ranking data, gender-matched, count-weighted
-                → Male names only for 남, Female names only for 여
-  - Age: weighted random (25–55 dominant)
-  - Job: randomly selected from age × gender-weighted candidate pool
+Two-phase approach:
+  Phase 1 (rule-based, no LLM):
+    - Gender: 50/50 random
+    - Surname: 2020 census distribution (top 30)
+    - Given name: koreanname.me ranking data, gender-matched, count-weighted
+                  → Male names only for 남, Female names only for 여
+    - Age: weighted random (25–55 dominant)
+
+  Phase 2 (LLM):
+    - Job: LLM selects from age × gender-appropriate candidate list
 """
 import json
 import random
 from pathlib import Path
 from typing import Optional
+from langchain_core.messages import HumanMessage
 from pipeline.full_state import FullPipelineState
 
 
@@ -151,14 +155,31 @@ _JOB_TABLE = {
 }
 
 
-def _sample_job(age: int, gender: str) -> str:
-    """Pick a job from age-appropriate pool, weighted by gender (no LLM)."""
+def _candidate_jobs(age: int, gender: str) -> list:
+    """Return ordered job candidates for (age, gender), weighted list for display."""
     for (lo, hi), entries in _JOB_TABLE.items():
         if lo <= age <= hi:
-            jobs    = [e[0] for e in entries]
-            weights = [e[1] if gender == "남" else e[2] for e in entries]
-            return random.choices(jobs, weights=weights, k=1)[0]
-    return "자영업자"
+            weights = [(e[0], e[1] if gender == "남" else e[2]) for e in entries]
+            # Sort by weight descending, return names only
+            return [e[0] for e in sorted(weights, key=lambda x: -x[1])]
+    return ["자영업자", "프리랜서"]
+
+
+def _get_llm(provider: str):
+    p = (provider or "claude").lower()
+    if p == "claude":
+        from langchain_anthropic import ChatAnthropic
+        from llm.config import CLAUDE_MODEL, ANTHROPIC_API_KEY
+        return ChatAnthropic(model=CLAUDE_MODEL, api_key=ANTHROPIC_API_KEY, max_tokens=128)
+    if p == "gpt":
+        from langchain_openai import ChatOpenAI
+        from llm.config import GPT_MODEL, OPENAI_API_KEY
+        return ChatOpenAI(model=GPT_MODEL, api_key=OPENAI_API_KEY, max_tokens=128)
+    if p == "glm":
+        from langchain_openai import ChatOpenAI
+        from llm.config import GLM_MODEL, GLM_API_KEY, GLM_BASE_URL
+        return ChatOpenAI(model=GLM_MODEL, api_key=GLM_API_KEY, base_url=GLM_BASE_URL, max_tokens=128)
+    raise ValueError(f"Unknown provider: {p!r}")
 
 
 # ── Age pool ──────────────────────────────────────────────────────────────────
@@ -171,44 +192,63 @@ _AGE_POOL = (
 
 
 def generate_persons(state: FullPipelineState) -> FullPipelineState:
-    """Step -1: Generate basic person skeletons (name, age, gender, job) — no LLM.
+    """Step -1: Generate basic person skeletons (name, age, gender, job).
 
-    Name-gender matching algorithm:
-    1. Gender is assigned first (50/50 pool, shuffled)
-    2. Surname sampled from 2020 census distribution
-    3. Given name sampled from gender-specific koreanname.me pool
-       → Male names only assigned to 남, Female names only to 여
-    4. Age sampled from working-age weighted pool
-    5. Job sampled from age×gender weight table (no LLM)
+    Phase 1 — Rule-based (no LLM):
+      1. Gender assigned 50/50, shuffled
+      2. Surname sampled from 2020 census distribution
+      3. Given name from gender-specific koreanname.me pool (count-weighted)
+         → Male names only → 남, Female names only → 여 (never crossed)
+      4. Age from working-age weighted pool
+
+    Phase 2 — LLM:
+      5. Job: LLM selects from age×gender-appropriate candidate list
     """
-    count = max(1, state.get("count", 1))
+    provider = state.get("provider", "claude")
+    count    = max(1, state.get("count", 1))
 
-    # Distribute genders 50/50 then shuffle
+    # ── Phase 1: rule-based name/age/gender ─────────────────────────────────────
     genders = (["남"] * ((count + 1) // 2) + ["여"] * (count // 2))
     random.shuffle(genders)
 
-    persons = []
-    used_names = set()  # 이름 중복 방지
-
+    skeletons = []
+    used_names: set = set()
     for i in range(count):
         gender = genders[i]
         age    = random.choice(_AGE_POOL)
-
-        # 이름 중복 방지 (최대 10회 시도)
         for _ in range(10):
             name = _sample_name(gender)
             if name not in used_names:
                 break
         used_names.add(name)
+        skeletons.append({"name": name, "age": age, "gender": gender})
 
-        job = _sample_job(age, gender)
+    print(f"[person_gen] Phase 1 done: {[(s['name'], s['age'], s['gender']) for s in skeletons]}")
 
-        persons.append({
-            "name":   name,
-            "age":    age,
-            "gender": gender,
-            "job":    job,
-        })
-        print(f"[person_gen] {i+1}/{count}: {name} ({age}세 {gender}, {job})")
+    # ── Phase 2: LLM assigns job ─────────────────────────────────────────
+    llm = _get_llm(provider)
+    persons = []
+    for i, s in enumerate(skeletons):
+        candidates = _candidate_jobs(s["age"], s["gender"])
+        prompt = (
+            f"{s['name']}({s['age']}세, {s['gender']}성)에게 가장 자연스러운 직업 하나를 고르세요.\n"
+            f"후보: {', '.join(candidates[:8])}\n"
+            f"직업 이름만 출력하세요. 설명 없이."
+        )
+        job = candidates[0]  # fallback
+        try:
+            resp = llm.invoke([HumanMessage(content=prompt)])
+            raw  = resp.content.strip().strip('"').strip("'")
+            for c in candidates:
+                if c in raw or raw in c:
+                    job = c
+                    break
+            else:
+                job = raw if raw else candidates[0]
+        except Exception as e:
+            print(f"[person_gen] LLM error for {s['name']}: {e}. Using fallback.")
+
+        persons.append({"name": s["name"], "age": s["age"], "gender": s["gender"], "job": job})
+        print(f"[person_gen] {i+1}/{count}: {s['name']} ({s['age']}세 {s['gender']}, {job})")
 
     return {**state, "persons": persons}
