@@ -8,59 +8,68 @@
   <script>
     tailwind.config = {
       darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: '#6366f1',
-            replaced: '#f59e0b',
-          }
-        }
-      }
+      theme: { extend: { colors: { brand: '#6366f1', replaced: '#f59e0b' } } }
     }
   </script>
   <style>
-    .node {
+    /* Node styles */
+    .node-pill {
+      position: relative;
+      display: inline-flex; flex-direction: column; align-items: center;
+      cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .node-pill:hover { transform: translateY(-3px); }
+    .node-box {
       display: inline-flex; align-items: center; justify-content: center;
-      padding: 7px 20px; border-radius: 8px; font-size: 13px; font-weight: 600;
-      transition: all 0.2s;
+      padding: 10px 26px; border-radius: 10px; font-size: 14px; font-weight: 700;
+      letter-spacing: 0.01em; white-space: nowrap;
     }
-    .node-base     { background: #1e3a5f; color: #bfdbfe; border: 2px solid #3b82f6; }
-    .node-variant  { background: #78350f; color: #fef3c7; border: 2px solid #f59e0b; }
-    .node-shared   { background: #1e293b; color: #94a3b8; border: 2px solid #475569; }
-    .node-end      { background: #1f2937; color: #6b7280; border: 2px dashed #4b5563; }
-    .node-replaced-base    { background: #1e3a5f; color: #93c5fd; border: 2px solid #3b82f6; opacity: 0.5; text-decoration: line-through; }
-    .node-replaced-variant { background: #78350f; color: #fef3c7; border: 2px solid #f59e0b; box-shadow: 0 0 10px rgba(245,158,11,0.4); }
+    .node-base    { background: #1e3a5f; color: #bfdbfe; border: 2px solid #3b82f6; box-shadow: 0 0 12px rgba(59,130,246,0.2); }
+    .node-variant { background: #78350f; color: #fef3c7; border: 2px solid #f59e0b; box-shadow: 0 0 12px rgba(245,158,11,0.3); }
+    .node-shared  { background: #1e293b; color: #94a3b8; border: 2px solid #475569; }
+    .node-end     { background: #111827; color: #4b5563; border: 2px dashed #374151; }
+    .node-replaced-base    { background: #1e3a5f; color: #60a5fa; border: 2px solid #3b82f6; opacity: 0.45; }
+    .node-replaced-base .node-box { text-decoration: line-through; }
+    .node-replaced-variant { background: #78350f; color: #fef3c7; border: 2px solid #f59e0b; box-shadow: 0 0 16px rgba(245,158,11,0.5); }
 
-    .arrow { color: #4b5563; font-size: 18px; margin: 0 4px; }
+    /* Arrow */
+    .arrow { color: #4b5563; font-size: 22px; margin: 0 2px; user-select: none; align-self: center; padding-top: 8px; }
 
-    .diff-badge {
-      display: inline-flex; align-items: center; gap: 4px;
-      font-size: 11px; padding: 2px 8px; border-radius: 999px; font-weight: 600;
+    /* Replace slot */
+    .replace-slot { display: inline-flex; flex-direction: column; align-items: center; gap: 6px; }
+    .replace-slot-label { font-size: 9px; font-weight: 800; letter-spacing: 0.08em; padding: 2px 6px; border-radius: 3px; }
+
+    /* Tooltip */
+    .tooltip {
+      position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%);
+      width: 320px; background: #0f172a; border: 1px solid #334155;
+      border-radius: 10px; padding: 14px; z-index: 100;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      pointer-events: none; opacity: 0; transition: opacity 0.15s;
+      text-align: left; font-family: ui-monospace, monospace;
     }
+    .node-pill:hover .tooltip { opacity: 1; }
+    /* Keep tooltip inside viewport on edges */
+    .node-pill:first-child .tooltip { left: 0; transform: none; }
+    .node-pill:last-of-type .tooltip { left: auto; right: 0; transform: none; }
+
+    /* View buttons */
     .view-btn {
-      padding: 6px 16px; border-radius: 6px; font-size: 12px; font-weight: 600;
+      padding: 7px 18px; border-radius: 7px; font-size: 12px; font-weight: 700;
       border: 2px solid transparent; cursor: pointer; transition: all 0.15s;
     }
-    .view-btn-active-base    { background: #1e3a5f; color: #bfdbfe; border-color: #3b82f6; }
-    .view-btn-active-variant { background: #78350f; color: #fef3c7; border-color: #f59e0b; }
-    .view-btn-active-both    { background: #1a1f2e; color: #c4b5fd; border-color: #6366f1; }
-    .view-btn-inactive       { background: #1f2937; color: #6b7280; border-color: #374151; }
+    .vb-base    { background: #1e3a5f; color: #bfdbfe; border-color: #3b82f6; }
+    .vb-variant { background: #78350f; color: #fef3c7; border-color: #f59e0b; }
+    .vb-both    { background: #1a1437; color: #c4b5fd; border-color: #6366f1; }
+    .vb-off     { background: #1f2937; color: #6b7280; border-color: #374151; }
 
-    .replace-slot {
-      display: inline-flex; flex-direction: column; align-items: center; gap: 3px;
-      vertical-align: middle;
-    }
-    .replace-label {
-      font-size: 9px; font-weight: 700; letter-spacing: 0.05em;
-      padding: 1px 5px; border-radius: 3px;
+    /* Flow container */
+    .flow-container {
+      display: flex; flex-wrap: wrap; align-items: flex-start;
+      gap: 8px; padding: 32px 28px; min-height: 120px;
     }
 
     pre { white-space: pre-wrap; word-break: break-word; }
-
-    .flow-wrap {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
-      padding: 16px;
-    }
   </style>
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen font-mono">
@@ -72,28 +81,23 @@
     <p class="text-xs text-gray-500 mt-0.5">Pipeline Comparison Visualizer</p>
   </div>
   <div class="flex gap-3 items-center">
-    <button onclick="loadFile()" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded border border-gray-700">
-      Load comparison_result.json
-    </button>
-    <button onclick="toggleDark()" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded border border-gray-700">
-      Toggle Dark
-    </button>
+    <button onclick="loadFile()" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded border border-gray-700">Load JSON</button>
+    <button onclick="toggleDark()" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded border border-gray-700">Toggle Dark</button>
   </div>
 </header>
 
-<!-- No data placeholder -->
+<!-- Placeholder -->
 <div id="placeholder" class="flex flex-col items-center justify-center h-96 text-gray-600">
   <div class="text-5xl mb-4">📊</div>
   <p class="text-lg mb-2">No comparison data loaded</p>
   <p class="text-sm">Run <code class="bg-gray-800 px-1 rounded">python compare.py --user fenghaoran --variant llm_enriched</code></p>
-  <p class="text-sm mt-1">then click <strong>Load comparison_result.json</strong> above.</p>
   <p class="text-xs mt-4 text-gray-700">Or the page auto-loads <code>./comparison_result.json</code> on startup.</p>
 </div>
 
-<!-- Main content -->
+<!-- Main -->
 <main id="main" class="hidden px-6 py-6 space-y-8">
 
-  <!-- Meta row -->
+  <!-- Meta -->
   <section class="grid grid-cols-2 gap-4 md:grid-cols-4">
     <div class="bg-gray-900 rounded-lg p-4 border border-gray-800">
       <p class="text-xs text-gray-500 uppercase tracking-wider">User</p>
@@ -115,9 +119,11 @@
 
   <!-- Graph section -->
   <section>
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400">Graph Structure</h2>
-      <!-- View toggle -->
+    <div class="flex items-center justify-between mb-3">
+      <div>
+        <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400">Graph Structure</h2>
+        <p class="text-xs text-gray-600 mt-0.5">Hover over a node to see details</p>
+      </div>
       <div class="flex gap-2">
         <button id="btn-base"    onclick="setView('base')"    class="view-btn">Base only</button>
         <button id="btn-variant" onclick="setView('variant')" class="view-btn">Variant only</button>
@@ -128,13 +134,13 @@
     <!-- Legend -->
     <div id="legend" class="flex flex-wrap gap-4 mb-3 text-xs text-gray-400"></div>
 
-    <!-- Graph container -->
-    <div class="bg-gray-900 rounded-lg border border-gray-800 min-h-20">
-      <div id="graph-flow" class="flow-wrap"></div>
+    <!-- Graph -->
+    <div class="bg-gray-900 rounded-xl border border-gray-800">
+      <div id="graph-flow" class="flow-container"></div>
     </div>
 
-    <!-- Replaced node detail (shown in Both view) -->
-    <div id="replaced-detail" class="hidden mt-3 space-y-2"></div>
+    <!-- Replaced detail -->
+    <div id="replaced-detail" class="hidden mt-4 space-y-3"></div>
   </section>
 
   <!-- Diff stats -->
@@ -147,7 +153,7 @@
     </div>
   </section>
 
-  <!-- Sample events side-by-side -->
+  <!-- Sample events -->
   <section>
     <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">Sample Events</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -167,74 +173,132 @@
 <input type="file" id="file-input" accept=".json" class="hidden" onchange="onFileSelected(event)" />
 
 <script>
+  // ── Node metadata (descriptions, input, output, example) ─────────────────────
+  const NODE_INFO = {
+    loader: {
+      emoji: '📂',
+      title: 'loader',
+      desc: 'Reads raw JSON files from the user\'s data directory into pipeline state.',
+      file: 'pipeline/nodes/loader.py',
+      input: [
+        'persona.json — character profile',
+        'daily_event.json — 4,000–5,000 daily events',
+        'phone_data/call.json — raw call records',
+        'phone_data/sms.json — raw SMS records',
+        'phone_data/push.json — raw push notifications',
+      ],
+      output: [
+        'state.persona',
+        'state.daily_events',
+        'state.raw_calls',
+        'state.raw_sms',
+        'state.raw_push',
+      ],
+      example_in:  '{ "data_dir": "data/fenghaoran", "user_id": "fenghaoran" }',
+      example_out: '{ "raw_calls": [...], "raw_sms": [...], "raw_push": [...] }',
+    },
+    call_gen: {
+      emoji: '📞',
+      title: 'call_gen',
+      desc: 'Rule-based conversion of raw call records into BehaviorEventEntity format. No LLM — pure data mapping.',
+      file: 'pipeline/nodes/call_gen.py',
+      input: ['state.raw_calls — list of raw call dicts'],
+      output: ['state.generated_calls — BehaviorEventEntity list'],
+      example_in:  '{ "datetime": "2025-01-02 09:15:00", "direction": 1, "call_result": "answered" }',
+      example_out: '{ "identifier": "call_42_...", "event_source": "CALL_LOG", "payload": "{...}" }',
+    },
+    sms_gen: {
+      emoji: '💬',
+      title: 'sms_gen',
+      desc: 'Rule-based conversion of raw SMS into BehaviorEventEntity. Assigns thread IDs per contact. No LLM.',
+      file: 'pipeline/nodes/sms_gen.py',
+      input: ['state.raw_sms — list of raw SMS dicts'],
+      output: ['state.generated_sms — BehaviorEventEntity list'],
+      example_in:  '{ "datetime": "2025-03-10 14:22:00", "message_type": "Send", "body": "On my way!" }',
+      example_out: '{ "identifier": "sms_1860_...", "event_source": "SMS", "payload": "{...}" }',
+    },
+    noti_gen: {
+      emoji: '🔔',
+      title: 'noti_gen',
+      desc: 'Maps raw push notifications to BehaviorEventEntity. Resolves app names to package names via a lookup table.',
+      file: 'pipeline/nodes/noti_gen.py',
+      input: ['state.raw_push — list of raw push dicts'],
+      output: ['state.generated_noti — BehaviorEventEntity list'],
+      example_in:  '{ "appName": "WeChat", "title": "New message", "text": "Come check this out!" }',
+      example_out: '{ "identifier": "noti_6_...", "payload": "{ \\"packageName\\": \\"com.tencent.mm\\" ...}" }',
+    },
+    formatter: {
+      emoji: '🗂️',
+      title: 'formatter',
+      desc: 'Merges all generated events, sorts by timestamp, and assigns contextGroupId (one group per calendar day).',
+      file: 'pipeline/nodes/formatter.py',
+      input: [
+        'state.generated_calls',
+        'state.generated_sms',
+        'state.generated_noti',
+      ],
+      output: ['state.events — merged, sorted, contextGroupId-assigned list'],
+      example_in:  '[ call_events[], sms_events[], noti_events[] ]',
+      example_out: '[ { "identifier": "...", "timestamp": 1696107600000, "contextGroupId": 1 }, ... ]',
+    },
+  };
+
+  // ── State ────────────────────────────────────────────────────────────────────
   let currentData = null;
   let currentView = 'both';
 
+  // ── Boot ─────────────────────────────────────────────────────────────────────
   window.addEventListener('DOMContentLoaded', () => {
     fetch('./comparison_result.json')
-      .then(r => { if (!r.ok) throw new Error('not found'); return r.json(); })
+      .then(r => { if (!r.ok) throw new Error(); return r.json(); })
       .then(data => render(data))
       .catch(() => {});
   });
 
   function loadFile() { document.getElementById('file-input').click(); }
   function onFileSelected(e) {
-    const file = e.target.files[0];
-    if (!file) return;
+    const file = e.target.files[0]; if (!file) return;
     const reader = new FileReader();
-    reader.onload = ev => {
-      try { render(JSON.parse(ev.target.result)); }
-      catch(err) { alert('Invalid JSON: ' + err.message); }
-    };
+    reader.onload = ev => { try { render(JSON.parse(ev.target.result)); } catch(err) { alert('Invalid JSON'); } };
     reader.readAsText(file);
   }
   function toggleDark() { document.documentElement.classList.toggle('dark'); }
 
-  // ── View toggle ──────────────────────────────────────────────────────────────
-  function setView(view) {
-    currentView = view;
-    updateViewButtons();
-    if (currentData) renderGraph(currentData);
-  }
+  // ── View ─────────────────────────────────────────────────────────────────────
+  function setView(v) { currentView = v; updateViewBtns(); if (currentData) renderGraph(currentData); }
 
-  function updateViewButtons() {
-    const map = {
-      base:    { id: 'btn-base',    active: 'view-btn-active-base' },
-      variant: { id: 'btn-variant', active: 'view-btn-active-variant' },
-      both:    { id: 'btn-both',    active: 'view-btn-active-both' },
-    };
-    Object.entries(map).forEach(([key, { id, active }]) => {
-      const btn = document.getElementById(id);
-      btn.className = 'view-btn ' + (currentView === key ? active : 'view-btn-inactive');
+  function updateViewBtns() {
+    const cfg = { base: 'vb-base', variant: 'vb-variant', both: 'vb-both' };
+    ['base','variant','both'].forEach(k => {
+      document.getElementById('btn-' + k).className =
+        'view-btn ' + (currentView === k ? cfg[k] : 'vb-off');
     });
   }
 
-  // ── Render ───────────────────────────────────────────────────────────────────
+  // ── Main render ───────────────────────────────────────────────────────────────
   function render(data) {
     currentData = data;
     document.getElementById('placeholder').classList.add('hidden');
     document.getElementById('main').classList.remove('hidden');
 
-    document.getElementById('meta-user').textContent    = data.user_id;
-    document.getElementById('meta-variant').textContent = data.variant;
-    document.getElementById('meta-base-count').textContent    = data.diff.base_count;
-    document.getElementById('meta-variant-count').textContent = data.diff.variant_count;
+    document.getElementById('meta-user').textContent         = data.user_id;
+    document.getElementById('meta-variant').textContent      = data.variant;
+    document.getElementById('meta-base-count').textContent   = data.diff.base_count;
+    document.getElementById('meta-variant-count').textContent= data.diff.variant_count;
 
     renderGraph(data);
     renderDiffTable(data.diff);
     renderSamples('base-samples',    data.base_sample    || []);
     renderSamples('variant-samples', data.variant_sample || []);
-    updateViewButtons();
+    updateViewBtns();
   }
 
-  // ── Graph rendering ──────────────────────────────────────────────────────────
+  // ── Graph ─────────────────────────────────────────────────────────────────────
   function renderGraph(data) {
-    const container = document.getElementById('graph-flow');
-    const legend    = document.getElementById('legend');
-    const detail    = document.getElementById('replaced-detail');
-    container.innerHTML = '';
-    legend.innerHTML    = '';
-    detail.innerHTML    = '';
+    const flow    = document.getElementById('graph-flow');
+    const legend  = document.getElementById('legend');
+    const detail  = document.getElementById('replaced-detail');
+    flow.innerHTML = legend.innerHTML = detail.innerHTML = '';
     detail.classList.add('hidden');
 
     const baseNodes     = data.base_graph.nodes    || [];
@@ -242,43 +306,39 @@
     const replacedNodes = data.variant_graph.replaced_nodes || [];
 
     if (currentView === 'base') {
-      legend.innerHTML = legendItem('#3b82f6', '#1e3a5f', 'Base node');
-      appendFlow(container, baseNodes, [], 'base');
-    }
-    else if (currentView === 'variant') {
-      legend.innerHTML  = legendItem('#475569', '#1e293b', 'Unchanged node');
-      legend.innerHTML += legendItem('#f59e0b', '#78350f', 'Replaced node');
-      appendFlow(container, variantNodes, replacedNodes, 'variant');
-    }
-    else {
-      // Both: merged flow showing diffs inline
-      legend.innerHTML  = legendItem('#475569', '#1e293b', 'Shared (unchanged)');
-      legend.innerHTML += legendItem('#3b82f6', '#1e3a5f', 'Base node (replaced)');
-      legend.innerHTML += legendItem('#f59e0b', '#78350f', 'Variant node (replaced)');
+      legend.innerHTML = dot('#3b82f6','#1e3a5f','Base node');
+      buildFlow(flow, baseNodes, [], 'base');
+    } else if (currentView === 'variant') {
+      legend.innerHTML  = dot('#475569','#1e293b','Unchanged node');
+      legend.innerHTML += dot('#f59e0b','#78350f','Replaced node');
+      buildFlow(flow, variantNodes, replacedNodes, 'variant');
+    } else {
+      legend.innerHTML  = dot('#475569','#1e293b','Shared (unchanged)');
+      legend.innerHTML += dot('#3b82f6','#1e3a5f','Base (replaced, struck)');
+      legend.innerHTML += dot('#f59e0b','#78350f','Variant (replaced, glowing)');
+      buildFlowBoth(flow, baseNodes, variantNodes, replacedNodes);
 
-      appendFlowBoth(container, baseNodes, variantNodes, replacedNodes);
-
-      // Detail cards for replaced nodes
-      if (replacedNodes.length > 0) {
+      if (replacedNodes.length) {
         detail.classList.remove('hidden');
-        const heading = document.createElement('p');
-        heading.className = 'text-xs text-gray-500 uppercase tracking-wider mb-1';
-        heading.textContent = 'Replaced Nodes';
-        detail.appendChild(heading);
+        const h = document.createElement('p');
+        h.className = 'text-xs text-gray-500 uppercase tracking-wider font-bold';
+        h.textContent = '🔄 Replaced Nodes';
+        detail.appendChild(h);
 
         replacedNodes.forEach(name => {
+          const info = NODE_INFO[name] || {};
           const card = document.createElement('div');
-          card.className = 'bg-gray-900 rounded-lg border border-amber-800/40 p-4 grid grid-cols-2 gap-4';
+          card.className = 'bg-gray-900 rounded-xl border border-amber-900/50 p-5 grid md:grid-cols-2 gap-6';
           card.innerHTML = `
             <div>
-              <span class="diff-badge bg-blue-900/50 text-blue-300 border border-blue-700 mb-2">BASE</span>
-              <p class="text-sm font-bold text-blue-300 mt-1">${name}</p>
-              <p class="text-xs text-gray-500 mt-1">Original implementation</p>
+              <span class="inline-block text-xs font-bold bg-blue-900/50 text-blue-300 border border-blue-700 px-2 py-0.5 rounded mb-2">BASE</span>
+              <p class="text-base font-bold text-blue-300">${name}</p>
+              <p class="text-xs text-gray-500 mt-1">Original LifeBench implementation</p>
             </div>
             <div>
-              <span class="diff-badge bg-amber-900/50 text-amber-300 border border-amber-700 mb-2">VARIANT</span>
-              <p class="text-sm font-bold text-amber-300 mt-1">${name}</p>
-              <p class="text-xs text-gray-500 mt-1">Replaced in <span class="text-amber-400">${currentData.variant}</span></p>
+              <span class="inline-block text-xs font-bold bg-amber-900/50 text-amber-300 border border-amber-700 px-2 py-0.5 rounded mb-2">VARIANT — ${data.variant}</span>
+              <p class="text-base font-bold text-amber-300">${name}</p>
+              <p class="text-xs text-gray-500 mt-1">Replaced in <span class="text-amber-400 font-bold">${data.variant}</span></p>
             </div>
           `;
           detail.appendChild(card);
@@ -287,89 +347,124 @@
     }
   }
 
-  function appendFlow(container, nodes, replacedNodes, mode) {
+  function buildFlow(container, nodes, replacedNodes, mode) {
     nodes.forEach((name, i) => {
-      const span = document.createElement('span');
       const isReplaced = replacedNodes.includes(name);
-      if (mode === 'base') {
-        span.className = 'node node-base';
-      } else {
-        span.className = 'node ' + (isReplaced ? 'node-variant' : 'node-shared');
-      }
-      span.textContent = name;
-      container.appendChild(span);
-      if (i < nodes.length - 1) appendArrow(container);
+      let cls = mode === 'base' ? 'node-base' : (isReplaced ? 'node-variant' : 'node-shared');
+      container.appendChild(makeNodePill(name, cls, mode === 'base' ? 'base' : (isReplaced ? 'variant' : 'shared')));
+      if (i < nodes.length - 1) container.appendChild(makeArrow());
     });
-    appendArrow(container);
-    appendEnd(container);
+    container.appendChild(makeArrow());
+    container.appendChild(makeEnd());
   }
 
-  function appendFlowBoth(container, baseNodes, variantNodes, replacedNodes) {
-    // Use baseNodes as the reference order; replaced positions show both
+  function buildFlowBoth(container, baseNodes, variantNodes, replacedNodes) {
     baseNodes.forEach((name, i) => {
       const isReplaced = replacedNodes.includes(name);
-
       if (isReplaced) {
-        // Show stacked: base (struck) on top, variant (highlighted) below
-        const slot = document.createElement('span');
+        const slot = document.createElement('div');
         slot.className = 'replace-slot';
 
-        const baseSpan = document.createElement('span');
-        baseSpan.className = 'node node-replaced-base';
-        baseSpan.textContent = name;
-
-        const variantSpan = document.createElement('span');
-        variantSpan.className = 'node node-replaced-variant';
-        variantSpan.textContent = name;
-
         const baseLabel = document.createElement('span');
-        baseLabel.className = 'replace-label bg-blue-900/50 text-blue-400';
+        baseLabel.className = 'replace-slot-label bg-blue-900/40 text-blue-400';
         baseLabel.textContent = 'BASE';
 
+        const basePill = makeNodePill(name, 'node-replaced-base', 'base');
+        basePill.querySelector('.node-box').style.textDecoration = 'line-through';
+
         const variantLabel = document.createElement('span');
-        variantLabel.className = 'replace-label bg-amber-900/50 text-amber-400';
+        variantLabel.className = 'replace-slot-label bg-amber-900/40 text-amber-400';
         variantLabel.textContent = 'VARIANT';
 
+        const variantPill = makeNodePill(name, 'node-replaced-variant', 'variant');
+
         slot.appendChild(baseLabel);
-        slot.appendChild(baseSpan);
+        slot.appendChild(basePill);
         slot.appendChild(variantLabel);
-        slot.appendChild(variantSpan);
+        slot.appendChild(variantPill);
         container.appendChild(slot);
       } else {
-        const span = document.createElement('span');
-        span.className = 'node node-shared';
-        span.textContent = name;
-        container.appendChild(span);
+        container.appendChild(makeNodePill(name, 'node-shared', 'shared'));
       }
-
-      if (i < baseNodes.length - 1) appendArrow(container);
+      if (i < baseNodes.length - 1) container.appendChild(makeArrow());
     });
-    appendArrow(container);
-    appendEnd(container);
+    container.appendChild(makeArrow());
+    container.appendChild(makeEnd());
   }
 
-  function appendArrow(container) {
+  function makeNodePill(name, boxClass, role) {
+    const info = NODE_INFO[name] || {};
+    const pill = document.createElement('div');
+    pill.className = 'node-pill';
+
+    const box = document.createElement('div');
+    box.className = 'node-box ' + boxClass;
+    box.textContent = (info.emoji ? info.emoji + ' ' : '') + name;
+
+    // Tooltip
+    const tip = document.createElement('div');
+    tip.className = 'tooltip';
+
+    const roleLabel = role === 'base' ? '<span class="text-blue-400 font-bold">BASE</span>'
+                    : role === 'variant' ? '<span class="text-amber-400 font-bold">VARIANT</span>'
+                    : '<span class="text-gray-400 font-bold">SHARED</span>';
+
+    tip.innerHTML = `
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-white font-bold text-sm">${info.emoji || ''} ${name}</span>
+        ${roleLabel}
+      </div>
+      <p class="text-gray-400 text-xs mb-3 leading-relaxed">${info.desc || 'No description'}</p>
+      ${info.file ? `<p class="text-gray-600 text-xs mb-3 font-mono">${info.file}</p>` : ''}
+      <div class="grid grid-cols-2 gap-2 mb-3">
+        <div>
+          <p class="text-blue-400 font-bold text-xs mb-1">📥 Input</p>
+          ${(info.input||[]).map(s=>`<p class="text-gray-400 text-xs leading-snug">• ${s}</p>`).join('')}
+        </div>
+        <div>
+          <p class="text-green-400 font-bold text-xs mb-1">📤 Output</p>
+          ${(info.output||[]).map(s=>`<p class="text-gray-400 text-xs leading-snug">• ${s}</p>`).join('')}
+        </div>
+      </div>
+      ${info.example_in ? `
+      <div class="border-t border-gray-800 pt-2 mt-2">
+        <p class="text-gray-600 text-xs font-bold mb-1">Example IN</p>
+        <pre class="text-gray-400 text-xs bg-gray-950 rounded p-2 overflow-auto max-h-20">${info.example_in}</pre>
+        <p class="text-gray-600 text-xs font-bold mt-2 mb-1">Example OUT</p>
+        <pre class="text-gray-400 text-xs bg-gray-950 rounded p-2 overflow-auto max-h-20">${info.example_out}</pre>
+      </div>` : ''}
+    `;
+
+    pill.appendChild(box);
+    pill.appendChild(tip);
+    return pill;
+  }
+
+  function makeArrow() {
     const a = document.createElement('span');
     a.className = 'arrow';
     a.textContent = '→';
-    container.appendChild(a);
+    return a;
   }
 
-  function appendEnd(container) {
-    const e = document.createElement('span');
-    e.className = 'node node-end';
-    e.textContent = 'END';
-    container.appendChild(e);
+  function makeEnd() {
+    const pill = document.createElement('div');
+    pill.className = 'node-pill';
+    const box = document.createElement('div');
+    box.className = 'node-box node-end';
+    box.textContent = 'END';
+    pill.appendChild(box);
+    return pill;
   }
 
-  function legendItem(borderColor, bgColor, label) {
-    return `<span class="flex items-center gap-1.5">
-      <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:${bgColor};border:2px solid ${borderColor}"></span>
-      <span>${label}</span>
+  function dot(border, bg, label) {
+    return `<span class="flex items-center gap-1.5 text-xs text-gray-400">
+      <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:${bg};border:2px solid ${border}"></span>
+      ${label}
     </span>`;
   }
 
-  // ── Diff table ───────────────────────────────────────────────────────────────
+  // ── Diff table ────────────────────────────────────────────────────────────────
   function renderDiffTable(diff) {
     const rows = [
       ['Base event count',    diff.base_count],
@@ -387,28 +482,24 @@
     `).join('');
   }
 
-  // ── Sample events ────────────────────────────────────────────────────────────
-  function renderSamples(containerId, samples) {
-    const container = document.getElementById(containerId);
+  // ── Sample events ─────────────────────────────────────────────────────────────
+  function renderSamples(id, samples) {
+    const container = document.getElementById(id);
     container.innerHTML = '';
-    if (!samples.length) {
-      container.innerHTML = '<p class="text-xs text-gray-600">No samples</p>';
-      return;
-    }
-    const sourceColors = { CALL_LOG: 'text-blue-400', SMS: 'text-green-400', NOTIFICATION: 'text-amber-400' };
-    samples.forEach(event => {
+    if (!samples.length) { container.innerHTML = '<p class="text-xs text-gray-600">No samples</p>'; return; }
+    const colors = { CALL_LOG: 'text-blue-400', SMS: 'text-green-400', NOTIFICATION: 'text-amber-400' };
+    samples.forEach(ev => {
       let payload = {};
-      try { payload = JSON.parse(event.payload); } catch(e) {}
-
+      try { payload = JSON.parse(ev.payload); } catch(e) {}
       const card = document.createElement('div');
       card.className = 'bg-gray-900 rounded-lg border border-gray-800 p-3 text-xs';
       card.innerHTML = `
         <div class="flex items-center justify-between mb-2">
-          <span class="font-bold ${sourceColors[event.event_source] || 'text-gray-400'}">${event.event_source}</span>
-          <span class="text-gray-600">${new Date(event.timestamp).toLocaleString()}</span>
+          <span class="font-bold ${colors[ev.event_source]||'text-gray-400'}">${ev.event_source}</span>
+          <span class="text-gray-600">${new Date(ev.timestamp).toLocaleString()}</span>
         </div>
-        <p class="text-gray-500 mb-1 truncate">${event.identifier}</p>
-        <pre class="text-gray-300 bg-gray-950 rounded p-2 overflow-auto max-h-40">${JSON.stringify(payload, null, 2)}</pre>
+        <p class="text-gray-500 mb-1 truncate">${ev.identifier}</p>
+        <pre class="text-gray-300 bg-gray-950 rounded p-2 overflow-auto max-h-40">${JSON.stringify(payload,null,2)}</pre>
       `;
       container.appendChild(card);
     });
