@@ -674,7 +674,7 @@ refer_kr.json 랜덤 추출 힌트(매 호출마다 다름):
 <div class="step-hdr">
   <span class="step-num">STEP 1</span>
   <span class="step-name">Draft Gen</span>
-  <span class="badge b-llm ml-2">LLM ×5/인</span>
+  <span class="badge b-llm ml-2">LLM ×5/인 (test: ×1)</span>
   <span class="text-xs text-gray-600 ml-2">연간 이벤트 초안 생성</span>
 </div>
 
@@ -828,31 +828,146 @@ refer_kr.json 랜덤 추출 힌트(매 호출마다 다름):
 
 <!-- NEW Step 1 -->
 <div class="nc">
-  <div class="vs-note">← ORIG 7단계 → 1단계 (5 LLM → 1 LLM/인)</div>
+  <div class="vs-note">← ORIG 5단계 KO 동일 구조 (5 LLM/인 · test 모드 Round 1만)</div>
 
+  <!-- Round 1: yearterm_eventgen -->
   <div class="ss ss-new">
     <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">📅 draft_gen</span>
-      <span class="badge b-llm">LLM ×1/인</span><span class="badge b-ko">KO</span>
+      <span class="npill np-new">📅 Round 1: yearterm_eventgen</span>
+      <span class="badge b-llm">LLM</span><span class="badge b-ko">KO</span>
     </div>
-    <div class="ss-path">nodes/draft_gen.py</div>
-    <div class="ss-note">한국 공휴일·직장 문화를 반영한 연간 이벤트 초안. test 모드 10개 / 정식 40개.</div>
+    <div class="ss-path">nodes/draft_gen.py → Round 1 (template_yearterm_eventgen 기반)</div>
+    <div class="ss-note">9개 카테고리로 약 100개 연간 이벤트 생성. test 모드: 20개만 생성 후 이후 단계 생략.</div>
     <div class="pb-wrap">
-      <div class="pb" data-new-k="draft_gen" data-lang="kr">로딩 중…</div>
+      <div class="pb" data-new-k="draft_gen_r1" data-lang="kr">로딩 중…</div>
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// state.personas[0]</span>
-{"name":<span class="cs">"박준혁"</span>,
- "job":<span class="cs">"소프트웨어 개발자"</span>,
- "home_city":<span class="cs">"인천"</span>}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// state.daily_drafts</span>
-[{"date":<span class="cs">"2025-01-29"</span>,
-  "title":<span class="cs">"설날 가족 모임"</span>,
-  "category":<span class="cs">"family"</span>},
- <span class="cg">... 40개 이벤트</span>]</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// persona summary</span>
+박준혁(46세, 소프트웨어 개발자,
+인천 거주)
+MBTI: INTJ / 취미: 독서, 등산
+work_desc: ...</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// events_r1 (카테고리별 텍스트)</span>
+&lt;type&gt;Career（N개）&lt;/type&gt;
+  업계 포럼 참가 (2025-03-18): ...
+  성과 평가 (2025-12-10): ...
+&lt;type&gt;Health（N개）&lt;/type&gt;
+  건강검진 (2025-04-05): ...
+  <span class="cg">... ~100개 이벤트</span></pre></div>
     </div>
   </div>
+  <div class="ss-arrow ss-arrow-g">↓</div>
+
+  <!-- Round 2: yearterm_complete -->
+  <div class="ss ss-new">
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="npill np-new">➕ Round 2: yearterm_complete</span>
+      <span class="badge b-llm">LLM</span><span class="badge b-ko">KO</span>
+    </div>
+    <div class="ss-path">nodes/draft_gen.py → Round 2 (template_yearterm_complete 기반)</div>
+    <div class="ss-note">Round 1과 중복 없이 약 90개 추가 이벤트 생성. 한국 공휴일·계절 특색·미사용 프로파일 정보 집중 보완.</div>
+    <div class="pb-wrap">
+      <div class="pb" data-new-k="draft_gen_r2" data-lang="kr">로딩 중…</div>
+      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+    </div>
+    <div class="io">
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// persona + Round 1 이벤트 목록</span>
+인물 프로파일: 박준혁...
+1라운드 이벤트:
+  2025-03-18: [Career] 업계 포럼...
+  <span class="cg">... 100개</span></pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// events_r2 (~90개 추가)</span>
+&lt;type&gt;Relationships（N개）&lt;/type&gt;
+  설날 귀성 (2025-01-28): ...
+  어버이날 카네이션 (2025-05-08): ...
+  <span class="cg">... ~90개 이벤트</span></pre></div>
+    </div>
+  </div>
+  <div class="ss-arrow ss-arrow-g">↓</div>
+
+  <!-- Round 3: extract_impact_events -->
+  <div class="ss ss-new">
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="npill np-new">🔍 Round 3: extract_impact_events</span>
+      <span class="badge b-llm">LLM</span><span class="badge b-ko">KO</span>
+    </div>
+    <div class="ss-path">nodes/draft_gen.py → Round 3 (template_extract_impact_events 기반)</div>
+    <div class="ss-note">①프로파일 변화 이벤트 (이직·이사·건강 변화 등), ②생활 습관 영향 이벤트 (출장·야근·질병 등) 두 가지만 추출.</div>
+    <div class="pb-wrap">
+      <div class="pb" data-new-k="draft_gen_r3" data-lang="kr">로딩 중…</div>
+      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+    </div>
+    <div class="io">
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// persona + 전체 이벤트 목록(R1+R2)</span>
+총 ~190개 이벤트</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// impact_text (타임라인 형식)</span>
+[프로파일 변화]
+  2025-07-01: 팀장 승진
+  → 직책·책임 변화
+[생활 습관 영향]
+  2025-09-10~15: 제주 출장
+  → 이 기간 자택 부재</pre></div>
+    </div>
+  </div>
+  <div class="ss-arrow ss-arrow-g">↓</div>
+
+  <!-- Round 4: monthly_events_analysis × 12 -->
+  <div class="ss ss-new">
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="npill np-new">📆 Round 4: monthly_events_analysis</span>
+      <span class="badge b-llm">LLM ×12</span><span class="badge b-ko">KO</span>
+    </div>
+    <div class="ss-path">nodes/draft_gen.py → Round 4 (template_monthly_events_analysis 기반)</div>
+    <div class="ss-note">1~12월 각각 분석. 불합리한 충돌 이벤트 삭제·수정, 고정 변화(long-term) + 근접 영향(short-term) 추출. JSON 구조화 출력.</div>
+    <div class="pb-wrap">
+      <div class="pb" data-new-k="draft_gen_r4" data-lang="kr">로딩 중…</div>
+      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+    </div>
+    <div class="io">
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 월별 × 12</span>
+{persona, target_month: "2025-01",
+ monthly_events: [...],
+ category_summaries: ...}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// JSON × 12</span>
+{"month":"2025-01",
+ "month_overview":"설날 귀성...",
+ "key_events":[{
+   "time_point":"2025-01-29",
+   "event":"설날 가족 모임",
+   "fixed_changes":[...],
+   "short_term_impacts":[...]}]}</pre></div>
+    </div>
+  </div>
+  <div class="ss-arrow ss-arrow-g">↓</div>
+
+  <!-- Round 5: timeline_conflict_resolution -->
+  <div class="ss ss-new">
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="npill np-new">⚖️ Round 5: conflict_resolution</span>
+      <span class="badge b-llm">LLM</span><span class="badge b-ko">KO</span>
+    </div>
+    <div class="ss-path">nodes/draft_gen.py → Round 5 (template_timeline_conflict_resolution 기반)</div>
+    <div class="ss-note">월별 타임라인 간 충돌 해소 + 2025년 전체 연간 개요(annual_overview) 생성. state.daily_drafts에 최종 이벤트 저장.</div>
+    <div class="pb-wrap">
+      <div class="pb" data-new-k="draft_gen_r5" data-lang="kr">로딩 중…</div>
+      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
+    </div>
+    <div class="io">
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// persona + 12개 월별 타임라인</span>
+timelines_list: [
+  {topic:"2025-01 타임라인",
+   events:[...]},
+  <span class="cg">... ×12</span>]</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// state.daily_drafts (최종)</span>
+[{"date":"2025-01-29",
+  "title":"설날 가족 모임",
+  "category":"family",
+  "description":"..."},
+ <span class="cg">... ~190개 이벤트</span>]</pre></div>
+    </div>
+  </div>
+
 </div>
 
 <div class="row-sep"></div>
@@ -1561,6 +1676,111 @@ JSON 배열만 출력하세요.`,
 - 人物1：城市=仁川，职业=软件开发者，年龄=46，性别=男
 - 人物2：城市=首尔，职业=医生，年龄=38，性别=女
 仅输出JSON数组。`
+  },
+  draft_gen_r1: {
+    kr: `인물 분석을 기반으로 2025년 내 발생 가능한 100개의 생활 이벤트를 생성합니다.
+
+## 一、핵심 창작 원칙
+- 인물 프로파일 심층 반영: 직업 배경, 가족 관계, 생활 습관, 성격 특성, 경제 상황, 소셜 서클과 강하게 연결.
+- 현실 논리 부합: 시간 규율(예: "겨울 스키", "설 귀성"), 생활 상식, 사회 규칙.
+- 자연스러운 인과 관계: 일부 이벤트 간 합리적 인과 관계.
+
+## 二、이벤트 세부 요구사항
+### 카테고리 (9개)
+Career / Education / Relationships / Family&Living Situation /
+Personal Life / Finance / Health / Unexpected Events / Other
+
+### 시간
+- 형식: 2025-XX-XX 또는 2025-XX-XX 至 2025-XX-XX
+- 전년도 각 월에 균등 분포
+
+## 三、출력 형식
+<type>Career（N개）</type>
+    이벤트명 (2025-MM-DD): 설명.
+
+---
+인물 분석: {summary}`,
+    zh: `（원본 ZH: template_yearterm_eventgen 참조）`
+  },
+  draft_gen_r2: {
+    kr: `인물 프로파일과 1라운드에서 생성한 100개 이벤트를 기반으로, 요구사항에 엄격히 부합하는 새로운 이벤트 약 90개를 추가 창작하세요. 중복을 철저히 피하고 정확한 보완을 실현하세요.
+
+## 보완 방향
+- 1라운드에서 다루지 않은 프로파일 세부 사항 심층 탐구
+- 한국 공휴일·계절 특색 (설날, 삼일절, 어린이날, 추석, 크리스마스 등)
+- 카테고리 다양성 심화
+
+## 출력 형식
+<type>Relationships（N개）</type>
+    이벤트명 (2025-MM-DD): 설명.
+
+---
+인물 프로파일: {summary}
+1라운드 이벤트 목록: {r1_events}`,
+    zh: `（원본 ZH: template_yearterm_complete 참조）`
+  },
+  draft_gen_r3: {
+    kr: `인물 프로파일과 이벤트 목록을 기반으로, 두 가지 유형의 중요 이벤트만 추출하세요:
+1. 프로파일 정보에 현저한 변화를 가져오는 이벤트 (직업 변동, 재무 변화, 건강 변화, 인간 관계 변화 등)
+2. 최근 생활 습관에 영향을 미치는 이벤트 (단기 출장·여행, 단기 질병, 연속 야근 등)
+
+관련 없는 이벤트는 완전히 무시 (단순 감정 증진, 실질적 변화 없는 사교 활동 등).
+
+타임라인 형식으로 핵심 이벤트 노드와 구체적 영향을 출력하세요.
+
+---
+인물 프로파일: {summary}
+이벤트 목록: {events}`,
+    zh: `（원본 ZH: template_extract_impact_events 참조）`
+  },
+  draft_gen_r4: {
+    kr: `핵심 과제: 지정 월의 중요 이벤트와 변화 기록 분석, 이벤트의 영향 유형 식별
+
+## 과제 요구사항
+- 지정 월의 중요 이벤트 선별·분석
+- 불합리한 충돌 이벤트 삭제, 다양성·연속성 이벤트 추가
+- 고정 변화 (장기적 정보 변화) + 근접 영향 (단기 생활 상태 변화) 식별
+
+## 출력 형식 (JSON)
+{
+  "month": "YYYY-MM",
+  "month_overview": "월 개요",
+  "key_events": [{
+    "time_point": "YYYY-MM-DD",
+    "event": "이벤트명: 설명",
+    "fixed_changes": ["고정 변화 설명"],
+    "short_term_impacts": [{"start_date": "...", "end_date": "...", "impact_description": "..."}]
+  }]
+}
+
+---
+인물 프로파일: {summary}
+지정 월: {target_month}
+해당 월 이벤트: {monthly_events}
+카테고리별 연간 요약: {category_summaries}`,
+    zh: `（원본 ZH: template_monthly_events_analysis 참조）`
+  },
+  draft_gen_r5: {
+    kr: `다음 여러 주제 타임라인 간의 충돌을 분석하고 해결하세요. 타임라인을 합병하지 마세요.
+
+## 과제 요구사항
+1. 충돌 식별: 이벤트 시간·장소·활동 배치 직접 충돌 / 장기 영향으로 인한 충돌
+2. 충돌 처리: 충돌 이벤트 삭제 또는 화해 이벤트 추가. 타임라인 독립성 유지.
+3. 연간 월별 요약 생성 (annual_overview)
+
+## 출력 형식 (JSON)
+{
+  "conflict_resolution_result": [{"topic": "...", "modification_content": "...", "modification_reason": "..."}],
+  "annual_overview": {
+    "1월": {"monthly_description": "...", "core_events": [...], "core_impacts": [...]},
+    ...
+  }
+}
+
+---
+인물 프로파일: {summary}
+타임라인 목록: {timelines_list}`,
+    zh: `（원본 ZH: template_timeline_conflict_resolution 참조）`
   },
   draft_gen: {
     kr: `인물 분석을 기반으로 2025년 내 발생 가능한 {event_count}개의 생활 이벤트를 생성합니다.
