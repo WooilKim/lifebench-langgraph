@@ -6,6 +6,7 @@ class FullPipelineState(TypedDict):
     # ── Inputs ────────────────────────────────────────────────────────────
     count: int      # number of personas to generate
     provider: str   # LLM provider: claude | gpt | glm
+    test_mode: bool # if True, limit draft events and simulator LLM calls
 
     # ── Step 0: persona_gen ───────────────────────────────────────────────
     personas: list  # list of persona dicts

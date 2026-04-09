@@ -83,6 +83,7 @@ def simulate_daily_events(state: FullPipelineState) -> FullPipelineState:
     provider = state.get("provider", "claude")
     personas = state.get("personas", [])
     daily_drafts = state.get("daily_drafts", {})
+    test_mode = state.get("test_mode", False)
 
     llm = _get_llm(provider, max_tokens=8192)
     daily_events_map: dict = {}
@@ -94,7 +95,7 @@ def simulate_daily_events(state: FullPipelineState) -> FullPipelineState:
         hobbies = persona.get("hobbies", [])
         drafts = daily_drafts.get(name, [])
 
-        print(f"[simulator] Simulating daily events for {name} ({len(drafts)} draft days)...")
+        print(f"[simulator] Simulating daily events for {name} ({len(drafts)} draft days, {'test:template-only' if test_mode else 'LLM+template'})...")
 
         # Index drafts by date
         draft_by_date: dict = {d["date"]: d for d in drafts}
@@ -112,6 +113,18 @@ def simulate_daily_events(state: FullPipelineState) -> FullPipelineState:
 
         # --- Generate LLM-detailed events for draft days in batches of 5 ---
         draft_dates = sorted(draft_by_date.keys())
+        # test_mode: skip LLM, use templates for all draft days too
+        if test_mode:
+            for dt in draft_dates:
+                if _is_weekend(dt):
+                    all_events.extend(_weekend_day_events(dt, hobbies, city))
+                else:
+                    all_events.extend(_routine_day_events(dt, job, city))
+            all_events.sort(key=lambda e: e.get("datetime", ""))
+            daily_events_map[name] = all_events
+            print(f"[simulator] {name}: {len(all_events)} events (test/template-only)")
+            continue
+
         batch_size = 5
 
         for batch_start in range(0, len(draft_dates), batch_size):

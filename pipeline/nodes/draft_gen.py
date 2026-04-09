@@ -61,6 +61,8 @@ def generate_drafts(state: FullPipelineState) -> FullPipelineState:
     """Step 1: For each persona, generate ~50 yearly life events."""
     provider = state.get("provider", "claude")
     personas = state.get("personas", [])
+    test_mode = state.get("test_mode", False)
+    event_count = 10 if test_mode else 40
 
     llm = _get_llm(provider, max_tokens=16384)
     daily_drafts: dict = {}
@@ -72,9 +74,9 @@ def generate_drafts(state: FullPipelineState) -> FullPipelineState:
         hobbies = ", ".join(persona.get("hobbies", []))
         city = persona.get("home_city", "서울")
 
-        print(f"[draft_gen] Generating draft events for {name}...")
+        print(f"[draft_gen] Generating draft events for {name} ({'test:10' if test_mode else '40'} events)...")
 
-        prompt = f"""{name}({age}세, {job}, {city} 거주)의 2025년 주요 생활 이벤트 40개를 JSON 배열로 생성하세요.
+        prompt = f"""{name}({age}세, {job}, {city} 거주)의 2025년 주요 생활 이벤트 {event_count}개를 JSON 배열로 생성하세요.
 
 취미: {hobbies}
 

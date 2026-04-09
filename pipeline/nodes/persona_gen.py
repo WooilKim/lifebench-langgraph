@@ -99,22 +99,35 @@ def generate_personas(state: FullPipelineState) -> FullPipelineState:
 
     llm = _get_llm(provider, max_tokens=4096)
 
+    CITIES  = ["서울", "부산", "대구", "인천", "광주", "대전"]
+    JOBS    = ["소프트웨어 개발자", "간호사", "교사", "마케터", "요리사", "디자이너",
+               "회계사", "영업사원", "경찰관", "의사", "작가", "사진작가", "유튜버",
+               "물리치료사", "건축가", "공무원", "약사", "번역가", "인테리어 디자이너"]
+    import random
+    assigned_cities = random.sample(CITIES * 3, min(count, len(CITIES * 3)))
+    assigned_jobs   = random.sample(JOBS,   min(count, len(JOBS)))
+    diversity_hint  = "\n".join(
+        f"- 페르소나 {i+1}: 도시={assigned_cities[i]}, 직업={assigned_jobs[i]}, 나이={random.randint(22,55)}, 성별={'남' if i%2==0 else '여'}"
+        for i in range(count)
+    )
+
     prompt = f"""다음 조건으로 한국인 페르소나 {count}명의 JSON 배열을 생성하세요.
 
 각 페르소나 필드:
-- name: 한국 이름 (문자열, 예: "김민준")
-- age: 20~60 사이 정수
+- name: 한국 이름 (문자열)
+- age: 정수
 - gender: "남" 또는 "여"
-- job: 직업 (문자열, 예: "회사원", "교사", "의사")
-- mbti: MBTI 유형 (예: "INTJ")
-- hobbies: 취미 리스트 (4~8개, 예: ["독서", "등산", "요리"])
-- personality_traits: 성격 특성 리스트 (예: ["성실한", "내향적"])
+- job: 직업
+- mbti: MBTI 유형
+- hobbies: 취미 리스트 (4~8개)
+- personality_traits: 성격 특성 리스트 (2~4개)
 - economic_level: "하", "중", "상" 중 하나
-- home_city: 서울/부산/대구/인천/광주/대전 중 하나
+- home_city: 문자열
 - relationships: 10~15명 리스트, 각 항목은 {{"name": "...", "relation": "...", "social_circle": "..."}}
-  (social_circle 예시: "가족", "직장", "대학 동기", "고등학교 동기", "연인", "동네")
 
-페르소나들은 서로 다른 직업·나이·도시를 가져야 합니다.
+아래 다양성 조건을 반드시 따르세요 (각 번호가 각 페르소나에 해당):
+{diversity_hint}
+
 JSON 배열만 출력하세요. 마크다운, 설명 없이."""
 
     personas = []

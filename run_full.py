@@ -18,6 +18,7 @@ def main():
     parser.add_argument("--provider", type=str, default="claude",
                         choices=["claude", "gpt", "glm"], help="LLM provider")
     parser.add_argument("--output", type=str, default="output", help="Output directory")
+    parser.add_argument("--test", action="store_true", help="Test mode: limit draft events to 5 per persona")
     args = parser.parse_args()
 
     print(f"=== Full LifeBench Pipeline ===")
@@ -28,9 +29,13 @@ def main():
 
     graph = build_full_graph()
 
+    if args.test:
+        print("[TEST MODE] draft events capped at 5 per persona, faster run")
+
     initial_state = {
         "count": args.count,
         "provider": args.provider,
+        "test_mode": args.test,
         "personas": [],
         "daily_drafts": {},
         "daily_events_map": {},
