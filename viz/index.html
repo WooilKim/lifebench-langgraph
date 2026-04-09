@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LifeBench LangGraph — Pipeline Comparison</title>
+  <title>LifeBench LangGraph — Pipeline Visualizer</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>tailwind.config = { darkMode: 'class' }</script>
   <style>
@@ -15,71 +15,66 @@
     }
     .node-box {
       display: flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 14px 32px; border-radius: 12px;
-      font-size: 15px; font-weight: 700; letter-spacing: 0.01em;
-      min-width: 200px; text-align: center;
+      padding: 12px 28px; border-radius: 10px;
+      font-size: 14px; font-weight: 700;
+      min-width: 210px; text-align: center;
       transition: transform 0.15s, box-shadow 0.15s;
       cursor: pointer;
     }
     .node-pill:hover .node-box { transform: translateY(-2px); }
 
-    .n-base    { background:#1e3a5f; color:#bfdbfe; border:2px solid #3b82f6; box-shadow:0 0 14px rgba(59,130,246,0.15); }
-    .n-variant { background:#78350f; color:#fef3c7; border:2px solid #f59e0b; box-shadow:0 0 14px rgba(245,158,11,0.25); }
+    /* color themes per group */
+    .n-new     { background:#14532d; color:#bbf7d0; border:2px solid #22c55e; box-shadow:0 0 12px rgba(34,197,94,0.15); }
+    .n-base    { background:#1e3a5f; color:#bfdbfe; border:2px solid #3b82f6; box-shadow:0 0 12px rgba(59,130,246,0.15); }
+    .n-variant { background:#78350f; color:#fef3c7; border:2px solid #f59e0b; box-shadow:0 0 12px rgba(245,158,11,0.25); }
     .n-shared  { background:#1e293b; color:#94a3b8; border:2px solid #475569; }
     .n-end     { background:#111827; color:#4b5563; border:2px dashed #374151; }
     .n-rb      { background:#1e3a5f; color:#60a5fa; border:2px solid #3b82f6; opacity:0.4; }
-    .n-rb .node-box { text-decoration:line-through; }
     .n-rv      { background:#78350f; color:#fef3c7; border:2px solid #f59e0b; box-shadow:0 0 18px rgba(245,158,11,0.45); }
 
-    /* ── Vertical arrow ────────────────────────── */
-    .v-arrow {
-      display:flex; flex-direction:column; align-items:center;
-      color:#4b5563; font-size:22px; line-height:1; margin:4px 0;
-      user-select:none;
+    /* ── Group dividers ────────────────────────── */
+    .group-label {
+      font-size:10px; font-weight:800; letter-spacing:0.12em;
+      padding:3px 10px; border-radius:4px; margin-bottom:8px;
     }
-    .v-arrow-line { width:2px; height:24px; background:#374151; }
+    .gl-new     { background:#14532d; color:#86efac; border:1px solid #22c55e; }
+    .gl-phone   { background:#1e3a5f; color:#93c5fd; border:1px solid #3b82f6; }
+    .group-divider { width:2px; height:32px; margin:4px auto; }
+    .gd-new     { background: linear-gradient(to bottom, #22c55e55, #3b82f655); }
+    .gd-phone   { background: #374151; }
+
+    /* ── Vertical arrow ────────────────────────── */
+    .v-arrow { display:flex; flex-direction:column; align-items:center; color:#4b5563; margin:2px 0; user-select:none; }
+    .v-arrow-line { width:2px; height:20px; background:#374151; }
 
     /* ── Tooltip ───────────────────────────────── */
     .tooltip {
-      position:absolute; left:calc(100% + 16px); top:50%; transform:translateY(-50%);
-      width:340px; background:#0f172a; border:1px solid #334155;
+      position:absolute; left:calc(100% + 18px); top:50%; transform:translateY(-50%);
+      width:350px; background:#0f172a; border:1px solid #334155;
       border-radius:12px; padding:16px; z-index:200;
       box-shadow:0 8px 40px rgba(0,0,0,0.7);
       pointer-events:none; opacity:0; transition:opacity 0.15s;
       font-family:ui-monospace,monospace; text-align:left;
     }
     .node-pill:hover .tooltip { opacity:1; }
-    /* flip left if near right edge */
-    .flip-tip .tooltip { left:auto; right:calc(100% + 16px); }
 
     /* ── Both-view replace slot ────────────────── */
     .replace-slot { display:flex; flex-direction:column; align-items:center; gap:4px; }
     .rs-label { font-size:9px; font-weight:800; letter-spacing:0.1em; padding:2px 7px; border-radius:3px; }
 
-    /* ── Context pipeline (top) ────────────────── */
-    .ctx-step {
-      display:flex; flex-direction:column; align-items:center; gap:4px;
-      min-width:100px; flex:1;
-    }
-    .ctx-box {
-      padding:8px 12px; border-radius:8px; font-size:11px; font-weight:700;
-      text-align:center; width:100%; border:2px solid transparent;
-      transition:all 0.15s;
-    }
-    .ctx-inactive { background:#1e293b; color:#64748b; border-color:#334155; }
-    .ctx-active   { background:#312e81; color:#c7d2fe; border-color:#6366f1;
-                    box-shadow:0 0 16px rgba(99,102,241,0.3); }
-    .ctx-arrow    { color:#475569; font-size:16px; align-self:center; padding-bottom:20px; }
-
     /* ── View buttons ──────────────────────────── */
-    .view-btn {
-      padding:7px 18px; border-radius:8px; font-size:12px; font-weight:700;
-      border:2px solid transparent; cursor:pointer; transition:all 0.15s;
-    }
+    .view-btn { padding:7px 16px; border-radius:8px; font-size:12px; font-weight:700; border:2px solid transparent; cursor:pointer; transition:all 0.15s; }
     .vb-base    { background:#1e3a5f; color:#bfdbfe; border-color:#3b82f6; }
     .vb-variant { background:#78350f; color:#fef3c7; border-color:#f59e0b; }
     .vb-both    { background:#1a1437; color:#c4b5fd; border-color:#6366f1; }
     .vb-off     { background:#1f2937; color:#6b7280; border-color:#374151; }
+
+    /* ── Context pipeline (top) ────────────────── */
+    .ctx-step { display:flex; flex-direction:column; align-items:center; gap:4px; min-width:90px; flex:1; }
+    .ctx-box  { padding:8px 10px; border-radius:8px; font-size:11px; font-weight:700; text-align:center; width:100%; border:2px solid transparent; transition:all 0.15s; }
+    .ctx-inactive { background:#1e293b; color:#64748b; border-color:#334155; }
+    .ctx-active   { background:#14532d; color:#bbf7d0; border-color:#22c55e; box-shadow:0 0 16px rgba(34,197,94,0.25); }
+    .ctx-arrow    { color:#475569; font-size:16px; align-self:center; padding-bottom:20px; }
 
     pre { white-space:pre-wrap; word-break:break-word; }
   </style>
@@ -89,8 +84,8 @@
 <!-- Header -->
 <header class="border-b border-gray-800 px-6 py-4 flex items-center justify-between">
   <div>
-    <h1 class="text-xl font-bold text-indigo-400">LifeBench LangGraph</h1>
-    <p class="text-xs text-gray-500 mt-0.5">Pipeline Comparison Visualizer</p>
+    <h1 class="text-xl font-bold text-green-400">LifeBench LangGraph</h1>
+    <p class="text-xs text-gray-500 mt-0.5">Full Pipeline Visualizer — persona_gen → formatter</p>
   </div>
   <div class="flex gap-3">
     <button onclick="loadFile()" class="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded border border-gray-700">Load JSON</button>
@@ -102,8 +97,8 @@
 <div id="placeholder" class="flex flex-col items-center justify-center h-96 text-gray-600">
   <div class="text-5xl mb-4">📊</div>
   <p class="text-lg mb-2">No comparison data loaded</p>
-  <p class="text-sm">Run <code class="bg-gray-800 px-1 rounded">python compare.py --user fenghaoran --variant llm_enriched</code></p>
-  <p class="text-xs mt-4 text-gray-700">Auto-loads <code>./comparison_result.json</code> on startup</p>
+  <p class="text-sm">Run <code class="bg-gray-800 px-1 rounded">python3 run_full.py --count 3 --test</code></p>
+  <p class="text-xs mt-2 text-gray-700">Auto-loads <code>./comparison_result.json</code> on startup</p>
 </div>
 
 <!-- Main -->
@@ -129,77 +124,49 @@
     </div>
   </section>
 
-  <!-- LifeBench Full Pipeline Context -->
+  <!-- LifeBench Original Pipeline context -->
   <section>
     <div class="flex items-center gap-2 mb-3">
-      <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400">LifeBench Full Pipeline</h2>
-      <span class="text-xs text-gray-600">— where this project fits in</span>
+      <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400">LifeBench Original Pipeline</h2>
+      <span class="text-xs text-gray-600">— for reference</span>
     </div>
     <div class="bg-gray-900 rounded-xl border border-gray-800 px-6 py-5">
       <div class="flex items-start gap-1 overflow-x-auto pb-1">
-        <!-- Step 0 -->
         <div class="ctx-step">
-          <div class="ctx-box ctx-inactive">
-            <div class="text-lg mb-1">👤</div>
-            <div>Step 0</div>
-            <div class="font-normal text-gray-500 text-xs mt-0.5">Persona Gen</div>
-          </div>
-          <div class="text-xs text-gray-600 text-center leading-snug">persona.json<br>30+ fields</div>
+          <div class="ctx-box ctx-inactive"><div class="text-lg mb-1">👤</div><div>Step 0</div><div class="font-normal text-gray-500 text-xs mt-0.5">Persona Gen</div></div>
+          <div class="text-xs text-gray-600 text-center leading-snug">persona.json<br>중국어·고정 스크립트</div>
         </div>
         <div class="ctx-arrow">→</div>
-        <!-- Step 1 -->
         <div class="ctx-step">
-          <div class="ctx-box ctx-inactive">
-            <div class="text-lg mb-1">📅</div>
-            <div>Step 1</div>
-            <div class="font-normal text-gray-500 text-xs mt-0.5">Draft Gen</div>
-          </div>
+          <div class="ctx-box ctx-inactive"><div class="text-lg mb-1">📅</div><div>Step 1</div><div class="font-normal text-gray-500 text-xs mt-0.5">Draft Gen</div></div>
           <div class="text-xs text-gray-600 text-center leading-snug">daily_draft.json<br>~190 events/yr</div>
         </div>
         <div class="ctx-arrow">→</div>
-        <!-- Step 2 -->
         <div class="ctx-step">
-          <div class="ctx-box ctx-inactive">
-            <div class="text-lg mb-1">🎮</div>
-            <div>Step 2</div>
-            <div class="font-normal text-gray-500 text-xs mt-0.5">Simulator</div>
-          </div>
+          <div class="ctx-box ctx-inactive"><div class="text-lg mb-1">🎮</div><div>Step 2</div><div class="font-normal text-gray-500 text-xs mt-0.5">Simulator</div></div>
           <div class="text-xs text-gray-600 text-center leading-snug">daily_event.json<br>4,000–5,000 events</div>
         </div>
         <div class="ctx-arrow">→</div>
-        <!-- Step 3 — ACTIVE -->
         <div class="ctx-step">
-          <div class="ctx-box ctx-active">
-            <div class="text-lg mb-1">📱</div>
-            <div>Step 3</div>
-            <div class="font-normal text-indigo-300 text-xs mt-0.5">Phone Data Gen</div>
-          </div>
-          <div class="text-xs text-indigo-400 font-bold text-center leading-snug mt-1">← This project<br>call / sms / noti</div>
+          <div class="ctx-box ctx-inactive"><div class="text-lg mb-1">📱</div><div>Step 3</div><div class="font-normal text-gray-500 text-xs mt-0.5">Phone Data Gen</div></div>
+          <div class="text-xs text-gray-600 text-center leading-snug">call/sms/push<br>JSON 파일 기반</div>
         </div>
         <div class="ctx-arrow">→</div>
-        <!-- Step 4 -->
         <div class="ctx-step">
-          <div class="ctx-box ctx-inactive">
-            <div class="text-lg mb-1">❓</div>
-            <div>Step 4</div>
-            <div class="font-normal text-gray-500 text-xs mt-0.5">QA Gen</div>
-          </div>
+          <div class="ctx-box ctx-inactive"><div class="text-lg mb-1">❓</div><div>Step 4</div><div class="font-normal text-gray-500 text-xs mt-0.5">QA Gen</div></div>
           <div class="text-xs text-gray-600 text-center leading-snug">QA.json<br>multi-hop Q&amp;A</div>
         </div>
       </div>
-      <p class="text-xs text-gray-600 mt-4">
-        Steps 0–2 &amp; 4 are from the original LifeBench (Chinese, fixed scripts).
-        <span class="text-indigo-400">Step 3</span> is rebuilt as a LangGraph pipeline — modular, swappable, multilingual.
-      </p>
+      <p class="text-xs text-gray-600 mt-4">원본은 중국어 고정 스크립트. 이 프로젝트는 <span class="text-green-400">Step 0–3 전체</span>를 한국어 기반 LangGraph 파이프라인으로 재구현.</p>
     </div>
   </section>
 
-  <!-- LangGraph Pipeline -->
+  <!-- LangGraph Full Pipeline -->
   <section>
     <div class="flex items-center justify-between mb-3">
       <div>
-        <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400">Step 3 — LangGraph Pipeline</h2>
-        <p class="text-xs text-gray-600 mt-0.5">Hover a node to see inputs, outputs, and examples</p>
+        <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400">LangGraph Full Pipeline</h2>
+        <p class="text-xs text-gray-600 mt-0.5">Hover a node · toggle view to compare base vs variant</p>
       </div>
       <div class="flex gap-2">
         <button id="btn-base"    onclick="setView('base')"    class="view-btn">Base only</button>
@@ -211,14 +178,12 @@
     <!-- Legend -->
     <div id="legend" class="flex flex-wrap gap-4 mb-4 text-xs text-gray-400"></div>
 
-    <!-- Vertical graph -->
     <div class="flex gap-6">
       <!-- Graph column -->
-      <div class="bg-gray-900 rounded-xl border border-gray-800 flex-1 flex flex-col items-center py-10 px-6 min-h-[600px]">
-        <div id="graph-flow" class="flex flex-col items-center w-full"></div>
+      <div class="bg-gray-900 rounded-xl border border-gray-800 flex-1 flex flex-col items-center py-10 px-8 min-h-[700px]">
+        <div id="graph-flow" class="flex flex-col items-center w-full max-w-xs"></div>
       </div>
-
-      <!-- Replaced detail column (Both view) -->
+      <!-- Replaced detail -->
       <div id="replaced-detail" class="hidden w-80 space-y-4 flex-shrink-0"></div>
     </div>
   </section>
@@ -235,14 +200,8 @@
   <section>
     <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">Sample Events</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div>
-        <p class="text-xs text-blue-400 font-bold uppercase mb-2">Base</p>
-        <div id="base-samples" class="space-y-3"></div>
-      </div>
-      <div>
-        <p class="text-xs text-amber-400 font-bold uppercase mb-2">Variant</p>
-        <div id="variant-samples" class="space-y-3"></div>
-      </div>
+      <div><p class="text-xs text-blue-400 font-bold uppercase mb-2">Base</p><div id="base-samples" class="space-y-3"></div></div>
+      <div><p class="text-xs text-amber-400 font-bold uppercase mb-2">Variant</p><div id="variant-samples" class="space-y-3"></div></div>
     </div>
   </section>
 
@@ -253,45 +212,69 @@
 <script>
 // ── Node metadata ─────────────────────────────────────────────────────────────
 const NODE_INFO = {
-  loader: {
-    emoji: '📂', file: 'pipeline/nodes/loader.py',
-    desc: 'Reads raw JSON files produced by LifeBench Steps 0–2 into pipeline state. No transformation — pure I/O.',
-    input:  ['data_dir/persona.json', 'data_dir/daily_event.json', 'phone_data/call.json', 'phone_data/sms.json', 'phone_data/push.json'],
-    output: ['state.persona', 'state.daily_events', 'state.raw_calls', 'state.raw_sms', 'state.raw_push'],
-    ex_in:  '{ "data_dir": "data/fenghaoran", "user_id": "fenghaoran" }',
-    ex_out: '{ "raw_calls": [300 records], "raw_sms": [420 records], "raw_push": [1200 records] }',
+  persona_gen: {
+    emoji: '👤', group: 'new', file: 'pipeline/nodes/persona_gen.py',
+    desc: '한국인 페르소나를 LLM으로 생성. 이름·나이·직업·MBTI·취미·인간관계 등 포함. 페르소나 수(count)를 입력으로 받으며, 각 페르소나의 직업·도시·나이가 다양하게 생성됨.',
+    input:  ['state.count — 생성할 페르소나 수', 'state.provider — LLM 제공자 (claude/gpt/glm)'],
+    output: ['state.personas — 페르소나 dict 리스트'],
+    ex_in:  '{ "count": 3, "provider": "claude" }',
+    ex_out: '[{ "name": "박준혁", "age": 35, "job": "소프트웨어 개발자",\n  "mbti": "INTP", "home_city": "서울",\n  "relationships": [{...}, ...] }]',
+  },
+  draft_gen: {
+    emoji: '📅', group: 'new', file: 'pipeline/nodes/draft_gen.py',
+    desc: '페르소나별 2025년 연간 이벤트 초안 생성. 한국 공휴일(설날·추석·광복절 등), 직장 문화, 취미 반영. test 모드에서는 10개, 정식에서는 40개 생성.',
+    input:  ['state.personas — 페르소나 리스트', 'state.test_mode — True면 10개로 제한'],
+    output: ['state.daily_drafts — {persona_name: [{date, title, category, description}]}'],
+    ex_in:  '{ "name": "박준혁", "job": "개발자", "home_city": "서울" }',
+    ex_out: '[{ "date": "2025-01-29", "title": "설날 가족 모임",\n  "category": "family", "description": "고향 방문" }]',
+  },
+  simulator: {
+    emoji: '🎮', group: 'new', file: 'pipeline/nodes/simulator.py',
+    desc: '이벤트 초안을 365일 상세 일정으로 확장. 이벤트 있는 날: LLM으로 5~8개 상세 이벤트 생성. 평범한 날: 직장인 템플릿(기상→출근→점심→퇴근→취침) 적용. test 모드에서는 LLM 없이 모두 템플릿 사용.',
+    input:  ['state.daily_drafts', 'state.personas', 'state.test_mode'],
+    output: ['state.daily_events_map — {persona_name: [{datetime, event_type, description, location}]}'],
+    ex_in:  '{ "date": "2025-01-29", "title": "설날" }',
+    ex_out: '[{ "datetime": "2025-01-29 10:00:00", "event_type": "가족 모임",\n  "description": "세배 및 떡국", "location": "부산 본가" }]',
+  },
+  phone_data_gen: {
+    emoji: '📱', group: 'new', file: 'pipeline/nodes/phone_data_gen.py',
+    desc: '일상 이벤트에서 합성 폰 데이터 생성 (LLM 없음, 규칙 기반). 이벤트 유형에 따라 통화·문자 생성, 취미·직업 기반 한국 앱 알림 생성. 카카오톡·토스·배달의민족·쿠팡 등 한국 앱 사용.',
+    input:  ['state.daily_events_map', 'state.personas'],
+    output: ['state.raw_calls', 'state.raw_sms', 'state.raw_push', 'state.persona_event_id_map'],
+    ex_in:  '{ "datetime": "2025-03-15 19:00:00", "event_type": "친구 모임" }',
+    ex_out: '{ "appName": "카카오톡", "title": "친구 모임 알림",\n  "packageName": "com.kakao.talk" }',
   },
   call_gen: {
-    emoji: '📞', file: 'pipeline/nodes/call_gen.py',
-    desc: 'Rule-based conversion of raw call records → BehaviorEventEntity. Maps direction/result to call_type (0=outgoing, 1=incoming, 2=missed). transcriptDialog is empty in base.',
-    input:  ['state.raw_calls — list of raw call dicts'],
+    emoji: '📞', group: 'phone', file: 'pipeline/nodes/call_gen.py',
+    desc: '원본 LifeBench 로직 유지. raw_calls → BehaviorEventEntity 변환 (규칙 기반, LLM 없음). direction/call_result → call_type(0=발신/1=수신/2=부재중) 매핑.',
+    input:  ['state.raw_calls'],
     output: ['state.generated_calls — BehaviorEventEntity list (CALL_LOG)'],
-    ex_in:  '{ "datetime": "2025-01-02 09:15:00", "direction": 1, "call_result": "answered", "contactName": "Zhang Wei" }',
-    ex_out: '{ "identifier": "call_42_1735777500000", "event_source": "CALL_LOG",\n  "payload": { "name": "Zhang Wei", "type": 1, "transcriptDialog": "" } }',
+    ex_in:  '{ "datetime": "2025-03-15 19:05:00", "contactName": "이민준",\n  "direction": 1, "call_result": "answered" }',
+    ex_out: '{ "identifier": "call_101_...", "event_source": "CALL_LOG",\n  "payload": { "type": 1, "transcriptDialog": "" } }',
   },
   sms_gen: {
-    emoji: '💬', file: 'pipeline/nodes/sms_gen.py',
-    desc: 'Rule-based conversion of raw SMS → BehaviorEventEntity. Assigns stable thread IDs per contact. Message body is used as-is in base.',
-    input:  ['state.raw_sms — list of raw SMS dicts'],
+    emoji: '💬', group: 'phone', file: 'pipeline/nodes/sms_gen.py',
+    desc: '원본 LifeBench 로직 유지. raw_sms → BehaviorEventEntity 변환. 연락처별 thread_id 할당, 메시지 본문 그대로 사용 (llm_enriched variant에서는 LLM으로 재작성).',
+    input:  ['state.raw_sms'],
     output: ['state.generated_sms — BehaviorEventEntity list (SMS)'],
-    ex_in:  '{ "datetime": "2025-03-10 14:22:00", "message_type": "Send", "body": "On my way!" }',
-    ex_out: '{ "identifier": "sms_1860_1741611720000", "event_source": "SMS",\n  "payload": { "body": "On my way!", "threadId": 7, "isIncoming": 0 } }',
+    ex_in:  '{ "datetime": "2025-03-10 14:22:00", "message_type": "Send",\n  "body": "지금 출발할게요!" }',
+    ex_out: '{ "identifier": "sms_10001_...", "event_source": "SMS",\n  "payload": { "body": "지금 출발할게요!", "threadId": 3 } }',
   },
   noti_gen: {
-    emoji: '🔔', file: 'pipeline/nodes/noti_gen.py',
-    desc: 'Maps raw push notifications → BehaviorEventEntity. Resolves app names to Android package names via lookup table (100+ apps). korean_local variant replaces this node to use Korean app names.',
-    input:  ['state.raw_push — list of raw push notification dicts'],
+    emoji: '🔔', group: 'phone', file: 'pipeline/nodes/noti_gen.py',
+    desc: '원본 LifeBench 로직 유지. raw_push → BehaviorEventEntity 변환. 앱 이름 → Android 패키지명 매핑. korean_local variant에서는 이 노드가 한국어 앱 이름/패키지로 교체됨.',
+    input:  ['state.raw_push'],
     output: ['state.generated_noti — BehaviorEventEntity list (NOTIFICATION)'],
-    ex_in:  '{ "appName": "WeChat", "title": "New message from Li Ming", "text": "Come check this out!" }',
-    ex_out: '{ "identifier": "noti_6_1696107600000", "event_source": "NOTIFICATION",\n  "payload": { "packageName": "com.tencent.mm", "appName": "WeChat" } }',
+    ex_in:  '{ "appName": "카카오톡", "title": "새 메시지",\n  "text": "지금 어디야?" }',
+    ex_out: '{ "identifier": "noti_20001_...", "event_source": "NOTIFICATION",\n  "payload": { "packageName": "com.kakao.talk" } }',
   },
   formatter: {
-    emoji: '🗂️', file: 'pipeline/nodes/formatter.py',
-    desc: 'Merges all three event lists, sorts by timestamp, assigns contextGroupId (one integer per calendar day). Final output is ready for benchmark evaluation.',
-    input:  ['state.generated_calls', 'state.generated_sms', 'state.generated_noti'],
-    output: ['state.events — merged, sorted, contextGroupId-stamped list'],
-    ex_in:  'calls[300] + sms[420] + noti[1200]',
-    ex_out: '[ { "identifier": "...", "timestamp": 1696107600000, "contextGroupId": 1 },\n  { "identifier": "...", "timestamp": 1696110000000, "contextGroupId": 1 }, ... ]',
+    emoji: '🗂️', group: 'phone', file: 'pipeline/full_graph.py (multi_formatter)',
+    desc: '모든 이벤트 병합·정렬 후 contextGroupId 부여 (날짜별 정수). 페르소나별로 이벤트 분리 → behavior_events_map. 최종 output/{name}/behavior_events.json으로 저장.',
+    input:  ['state.generated_calls', 'state.generated_sms', 'state.generated_noti', 'state.persona_event_id_map'],
+    output: ['state.behavior_events — 전체 이벤트 (정렬)', 'state.behavior_events_map — {persona: [events]}'],
+    ex_in:  'calls[170] + sms[224] + noti[3624]',
+    ex_out: '{ "박준혁": [4018 events], "김혜진": [4189 events] }',
   },
 };
 
@@ -340,6 +323,9 @@ function render(data) {
 }
 
 // ── Graph ─────────────────────────────────────────────────────────────────────
+// Full node order — always render all 8 nodes
+const FULL_NODES = ['persona_gen','draft_gen','simulator','phone_data_gen','call_gen','sms_gen','noti_gen','formatter'];
+
 function renderGraph(data) {
   const flow   = document.getElementById('graph-flow');
   const legend = document.getElementById('legend');
@@ -347,32 +333,35 @@ function renderGraph(data) {
   flow.innerHTML = legend.innerHTML = detail.innerHTML = '';
   detail.classList.add('hidden');
 
-  const baseNodes     = data.base_graph.nodes    || [];
-  const variantNodes  = data.variant_graph.nodes || [];
-  const replacedNodes = data.variant_graph.replaced_nodes || [];
+  // Use full node list; fall back to comparison_result nodes if available
+  const baseNodes     = data.base_graph    ? (data.base_graph.nodes    || FULL_NODES) : FULL_NODES;
+  const variantNodes  = data.variant_graph ? (data.variant_graph.nodes || FULL_NODES) : FULL_NODES;
+  const replacedNodes = data.variant_graph ? (data.variant_graph.replaced_nodes || []) : [];
+  const newNodes      = data.variant_graph ? (data.variant_graph.new_nodes || ['persona_gen','draft_gen','simulator','phone_data_gen']) : ['persona_gen','draft_gen','simulator','phone_data_gen'];
 
   if (currentView === 'base') {
-    legend.innerHTML = dot('#3b82f6','#1e3a5f','Base node');
-    buildVertical(flow, baseNodes, [], 'base');
+    legend.innerHTML  = dot('#22c55e','#14532d','New node (this project)');
+    legend.innerHTML += dot('#3b82f6','#1e3a5f','Base node (LifeBench original)');
+    buildVertical(flow, baseNodes, [], newNodes, 'base');
   } else if (currentView === 'variant') {
-    legend.innerHTML  = dot('#475569','#1e293b','Unchanged node');
+    legend.innerHTML  = dot('#22c55e','#14532d','New node');
+    legend.innerHTML += dot('#475569','#1e293b','Unchanged node');
     legend.innerHTML += dot('#f59e0b','#78350f','Replaced node');
-    buildVertical(flow, variantNodes, replacedNodes, 'variant');
+    buildVertical(flow, variantNodes, replacedNodes, newNodes, 'variant');
   } else {
-    legend.innerHTML  = dot('#475569','#1e293b','Shared (unchanged)');
-    legend.innerHTML += dot('#3b82f6','#1e3a5f','Base (replaced)');
+    legend.innerHTML  = dot('#22c55e','#14532d','New node (this project)');
+    legend.innerHTML += dot('#475569','#1e293b','Shared (unchanged)');
+    legend.innerHTML += dot('#3b82f6','#1e3a5f','Base (replaced, struck)');
     legend.innerHTML += dot('#f59e0b','#78350f','Variant (replaced, glowing)');
-    buildVerticalBoth(flow, baseNodes, variantNodes, replacedNodes);
+    buildVerticalBoth(flow, baseNodes, variantNodes, replacedNodes, newNodes);
 
     if (replacedNodes.length) {
       detail.classList.remove('hidden');
       const h = document.createElement('p');
-      h.className = 'text-xs text-gray-500 uppercase font-bold tracking-wider mb-1';
+      h.className = 'text-xs text-gray-500 uppercase font-bold tracking-wider mb-2';
       h.textContent = '🔄 Replaced Nodes';
       detail.appendChild(h);
-
       replacedNodes.forEach(name => {
-        const info = NODE_INFO[name] || {};
         const card = document.createElement('div');
         card.className = 'bg-gray-900 rounded-xl border border-amber-900/40 p-4 space-y-3';
         card.innerHTML = `
@@ -384,20 +373,40 @@ function renderGraph(data) {
           <div class="border-t border-gray-800 pt-3">
             <span class="text-xs font-bold bg-amber-900/50 text-amber-300 border border-amber-700 px-2 py-0.5 rounded">VARIANT — ${data.variant}</span>
             <p class="text-sm font-bold text-amber-300 mt-1">${name}</p>
-            <p class="text-xs text-gray-500">Replaced node in <span class="text-amber-400">${data.variant}</span></p>
-          </div>
-        `;
+            <p class="text-xs text-gray-500">Replaced in <span class="text-amber-400">${data.variant}</span></p>
+          </div>`;
         detail.appendChild(card);
       });
     }
   }
 }
 
-function buildVertical(container, nodes, replacedNodes, mode) {
+function buildVertical(container, nodes, replacedNodes, newNodes, mode) {
+  let lastGroup = null;
   nodes.forEach((name, i) => {
     const isReplaced = replacedNodes.includes(name);
-    const cls = mode === 'base' ? 'n-base' : (isReplaced ? 'n-variant' : 'n-shared');
-    const role = mode === 'base' ? 'base' : (isReplaced ? 'variant' : 'shared');
+    const isNew = newNodes.includes(name);
+    const group = isNew ? 'new' : 'phone';
+
+    if (group !== lastGroup) {
+      if (lastGroup !== null) {
+        const div = document.createElement('div');
+        div.className = 'group-divider gd-new';
+        container.appendChild(div);
+      }
+      const lbl = document.createElement('div');
+      lbl.className = 'group-label ' + (group === 'new' ? 'gl-new' : 'gl-phone');
+      lbl.textContent = group === 'new' ? '🆕 NEW — LangGraph' : '📱 PHONE DATA — LifeBench Original';
+      container.appendChild(lbl);
+      lastGroup = group;
+    }
+
+    let cls;
+    if (isNew) cls = 'n-new';
+    else if (mode === 'base') cls = 'n-base';
+    else cls = isReplaced ? 'n-variant' : 'n-shared';
+
+    const role = isNew ? 'new' : (mode === 'base' ? 'base' : (isReplaced ? 'variant' : 'shared'));
     container.appendChild(makeNodePill(name, cls, role));
     if (i < nodes.length - 1) container.appendChild(makeVArrow());
   });
@@ -405,31 +414,44 @@ function buildVertical(container, nodes, replacedNodes, mode) {
   container.appendChild(makeEnd());
 }
 
-function buildVerticalBoth(container, baseNodes, variantNodes, replacedNodes) {
+function buildVerticalBoth(container, baseNodes, variantNodes, replacedNodes, newNodes) {
+  let lastGroup = null;
   baseNodes.forEach((name, i) => {
     const isReplaced = replacedNodes.includes(name);
-    if (isReplaced) {
+    const isNew = newNodes.includes(name);
+    const group = isNew ? 'new' : 'phone';
+
+    if (group !== lastGroup) {
+      if (lastGroup !== null) {
+        const div = document.createElement('div');
+        div.className = 'group-divider gd-new';
+        container.appendChild(div);
+      }
+      const lbl = document.createElement('div');
+      lbl.className = 'group-label ' + (group === 'new' ? 'gl-new' : 'gl-phone');
+      lbl.textContent = group === 'new' ? '🆕 NEW — LangGraph' : '📱 PHONE DATA — LifeBench Original';
+      container.appendChild(lbl);
+      lastGroup = group;
+    }
+
+    if (isNew) {
+      container.appendChild(makeNodePill(name, 'n-new', 'new'));
+    } else if (isReplaced) {
       const slot = document.createElement('div');
       slot.className = 'replace-slot w-full flex flex-col items-center';
-
       const lBase = document.createElement('span');
-      lBase.className = 'rs-label bg-blue-900/40 text-blue-400 mb-1';
-      lBase.textContent = 'BASE';
+      lBase.className = 'rs-label bg-blue-900/40 text-blue-400 mb-1'; lBase.textContent = 'BASE';
       const pBase = makeNodePill(name, 'n-rb', 'base');
-
       const lVar = document.createElement('span');
-      lVar.className = 'rs-label bg-amber-900/40 text-amber-400 mt-3 mb-1';
-      lVar.textContent = 'VARIANT';
+      lVar.className = 'rs-label bg-amber-900/40 text-amber-400 mt-3 mb-1'; lVar.textContent = 'VARIANT';
       const pVar = makeNodePill(name, 'n-rv', 'variant');
-
-      slot.appendChild(lBase);
-      slot.appendChild(pBase);
-      slot.appendChild(lVar);
-      slot.appendChild(pVar);
+      slot.appendChild(lBase); slot.appendChild(pBase);
+      slot.appendChild(lVar); slot.appendChild(pVar);
       container.appendChild(slot);
     } else {
       container.appendChild(makeNodePill(name, 'n-shared', 'shared'));
     }
+
     if (i < baseNodes.length - 1) container.appendChild(makeVArrow());
   });
   container.appendChild(makeVArrow());
@@ -440,26 +462,25 @@ function makeNodePill(name, boxClass, role) {
   const info = NODE_INFO[name] || {};
   const pill = document.createElement('div');
   pill.className = 'node-pill w-full flex flex-col items-center';
-
   const box = document.createElement('div');
   box.className = 'node-box ' + boxClass;
   box.innerHTML = `<span>${info.emoji||''}</span><span>${name}</span>`;
 
-  // Tooltip
   const tip = document.createElement('div');
   tip.className = 'tooltip';
-  const roleHtml = role==='base'
-    ? '<span class="text-blue-400 font-bold text-xs">BASE</span>'
-    : role==='variant'
-    ? '<span class="text-amber-400 font-bold text-xs">VARIANT</span>'
-    : '<span class="text-gray-400 font-bold text-xs">SHARED</span>';
+  const roleBadge = {
+    new:     '<span class="text-green-400 font-bold text-xs">NEW</span>',
+    base:    '<span class="text-blue-400 font-bold text-xs">BASE</span>',
+    variant: '<span class="text-amber-400 font-bold text-xs">VARIANT</span>',
+    shared:  '<span class="text-gray-400 font-bold text-xs">SHARED</span>',
+  }[role] || '';
 
   tip.innerHTML = `
     <div class="flex items-center justify-between mb-2">
       <span class="text-white font-bold">${info.emoji||''} ${name}</span>
-      ${roleHtml}
+      ${roleBadge}
     </div>
-    <p class="text-gray-400 text-xs mb-3 leading-relaxed">${info.desc||''}</p>
+    <p class="text-gray-300 text-xs mb-3 leading-relaxed">${info.desc||''}</p>
     ${info.file ? `<p class="text-gray-600 text-xs mb-3">${info.file}</p>` : ''}
     <div class="grid grid-cols-2 gap-3 mb-3">
       <div>
@@ -479,34 +500,28 @@ function makeNodePill(name, boxClass, role) {
       <pre class="text-gray-400 text-xs bg-gray-950 rounded p-2 max-h-24 overflow-auto">${info.ex_out}</pre>
     </div>` : ''}
   `;
-
   pill.appendChild(box);
   pill.appendChild(tip);
   return pill;
 }
 
 function makeVArrow() {
-  const wrap = document.createElement('div');
-  wrap.className = 'v-arrow';
-  wrap.innerHTML = '<div class="v-arrow-line"></div><span>↓</span>';
-  return wrap;
+  const w = document.createElement('div');
+  w.className = 'v-arrow';
+  w.innerHTML = '<div class="v-arrow-line"></div><span>↓</span>';
+  return w;
 }
-
 function makeEnd() {
   const pill = document.createElement('div');
   pill.className = 'node-pill w-full flex flex-col items-center';
   const box = document.createElement('div');
-  box.className = 'node-box n-end';
-  box.textContent = 'END';
-  pill.appendChild(box);
-  return pill;
+  box.className = 'node-box n-end'; box.textContent = 'END';
+  pill.appendChild(box); return pill;
 }
-
 function dot(border, bg, label) {
   return `<span class="flex items-center gap-1.5">
     <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:${bg};border:2px solid ${border}"></span>
-    <span>${label}</span>
-  </span>`;
+    <span>${label}</span></span>`;
 }
 
 // ── Diff table ────────────────────────────────────────────────────────────────
