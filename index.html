@@ -89,6 +89,19 @@
             font-family:ui-monospace,monospace;font-size:9.5px;color:#64748b;overflow-x:auto}
     .io-lbl{font-size:8.5px;font-weight:800;letter-spacing:.08em;margin-bottom:2px}
     pre{white-space:pre-wrap;word-break:break-word;margin:0}
+
+    /* job source badge tooltip */
+    .job-src { position:relative; cursor:help; }
+    .job-src .job-tip {
+      display:none; position:absolute; bottom:calc(100% + 6px); left:50%;
+      transform:translateX(-50%);
+      background:#0f172a; border:1px solid #334155; border-radius:8px;
+      padding:10px 12px; min-width:180px; max-width:260px;
+      font-size:10px; color:#94a3b8; font-family:ui-monospace,monospace;
+      white-space:normal; line-height:1.6; z-index:300;
+      box-shadow:0 6px 24px rgba(0,0,0,0.6);
+    }
+    .job-src:hover .job-tip { display:block; }
     .cs{color:#fbbf24}.cn{color:#34d399}.cb{color:#60a5fa}
     .ck{color:#475569}.cr{color:#f87171}.cg{color:#a3e635}
 
@@ -312,7 +325,10 @@ traits:  [<span class="cs">"家庭导向"</span>...]
     <div class="ss-path">nodes/person_gen.py — generate_persons() Phase 2</div>
     <div class="ss-note">
       나이대 × 성별 가중치 후보 목록 생성 후 LLM이 가장 자연스러운 직업 선택.<br>
-      후보 출처: <span class="badge b-zh" style="font-size:9px">LifeBench person.json 설문</span> <span class="badge" style="background:#1e3a5f;color:#93c5fd;border:1px solid #3b82f6;font-size:9px">refer.json 137개</span> <span class="badge b-rule" style="font-size:9px">기존 후보</span><br>
+      후보 출처:
+      <span class="job-src"><span class="badge b-zh" style="font-size:9px;cursor:help">LifeBench person.json 설문</span><span class="job-tip"><b style="color:#7dd3fc">📋 person.json 설문 직업 (7개)</b><br>보험 에이전트 · 주치의 · 기계 엔지니어<br>수치제어 조작원 · 의류 매장 운영자<br>유튜버·스트리머 · 농업인</span></span>
+      <span class="job-src"><span class="badge" style="background:#1e3a5f;color:#93c5fd;border:1px solid #3b82f6;font-size:9px;cursor:help">refer.json 137개</span><span class="job-tip"><b style="color:#93c5fd">📦 refer.json 매핑 직업 (27개)</b><br>조산사 · 통신 엔지니어 · 광고 디자이너<br>번역가 · 수의사 · 공증인 · 법관 · 검사<br>항공기 조종사 · 라디오 아나운서<br>방송 진행자 · 운동선수·코치<br>환경 미화원 · 문화재 관리사<br>전통 악기 연주자 · 스포츠 심판원<br>시장 상인 · 약국 운영자 · 도서관 사서<br>컴퓨터 소프트웨어 기술자<br>실내 인테리어 디자이너 · 회계사<br>통계 연구원 · 프리랜서 작가 · 퇴직자<br><i style="color:#475569">+ 기타</i></span></span>
+      <span class="job-src"><span class="badge b-rule" style="font-size:9px;cursor:help">기존 후보</span><span class="job-tip"><b style="color:#9ca3af">⚙️ 기존 후보 직업</b><br>소프트웨어 개발자 · 마케터 · 영업사원<br>간호사 · 교사 · 공무원 · 의사 · 약사<br>변호사 · 회계사 · 건축사 · 팀장 · 부장<br>이사 · 임원 · 대학 교수 · 자영업자<br>중소기업 대표 · 부동산 중개사 · 세무사<br>대학생 · 아르바이트생 · 기타</span></span><br>
       예: 29세 여성 → [간호사(8), 조산사(3), 주치의(3), 의류매장운영자(5)...] 중 선택
     </div>
     <div class="pb-wrap">
