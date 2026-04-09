@@ -288,9 +288,17 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>persona + year/term</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>연간 이벤트 초안
-(카테고리별 비율 지정)</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// persona.json</span>
+{"name":<span class="cs">"Feng Haoran"</span>,
+ "job":<span class="cs">"Financial Investment Advisor"</span>,
+ "mbti":<span class="cs">"ENTJ"</span>,
+ "hobbies":[<span class="cs">"Running"</span>,...]
+}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 이벤트 100개 (1라운드)</span>
+{"date":<span class="cs">"2025-01-01"</span>,
+ "title":<span class="cs">"New Year Morning Run"</span>,
+ "category":<span class="cs">"Personal Life"</span>}
+<span class="cg">... 100개</span></pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -306,9 +314,15 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>1라운드 초안</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>보완된 이벤트 목록
-(빠진 계절·공휴일 추가)</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 1라운드 100개 목록</span>
+[{"date":<span class="cs">"2025-01-01"</span>,
+  "title":<span class="cs">"New Year Run"</span>},
+ <span class="cg">... 100개</span>]</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 2라운드 90개 추가</span>
+{"date":<span class="cs">"2025-02-03"</span>,
+ "title":<span class="cs">"元宵节家庭聚餐"</span>,
+ "category":<span class="cs">"Family"</span>}
+<span class="cg">... 90개 (중복 없음)</span></pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -324,9 +338,14 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>전체 이벤트 목록</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>인생에 영향 주는
-충격 이벤트 추출</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 전체 190개 이벤트</span>
+[{"title":<span class="cs">"Job Promotion"</span>,
+  "date":<span class="cs">"2025-03-15"</span>},
+ ...]</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 충격 이벤트만 추출</span>
+{"title":<span class="cs">"Promotion"</span>,
+ "impact_type":<span class="cs">"profile_change"</span>,
+ "date":<span class="cs">"2025-03-15"</span>}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -342,9 +361,16 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>월별 이벤트 배열</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>월별 트렌드 분석
-(계절 패턴 반영)</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 2025-01 이벤트</span>
+[{"date":<span class="cs">"2025-01-01"</span>,
+  "title":<span class="cs">"New Year Run"</span>,
+  "category":<span class="cs">"Personal Life"</span>},
+ <span class="cg">...</span>]</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 월별 분석 결과</span>
+{"month":<span class="cs">"2025-01"</span>,
+ "fixed_changes":[...],
+ "proximity_impacts":[...],
+ "daily_overview":<span class="cs">"..."</span>}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -360,9 +386,17 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>합산된 타임라인</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>충돌 해결된 최종
-이벤트 스케줄</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 주제별 타임라인</span>
+[{"topic":<span class="cs">"Career"</span>,
+  "events":[...]},
+ {"topic":<span class="cs">"Health"</span>,
+  "events":[...]}]</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// daily_draft.json</span>
+{"2025-01":[
+  {"date":<span class="cs">"2025-01-01"</span>,
+   "daily_overview":<span class="cs">"New Year holiday..."</span>,
+   "date_attribute":{"holiday":<span class="cs">"New Year's Day"</span>}}
+]}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -431,10 +465,13 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>월별 이벤트 목록
-(draft에서 추출)</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>월별 퍼지 기억 요약
-(장기기억 압축)</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// persona + 이벤트 목록</span>
+{"persona":"Feng Haoran",
+ "year":2025, "month":1,
+ "events_desc":"Jan 1: Morning run..."}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// monthly_summaries.json</span>
+{"2025-01":"1월 마라톤 등록 및
+ 훈련 시작. 연말 회고 설정..."}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -460,11 +497,15 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>persona + 당일 계획
-+ 퍼지 기억</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>{"thought":"...",
- "plan":[...]}
-1인칭 주관적 계획</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 2025-01-01</span>
+{"cognition":"ENTJ 투자 조언사",
+ "plan":"New Year holiday",
+ "memory":"1월 퍼지 기억..."}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 1인칭 주관적 계획</span>
+{"thought":"새해 첫날, 일찍
+일어나 유주산 달리기...",
+ "plan":["06:40 기상",
+ "08:00 마라톤 훈련"...]}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -480,10 +521,15 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>주관적 계획
-+ 날짜 컨텍스트</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>객관적 시간순 이벤트
-(통근·식사 등 보완)</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 주관적 계획</span>
+{"thought":"...",
+ "date":"2025-01-01",
+ "is_holiday":true}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 시간순 이벤트 표</span>
+{"시간":"06:40-08:00",
+ "이벤트":"Morning run",
+ "장소":"Yuelu Mountain"}
+<span class="cg">... 하루 전체</span></pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -499,10 +545,15 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>객관적 이벤트 배열
-+ POI 데이터</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>이동경로 반영
-이벤트 + 위치정보</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 이벤트 + POI 검색</span>
+{"event":"Morning run",
+ "location_type":"outdoor_sports",
+ "city":"Changsha"}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 실제 주소 + 이동시간</span>
+{"location":"Yuelu Mountain,
+  No.9 Lushan Rd...",
+ "gps":{"lat":28.18,"lng":112.93},
+ "commute_min":20}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -518,9 +569,18 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>완성된 당일 이벤트</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>하루 회고
-(감정·반성 기록)</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 2025-01-01 전체 이벤트</span>
+[{"time":"06:40",
+  "event":"Morning run"},
+ {"time":"13:30",
+  "event":"Family lunch"},
+ <span class="cg">...</span>]</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// daily_reflection</span>
+{"date":"2025-01-01",
+ "topic":"New Year goals",
+ "events":"유주산 마라톤 후
+가족과 점심...",
+ "thought":"충실한 하루"}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -536,9 +596,14 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>회고 + 장기기억</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>업데이트된 장기기억
-(중요 변화 반영)</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 회고 + 기존 장기기억</span>
+{"life":"Jan 1: marathon...",
+ "memory":"I enjoy running",
+ "ref":"ENTJ 투자 조언사"}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 업데이트된 장기기억</span>
+{"health":"Running 1h/day",
+ "goals":"Marathon in April",
+ "habits":"Morning run"}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -554,10 +619,16 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>월별 이벤트
-+ 충격 이벤트 목록</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>건강·심리 영향 분석
-월별 상태 변화</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 2025-01 이벤트 + 충격</span>
+{"health_init":"Good",
+ "impact_events":[
+  {"title":"Promotion",
+   "date":"2025-03-15"}]}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// 월말 건강 상태</span>
+{"mid_state":"Stressed",
+ "end_state":"Energized",
+ "changes":["Sleep improved",
+ "Appetite normal"]}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -573,9 +644,16 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>원시 이벤트 배열</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>정형화된 이벤트
-시퀀스 (타임스탬프)</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 표 형식 이벤트 텍스트</span>
+"06:40-08:00 유주산 달리기
+08:30 집 귀환 세면..."
+<span class="ck">// POI 데이터</span></pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// daily_event.json</span>
+{"event_id":"1",
+ "name":"Morning run at Yuelu",
+ "date":["06:40 to 08:00 on Jan 1"],
+ "type":"Personal Life",
+ "location":"Yuelu Mountain..."}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -728,8 +806,14 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>이벤트 컨텍스트</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>note.json</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 이벤트 + 생성지침</span>
+{"event_info":{"type":"Study"},
+ "generate_guide":"커피 메모 노트"}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// note.json</span>
+{"type":"note",
+ "title":"Hand Drip Coffee",
+ "content":"I. Ethiopia Yirgacheffe",
+ "datetime":"2025-01-01 20:00:00"}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -745,8 +829,15 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>이벤트 목록</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>calendar.json</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 이벤트 + 생성지침</span>
+{"event_info":{"type":"Family"},
+ "generate_guide":"설날 가족 행사",
+ "date":"2025-01-29"}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// calendar.json</span>
+{"type":"calendar",
+ "title":"설날 가족 모임",
+ "start":"2025-01-29 10:00:00",
+ "end":"2025-01-29 18:00:00"}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -762,9 +853,15 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>이벤트 목록</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>photo.json
-(확률 기반 사진 기록)</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 이벤트 + 위치</span>
+{"event_info":{"type":"Outdoor"},
+ "location":"Yuelu Mountain",
+ "date":"2025-01-01"}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// photo.json</span>
+{"type":"photo",
+ "title":"IMG_20250101_064500",
+ "caption":"유주산 일출",
+ "location":{"poi":"Yuelu Mountain"}}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -780,9 +877,15 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>이벤트 + 위치 정보</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>perception data
-(센서·위치 기록)</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 이벤트 + 카테고리</span>
+{"events":[{"type":"달리기",
+  "location":"Yuelu Mountain"}],
+ "category_list":{...}}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// perception data</span>
+{"event_type":"달리기",
+ "date":"2025-01-01",
+ "time":["06:40:00","08:00:00"],
+ "location":"Yuelu Mountain"}</pre></div>
     </div>
   </div>
 
@@ -902,9 +1005,15 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>단일 이벤트 데이터</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>single-hop Q&amp;A
-(사실 확인 질문)</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 단일 이벤트</span>
+{"event_id":"217",
+ "name":"Visit art museum",
+ "date":"2025-01-18",
+ "participants":["Peng Yuqing"]}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// single-hop QA</span>
+{"question":"In mid-Jan, which day
+did Feng visit art museum?",
+ "answer":"January 18"}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -920,9 +1029,16 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>여러 이벤트 조합</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>multi-hop Q&amp;A
-(여러 이벤트 연결)</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 여러 이벤트 조합</span>
+[{"event":"Overtime",
+  "date":"2025-01-02"},
+ {"event":"Sleep delay",
+  "date":"2025-01-03"}]</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// multi-hop QA</span>
+{"question":"What caused Feng's
+sleep shift in January?",
+ "answer":"Jan 2 overtime led
+to Jan 3 sleep delay"}</pre></div>
     </div>
   </div>
   <div class="ss-arrow">↓</div>
@@ -946,7 +1062,11 @@
       <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>시계열 이벤트 데이터</pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// 시계열 이벤트</span>
+[{"date":"2025-01-02",
+  "sleep_time":"23:30"},
+ {"date":"2025-01-03",
+  "sleep_time":"00:15"}]</pre></div>
       <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre>temporal · pattern
 · updating Q&amp;A</pre></div>
     </div>
