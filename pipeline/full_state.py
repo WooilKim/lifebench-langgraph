@@ -8,6 +8,9 @@ class FullPipelineState(TypedDict):
     provider: str   # LLM provider: claude | gpt | glm
     test_mode: bool # if True, limit draft events and simulator LLM calls
 
+    # ── Step -1: person_gen ───────────────────────────────────────────────
+    persons: list   # [{name, age, gender, job}] — basic skeleton before persona expansion
+
     # ── Step 0: persona_gen ───────────────────────────────────────────────
     personas: list  # list of persona dicts
 

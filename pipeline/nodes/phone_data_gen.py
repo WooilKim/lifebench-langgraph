@@ -173,9 +173,19 @@ def _offset_dt(dt_str: str, delta_minutes: int) -> str:
 
 # ── Core generation logic ──────────────────────────────────────────────────────
 
+def _normalize_rel(r: dict) -> dict:
+    """Normalize relationship dict keys (LLM may use Korean keys)."""
+    return {
+        "name":         r.get("name") or r.get("이름") or r.get("contact_name") or "이름없음",
+        "relation":     r.get("relation") or r.get("관계") or "",
+        "social_circle": r.get("social_circle") or r.get("소셜서클") or r.get("소셜_서클") or "",
+    }
+
+
 def _pick_contact(relationships: list, prefer_circles: list = None):
     if not relationships:
         return None
+    relationships = [_normalize_rel(r) for r in relationships]
     if prefer_circles:
         preferred = [r for r in relationships if r.get("social_circle") in prefer_circles]
         if preferred:

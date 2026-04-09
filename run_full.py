@@ -36,6 +36,7 @@ def main():
         "count": args.count,
         "provider": args.provider,
         "test_mode": args.test,
+        "persons": [],   # populated by person_gen
         "personas": [],
         "daily_drafts": {},
         "daily_events_map": {},

@@ -93,42 +93,45 @@ def _default_persona(idx: int) -> dict:
 def generate_personas(state: FullPipelineState) -> FullPipelineState:
     """Step 0: Generate `count` Korean personas via LLM."""
     provider = state.get("provider", "claude")
-    count = max(1, state.get("count", 1))
+    persons  = state.get("persons", [])   # from person_gen
+    count    = max(1, state.get("count", 1))
 
-    print(f"[persona_gen] Generating {count} persona(s) with {provider}...")
+    # If person_gen ran, use those skeletons; otherwise fall back to count
+    if not persons:
+        print("[persona_gen] No persons from person_gen — generating from scratch")
+        import random
+        CITIES = ["서울", "부산", "대구", "인천", "광주", "대전"]
+        persons = [
+            {"name": f"이일{i+1}", "age": random.randint(25, 50),
+             "gender": "남" if i % 2 == 0 else "여", "job": "회사원"}
+            for i in range(count)
+        ]
 
+    print(f"[persona_gen] Expanding {len(persons)} person(s) into full personas with {provider}...")
     llm = _get_llm(provider, max_tokens=4096)
 
-    CITIES  = ["서울", "부산", "대구", "인천", "광주", "대전"]
-    JOBS    = ["소프트웨어 개발자", "간호사", "교사", "마케터", "요리사", "디자이너",
-               "회계사", "영업사원", "경찰관", "의사", "작가", "사진작가", "유튜버",
-               "물리치료사", "건축가", "공무원", "약사", "번역가", "인테리어 디자이너"]
     import random
-    assigned_cities = random.sample(CITIES * 3, min(count, len(CITIES * 3)))
-    assigned_jobs   = random.sample(JOBS,   min(count, len(JOBS)))
-    diversity_hint  = "\n".join(
-        f"- 페르소나 {i+1}: 도시={assigned_cities[i]}, 직업={assigned_jobs[i]}, 나이={random.randint(22,55)}, 성별={'남' if i%2==0 else '여'}"
-        for i in range(count)
+    CITIES = ["서울", "부산", "대구", "인천", "광주", "대전"]
+    random.shuffle(CITIES)
+
+    # Build a single batch prompt for all persons
+    person_list = "\n".join(
+        f"{i+1}. {p['name']} ({p['age']}세, {p['gender']}, 직업: {p['job']}, 도시: {CITIES[i % len(CITIES)]})"
+        for i, p in enumerate(persons)
     )
 
-    prompt = f"""다음 조건으로 한국인 페르소나 {count}명의 JSON 배열을 생성하세요.
+    prompt = f"""아래 기본 정보를 기반으로 한국인 페르소나 {len(persons)}명의 JSON 배열을 생성하세요.
+기본 정보 (반드시 유지):
+{person_list}
 
-각 페르소나 필드:
-- name: 한국 이름 (문자열)
-- age: 정수
-- gender: "남" 또는 "여"
-- job: 직업
-- mbti: MBTI 유형
-- hobbies: 취미 리스트 (4~8개)
-- personality_traits: 성격 특성 리스트 (2~4개)
-- economic_level: "하", "중", "상" 중 하나
-- home_city: 문자열
-- relationships: 10~15명 리스트, 각 항목은 {{"name": "...", "relation": "...", "social_circle": "..."}}
+각 페르소나는 기본 정보(name/age/gender/job/home_city)를 그대로 유지하고 아래 필드를 추가합니다:
+- mbti: MBTI 유형 (나이와 직업에 자연스러운 것으로)
+- hobbies: 취미 리스트 (4~8개, 나이와 직업에 어울리는 취미로)
+- personality_traits: 성격 특성 (2~4개)
+- economic_level: "하"/"중"/"상" (직업과 나이 고려)
+- relationships: 10~15명 [{{이름, 관계, 소셜서클}}] (직업/나이대 연령에 맞는 인연)
 
-아래 다양성 조건을 반드시 따르세요 (각 번호가 각 페르소나에 해당):
-{diversity_hint}
-
-JSON 배열만 출력하세요. 마크다운, 설명 없이."""
+JSON 배열만 출력하세요. 마크다운 없이."""
 
     personas = []
     try:
@@ -138,14 +141,39 @@ JSON 배열만 출력하세요. 마크다운, 설명 없이."""
             personas = parsed
         elif isinstance(parsed, dict):
             personas = [parsed]
+        # Ensure basic fields from persons are preserved
+        for i, p in enumerate(persons):
+            if i < len(personas):
+                personas[i]["name"]      = p["name"]
+                personas[i]["age"]       = p["age"]
+                personas[i]["gender"]    = p["gender"]
+                personas[i]["job"]       = p["job"]
+                personas[i]["home_city"] = CITIES[i % len(CITIES)]
     except Exception as e:
         print(f"[persona_gen] LLM parse error: {e}. Using defaults.")
 
-    # Pad with defaults if LLM returned fewer than requested
-    while len(personas) < count:
-        personas.append(_default_persona(len(personas)))
+    # Pad with defaults if fewer than expected
+    while len(personas) < len(persons):
+        p = persons[len(personas)]
+        d = _default_persona(len(personas))
+        d.update({"name": p["name"], "age": p["age"],
+                  "gender": p["gender"], "job": p["job"]})
+        personas.append(d)
 
-    personas = personas[:count]
-    print(f"[persona_gen] Generated {len(personas)} persona(s): {[p.get('name', '?') for p in personas]}")
+    personas = personas[:len(persons)]
+
+    # Normalize relationship keys (LLM may return Korean or variant key names)
+    for p in personas:
+        rels = p.get("relationships") or p.get("인간관계") or p.get("relations") or []
+        normalized = []
+        for r in rels:
+            normalized.append({
+                "name":          r.get("name") or r.get("이름") or r.get("contact_name") or "이름없음",
+                "relation":      r.get("relation") or r.get("관계") or r.get("관계유형") or "",
+                "social_circle": r.get("social_circle") or r.get("소셜서클") or r.get("소셜_서클") or "",
+            })
+        p["relationships"] = normalized
+
+    print(f"[persona_gen] Expanded {len(personas)} persona(s): {[p.get('name', '?') for p in personas]}")
 
     return {**state, "personas": personas}

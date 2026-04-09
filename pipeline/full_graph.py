@@ -1,4 +1,4 @@
-"""Full LangGraph pipeline: persona_gen → draft_gen → simulator → phone_data_gen
+"""Full LangGraph pipeline: person_gen → persona_gen → draft_gen → simulator → phone_data_gen
 → call_gen → sms_gen → noti_gen → multi_formatter → END
 """
 import time
@@ -7,6 +7,7 @@ from datetime import datetime
 from langgraph.graph import StateGraph, END
 
 from pipeline.full_state import FullPipelineState
+from pipeline.nodes.person_gen import generate_persons
 from pipeline.nodes.persona_gen import generate_personas
 from pipeline.nodes.draft_gen import generate_drafts
 from pipeline.nodes.simulator import simulate_daily_events
@@ -85,6 +86,7 @@ def build_full_graph():
     """Build and return the compiled full pipeline graph."""
     g = StateGraph(FullPipelineState)
 
+    g.add_node("person_gen",     generate_persons)
     g.add_node("persona_gen",    generate_personas)
     g.add_node("draft_gen",      generate_drafts)
     g.add_node("simulator",      simulate_daily_events)
@@ -94,7 +96,8 @@ def build_full_graph():
     g.add_node("noti_gen",       generate_notifications)
     g.add_node("formatter",      multi_formatter)
 
-    g.set_entry_point("persona_gen")
+    g.set_entry_point("person_gen")
+    g.add_edge("person_gen",     "persona_gen")
     g.add_edge("persona_gen",    "draft_gen")
     g.add_edge("draft_gen",      "simulator")
     g.add_edge("simulator",      "phone_data_gen")
