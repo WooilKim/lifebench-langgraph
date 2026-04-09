@@ -1,0 +1,1038 @@
+[
+  {
+    "persona": {
+      "name": "김민준",
+      "age": 32,
+      "gender": "남",
+      "job": "소프트웨어 개발자",
+      "mbti": "INTP",
+      "hobbies": [
+        "게임",
+        "독서",
+        "등산",
+        "요리"
+      ],
+      "personality_traits": [
+        "분석적",
+        "내향적",
+        "논리적"
+      ],
+      "economic_level": "중",
+      "home_city": "서울",
+      "relationships": [
+        {
+          "name": "이지연",
+          "relation": "여자친구",
+          "social_circle": "연인"
+        },
+        {
+          "name": "박성호",
+          "relation": "친구",
+          "social_circle": "대학 동기"
+        },
+        {
+          "name": "김부장",
+          "relation": "상사",
+          "social_circle": "직장"
+        },
+        {
+          "name": "최팀장",
+          "relation": "팀장",
+          "social_circle": "직장"
+        },
+        {
+          "name": "정대리",
+          "relation": "동료",
+          "social_circle": "직장"
+        },
+        {
+          "name": "김엄마",
+          "relation": "어머니",
+          "social_circle": "가족"
+        },
+        {
+          "name": "김아빠",
+          "relation": "아버지",
+          "social_circle": "가족"
+        },
+        {
+          "name": "김동생",
+          "relation": "동생",
+          "social_circle": "가족"
+        },
+        {
+          "name": "이현우",
+          "relation": "친구",
+          "social_circle": "고등학교 동기"
+        },
+        {
+          "name": "서준호",
+          "relation": "친구",
+          "social_circle": "동네"
+        }
+      ]
+    },
+    "stats": {
+      "total": 4079,
+      "calls": 208,
+      "sms": 240,
+      "noti": 3631
+    },
+    "samples": {
+      "calls": [
+        {
+          "identifier": "call_0_1735690320000",
+          "timestamp": 1735690320000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-2441-3031\", \"name\": \"정대리\", \"date\": 1735690320000, \"type\": 2, \"geocodedLocation\": \"\", \"duration\": 0, \"missedReason\": \"No answer\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "call_1_1735863300000",
+          "timestamp": 1735863300000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-2441-3031\", \"name\": \"정대리\", \"date\": 1735863300000, \"type\": 0, \"geocodedLocation\": \"\", \"duration\": 780, \"missedReason\": \"\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 3
+        },
+        {
+          "identifier": "call_2_1736122140000",
+          "timestamp": 1736122140000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-9046-7094\", \"name\": \"김부장\", \"date\": 1736122140000, \"type\": 1, \"geocodedLocation\": \"\", \"duration\": 540, \"missedReason\": \"\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 6
+        }
+      ],
+      "sms": [
+        {
+          "identifier": "sms_10000_1735862580000",
+          "timestamp": 1735862580000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_10000\", \"messageType\": 0, \"messageId\": 10000, \"threadId\": 1, \"date\": 1735862580000, \"address\": \"010-9046-7094\", \"title\": \"김부장\", \"body\": \"응, 가능해!\", \"isIncoming\": 1, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 3
+        },
+        {
+          "identifier": "sms_10001_1735863420000",
+          "timestamp": 1735863420000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_10001\", \"messageType\": 1, \"messageId\": 10001, \"threadId\": 1, \"date\": 1735863420000, \"address\": \"010-9046-7094\", \"title\": \"김부장\", \"body\": \"자료 공유해 줄 수 있어요?\", \"isIncoming\": 0, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 3
+        },
+        {
+          "identifier": "sms_10002_1736057100000",
+          "timestamp": 1736057100000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_10002\", \"messageType\": 1, \"messageId\": 10002, \"threadId\": 2, \"date\": 1736057100000, \"address\": \"010-0476-8436\", \"title\": \"이현우\", \"body\": \"지금 어디야? 나 근처야\", \"isIncoming\": 0, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 5
+        }
+      ],
+      "noti": [
+        {
+          "identifier": "noti_20005_1735696080000",
+          "timestamp": 1735696080000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.유튜브\", \"postTime\": 1735696080000, \"key\": \"noti_20005\", \"id\": 20005, \"isOngoing\": false, \"isClearable\": false, \"title\": \"구독 채널 업로드\", \"text\": \"새 영상이 업로드되었습니다.\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"유튜브\", \"analysis\": {}}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "noti_20010_1735696740000",
+          "timestamp": 1735696740000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.만개의레시피\", \"postTime\": 1735696740000, \"key\": \"noti_20010\", \"id\": 20010, \"isOngoing\": false, \"isClearable\": false, \"title\": \"알림\", \"text\": \"새로운 알림이 있습니다.\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"만개의레시피\", \"analysis\": {}}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "noti_20001_1735704240000",
+          "timestamp": 1735704240000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.트랭글\", \"postTime\": 1735704240000, \"key\": \"noti_20001\", \"id\": 20001, \"isOngoing\": false, \"isClearable\": true, \"title\": \"업데이트\", \"text\": \"앱이 업데이트되었습니다.\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"트랭글\", \"analysis\": {}}",
+          "contextGroupId": 1
+        }
+      ]
+    }
+  },
+  {
+    "persona": {
+      "name": "김혜진",
+      "age": 48,
+      "gender": "여",
+      "job": "의사",
+      "mbti": "ESTJ",
+      "hobbies": [
+        "필라테스",
+        "요리",
+        "독서",
+        "여행",
+        "와인 테이스팅",
+        "클래식 음악 감상",
+        "정원 가꾸기"
+      ],
+      "personality_traits": [
+        "리더십",
+        "책임감",
+        "꼼꼼함",
+        "사교적"
+      ],
+      "economic_level": "상",
+      "home_city": "인천",
+      "relationships": [
+        {
+          "name": "이상철",
+          "relation": "배우자",
+          "social_circle": "가족"
+        },
+        {
+          "name": "이하은",
+          "relation": "딸",
+          "social_circle": "가족"
+        },
+        {
+          "name": "이준서",
+          "relation": "아들",
+          "social_circle": "가족"
+        },
+        {
+          "name": "김영숙",
+          "relation": "어머니",
+          "social_circle": "가족"
+        },
+        {
+          "name": "김태민",
+          "relation": "남동생",
+          "social_circle": "가족"
+        },
+        {
+          "name": "박소연",
+          "relation": "동료 의사",
+          "social_circle": "직장"
+        },
+        {
+          "name": "최현우",
+          "relation": "레지던트",
+          "social_circle": "직장"
+        },
+        {
+          "name": "장미란",
+          "relation": "간호사장",
+          "social_circle": "직장"
+        },
+        {
+          "name": "신동엽",
+          "relation": "병원 원장",
+          "social_circle": "직장"
+        },
+        {
+          "name": "류지영",
+          "relation": "의대 동기",
+          "social_circle": "친구"
+        },
+        {
+          "name": "오세진",
+          "relation": "의대 동기",
+          "social_circle": "친구"
+        },
+        {
+          "name": "한소희",
+          "relation": "고등학교 친구",
+          "social_circle": "친구"
+        },
+        {
+          "name": "임수정",
+          "relation": "필라테스 친구",
+          "social_circle": "취미"
+        },
+        {
+          "name": "강나래",
+          "relation": "와인 모임 친구",
+          "social_circle": "취미"
+        },
+        {
+          "name": "문지혜",
+          "relation": "이웃",
+          "social_circle": "지역"
+        }
+      ]
+    },
+    "stats": {
+      "total": 4189,
+      "calls": 231,
+      "sms": 225,
+      "noti": 3733
+    },
+    "samples": {
+      "calls": [
+        {
+          "identifier": "call_100000_1735682520000",
+          "timestamp": 1735682520000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-8673-8187\", \"name\": \"장미란\", \"date\": 1735682520000, \"type\": 0, \"geocodedLocation\": \"\", \"duration\": 780, \"missedReason\": \"\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "call_100001_1735727940000",
+          "timestamp": 1735727940000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-8833-4691\", \"name\": \"이준서\", \"date\": 1735727940000, \"type\": 1, \"geocodedLocation\": \"\", \"duration\": 480, \"missedReason\": \"\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "call_100002_1735776600000",
+          "timestamp": 1735776600000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-2205-9857\", \"name\": \"최현우\", \"date\": 1735776600000, \"type\": 1, \"geocodedLocation\": \"\", \"duration\": 480, \"missedReason\": \"\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 2
+        }
+      ],
+      "sms": [
+        {
+          "identifier": "sms_110000_1735689300000",
+          "timestamp": 1735689300000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_110000\", \"messageType\": 0, \"messageId\": 110000, \"threadId\": 16, \"date\": 1735689300000, \"address\": \"010-2205-9857\", \"title\": \"최현우\", \"body\": \"오늘은 좀 어렵고 다음에 하자\", \"isIncoming\": 1, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "sms_110001_1735690680000",
+          "timestamp": 1735690680000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_110001\", \"messageType\": 1, \"messageId\": 110001, \"threadId\": 16, \"date\": 1735690680000, \"address\": \"010-2205-9857\", \"title\": \"최현우\", \"body\": \"방금 메일 확인했어요?\", \"isIncoming\": 0, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "sms_110002_1735788240000",
+          "timestamp": 1735788240000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_110002\", \"messageType\": 1, \"messageId\": 110002, \"threadId\": 17, \"date\": 1735788240000, \"address\": \"010-5925-9175\", \"title\": \"한소희\", \"body\": \"저번에 얘기한 거 어떻게 됐어?\", \"isIncoming\": 0, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 2
+        }
+      ],
+      "noti": [
+        {
+          "identifier": "noti_120004_1735683900000",
+          "timestamp": 1735683900000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.카카오톡\", \"postTime\": 1735683900000, \"key\": \"noti_120004\", \"id\": 120004, \"isOngoing\": false, \"isClearable\": false, \"title\": \"단톡방 알림\", \"text\": \"새 메시지 1개\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"카카오톡\", \"analysis\": {}}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "noti_120010_1735686180000",
+          "timestamp": 1735686180000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.카카오페이\", \"postTime\": 1735686180000, \"key\": \"noti_120010\", \"id\": 120010, \"isOngoing\": false, \"isClearable\": true, \"title\": \"머니 입금\", \"text\": \"카카오페이 머니 입금 완료\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"카카오페이\", \"analysis\": {}}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "noti_120012_1735698360000",
+          "timestamp": 1735698360000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.네이버\", \"postTime\": 1735698360000, \"key\": \"noti_120012\", \"id\": 120012, \"isOngoing\": false, \"isClearable\": false, \"title\": \"네이버 포인트\", \"text\": \"포인트가 적립되었습니다.\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"네이버\", \"analysis\": {}}",
+          "contextGroupId": 1
+        }
+      ]
+    }
+  },
+  {
+    "persona": {
+      "name": "박서연",
+      "age": 34,
+      "gender": "여",
+      "job": "간호사",
+      "mbti": "ESFJ",
+      "hobbies": [
+        "요가",
+        "독서",
+        "요리",
+        "사진 촬영",
+        "카페 탐방",
+        "넷플릭스 시청"
+      ],
+      "personality_traits": [
+        "따뜻한",
+        "책임감 있는",
+        "사교적인",
+        "배려심 깊은",
+        "감성적인"
+      ],
+      "economic_level": "중",
+      "home_city": "대전",
+      "relationships": [
+        {
+          "name": "박현우",
+          "relation": "오빠",
+          "social_circle": "가족"
+        },
+        {
+          "name": "이정숙",
+          "relation": "어머니",
+          "social_circle": "가족"
+        },
+        {
+          "name": "박철수",
+          "relation": "아버지",
+          "social_circle": "가족"
+        },
+        {
+          "name": "박지훈",
+          "relation": "남동생",
+          "social_circle": "가족"
+        },
+        {
+          "name": "최유진",
+          "relation": "친한 동료",
+          "social_circle": "직장"
+        },
+        {
+          "name": "김태호",
+          "relation": "선배 간호사",
+          "social_circle": "직장"
+        },
+        {
+          "name": "오민정",
+          "relation": "같은 병동 동료",
+          "social_circle": "직장"
+        },
+        {
+          "name": "한수진",
+          "relation": "대학 절친",
+          "social_circle": "대학 동기"
+        },
+        {
+          "name": "임채원",
+          "relation": "대학 동기",
+          "social_circle": "대학 동기"
+        },
+        {
+          "name": "정다은",
+          "relation": "고등학교 베프",
+          "social_circle": "고등학교 동기"
+        },
+        {
+          "name": "윤성민",
+          "relation": "남자친구",
+          "social_circle": "연인"
+        },
+        {
+          "name": "강미래",
+          "relation": "요가 친구",
+          "social_circle": "동네"
+        },
+        {
+          "name": "송은혜",
+          "relation": "카페 단골 친구",
+          "social_circle": "동네"
+        }
+      ]
+    },
+    "stats": {
+      "total": 4231,
+      "calls": 196,
+      "sms": 234,
+      "noti": 3801
+    },
+    "samples": {
+      "calls": [
+        {
+          "identifier": "call_0_1735863300000",
+          "timestamp": 1735863300000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-6564-6051\", \"name\": \"오민정\", \"date\": 1735863300000, \"type\": 1, \"geocodedLocation\": \"\", \"duration\": 300, \"missedReason\": \"\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 3
+        },
+        {
+          "identifier": "call_1_1736119800000",
+          "timestamp": 1736119800000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-4387-5805\", \"name\": \"한수진\", \"date\": 1736119800000, \"type\": 1, \"geocodedLocation\": \"\", \"duration\": 420, \"missedReason\": \"\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 6
+        },
+        {
+          "identifier": "call_2_1736154900000",
+          "timestamp": 1736154900000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-7666-1981\", \"name\": \"박지훈\", \"date\": 1736154900000, \"type\": 0, \"geocodedLocation\": \"\", \"duration\": 180, \"missedReason\": \"\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 6
+        }
+      ],
+      "sms": [
+        {
+          "identifier": "sms_10000_1735775760000",
+          "timestamp": 1735775760000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_10000\", \"messageType\": 0, \"messageId\": 10000, \"threadId\": 1, \"date\": 1735775760000, \"address\": \"010-0250-0596\", \"title\": \"김태호\", \"body\": \"잠깐만, 지금 확인할게\", \"isIncoming\": 1, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 2
+        },
+        {
+          "identifier": "sms_10001_1736121960000",
+          "timestamp": 1736121960000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_10001\", \"messageType\": 0, \"messageId\": 10001, \"threadId\": 1, \"date\": 1736121960000, \"address\": \"010-0250-0596\", \"title\": \"김태호\", \"body\": \"잠깐만, 지금 확인할게\", \"isIncoming\": 1, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 6
+        },
+        {
+          "identifier": "sms_10002_1736293800000",
+          "timestamp": 1736293800000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_10002\", \"messageType\": 1, \"messageId\": 10002, \"threadId\": 1, \"date\": 1736293800000, \"address\": \"010-0250-0596\", \"title\": \"김태호\", \"body\": \"업무 관련해서 잠깐 통화 가능해요?\", \"isIncoming\": 0, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 8
+        }
+      ],
+      "noti": [
+        {
+          "identifier": "noti_20009_1735687860000",
+          "timestamp": 1735687860000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.예스24\", \"postTime\": 1735687860000, \"key\": \"noti_20009\", \"id\": 20009, \"isOngoing\": false, \"isClearable\": true, \"title\": \"알림\", \"text\": \"새로운 알림이 있습니다.\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"예스24\", \"analysis\": {}}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "noti_20013_1735687920000",
+          "timestamp": 1735687920000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.카카오맵\", \"postTime\": 1735687920000, \"key\": \"noti_20013\", \"id\": 20013, \"isOngoing\": false, \"isClearable\": true, \"title\": \"업데이트\", \"text\": \"앱이 업데이트되었습니다.\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"카카오맵\", \"analysis\": {}}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "noti_20006_1735689180000",
+          "timestamp": 1735689180000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.네이버지도\", \"postTime\": 1735689180000, \"key\": \"noti_20006\", \"id\": 20006, \"isOngoing\": false, \"isClearable\": true, \"title\": \"업데이트\", \"text\": \"앱이 업데이트되었습니다.\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"네이버지도\", \"analysis\": {}}",
+          "contextGroupId": 1
+        }
+      ]
+    }
+  },
+  {
+    "persona": {
+      "name": "박준혁",
+      "age": 46,
+      "gender": "남",
+      "job": "소프트웨어 개발자",
+      "mbti": "INTJ",
+      "hobbies": [
+        "독서",
+        "등산",
+        "체스",
+        "유튜브 시청",
+        "코딩 사이드 프로젝트",
+        "커피 원두 수집"
+      ],
+      "personality_traits": [
+        "분석적",
+        "내성적",
+        "완벽주의",
+        "논리적"
+      ],
+      "economic_level": "중",
+      "home_city": "인천",
+      "relationships": [
+        {
+          "name": "박민정",
+          "relation": "배우자",
+          "social_circle": "가족"
+        },
+        {
+          "name": "박서준",
+          "relation": "아들",
+          "social_circle": "가족"
+        },
+        {
+          "name": "박지아",
+          "relation": "딸",
+          "social_circle": "가족"
+        },
+        {
+          "name": "박재호",
+          "relation": "형",
+          "social_circle": "가족"
+        },
+        {
+          "name": "김순희",
+          "relation": "어머니",
+          "social_circle": "가족"
+        },
+        {
+          "name": "이동훈",
+          "relation": "직장 동료",
+          "social_circle": "직장"
+        },
+        {
+          "name": "최수빈",
+          "relation": "팀장",
+          "social_circle": "직장"
+        },
+        {
+          "name": "정우진",
+          "relation": "직장 후배",
+          "social_circle": "직장"
+        },
+        {
+          "name": "한지수",
+          "relation": "직장 동료",
+          "social_circle": "직장"
+        },
+        {
+          "name": "오민석",
+          "relation": "대학 친구",
+          "social_circle": "친구"
+        },
+        {
+          "name": "강태양",
+          "relation": "고등학교 친구",
+          "social_circle": "친구"
+        },
+        {
+          "name": "윤성호",
+          "relation": "등산 모임 친구",
+          "social_circle": "취미"
+        },
+        {
+          "name": "임채원",
+          "relation": "온라인 커뮤니티 친구",
+          "social_circle": "취미"
+        },
+        {
+          "name": "서지훈",
+          "relation": "이웃",
+          "social_circle": "지역"
+        },
+        {
+          "name": "노은경",
+          "relation": "처제",
+          "social_circle": "가족"
+        }
+      ]
+    },
+    "stats": {
+      "total": 4018,
+      "calls": 170,
+      "sms": 224,
+      "noti": 3624
+    },
+    "samples": {
+      "calls": [
+        {
+          "identifier": "call_0_1735689300000",
+          "timestamp": 1735689300000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-3505-1186\", \"name\": \"정우진\", \"date\": 1735689300000, \"type\": 0, \"geocodedLocation\": \"\", \"duration\": 120, \"missedReason\": \"\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "call_1_1736208240000",
+          "timestamp": 1736208240000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-3505-1186\", \"name\": \"정우진\", \"date\": 1736208240000, \"type\": 1, \"geocodedLocation\": \"\", \"duration\": 60, \"missedReason\": \"\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 7
+        },
+        {
+          "identifier": "call_2_1736295000000",
+          "timestamp": 1736295000000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-4654-8450\", \"name\": \"최수빈\", \"date\": 1736295000000, \"type\": 0, \"geocodedLocation\": \"\", \"duration\": 540, \"missedReason\": \"\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 8
+        }
+      ],
+      "sms": [
+        {
+          "identifier": "sms_10000_1735855260000",
+          "timestamp": 1735855260000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_10000\", \"messageType\": 0, \"messageId\": 10000, \"threadId\": 1, \"date\": 1735855260000, \"address\": \"010-8911-2918\", \"title\": \"김순희\", \"body\": \"좋아! 기대된다\", \"isIncoming\": 1, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 3
+        },
+        {
+          "identifier": "sms_10001_1735862400000",
+          "timestamp": 1735862400000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_10001\", \"messageType\": 0, \"messageId\": 10001, \"threadId\": 2, \"date\": 1735862400000, \"address\": \"010-3505-1186\", \"title\": \"정우진\", \"body\": \"오케이 알겠어!\", \"isIncoming\": 1, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 3
+        },
+        {
+          "identifier": "sms_10002_1735864200000",
+          "timestamp": 1735864200000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_10002\", \"messageType\": 1, \"messageId\": 10002, \"threadId\": 2, \"date\": 1735864200000, \"address\": \"010-3505-1186\", \"title\": \"정우진\", \"body\": \"프로젝트 일정 다시 확인 부탁해요\", \"isIncoming\": 0, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 3
+        }
+      ],
+      "noti": [
+        {
+          "identifier": "noti_20003_1735687920000",
+          "timestamp": 1735687920000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.네이버지도\", \"postTime\": 1735687920000, \"key\": \"noti_20003\", \"id\": 20003, \"isOngoing\": false, \"isClearable\": false, \"title\": \"알림\", \"text\": \"새로운 알림이 있습니다.\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"네이버지도\", \"analysis\": {}}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "noti_20002_1735696500000",
+          "timestamp": 1735696500000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.카카오페이\", \"postTime\": 1735696500000, \"key\": \"noti_20002\", \"id\": 20002, \"isOngoing\": false, \"isClearable\": true, \"title\": \"결제 완료\", \"text\": \"21,000원 결제 완료\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"카카오페이\", \"analysis\": {}}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "noti_20005_1735703700000",
+          "timestamp": 1735703700000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.트랭글\", \"postTime\": 1735703700000, \"key\": \"noti_20005\", \"id\": 20005, \"isOngoing\": false, \"isClearable\": false, \"title\": \"업데이트\", \"text\": \"앱이 업데이트되었습니다.\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"트랭글\", \"analysis\": {}}",
+          "contextGroupId": 1
+        }
+      ]
+    }
+  },
+  {
+    "persona": {
+      "name": "이수연",
+      "age": 34,
+      "gender": "여",
+      "job": "간호사",
+      "mbti": "ISFJ",
+      "hobbies": [
+        "요리",
+        "독서",
+        "영화 감상",
+        "뜨개질",
+        "산책",
+        "유튜브 시청"
+      ],
+      "personality_traits": [
+        "성실한",
+        "배려심 깊은",
+        "내향적",
+        "책임감 강한",
+        "꼼꼼한"
+      ],
+      "economic_level": "중",
+      "home_city": "대전",
+      "relationships": [
+        {
+          "name": "이태호",
+          "relation": "아버지",
+          "social_circle": "가족"
+        },
+        {
+          "name": "박순희",
+          "relation": "어머니",
+          "social_circle": "가족"
+        },
+        {
+          "name": "이준혁",
+          "relation": "남동생",
+          "social_circle": "가족"
+        },
+        {
+          "name": "김도현",
+          "relation": "남자친구",
+          "social_circle": "연인"
+        },
+        {
+          "name": "최지영",
+          "relation": "직장 동료",
+          "social_circle": "직장"
+        },
+        {
+          "name": "박민서",
+          "relation": "직장 선배",
+          "social_circle": "직장"
+        },
+        {
+          "name": "한상훈",
+          "relation": "직장 후배",
+          "social_circle": "직장"
+        },
+        {
+          "name": "오혜린",
+          "relation": "대학 동기",
+          "social_circle": "대학 동기"
+        },
+        {
+          "name": "정유나",
+          "relation": "대학 동기",
+          "social_circle": "대학 동기"
+        },
+        {
+          "name": "강태민",
+          "relation": "대학 동기",
+          "social_circle": "대학 동기"
+        },
+        {
+          "name": "윤소희",
+          "relation": "고등학교 친구",
+          "social_circle": "고등학교 동기"
+        },
+        {
+          "name": "임채원",
+          "relation": "고등학교 친구",
+          "social_circle": "고등학교 동기"
+        },
+        {
+          "name": "서지훈",
+          "relation": "이웃",
+          "social_circle": "동네"
+        },
+        {
+          "name": "조미란",
+          "relation": "이웃",
+          "social_circle": "동네"
+        }
+      ]
+    },
+    "stats": {
+      "total": 10297,
+      "calls": 222,
+      "sms": 233,
+      "noti": 9842
+    },
+    "samples": {
+      "calls": [
+        {
+          "identifier": "call_0_1735776900000",
+          "timestamp": 1735776900000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-4299-9960\", \"name\": \"박민서\", \"date\": 1735776900000, \"type\": 0, \"geocodedLocation\": \"\", \"duration\": 120, \"missedReason\": \"\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 2
+        },
+        {
+          "identifier": "call_1_1735788300000",
+          "timestamp": 1735788300000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-0757-1992\", \"name\": \"임채원\", \"date\": 1735788300000, \"type\": 1, \"geocodedLocation\": \"\", \"duration\": 420, \"missedReason\": \"\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 2
+        },
+        {
+          "identifier": "call_2_1735814640000",
+          "timestamp": 1735814640000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-9878-0461\", \"name\": \"김도현\", \"date\": 1735814640000, \"type\": 2, \"geocodedLocation\": \"\", \"duration\": 0, \"missedReason\": \"No answer\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 2
+        }
+      ],
+      "sms": [
+        {
+          "identifier": "sms_10000_1736121840000",
+          "timestamp": 1736121840000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_10000\", \"messageType\": 1, \"messageId\": 10000, \"threadId\": 1, \"date\": 1736121840000, \"address\": \"010-4982-5880\", \"title\": \"한상훈\", \"body\": \"업무 관련해서 잠깐 통화 가능해요?\", \"isIncoming\": 0, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 6
+        },
+        {
+          "identifier": "sms_10001_1736205600000",
+          "timestamp": 1736205600000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_10001\", \"messageType\": 0, \"messageId\": 10001, \"threadId\": 2, \"date\": 1736205600000, \"address\": \"010-1854-9475\", \"title\": \"이태호\", \"body\": \"ㅋㅋ 맞아맞아\", \"isIncoming\": 1, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 7
+        },
+        {
+          "identifier": "sms_10002_1736373000000",
+          "timestamp": 1736373000000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_10002\", \"messageType\": 0, \"messageId\": 10002, \"threadId\": 3, \"date\": 1736373000000, \"address\": \"010-9878-0461\", \"title\": \"김도현\", \"body\": \"오늘은 좀 어렵고 다음에 하자\", \"isIncoming\": 1, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 9
+        }
+      ],
+      "noti": [
+        {
+          "identifier": "noti_20000_1735657560000",
+          "timestamp": 1735657560000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.네이버\", \"postTime\": 1735657560000, \"key\": \"noti_20000\", \"id\": 20000, \"isOngoing\": false, \"isClearable\": true, \"title\": \"실시간 검색어\", \"text\": \"지금 인기 검색어를 확인하세요.\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"네이버\", \"analysis\": {}}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "noti_20001_1735657920000",
+          "timestamp": 1735657920000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.마켓컬리\", \"postTime\": 1735657920000, \"key\": \"noti_20001\", \"id\": 20001, \"isOngoing\": false, \"isClearable\": false, \"title\": \"업데이트\", \"text\": \"앱이 업데이트되었습니다.\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"마켓컬리\", \"analysis\": {}}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "noti_20004_1735684560000",
+          "timestamp": 1735684560000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.카카오톡\", \"postTime\": 1735684560000, \"key\": \"noti_20004\", \"id\": 20004, \"isOngoing\": false, \"isClearable\": true, \"title\": \"단톡방 알림\", \"text\": \"새 메시지 9개\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"카카오톡\", \"analysis\": {}}",
+          "contextGroupId": 1
+        }
+      ]
+    }
+  },
+  {
+    "persona": {
+      "name": "최민수",
+      "age": 41,
+      "gender": "남",
+      "job": "간호사",
+      "mbti": "ISFJ",
+      "hobbies": [
+        "헬스",
+        "영화 감상",
+        "요리",
+        "자전거 타기",
+        "사진 촬영",
+        "보드게임",
+        "드라마 시청",
+        "명상"
+      ],
+      "personality_traits": [
+        "공감능력",
+        "성실함",
+        "온화함",
+        "인내심"
+      ],
+      "economic_level": "중",
+      "home_city": "서울",
+      "relationships": [
+        {
+          "name": "최수연",
+          "relation": "배우자",
+          "social_circle": "가족"
+        },
+        {
+          "name": "최도현",
+          "relation": "아들",
+          "social_circle": "가족"
+        },
+        {
+          "name": "최아린",
+          "relation": "딸",
+          "social_circle": "가족"
+        },
+        {
+          "name": "최병수",
+          "relation": "아버지",
+          "social_circle": "가족"
+        },
+        {
+          "name": "이정희",
+          "relation": "어머니",
+          "social_circle": "가족"
+        },
+        {
+          "name": "최민아",
+          "relation": "여동생",
+          "social_circle": "가족"
+        },
+        {
+          "name": "황보람",
+          "relation": "동료 간호사",
+          "social_circle": "직장"
+        },
+        {
+          "name": "유나현",
+          "relation": "동료 간호사",
+          "social_circle": "직장"
+        },
+        {
+          "name": "김철수",
+          "relation": "담당 의사",
+          "social_circle": "직장"
+        },
+        {
+          "name": "박은지",
+          "relation": "직장 선배",
+          "social_circle": "직장"
+        },
+        {
+          "name": "송재국",
+          "relation": "대학 친구",
+          "social_circle": "친구"
+        },
+        {
+          "name": "안성훈",
+          "relation": "고등학교 친구",
+          "social_circle": "친구"
+        },
+        {
+          "name": "정다운",
+          "relation": "헬스 친구",
+          "social_circle": "취미"
+        },
+        {
+          "name": "변현석",
+          "relation": "자전거 동호회 친구",
+          "social_circle": "취미"
+        },
+        {
+          "name": "나지현",
+          "relation": "이웃",
+          "social_circle": "지역"
+        }
+      ]
+    },
+    "stats": {
+      "total": 4251,
+      "calls": 217,
+      "sms": 242,
+      "noti": 3792
+    },
+    "samples": {
+      "calls": [
+        {
+          "identifier": "call_200000_1735740660000",
+          "timestamp": 1735740660000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-8027-9798\", \"name\": \"김철수\", \"date\": 1735740660000, \"type\": 1, \"geocodedLocation\": \"\", \"duration\": 480, \"missedReason\": \"\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "call_200001_1736245500000",
+          "timestamp": 1736245500000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-4883-3992\", \"name\": \"송재국\", \"date\": 1736245500000, \"type\": 1, \"geocodedLocation\": \"\", \"duration\": 420, \"missedReason\": \"\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 7
+        },
+        {
+          "identifier": "call_200002_1736373960000",
+          "timestamp": 1736373960000,
+          "event_source": "CALL_LOG",
+          "payload": "{\"number\": \"010-0527-6911\", \"name\": \"안성훈\", \"date\": 1736373960000, \"type\": 1, \"geocodedLocation\": \"\", \"duration\": 60, \"missedReason\": \"\", \"transcriptDialog\": \"\"}",
+          "contextGroupId": 9
+        }
+      ],
+      "sms": [
+        {
+          "identifier": "sms_210000_1735689960000",
+          "timestamp": 1735689960000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_210000\", \"messageType\": 0, \"messageId\": 210000, \"threadId\": 31, \"date\": 1735689960000, \"address\": \"010-3951-3116\", \"title\": \"유나현\", \"body\": \"오케이 알겠어!\", \"isIncoming\": 1, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "sms_210001_1735769340000",
+          "timestamp": 1735769340000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_210001\", \"messageType\": 1, \"messageId\": 210001, \"threadId\": 32, \"date\": 1735769340000, \"address\": \"010-9186-0668\", \"title\": \"최도현\", \"body\": \"오늘 시간 있어? 밥 한번 먹자!\", \"isIncoming\": 0, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 2
+        },
+        {
+          "identifier": "sms_210002_1735770660000",
+          "timestamp": 1735770660000,
+          "event_source": "SMS",
+          "payload": "{\"messageTypeAndId\": \"sms_210002\", \"messageType\": 0, \"messageId\": 210002, \"threadId\": 32, \"date\": 1735770660000, \"address\": \"010-9186-0668\", \"title\": \"최도현\", \"body\": \"응, 가능해!\", \"isIncoming\": 1, \"creator\": \"com.android.mms\"}",
+          "contextGroupId": 2
+        }
+      ],
+      "noti": [
+        {
+          "identifier": "noti_220010_1735685520000",
+          "timestamp": 1735685520000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.카카오게임즈\", \"postTime\": 1735685520000, \"key\": \"noti_220010\", \"id\": 220010, \"isOngoing\": false, \"isClearable\": true, \"title\": \"업데이트\", \"text\": \"앱이 업데이트되었습니다.\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"카카오게임즈\", \"analysis\": {}}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "noti_220008_1735685640000",
+          "timestamp": 1735685640000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.씨네21\", \"postTime\": 1735685640000, \"key\": \"noti_220008\", \"id\": 220008, \"isOngoing\": false, \"isClearable\": true, \"title\": \"업데이트\", \"text\": \"앱이 업데이트되었습니다.\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"씨네21\", \"analysis\": {}}",
+          "contextGroupId": 1
+        },
+        {
+          "identifier": "noti_220003_1735689840000",
+          "timestamp": 1735689840000,
+          "event_source": "NOTIFICATION",
+          "payload": "{\"packageName\": \"com.app.카카오페이\", \"postTime\": 1735689840000, \"key\": \"noti_220003\", \"id\": 220003, \"isOngoing\": false, \"isClearable\": true, \"title\": \"머니 입금\", \"text\": \"카카오페이 머니 입금 완료\", \"subText\": \"\", \"category\": \"other\", \"appName\": \"카카오페이\", \"analysis\": {}}",
+          "contextGroupId": 1
+        }
+      ]
+    }
+  }
+]
