@@ -79,18 +79,22 @@
             <div id="pd-hobbies" class="flex flex-wrap gap-1 mt-2"></div>
           </div>
         </div>
-        <div class="grid grid-cols-3 gap-3 text-center">
-          <div class="bg-blue-900/30 rounded-lg px-4 py-2 border border-blue-800/40">
-            <div id="pd-calls" class="text-xl font-bold text-blue-300"></div>
+        <div class="grid grid-cols-4 gap-2 text-center">
+          <div class="bg-blue-900/30 rounded-lg px-3 py-2 border border-blue-800/40">
+            <div id="pd-calls" class="text-lg font-bold text-blue-300"></div>
             <div class="text-xs text-gray-500">통화</div>
           </div>
-          <div class="bg-green-900/30 rounded-lg px-4 py-2 border border-green-800/40">
-            <div id="pd-sms" class="text-xl font-bold text-green-300"></div>
+          <div class="bg-green-900/30 rounded-lg px-3 py-2 border border-green-800/40">
+            <div id="pd-sms" class="text-lg font-bold text-green-300"></div>
             <div class="text-xs text-gray-500">문자</div>
           </div>
-          <div class="bg-amber-900/30 rounded-lg px-4 py-2 border border-amber-800/40">
-            <div id="pd-noti" class="text-xl font-bold text-amber-300"></div>
+          <div class="bg-amber-900/30 rounded-lg px-3 py-2 border border-amber-800/40">
+            <div id="pd-noti" class="text-lg font-bold text-amber-300"></div>
             <div class="text-xs text-gray-500">알림</div>
+          </div>
+          <div class="bg-purple-900/30 rounded-lg px-3 py-2 border border-purple-800/40">
+            <div id="pd-gmail" class="text-lg font-bold text-purple-300"></div>
+            <div class="text-xs text-gray-500">이메일</div>
           </div>
         </div>
       </div>
@@ -295,9 +299,30 @@ raw_push → BehaviorEventEntity 매핑:
     output_key: 'noti',
   },
   {
-    id: 'formatter', emoji: '🗂️', label: 'formatter', group: 'phone',
-    title: 'Step 7 — 포맷 & 병합',
-    desc: '모든 이벤트를 timestamp 기준으로 정렬 후 날짜별 contextGroupId를 부여합니다. persona_event_id_map을 이용해 페르소나별로 이벤트를 분리합니다. 최종 결과는 output/{name}/behavior_events.json으로 저장됩니다.',
+    id: 'gmail_gen', emoji: '[mail]', label: 'gmail_gen', group: 'phone',
+    title: 'Step 7 — Gmail 변환 (NEW)',
+    desc: 'raw_emails를 BehaviorEventEntity(GMAIL) 포맷으로 변환합니다. format.txt Gmail 페이로드 기준: id, uid, from, subject, snippet, receivedEpochMs. 직장/가족/소셜/서비스 카테고리별 일 1~4개 생성.',
+    file: 'pipeline/nodes/gmail_gen.py',
+    llm: false,
+    prompt: `[규칙 기반 변환, LLM 없음]
+
+raw_emails → BehaviorEventEntity 매핑:
+- identifier: "gmail_{event_id}_{timestamp_ms}"
+- event_source: "GMAIL"
+- payload.id: "gmail_{n}"
+- payload.uid: int
+- payload.from: 이메일 주소
+- payload.subject: 제목 (직장/가족/소셜/서비스)
+- payload.snippet: 내용 미리보기
+- payload.receivedEpochMs: ms timestamp`,
+    input_desc: '`state.raw_emails` — 이메일 레코드 리스트',
+    output_desc: '`state.generated_gmail` — BehaviorEventEntity list (GMAIL)',
+  },
+  {
+    id: 'formatter', emoji: '[folder]', label: 'formatter', group: 'phone',
+    title: 'Step 8 — 포맷 & 병합',
+    desc: '모든 이벤트(call+sms+noti+gmail)을 timestamp 기준으로 정렬 후 날짜별 contextGroupId를 부여합니다. per-type 파일 분리 저장(call/sms/noti/gmail). 출력: output_test/{name}/ 폴더.'
+,
     file: 'pipeline/full_graph.py (multi_formatter)',
     llm: false,
     prompt: `[규칙 기반, LLM 없음]
@@ -397,11 +422,13 @@ function renderPersonaGrid() {
       </div>
       <div class="text-xs text-gray-400 truncate">${p.job}</div>
       <div class="text-xs text-gray-600">${p.home_city} · ${p.mbti}</div>
-      <div class="mt-2 flex gap-1 text-xs">
-        <span class="text-blue-400">${d.stats.calls}📞</span>
-        <span class="text-green-400">${d.stats.sms}💬</span>
-        <span class="text-amber-400">${d.stats.noti}🔔</span>
+      <div class="mt-2 flex gap-1 flex-wrap text-xs">
+        <span class="text-blue-400">${d.stats.calls} call</span>
+        <span class="text-green-400">${d.stats.sms} sms</span>
+        <span class="text-amber-400">${d.stats.noti} noti</span>
+        <span class="text-purple-400">${d.stats.gmail || 0} mail</span>
       </div>
+      <div class="text-xs text-gray-600 mt-1">${d.stats.transcript_count || 0}개 transcript</div>
     </div>`;
   }).join('');
 }
@@ -626,37 +653,39 @@ ${buildAppList(p)}</div>`;
   }
 
   if (step.id === 'call_gen' && samples.calls?.length) {
-    const ev = samples.calls[0];
-    let pl = {}; try { pl = JSON.parse(ev.payload); } catch {}
-    return `<div class="space-y-2">
-      <p class="text-xs text-gray-500">통화 기록 ${data.stats.calls}건 중 샘플:</p>
-      <div class="code-block text-xs text-gray-300">
-{
-  "identifier": "${ev.identifier}",
+    const callsWithTd = samples.calls.filter(e => e.payload && e.payload.transcriptDialog);
+    const ev = callsWithTd[0] || samples.calls[0];
+    const pl = ev.payload || {};
+    const td = pl.transcriptDialog || '';
+    const tdLines = td.split('\n').slice(0,6).join('\n');
+    return `<div class="space-y-3">
+      <p class="text-xs text-gray-500">\uD1B5\uD654 ${data.stats.calls}\uAC1C &middot; transcript ${data.stats.transcript_count || 0}\uAC1C \uC0D8\uD50C:</p>
+      <div class="code-block text-xs text-gray-300">{
   "event_source": <span class="text-blue-400">"CALL_LOG"</span>,
   "payload": {
-    "name": "${pl.name||''}",
-    "number": "${pl.number||''}",
+    "name": <span class="text-amber-300">"${escHtml(pl.name||'')}"</span>,
+    "number": "${escHtml(pl.number||'')}",
     "type": <span class="text-amber-400">${pl.type}</span>,
     "duration": <span class="text-green-400">${pl.duration}s</span>,
-    "transcriptDialog": <span class="text-gray-600">""</span>
+    "transcriptDialog": <span class="text-yellow-300">"${escHtml(tdLines.slice(0,60))}..."</span>
   }
-}</div></div>`;
+}</div>
+      ${td ? `<div class="data-panel"><p class="text-xs text-yellow-400 font-bold mb-2">Transcript (LLM \uC0DD\uC131)</p><pre class="text-xs text-gray-300 leading-relaxed">${escHtml(tdLines)}\n<span class="text-gray-600">...</span></pre></div>` : ''}
+    </div>`;
   }
 
   if (step.id === 'sms_gen' && samples.sms?.length) {
     const ev = samples.sms[0];
-    let pl = {}; try { pl = JSON.parse(ev.payload); } catch {}
+    const pl = ev.payload || {};
     return `<div class="space-y-2">
-      <p class="text-xs text-gray-500">문자 기록 ${data.stats.sms}건 중 샘플:</p>
-      <div class="code-block text-xs text-gray-300">
-{
-  "identifier": "${ev.identifier}",
+      <p class="text-xs text-gray-500">\uBB38\uC790 ${data.stats.sms}\uAC1C \uC0D8\uD50C:</p>
+      <div class="code-block text-xs text-gray-300">{
   "event_source": <span class="text-green-400">"SMS"</span>,
   "payload": {
-    "title": "${pl.title||''}",
-    "body": <span class="text-yellow-300">"${escHtml((pl.body||'').slice(0,40))}"</span>,
+    "title": "${escHtml(pl.title||'')}",
+    "body": <span class="text-yellow-300">"${escHtml((pl.body||'').slice(0,50))}"</span>,
     "threadId": <span class="text-blue-400">${pl.threadId}</span>,
+    "messageType": ${pl.messageType},
     "isIncoming": ${pl.isIncoming}
   }
 }</div></div>`;
@@ -664,38 +693,66 @@ ${buildAppList(p)}</div>`;
 
   if (step.id === 'noti_gen' && samples.noti?.length) {
     const ev = samples.noti[0];
-    let pl = {}; try { pl = JSON.parse(ev.payload); } catch {}
+    const pl = ev.payload || {};
     return `<div class="space-y-2">
-      <p class="text-xs text-gray-500">알림 기록 ${data.stats.noti}건 중 샘플:</p>
-      <div class="code-block text-xs text-gray-300">
-{
-  "identifier": "${ev.identifier}",
+      <p class="text-xs text-gray-500">\uC54C\uB9BC ${data.stats.noti}\uAC1C \uC0D8\uD50C:</p>
+      <div class="code-block text-xs text-gray-300">{
   "event_source": <span class="text-amber-400">"NOTIFICATION"</span>,
   "payload": {
-    "appName": <span class="text-green-400">"${pl.appName||''}"</span>,
-    "packageName": <span class="text-blue-400">"${pl.packageName||''}"</span>,
-    "title": "${escHtml((pl.title||'').slice(0,30))}",
+    "appName": <span class="text-green-400">"${escHtml(pl.appName||'')}"</span>,
+    "packageName": <span class="text-blue-400">"${escHtml(pl.packageName||'')}"</span>,
+    "title": "${escHtml((pl.title||'').slice(0,35))}",
+    "text": "${escHtml((pl.text||'').slice(0,50))}",
     "category": "${pl.category||''}"
   }
 }</div></div>`;
   }
 
-  if (step.id === 'formatter') {
-    return `<div class="code-block text-xs text-gray-300">
-<span class="text-green-400">// 최종 output/${p.name}/behavior_events.json</span>
-총 이벤트: <span class="text-white font-bold">${data.stats.total.toLocaleString()}개</span>
-
-breakdown:
-  CALL_LOG:     <span class="text-blue-400">${data.stats.calls}</span>
-  SMS:          <span class="text-green-400">${data.stats.sms}</span>
-  NOTIFICATION: <span class="text-amber-400">${data.stats.noti}</span>
-
-contextGroupId:
-  날짜별 그룹 → 1~365 정수 부여
-  같은 날 이벤트는 같은 ID 공유</div>`;
+  if (step.id === 'gmail_gen' && samples.gmail?.length) {
+    const ev = samples.gmail[0];
+    const pl = ev.payload || {};
+    return `<div class="space-y-3">
+      <p class="text-xs text-gray-500">\uC774\uBA54\uC77C ${data.stats.gmail || 0}\uAC1C \uC0D8\uD50C:</p>
+      <div class="code-block text-xs text-gray-300">{
+  "event_source": <span class="text-purple-400">"GMAIL"</span>,
+  "payload": {
+    "id": "${escHtml(pl.id||'')}",
+    "from": <span class="text-blue-300">"${escHtml(pl.from||'')}"</span>,
+    "subject": <span class="text-yellow-300">"${escHtml((pl.subject||'').slice(0,45))}"</span>,
+    "snippet": "${escHtml((pl.snippet||'').slice(0,50))}",
+    "receivedEpochMs": ${pl.receivedEpochMs}
+  }
+}</div>
+      <div class="space-y-1">
+        ${samples.gmail.slice(0,4).map(g => {
+          const gpl = g.payload || {};
+          const d = new Date(g.timestamp).toLocaleDateString('ko-KR',{month:'short',day:'numeric'});
+          return `<div class="event-row text-xs"><span class="text-gray-600">${d}</span> <span class="text-blue-300">${escHtml(gpl.from||'')}</span> &middot; <span class="text-yellow-300">${escHtml((gpl.subject||'').slice(0,40))}</span></div>`;
+        }).join('')}
+      </div>
+    </div>`;
   }
 
-  return '<p class="text-xs text-gray-600">샘플 데이터 없음</p>';
+  if (step.id === 'formatter') {
+    return `<div class="code-block text-xs text-gray-300">
+<span class="text-green-400">// output_test/${p.name}/</span>
+\uCD1D \uC774\uBCA4\uD2B8: <span class="text-white font-bold">${data.stats.total.toLocaleString()}\uAC1C</span>
+
+breakdown:
+  CALL_LOG:     <span class="text-blue-400">${data.stats.calls}</span>  (transcript ${data.stats.transcript_count||0}\uAC1C)
+  SMS:          <span class="text-green-400">${data.stats.sms}</span>
+  NOTIFICATION: <span class="text-amber-400">${data.stats.noti}</span>
+  GMAIL:        <span class="text-purple-400">${data.stats.gmail||0}</span>
+
+\uD30C\uC77C:
+  behavior_events.json       (\uC804\uCCB4)
+  behavior_events_call.json
+  behavior_events_sms.json
+  behavior_events_noti.json
+  behavior_events_gmail.json</div>`;
+  }
+
+  return '<p class="text-xs text-gray-600">\uC0D8\uD50C \uB370\uC774\uD130 \uC5C6\uC74C</p>';
 }
 
 function buildAppList(persona) {
