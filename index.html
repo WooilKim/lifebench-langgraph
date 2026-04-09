@@ -1365,78 +1365,104 @@ How was your morning run?",
 
 <!-- NEW Step 3 -->
 <div class="nc">
-  <div class="vs-note">← ORIG 9단계 (LLM 7종) → 4노드 (규칙 기반)</div>
+  <div class="vs-note">← ORIG 9단계 (LLM 7종) → 5노드 (규칙+LLM transcript·KO)</div>
 
   <div class="ss ss-new">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">📱 phone_data_gen</span>
-      <span class="badge b-rule">규칙 기반</span>
-    </div>
+    <div class="flex items-center gap-2 flex-wrap"><span class="npill np-new">phone_data_gen</span><span class="badge b-rule">규칙</span></div>
     <div class="ss-path">nodes/phone_data_gen.py</div>
-    <div class="ss-note">이벤트에서 규칙 기반으로 raw 폰 데이터 합성 (LLM 없음). 사회/가족 이벤트 → 통화·문자. 취미 기반 앱 알림 매핑.</div>
+    <div class="ss-note">이벤트에서 규칙 기반으로 raw 폰 데이터 합성 (LLM 없음). 통화/문자/알림/이메일 4종. 28개 KR 앱 매핑. 일 1~4개 이메일 (ID base +30_000).</div>
+    <div class="pb-wrap"><div class="pb pb-rule">[규칙]
+통화: 회의/미팅->직장, 모임/약속->소셜, 가족/명절->가족
+알림: 독서->리디빝스, 음악->멜론, 코어: 커카오톡/토스/네이버/쿠팡 등
+이메일: 직장/가족/소셜/서비스 | 일 1~4개</div></div>
+    <div class="io">
+      <div class="io-box"><div class="io-lbl text-blue-400">INPUT</div><pre>state.daily_events_map</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">OUTPUT</div><pre>raw_calls / raw_sms
+raw_push / raw_emails</pre></div>
+    </div>
+  </div>
+  <div class="ss-arrow ss-arrow-g">↓</div>
+
+  <div class="ss ss-new">
+    <div class="flex items-center gap-2 flex-wrap"><span class="npill np-new">call_gen</span><span class="badge b-llm">LLM (transcript)</span><span class="badge b-rule">변환</span><span class="badge b-ko">KO</span></div>
+    <div class="ss-path">nodes/call_gen.py</div>
+    <div class="ss-note">raw_calls → BehaviorEventEntity(CALL_LOG). <b>10통화씩 배치 LLM transcriptDialog 생성</b>. 부재중 생략, test_mode LLM 스킵.</div>
     <div class="pb-wrap">
-      <div class="pb pb-rule">[규칙 기반 로직 — LLM 없음]
-
-통화 생성 규칙:
-  social/family 이벤트 → 관계인과 통화 레코드 생성
-  방향: 이벤트 유형에 따라 발신/수신 결정
-
-알림 생성 규칙 (취미 기반 앱 매핑):
-  독서    → 예스24, 리디북스
-  음악    → 멜론, 스포티파이
-  개발자  → GitHub, Slack
-  공통    → 카카오톡, 토스, 배달의민족</div>
+      <div class="pb" data-new-k="call_gen_transcript" data-lang="kr">로딩 중…</div>
+      <button class="pb-btn" onclick="togglePb(this)">원본 ZH</button>
     </div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre><span class="ck">// state.daily_events_map</span>
-{"datetime":<span class="cs">"2025-01-02..."</span>,
- "event_type":<span class="cs">"업무 시작"</span>}</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// raw phone data</span>
-{calls:[...],
- sms:[...],
- notifications:[...]}</pre></div>
-    </div>
-  </div>
-  <div class="ss-arrow ss-arrow-g">↓</div>
-
-  <div class="ss ss-new">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">📞 call_gen</span>
-      <span class="npill np-new" style="margin-left:4px">💬 sms_gen</span>
-      <span class="npill np-new" style="margin-left:4px">🔔 noti_gen</span>
-    </div>
-    <div class="ss-path">nodes/call_gen.py · sms_gen.py · noti_gen.py</div>
-    <div class="ss-note">BehaviorEventEntity 변환. 원본 LifeBench convert.py 로직 그대로 유지.<br>direction=0→발신, 1→수신, "missed"→부재중.</div>
-    <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>raw phone data
-(calls/sms/notifications)</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// BehaviorEventEntity</span>
-{"identifier":<span class="cs">"call_0_..."</span>,
- "event_source":<span class="cb">"CALL_LOG"</span>,
+      <div class="io-box"><div class="io-lbl text-blue-400">INPUT (배치 x10)</div><pre><span class="ck">// persona + 통화 목록</span>
+[ID:0] 2025-01-29 | 발신 | 박마리(닸) | 300초
+[ID:1] 2025-01-29 | 수신 | 취장님 | 120초</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">OUTPUT</div><pre>{"event_source":<span class="cb">"CALL_LOG"</span>,
  "payload":{
-   "type":<span class="cn">0</span>,
-   "duration":<span class="cn">120</span>}}</pre></div>
+   "name":<span class="cs">"박마리"</span>,
+   "type":<span class="cn">1</span>, "duration":<span class="cn">300</span>,
+   "transcriptDialog":<span class="cs">"A: 여보세요?\nB: 엄마, 설날!</span><span class="cg">..."</span>}}</pre></div>
     </div>
   </div>
   <div class="ss-arrow ss-arrow-g">↓</div>
 
   <div class="ss ss-new">
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="npill np-new">🗂️ formatter</span>
-      <span class="badge b-rule">규칙 기반</span>
-    </div>
-    <div class="ss-path">nodes/formatter.py</div>
-    <div class="ss-note">병합·정렬·contextGroupId 할당·페르소나별 분리.</div>
+    <div class="flex items-center gap-2 flex-wrap"><span class="npill np-new">sms_gen</span><span class="badge b-rule">변환</span></div>
+    <div class="ss-path">nodes/sms_gen.py</div>
+    <div class="ss-note">raw_sms → BehaviorEventEntity(SMS). 동일 연락처 = 동일 threadId.</div>
     <div class="io">
-      <div class="io-box"><div class="io-lbl text-blue-400">📥 INPUT</div><pre>BehaviorEventEntity 배열
-(call + sms + noti)</pre></div>
-      <div class="io-box"><div class="io-lbl text-green-400">📤 OUTPUT</div><pre><span class="ck">// state.behavior_events_map</span>
-{"박준혁":[
-  {"identifier":<span class="cs">"..."</span>,
-   "contextGroupId":<span class="cn">1</span>},
-  <span class="cg">...]}</span></pre></div>
+      <div class="io-box"><div class="io-lbl text-blue-400">INPUT</div><pre>raw_sms {contactName, body, message_type}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">OUTPUT</div><pre>{"event_source":<span class="cb">"SMS"</span>,
+ "payload":{"threadId":<span class="cn">1</span>, "body":<span class="cs">"설날 잘 보내"</span>}}</pre></div>
     </div>
   </div>
+  <div class="ss-arrow ss-arrow-g">↓</div>
+
+  <div class="ss ss-new">
+    <div class="flex items-center gap-2 flex-wrap"><span class="npill np-new">noti_gen</span><span class="badge b-rule">변환</span><span class="badge b-ko">28개 KR 앱</span></div>
+    <div class="ss-path">nodes/noti_gen.py</div>
+    <div class="ss-note">raw_push → BehaviorEventEntity(NOTIFICATION). 커카오톡/토스/쿠팡/멜론 등 28개 한국 앱 패키지명 매핑.</div>
+    <div class="io">
+      <div class="io-box"><div class="io-lbl text-blue-400">INPUT</div><pre>raw_push {source:<span class="cs">"커카오톡"</span>}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">OUTPUT</div><pre>{"event_source":<span class="cb">"NOTIFICATION"</span>,
+ "payload":{"packageName":<span class="cs">"com.kakao.talk"</span>}}</pre></div>
+    </div>
+  </div>
+  <div class="ss-arrow ss-arrow-g">↓</div>
+
+  <div class="ss ss-new">
+    <div class="flex items-center gap-2 flex-wrap"><span class="npill np-new">gmail_gen</span><span class="badge b-rule">변환</span><span class="badge b-ko">KO</span><span style="font-size:9px;padding:1px 5px;background:#14532d;color:#bbf7d0;border-radius:3px;border:1px solid #22c55e;font-weight:700">NEW</span></div>
+    <div class="ss-path">nodes/gmail_gen.py</div>
+    <div class="ss-note">raw_emails → BehaviorEventEntity(GMAIL). format.txt Gmail 페이로드: id / uid / from / subject / snippet / receivedEpochMs.</div>
+    <div class="io">
+      <div class="io-box"><div class="io-lbl text-blue-400">INPUT</div><pre>raw_emails
+{from:<span class="cs">"kim@naver.com"</span>,
+ subject:<span class="cs">"[업무] 보고서"</span>,
+ snippet:<span class="cs">"보고서 검토 후..."</span>}</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">OUTPUT</div><pre>{"event_source":<span class="cb">"GMAIL"</span>,
+ "payload":{
+   "id":<span class="cs">"gmail_30000"</span>,
+   "from":<span class="cs">"kim@naver.com"</span>,
+   "subject":<span class="cs">"[업무]..."</span>,
+   "receivedEpochMs":<span class="cn">1735777800000</span>}}</pre></div>
+    </div>
+  </div>
+  <div class="ss-arrow ss-arrow-g">↓</div>
+
+  <div class="ss ss-new">
+    <div class="flex items-center gap-2 flex-wrap"><span class="npill np-new">formatter</span><span class="badge b-rule">규칙 기반</span></div>
+    <div class="ss-path">pipeline/full_graph.py → multi_formatter</div>
+    <div class="ss-note">병합·정렬·contextGroupId 할당·페르소나별 분리. per-type 파일 저장 (call/sms/noti/gmail).</div>
+    <div class="io">
+      <div class="io-box"><div class="io-lbl text-blue-400">INPUT</div><pre>generated_calls + sms
++ noti + gmail</pre></div>
+      <div class="io-box"><div class="io-lbl text-green-400">OUTPUT (페르소나 폴더)</div><pre>behavior_events.json (<span class="cg">전체</span>)
+behavior_events_call.json
+behavior_events_sms.json
+behavior_events_noti.json
+behavior_events_gmail.json
+persona.json</pre></div>
+    </div>
+  </div>
+
 </div>
 
 <div class="row-sep"></div>
@@ -1594,6 +1620,26 @@ JSON 배열만 출력하세요.`,
 - 人物1：城市=仁川，职业=软件开发者，年龄=46，性别=男
 - 人物2：城市=首尔，职业=医生，年龄=38，性别=女
 仅输出JSON数组。`
+  },
+  call_gen_transcript: {
+    kr: `아래 인물이 진행한 통화 목록에 대해 각각 현실적인 통화 대화 스크립트를 생성하세요.
+
+## 인물 정보
+- 이름: {persona_name} / 직업: {persona_job}
+
+## 통화 목록 (배치 x10)
+{batch_text}
+
+## 요구사항
+1. 각 [ID:N]별 한국어 구어체 대화 작성 (3~8턴)
+2. "A: 대사\\nB: 대사\\nA: ..." 형식
+3. 통화 방향/시간/관계 반영
+4. 짧은 통화(60초 이하)는 간단하게
+
+## 출력 (JSON)
+{"ID1": "A: 여보세요?\\nB: ...", "ID2": "..."}
+JSON만 출력.`,
+    zh: `(신규 KR 전용 프롬프트)`
   },
   draft_gen_r1: {
     kr: `인물 분석을 기반으로 2025년 내 발생 가능한 100개의 생활 이벤트를 생성합니다.
