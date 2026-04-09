@@ -190,10 +190,35 @@ def generate_calls(state: FullPipelineState) -> FullPipelineState:
             print(f"[call_gen] skipping {call.get('event_id')}: {e}")
 
     if test_mode:
-        # Remove _raw and return as-is (no transcript)
+        # test_mode: still generate transcripts but only for first 30 calls to keep it fast
+        llm = _get_llm(provider)
+        persona_calls: dict[str, list] = {}
+        for ev in converted:
+            raw = ev.get("_raw", {})
+            pname = raw.get("persona_name", "")
+            payload = json.loads(ev["payload"])
+            if payload["type"] != 2:
+                persona_calls.setdefault(pname, []).append(raw)
+
+        transcript_map: dict[int, str] = {}
+        for pname, calls_for_persona in persona_calls.items():
+            persona = persona_by_name.get(pname, {})
+            # limit to first 30 calls in test mode
+            limited = calls_for_persona[:30]
+            print(f"[call_gen] {pname}: generating transcripts for {len(limited)} calls (test mode)...")
+            for i in range(0, len(limited), BATCH_SIZE):
+                batch = limited[i: i + BATCH_SIZE]
+                batch_result = _generate_transcripts_batch(llm, persona, batch)
+                transcript_map.update(batch_result)
+
         results = []
         for ev in converted:
-            ev.pop("_raw", None)
+            raw = ev.pop("_raw", {})
+            payload = json.loads(ev["payload"])
+            eid = raw.get("event_id")
+            if eid is not None and payload["type"] != 2:
+                payload["transcriptDialog"] = transcript_map.get(int(eid), "")
+                ev["payload"] = json.dumps(payload, ensure_ascii=False)
             results.append(ev)
         return {**state, "generated_calls": results}
 
