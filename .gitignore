@@ -1,7 +1,10 @@
 .env
+.venv/
 __pycache__/
 *.pyc
 *.pyo
 output/
+output_web/
+output_web_test/
 .DS_Store
 data/korean_names.json

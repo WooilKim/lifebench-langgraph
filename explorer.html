@@ -54,6 +54,47 @@
 
 <div class="max-w-6xl mx-auto px-4 py-6 space-y-8">
 
+  <!-- Run Control Panel -->
+  <section id="run-panel" class="bg-gray-900 rounded-xl border border-indigo-900/40 p-4">
+    <div class="flex items-center justify-between flex-wrap gap-3">
+      <div class="flex items-center gap-3 flex-wrap">
+        <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400">Pipeline Run</h2>
+        <span id="run-status-badge" class="badge bg-gray-800 text-gray-400 border border-gray-700">idle</span>
+        <span id="run-status-text" class="text-xs text-gray-500">서버에 연결되면 여기서 상태가 보입니다.</span>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap">
+        <label class="text-xs text-gray-400">count
+          <input id="run-count" type="number" min="1" max="50" value="1"
+                 class="ml-1 w-16 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-xs" />
+        </label>
+        <label class="text-xs text-gray-400">provider
+          <select id="run-provider" class="ml-1 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-xs">
+            <option value="claude">claude</option>
+            <option value="gpt">gpt</option>
+            <option value="glm">glm</option>
+          </select>
+        </label>
+        <label class="text-xs text-gray-400 inline-flex items-center gap-1">
+          <input id="run-test" type="checkbox" checked class="bg-gray-800" /> test mode
+        </label>
+        <label class="text-xs text-gray-400">output
+          <input id="run-output" type="text" placeholder="(server default)"
+                 class="ml-1 w-40 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-xs" />
+        </label>
+        <button id="run-button" onclick="startRun()"
+                class="text-xs font-bold px-3 py-1.5 rounded bg-green-700 hover:bg-green-600 text-white border border-green-500">
+          Start Run
+        </button>
+        <button onclick="reloadData()"
+                class="text-xs px-3 py-1.5 rounded bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700">
+          Reload
+        </button>
+      </div>
+    </div>
+    <div id="run-meta" class="mt-3 text-xs text-gray-500 hidden"></div>
+    <pre id="run-logs" class="hidden mt-3 code-block text-xs max-h-40 overflow-y-auto"></pre>
+  </section>
+
   <!-- Persona Selector -->
   <section>
     <div class="flex items-center gap-2 mb-3">
@@ -351,21 +392,196 @@ raw_emails → BehaviorEventEntity 매핑:
 let allPersonas = [];
 let selectedIdx = 0;
 let expandedStep = null;
+let currentDataInfo = { outputDir: null, defaultOutputDir: null, metadata: {} };
 
-// ── Boot ──────────────────────────────────────────────────────────────────────
+// ── Data loading ──────────────────────────────────────────────────────────────
+// Prefer the web server's /api/data endpoint. Fall back to the checked-in
+// static pipeline_data.json so the page still works when opened directly
+// (e.g. via file:// or a plain static host).
+function loadData() {
+  return fetch('/api/data')
+    .then(r => { if (!r.ok) throw new Error('api not ok'); return r.json(); })
+    .then(payload => {
+      if (Array.isArray(payload)) {
+        return {
+          personas: payload,
+          outputDir: null,
+          defaultOutputDir: null,
+          metadata: {},
+        };
+      }
+      return {
+        personas: payload.personas || [],
+        outputDir: payload.output_dir || null,
+        defaultOutputDir: payload.default_output_dir || null,
+        metadata: payload.metadata || {},
+      };
+    })
+    .catch(() => fetch('./pipeline_data.json')
+      .then(r => r.json())
+      .then(payload => ({ personas: payload, outputDir: null, defaultOutputDir: null, metadata: {} }))
+      .catch(() => ({ personas: [], outputDir: null, defaultOutputDir: null, metadata: {} })));
+}
+
+function renderRunMeta() {
+  const meta = document.getElementById('run-meta');
+  if (!meta) return;
+  const parts = [];
+  if (currentDataInfo.outputDir) parts.push(`data output: ${currentDataInfo.outputDir}`);
+  if (currentDataInfo.defaultOutputDir && currentDataInfo.defaultOutputDir !== currentDataInfo.outputDir) {
+    parts.push(`server default: ${currentDataInfo.defaultOutputDir}`);
+  }
+  const provider = currentDataInfo.metadata && currentDataInfo.metadata.provider;
+  if (provider) parts.push(`provider: ${provider}`);
+  if (!parts.length) {
+    meta.classList.add('hidden');
+    meta.textContent = '';
+    return;
+  }
+  meta.classList.remove('hidden');
+  meta.textContent = parts.join(' · ');
+}
+
+function reloadData() {
+  setRunStatus('idle', 'loading latest data…');
+  return loadData().then(payload => {
+    allPersonas = payload.personas || [];
+    currentDataInfo = {
+      outputDir: payload.outputDir,
+      defaultOutputDir: payload.defaultOutputDir,
+      metadata: payload.metadata || {},
+    };
+    renderRunMeta();
+    renderPersonaGrid();
+    renderPipeline();
+    renderStepNav();
+    if (allPersonas.length > 0) {
+      selectPersona(Math.min(selectedIdx, allPersonas.length - 1));
+      setRunStatus('success', `${allPersonas.length} persona(s) loaded`);
+    } else {
+      setRunStatus('idle', '아직 생성된 데이터가 없습니다.');
+    }
+  });
+}
+
 window.addEventListener('DOMContentLoaded', () => {
-  fetch('./pipeline_data.json')
-    .then(r => r.json())
-    .then(data => { allPersonas = data; init(); })
-    .catch(() => { showFallback(); });
+  loadData()
+    .then(payload => {
+      allPersonas = payload.personas || [];
+      currentDataInfo = {
+        outputDir: payload.outputDir,
+        defaultOutputDir: payload.defaultOutputDir,
+        metadata: payload.metadata || {},
+      };
+      renderRunMeta();
+      if (allPersonas.length > 0) init();
+      else showFallback();
+    })
+    .catch(() => showFallback());
 });
 
 function showFallback() {
   // Show pipeline steps without persona data
   allPersonas = [];
+  currentDataInfo = { outputDir: null, defaultOutputDir: null, metadata: {} };
+  renderRunMeta();
+  setRunStatus('idle', '데이터가 없으면 여기서 바로 생성할 수 있습니다.');
   renderPersonaGrid();
   renderPipeline();
   renderStepNav();
+}
+
+// ── Run control ───────────────────────────────────────────────────────────────
+let runPollTimer = null;
+
+function setRunStatus(status, text) {
+  const badge = document.getElementById('run-status-badge');
+  const statusText = document.getElementById('run-status-text');
+  if (!badge) return;
+  const themes = {
+    idle:    ['bg-gray-800',   'text-gray-400',   'border-gray-700'],
+    running: ['bg-amber-900/60','text-amber-200',  'border-amber-700'],
+    success: ['bg-green-900/60','text-green-200',  'border-green-700'],
+    failed:  ['bg-rose-900/60', 'text-rose-200',   'border-rose-700'],
+  };
+  badge.className = 'badge border ' + (themes[status] || themes.idle).join(' ');
+  badge.textContent = status;
+  if (statusText) statusText.textContent = text || '';
+}
+
+function appendRunLogs(lines, error) {
+  const pre = document.getElementById('run-logs');
+  if (!pre) return;
+  pre.classList.remove('hidden');
+  pre.textContent = (lines || []).join('\n') + (error ? ('\n--- ERROR ---\n' + error) : '');
+  pre.scrollTop = pre.scrollHeight;
+}
+
+async function startRun() {
+  const btn = document.getElementById('run-button');
+  const count = Math.max(1, parseInt(document.getElementById('run-count').value || '1', 10));
+  const provider = document.getElementById('run-provider').value;
+  const testMode = document.getElementById('run-test').checked;
+  const output = document.getElementById('run-output').value.trim();
+  const body = { count, provider, test_mode: testMode };
+  if (output) body.output = output;
+
+  btn.disabled = true;
+  appendRunLogs([], '');
+  setRunStatus('running', 'starting…');
+  try {
+    const res = await fetch('/api/run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) {
+      const errBody = await res.json().catch(() => ({}));
+      throw new Error(errBody.error || ('HTTP ' + res.status));
+    }
+    const { run_id, output_dir } = await res.json();
+    if (output_dir) {
+      currentDataInfo.outputDir = output_dir;
+      renderRunMeta();
+    }
+    setRunStatus('running', `run ${run_id} started`);
+    pollRun(run_id);
+  } catch (e) {
+    setRunStatus('failed', String(e));
+    btn.disabled = false;
+  }
+}
+
+function pollRun(runId) {
+  if (runPollTimer) clearInterval(runPollTimer);
+  runPollTimer = setInterval(async () => {
+    try {
+      const res = await fetch('/api/run/' + encodeURIComponent(runId));
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const rec = await res.json();
+      appendRunLogs(rec.logs, rec.error);
+      if (rec.status === 'success') {
+        clearInterval(runPollTimer); runPollTimer = null;
+        const n = rec.summary && rec.summary.personas ? rec.summary.personas.length : 0;
+        const out = rec.summary && rec.summary.output_dir ? rec.summary.output_dir : currentDataInfo.outputDir;
+        if (out) currentDataInfo.outputDir = out;
+        renderRunMeta();
+        setRunStatus('success', `${n} persona(s) generated — reloading data`);
+        document.getElementById('run-button').disabled = false;
+        reloadData();
+      } else if (rec.status === 'failed') {
+        clearInterval(runPollTimer); runPollTimer = null;
+        setRunStatus('failed', 'pipeline failed — see logs');
+        document.getElementById('run-button').disabled = false;
+      } else {
+        setRunStatus('running', `${rec.logs.length} log line(s)`);
+      }
+    } catch (e) {
+      clearInterval(runPollTimer); runPollTimer = null;
+      setRunStatus('failed', String(e));
+      document.getElementById('run-button').disabled = false;
+    }
+  }, 1000);
 }
 
 function init() {
@@ -400,8 +616,11 @@ function renderPersonaGrid() {
   count.textContent = allPersonas.length ? `${allPersonas.length}명 생성됨` : '데이터 없음';
 
   if (!allPersonas.length) {
+    const hint = currentDataInfo.outputDir
+      ? `현재 output: ${currentDataInfo.outputDir} · Start Run으로 바로 생성할 수 있습니다.`
+      : 'python3 run_full.py --count 3 --test 실행 후 새로고침 또는 위 Start Run 사용';
     grid.innerHTML = `<div class="col-span-full text-center text-gray-600 py-8">
-      <p class="text-sm">python3 run_full.py --count 3 --test 실행 후 새로고침</p>
+      <p class="text-sm">${hint}</p>
     </div>`;
     return;
   }
@@ -734,8 +953,9 @@ ${buildAppList(p)}</div>`;
   }
 
   if (step.id === 'formatter') {
+    const activeOut = currentDataInfo.outputDir || 'output_web/<persona>';
     return `<div class="code-block text-xs text-gray-300">
-<span class="text-green-400">// output_test/${p.name}/</span>
+<span class="text-green-400">// ${escHtml(activeOut)}/${p.name}/</span>
 \uCD1D \uC774\uBCA4\uD2B8: <span class="text-white font-bold">${data.stats.total.toLocaleString()}\uAC1C</span>
 
 breakdown:

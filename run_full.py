@@ -3,13 +3,15 @@
 
 Usage:
     python run_full.py --count 2 --provider claude
-    python run_full.py --count 1 --provider gpt
+    python run_full.py --count 1 --provider gpt --test
+
+This module is a thin wrapper around :mod:`server.pipeline_runner`, which is
+also used by the web server so both paths share the exact same execution and
+output-serialization logic.
 """
 import argparse
-import json
-import os
-import time
-from pathlib import Path
+
+from server.pipeline_runner import run_pipeline
 
 
 def main():
@@ -21,91 +23,25 @@ def main():
     parser.add_argument("--test", action="store_true", help="Test mode: limit draft events to 5 per persona")
     args = parser.parse_args()
 
-    print(f"=== Full LifeBench Pipeline ===")
+    print("=== Full LifeBench Pipeline ===")
     print(f"Personas: {args.count} | Provider: {args.provider} | Output: {args.output}")
-    print()
-
-    from pipeline.full_graph import build_full_graph
-
-    graph = build_full_graph()
-
     if args.test:
         print("[TEST MODE] draft events capped at 5 per persona, faster run")
+    print()
 
-    initial_state = {
-        "count": args.count,
-        "provider": args.provider,
-        "test_mode": args.test,
-        "persons": [],   # populated by person_gen
-        "personas": [],
-        "daily_drafts": {},
-        "daily_events_map": {},
-        "raw_calls": [],
-        "raw_sms": [],
-        "raw_push": [],
-        "persona_event_id_map": {},
-        "generated_calls": [],
-        "generated_sms": [],
-        "generated_noti": [],
-        "behavior_events": [],
-        "behavior_events_map": {},
-        "metadata": {"start_time": time.time(), "provider": args.provider},
-    }
+    summary = run_pipeline(
+        count=args.count,
+        provider=args.provider,
+        output_dir=args.output,
+        test_mode=args.test,
+        log=print,
+    )
 
-    print("Running pipeline...")
-    t0 = time.time()
-    result = graph.invoke(initial_state)
-    elapsed = time.time() - t0
-    print(f"\nPipeline completed in {elapsed:.1f}s")
-
-    # ── Save per-persona output ────────────────────────────────────────────────
-    output_root = Path(args.output)
-    behavior_events_map: dict = result.get("behavior_events_map", {})
-    personas: list = result.get("personas", [])
-
-    if not behavior_events_map:
-        print("[WARNING] behavior_events_map is empty — saving combined output instead")
-        behavior_events_map = {"all": result.get("behavior_events", [])}
-
-    behavior_events_by_type = result.get("behavior_events_by_type", {})
-
-    saved = []
-    for persona in personas:
-        name = persona.get("name", "unknown")
-        events = behavior_events_map.get(name, [])
-        by_type = behavior_events_by_type.get(name, {})
-        out_dir = output_root / name
-        out_dir.mkdir(parents=True, exist_ok=True)
-
-        events_path = out_dir / "behavior_events.json"
-        with open(events_path, "w", encoding="utf-8") as f:
-            json.dump(events, f, ensure_ascii=False, indent=2)
-
-        for type_name, type_events in by_type.items():
-            with open(out_dir / f"behavior_events_{type_name}.json", "w", encoding="utf-8") as f:
-                json.dump(type_events, f, ensure_ascii=False, indent=2)
-
-        persona_path = out_dir / "persona.json"
-        with open(persona_path, "w", encoding="utf-8") as f:
-            json.dump(persona, f, ensure_ascii=False, indent=2)
-
-        counts = {t: len(v) for t, v in by_type.items()}
-        saved.append((name, len(events), str(events_path)))
-        print(f"  Saved {len(events):4d} events → {out_dir}/ "
-              f"[call={counts.get('call',0)} sms={counts.get('sms',0)} "
-              f"noti={counts.get('noti',0)} gmail={counts.get('gmail',0)}]")
-
-    # ── Save metadata ──────────────────────────────────────────────────────────
-    metadata = result.get("metadata", {})
-    metadata["elapsed_seconds"] = elapsed
-    meta_path = output_root / "metadata.json"
-    output_root.mkdir(parents=True, exist_ok=True)
-    with open(meta_path, "w", encoding="utf-8") as f:
-        json.dump(metadata, f, ensure_ascii=False, indent=2)
-
-    print(f"\nDone! {len(saved)} persona(s) saved to {output_root}/")
-    for name, n_events, path in saved:
-        print(f"  {name}: {n_events} events → {path}")
+    print(f"\nDone! {len(summary['personas'])} persona(s) saved to {summary['output_dir']}/")
+    for p in summary["personas"]:
+        c = p["counts"]
+        print(f"  Saved {p['event_count']:4d} events → {p['output_dir']}/ "
+              f"[call={c['call']} sms={c['sms']} noti={c['noti']} gmail={c['gmail']}]")
 
 
 if __name__ == "__main__":
